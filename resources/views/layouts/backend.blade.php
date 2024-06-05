@@ -32,13 +32,7 @@
 <link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2-bootstrap-5-theme.min.css') }}">
 
-<style>
-/* custom select */
-.select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option {font-size: 14px;} 
-.select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {font-size: 14px;}
-/* custom hamburger style */
-.studynexus-menu{ display: inline-block; cursor: pointer; } .studynexus-bar{ width: 21px; height: 2px; background-color: currentColor; margin: 3px ; } .studynexus-text{ font-family: Arial, san-serif; font-size: 8px; margin-left: ; }
-</style>
+<link rel="stylesheet"  href="{{ asset('css/custom.css') }}">
 
   <!-- Scripts -->
   <script>
