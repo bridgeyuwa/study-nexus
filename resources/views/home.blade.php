@@ -1,0 +1,257 @@
+@extends('layouts.backend')
+
+
+@section('content')
+
+
+ <!-- Study Nexus Hero -->
+     
+        <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6" style="background-image: url(/media/patterns/cubes.png)">
+
+         
+         <div class="col-md-6  d-none d-md-block">
+               <br>
+            <div class="d-flex justify-content-center align-content-center">  
+                <img class="center-block " src="/media/patterns/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
+             </div>
+          </div>
+          
+
+
+          <div class="col-12 col-md-6">
+            <div class="text-center d-block d-lg-none ">
+              <h1 class="display-1">Study<span class="text-info">Nexus</span>.<span class="text-success display-5">ng</span></h1>
+            </div>
+            <div class="text-left d-none d-lg-block ">
+              <h1 class="display-3">Study<span class="text-info">Nexus</span>.<span class="text-success display-6">ng</span></h1>
+            </div>
+
+            <p class="lead">Explore the premium source for higher education information in Nigeria.</p>
+<p>Delve into our extensive database containing over 20,000 courses across 900+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and Innovation Enterprise Institutions. Uncover Institution Rankings and insights into popular Institution Courses in Nigeria. Streamline your search by utilizing our multi-teir filtering system based on Location, Study Level, and Course.</p>
+            
+
+          <div class="d-flex justify-content-center pb-4">
+            <a class="btn btn-hero btn-secondary rounded-0" href="{{url("#search")}}">Explore</a>     
+           </div> 
+ 
+          </div>
+
+          
+
+        </div>
+      <!-- END Study Nexus Hero -->
+
+
+<!-- Search -->
+
+  <!-- Hero -->
+        <div id="search" class="bg-image" style="background-image: url('{{asset('media/photos/photo13@2x.jpg')}}');">
+          <div class="bg-black-75">
+            <div class="content content-full content-top text-center pt-5 pb-0">
+              <div class="pt-4 pb-3">
+                
+              <livewire:search-form fullSearch />
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Hero -->
+
+
+<!-- End Search -->
+
+
+<!-- Facts -->
+      <div class="bg-white block" style="background-image: url(/media/patterns/grid-me.png)">
+        <div class="container text-center text-gd-xinspire pt-4">
+
+          <div class="row">
+            <div class="counter col-md-3 col-sm-6">
+              <p class="display-5 fw-semibold mb-0"><span>{{count($institutions)}}</span></p>
+              <h6 class="h2 fw-light">Institutions</h6>
+            </div>
+
+            <div class="counter col-md-3 col-sm-6">
+              <p class="display-5  fw-semibold mb-0"><span>{{count($programs)}}</span></p>
+              <h6 class="h2 fw-light">Courses</h6>
+            </div>
+  
+            <div class="counter col-md-3 col-sm-6">
+              <p class="display-5 fw-semibold mb-0"><span>{{count($colleges)}}</span></p>
+              <h6 class="h2 fw-light">Colleges</h6>
+            </div>
+
+           <div class="counter col-md-3 col-sm-6">
+              <p class="display-5 fw-semibold mb-0"><span>{{count($colleges)}}</span></p>
+              <h6 class="h2 fw-light">Colleges</h6>
+            </div>
+            
+          </div>
+
+        </div>
+      </div>
+      <!-- END Facts -->
+
+
+      <!--  Grid Links -->
+<div class="container">
+    <div class="p-3 pb-1">
+        <!--  Grid -->
+        <div class="row text-center d-flex justify-content-around">
+
+
+
+
+            <div class="col-6 col-md-3">
+                <a class="block block-link-pop text-center bg-gray-dark" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                    <div class="block-content block-content-full ratio ratio-4x3 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                                <i class="text-white fa fa-3x fa-graduation-cap"></i>
+                                <div class="fw-semibold mt-2 text-uppercase text-white">Scholarships</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <a class="block block-link-pop text-center bg-gray-light" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                    <div class="block-content block-content-full ratio ratio-4x3 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                                <i class="fa fa-3x fa-pen-clip"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Blog</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <a class="block block-link-pop text-center bg-gray" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                    <div class="block-content block-content-full ratio ratio-4x3 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                                <i class=" fa fa-3x fa-plane-departure"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Study Abroad</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <a class="block block-link-pop text-center bg-gray-darker" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                    <div class="block-content block-content-full ratio ratio-4x3 ">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                                <i class="fa fa-3x fa-folder text-white"></i>
+                                <div class="fw-semibold mt-2 text-uppercase text-white">Resources</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+        <!-- END Grid -->
+    </div>
+</div>
+<!--  End Grid Links -->
+
+
+
+<!-- Explore -->
+<div class="container">
+    <div class="p-3">
+        <div class="row">
+            <div class="col-md-6 d-flex">
+                <div class="block block-rounded flex-fill d-flex flex-column">
+                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                        <h3 class="fw-light mb-1">Academic Course Programs Library</h3>
+                    </div>
+                    <div class="block-content mb-auto pb-2">
+                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'bachelors'])}}">Bachelor's Degree Courses</a></p>
+                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'diploma'])}}">Diploma Courses</a></p>
+                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'nce'])}}">National Certificate of Education Courses</a></p>
+                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'nid'])}}">National Innovation Diploma Courses</a></p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6 d-flex">
+                <div class="block block-rounded flex-fill d-flex flex-column">
+                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                        <h3 class=" fw-light mb-1">Academic Institutions Library</h3>
+                    </div>
+                    <div class="block-content mb-auto pb-2">
+
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'university'])}}">Universities</a></p>
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'polytechnic'])}}">Polytechnics</a></p>
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'monotechnic'])}}">Monotechnics</a></p>
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'college-of-education'])}}">Colleges of Education</a></p>
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'innovation-enterprise-institution'])}}">Innovation Enterprise Institutions</a></p>
+
+                    </div>
+                    <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
+                        <a class="btn btn-hero btn-info rounded-0 w-100" href="{{route('institutions.index')}}"> View all Institutions</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex">
+                <div class="block block-rounded flex-fill d-flex flex-column">
+                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                        <h3 class="fw-light mb-1">Academic Institutions by Location</h3>
+                    </div>
+                    <div class="block-content mb-auto pb-2">
+
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'university'])}}">University Locations</a></p>
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'polytechnic'])}}">Polytechnic Locations</a></p>
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'monotechnic'])}}">Montechnic Locations</a></p>
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'college-of-education'])}}">College of Education Locations</a></p>
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'innovation-enterprise-institution'])}}">Innovation Enterprise Institution Locations</a></p>
+
+                    </div>
+                    <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
+                        <a class="btn btn-hero btn-info rounded-0 w-100" href="{{route('institutions.location')}}"> View All Locations</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex">
+                <div class="block block-rounded flex-fill d-flex flex-column">
+                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                        <h3 class="fw-light mb-1">Academic Institution Rankings</h3>
+                    </div>
+                    <div class="block-content mb-auto pb-2">
+
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'university'])}}">University Rankings</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'polytechnic'])}}">Polytechnic Rankings</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'monotechnic'])}}">Montechnic Rankings</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'college-of-education'])}}">Colleges of Education Rankings</a></p>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            
+
+
+
+        </div>
+    </div>
+    <!-- END md Grid -->
+
+</div>
+<!--  End Explore -->
+
+
+@endsection
