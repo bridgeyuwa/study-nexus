@@ -36,13 +36,11 @@ class Program extends Model {
 // for level_program relationship
 
 public function __levels() {
-        return $this->belongsToMany(Program::class,'level_program','program_id','level_id')->withPivot('honor_id','description','duration','tuition_fee_low','tuition_fee_high','utme_subjects','utme_o_level_req','direct_entry_req');
+        return $this->belongsToMany(Program::class,'level_program','program_id','level_id')->withPivot('description','utme_subjects','utme_o_level_req','direct_entry_req');
     }
 
    
-    public function honor() {
-        return $this->belongsTo(Honor::class);
-    }
+    
 
 }
 

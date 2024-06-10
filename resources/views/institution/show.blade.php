@@ -7,17 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Number; 
 @endphp
 
-<style>
-    .bg-stripped:nth-child(even) {
-        background-color: #e9ecef;
-        padding-top: 3px;
-        padding-bottom: 3px;
-    }
-    .bg-stripped:nth-child(odd) {
-        padding-top: 3px;
-        padding-bottom: 3px;
-    }
-</style>
 
 <!-- Hero -->
 <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
@@ -174,7 +163,7 @@ use Illuminate\Support\Number;
                         <tr>
                             <td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} </span></td>
                             <td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
-                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['category' => $institution->category->slug])}}"> View </a> </td>
+                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
                         </tr>
 
                         <tr>
@@ -187,7 +176,7 @@ use Illuminate\Support\Number;
                         <tr>
                             <td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
                             <td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
-                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
+                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['category' => $institution->category->slug])}}"> View </a> </td>
                         </tr>
 
                     </table>

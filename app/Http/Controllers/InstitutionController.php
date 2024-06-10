@@ -254,7 +254,7 @@ private function computeRank($institution, $allInstitutions) {
 
     public function show(Institution $institution) {
                  $allInstitutions = Institution::whereNotNull('rank')->where('category_id',$institution->category->id)->orderBy('rank')->get();  // get all institutions 
-                 $institution->load(['schooltype','category.institutions','term','catchments','state.institutions','state.region.institutions','socials.socialtype','phonenumbers',
+                 $institution->load(['schooltype','category.institutions','term','catchments','state.institutions','state.region.institutions',
 
                                       'levels.programs' => function($query) use($institution) {
 
