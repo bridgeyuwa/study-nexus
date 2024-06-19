@@ -34,7 +34,7 @@ use Illuminate\Support\Str;
         <div class="block-content">
 
             <!-- Introduction -->
-            <h2 class="content-heading text-center">Academic Institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{str::title($level->name)}} in @endif @if(!empty($program)) {{Str::of($program->name)->title()}} @endif in @if(!is_null($state)) {{str::title($state->name)}}, @endif Nigeria</h2>
+            <h2 class="content-heading text-center">Academic Institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{str::title($level->name)}}  @endif @if(!empty($program)) in {{Str::of($program->name)->title()}} @endif in @if(!is_null($state)) {{str::title($state->name)}}, @endif Nigeria</h2>
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
