@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+		$middleware->validateCsrfTokens(except: [
+		'livewire/update',
+		]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
