@@ -97,7 +97,7 @@ use Illuminate\Support\Number;
                         </tbody>
                     </table>
                     <!-- end full table -->
-
+					{{$institutions->links()}}
                 </div>
             </div>
         </div>

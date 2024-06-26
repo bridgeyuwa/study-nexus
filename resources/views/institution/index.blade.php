@@ -57,13 +57,13 @@
 
                 <div class="col-lg-8">
 
-                    {{ $institutions->links() }} @foreach($institutions as $institution)
+                    {{ $institutions->onEachSide(1)->links() }} @foreach($institutions as $institution)
 
                     <a href="{{route('institutions.show', ['institution' => $institution->id])}}" class="block block-rounded mb-3">
                       <div class="block block-header-default bg-image mb-0"
                           style="background-image: url('/media/photos/photo11.jpg');">
                           <div class="bg-black-75 text-center p-3">
-                              <div class="fs-lg text-white mb-1">{{str::upper($institution->name)}}
+                              <div class="fs-lg text-white mb-1">{{str::title($institution->name)}}
                                @if(!empty($institution->abbr))<span class="text-white-75 fw-light">({{str::upper($institution->abbr)}})</span> @endif 
                             </div>
 
@@ -77,7 +77,7 @@
                               
                           </div>
                       </div>
-                    </a> @endforeach {{ $institutions->links() }}
+                    </a> @endforeach {{ $institutions->onEachSide(1)->links() }}
 
                 </div>
             </div>

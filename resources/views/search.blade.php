@@ -75,7 +75,7 @@ use Illuminate\Support\Str;
                         </div>
                     </div>
 
-                    @else {{ $institutions->links() }} @foreach ($institutions as $institution)
+                    @else {{ $institutions->onEachSide(1)->links() }} @foreach ($institutions as $institution)
                     <!-- institution/program item -->
                     <a href="
                    @if(!empty($program) && !empty($level))  
@@ -90,19 +90,19 @@ use Illuminate\Support\Str;
                 <div class="block block-header-default bg-image mb-0"
                     style="background-image: url('media/photos/photo11.jpg');">
                     <div class="bg-black-75 text-center pt-3 pb-1">
-                        <div class="h4 fw-normal text-white mb-0">{{str::upper($institution->name)}}
+                        <div class="h4 fw-normal text-white mb-0">{{str::title($institution->name)}}
                             @if(!empty($institution->abbr))({{str::upper($institution->abbr)}}) @endif</div>
 
-                          @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-5"> Former: <span class="text-white-75 fw-light">{{str::title($institution->former_name)}}</span> </div> @endif 
+                          @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span class="text-white-75 fw-light">{{str::title($institution->former_name)}}</span> </div> @endif 
 
                         <div class="h6 fw-normal text-white-75 mb-2 fs-sm">{{str::title($institution->schooltype->name)}}
                             {{str::title($institution->category->name)}}. <i
                                 class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
 
-@if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State, @endif Nigeria
+@if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
 
 </div>
-                        @if(!empty($program)) <div class="h5 fw-normal mb-2 text-white"> {{str::title($program->name)}} @if(isset($level))<span class="fs-sm fw-light">({{str::title($level->name)}})</span>@endif
+                        @if(!empty($program)) <div class="h6 fw-normal mb-2 text-white"> {{str::title($program->name)}} @if(isset($level))<span class="fs-sm fw-light">({{str::title($level->name)}})</span>@endif
                         </div> @endif
                     </div>
                 </div>

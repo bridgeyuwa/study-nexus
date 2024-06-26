@@ -112,8 +112,8 @@ class InstitutionController extends Controller {
 
           */
 
-              $institutions = Institution::where('category_id', $category->id)->with(['state.region','category','state.institutions','state.region.institutions'])->orderByRaw('rank IS NULL, rank')->get(); 
- //dd($institutions);
+              $institutions = Institution::where('category_id', $category->id)->with(['state.region','category','state.institutions','state.region.institutions'])->orderByRaw('rank IS NULL, rank')->paginate(100); 
+
 
               foreach($institutions as $institution) {
               
@@ -136,8 +136,8 @@ class InstitutionController extends Controller {
 
           $institutions = Institution::where('state_id', $state->id)->where('category_id', $category->id)->with([
                      'state.region','category','state.institutions'
-                   ])->orderByRaw('rank IS NULL, rank')->get();          
-//dd($institutions);
+                   ])->orderByRaw('rank IS NULL, rank')->paginate(100);          
+
    
 
            if($institutions->isNotEmpty()){
@@ -171,8 +171,8 @@ class InstitutionController extends Controller {
 
                  function($query) use($region) {
                        $query->where('region_id', $region->id);
-                 })->with('state.region')->orderByRaw('rank IS NULL, rank')->get();          
-//dd($institutions);
+                 })->with('state.region')->orderByRaw('rank IS NULL, rank')->paginate(100);          
+
 
 
           if($institutions->isNotEmpty()){

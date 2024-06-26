@@ -3,7 +3,7 @@ A Comprehensive Guide to Academic Opportunities
 
 **Study Nexus** is your go-to resource for exploring colleges, universities, and academic programs worldwide. Our mission is to provide the most comprehensive, accurate, and unbiased information to help students find the perfect educational path.
 
-**Owned and operated by EduGlobal**, the leading educational technology company, Study Nexus is dedicated to empowering millions of students to make informed decisions about their education, careers, and future. We aim to be the bridge between students and their dream institutions.
+**Owned and operated by Study Nexus Nigeria Ltd**, the leading educational technology company in Nigeria, Study Nexus is dedicated to empowering millions of students to make informed decisions about their education, careers, and future. We aim to be the bridge between students and their dream institutions.
 
 ## Explore and Connect
 
@@ -27,7 +27,7 @@ Study Nexus offers detailed descriptions of a wide variety of academic programs.
 
 ## Study Nexus by the Numbers
 
-- Online since 2015
+- Online since 2024
 - #1 resource for global education seekers
 - 6.5 million unique visitors in the past year
 - 7.2 million searches conducted in the past year
@@ -35,14 +35,13 @@ Study Nexus offers detailed descriptions of a wide variety of academic programs.
 
 ## What We Provide
 
-- Tuition fee ranges by degree (bachelor's, master's, doctoral)
+- Tuition fee ranges by study level (bachelor's, diploma, NCE, master's, doctoral)
 - Detailed course descriptions
 - Program durations
 - Admission and entrance exam requirements
 - Contact information for admissions
 - Academic calendars
 - School performance metrics
-- Graduate testimonials
 
 ## Our Data Collection Process
 
@@ -50,7 +49,7 @@ We gather information from a variety of sources, including official school websi
 
 ## Searching for Colleges
 
-Our intuitive search tool allows you to filter schools by:
+Our intuitive [search tool](/search) allows you to filter schools by:
 - **Field of Study:** From STEM to humanities, find programs that match your interests.
 - **Location:** Discover educational opportunities in your preferred cities and countries.
 - **Degree Level:** Search for bachelor’s, master’s, or doctoral programs.
