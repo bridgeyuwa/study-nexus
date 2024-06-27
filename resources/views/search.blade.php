@@ -75,7 +75,11 @@ use Illuminate\Support\Str;
                         </div>
                     </div>
 
-                    @else {{ $institutions->onEachSide(1)->links() }} @foreach ($institutions as $institution)
+                    @else 
+						
+				{{ $institutions->onEachSide(1)->links() }} 
+				
+				    @foreach ($institutions as $institution)
                     <!-- institution/program item -->
                     <a href="
                    @if(!empty($program) && !empty($level))  
