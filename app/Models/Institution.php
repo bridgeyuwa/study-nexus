@@ -46,10 +46,6 @@ class Institution extends Model {
         return $this->belongsTo(Term::class);
     }
 
-    public function lga() {
-        return $this->belongsTo(Lga::Class);
-    }
-
     public function category() {
         return $this->belongsTo(Category::class);
     }    

@@ -15,11 +15,6 @@ class State extends Model
         return $this->hasMany(Institution::class);
     }
     
-      public function lgas()
-    {
-        return $this->hasMany(Lga::class);
-    }
-    
     public function region()
     {
         return $this->belongsTo(Region::class);

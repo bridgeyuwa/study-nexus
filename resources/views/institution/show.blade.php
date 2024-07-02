@@ -16,7 +16,7 @@ use Illuminate\Support\Number;
                 <h1 class="fw-light text-white mb-1">{{Str::title($institution->name)}} @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif</h1>
 
                 <h2 class="h4 fs-md  fw-light text-white-75 mb-1">
-                     @if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
+                     @if(isset($institution->locality)) {{str::title($institution->locality)}} @endif - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
                 </h2>
 
             </div>
