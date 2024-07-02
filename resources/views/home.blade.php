@@ -63,35 +63,37 @@
 
 
 <!-- Facts -->
-      <div class="bg-white block" style="background-image: url(/media/patterns/grid-me.png)">
-        <div class="container text-center text-gd-xinspire pt-4">
-
-          <div class="row">
-            <div class="counter col-md-3 col-sm-6">
-              <p class="display-5 fw-semibold mb-0"><span>{{count($institutions)}}</span></p>
-              <h6 class="h2 fw-light">Institutions</h6>
+      <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" style="background-image: url(/media/patterns/grid-me.pngx)">
+              
+              <div class="px-2 px-sm-5">
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($institutions))}}</p>
+                <p class="text-muted mb-0">
+                  Institutions
+                </p>
+              </div>
+			      <div class="px-2 px-sm-5 border-start">
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($categories))}}</p>
+                <p class="text-muted mb-0">
+                 Categories
+                </p>
+              </div>
+              <div class="px-2 px-sm-5 border-start">
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($programs))}}</p>
+                <p class="text-muted mb-0">
+                  Course Programs
+                </p>
+              </div>
+             
+              <div class="px-2 px-sm-5 border-start">
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($levels))}}</p>
+                <p class="text-muted mb-0">
+                  Study Levels
+                </p>
+              </div>
             </div>
+<!-- END Facts -->
 
-            <div class="counter col-md-3 col-sm-6">
-              <p class="display-5  fw-semibold mb-0"><span>{{count($programs)}}</span></p>
-              <h6 class="h2 fw-light">Courses</h6>
-            </div>
-  
-            <div class="counter col-md-3 col-sm-6">
-              <p class="display-5 fw-semibold mb-0"><span>{{count($colleges)}}</span></p>
-              <h6 class="h2 fw-light">Colleges</h6>
-            </div>
 
-           <div class="counter col-md-3 col-sm-6">
-              <p class="display-5 fw-semibold mb-0"><span>{{count($colleges)}}</span></p>
-              <h6 class="h2 fw-light">Colleges</h6>
-            </div>
-            
-          </div>
-
-        </div>
-      </div>
-      <!-- END Facts -->
 
 
       <!--  Grid Links -->
@@ -122,7 +124,7 @@
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
                                 <i class="fa fa-3x fa-pen-clip"></i>
-                                <div class="fw-semibold mt-2 text-uppercase">Blog</div>
+                                <div class="fw-semibold mt-2 text-uppercase">News</div>
                             </div>
                         </div>
                     </div>
@@ -199,7 +201,7 @@
 
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
-                        <a class="btn btn-hero btn-info rounded-0 w-100" href="{{route('institutions.index')}}"> View all Institutions</a>
+                        <a class="btn btn-hero btn-alt-primary rounded-0 w-100" href="{{route('institutions.index')}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View all Institutions</a>
                     </div>
                 </div>
             </div>
@@ -219,7 +221,7 @@
 
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
-                        <a class="btn btn-hero btn-info rounded-0 w-100" href="{{route('institutions.location')}}"> View All Locations</a>
+                        <a class="btn btn-hero btn-alt-primary rounded-0 w-100" href="{{route('institutions.location')}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View All Locations</a>
                     </div>
                 </div>
             </div>
