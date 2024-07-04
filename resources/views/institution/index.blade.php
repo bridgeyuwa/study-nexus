@@ -72,7 +72,7 @@
                                {{str::title($institution->schooltype->name)}} 
                                {{str::title($institution->category->name)}}. 
                                     <i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
-                                @if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
+                                @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif   @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
                                </div>
                               
                           </div>

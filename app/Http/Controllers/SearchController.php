@@ -8,6 +8,7 @@ use App\Models\State;
 use App\Models\Program;
 use App\Models\Level;
 use Illuminate\Database\Eloquent\Builder;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class SearchController extends Controller {
 
@@ -104,7 +105,14 @@ class SearchController extends Controller {
            }
 
       
+	  
+	  
+	  $SEOData = new SEOData(
+                                          title: 'Search Nigerian Academic Institutions and Programs',
+                                          description: 'Use our advanced search to find universities, polytechnics, monotechnics, colleges of education, etc and course programs in Nigeria that match your criteria. Filter by location, study level, course program and more.',
 
-        return view('search', compact('institutions', 'program', 'state', 'level'));
+                                       );
+
+        return view('search', compact('institutions', 'program', 'state', 'level','SEOData'));
     }
 }

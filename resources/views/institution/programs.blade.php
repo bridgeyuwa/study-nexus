@@ -31,7 +31,7 @@ use Illuminate\Support\Number;
               </h1>
 
                   <h2 class="h4 fs-md  fw-light text-white-75 ">
-                      @if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
+                      @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
                     </h2>
 
             <h2 class="h3 fw-light text-white">{{str::title($level->name)}} Programs</h2>

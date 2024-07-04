@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Program;
 use App\Models\Level;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class ProgramController extends Controller
 {
@@ -37,8 +38,15 @@ foreach ($programs as $program) {
 // Now $colleges is an associative array where keys are college names
 // and values are arrays of programs associated with each college
 
+
+
+        $SEOData = new SEOData(
+                                          title: $level->name. ' Course Programs in Nigeria',
+                                          description: 'Discover '.$level->name. ' programs across academic institutions in Nigeria. Compare and choose the best course program for your academic journey.',
+
+                                       );
  
-           return view('program.index', compact('colleges','level'));
+           return view('program.index', compact('colleges','level','SEOData'));
     }
 
 
@@ -58,7 +66,14 @@ $level->load([ 'programs' => function ($query) use($program) {
 
 /* for generic program data at levels */
  $program = $level->__programs()->where('program_id', $program->id)->first();
-return view('program.show', compact('level','program'));
+
+
+  $SEOData = new SEOData(
+                                          title: $level->name. ' in '.$program->name. ' in Nigeria',
+                                       );
+
+
+return view('program.show', compact('level','program','SEOData'));
     }
     
 
@@ -74,7 +89,14 @@ $level->load([ 'programs' => function ($query) use($program) {
 
 
 $institutions = $program->institutions()->with(['schooltype','category','state'])->wherePivot('level_id', $level->id)->paginate(60);
-      return view('program.institutions', compact('level','program','institutions'));
+
+
+
+      $SEOData = new SEOData(
+                               title: 'Academic Institutions Offering '.$level->name. ' in '.$program->name.' in Nigeria',
+                               description: 'Academic institutions offering '.$level->name. ' in ' .$program->name. '. Explore the collection of institutions to make informed decisions.',
+                                       );
+      return view('program.institutions', compact('level','program','institutions','SEOData'));
     }
     
 }

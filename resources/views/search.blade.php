@@ -103,7 +103,7 @@ use Illuminate\Support\Str;
                             {{str::title($institution->category->name)}}. <i
                                 class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
 
-@if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
+@if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
 
 </div>
                         @if(!empty($program)) <div class="h6 fw-normal mb-2 text-white"> {{str::title($program->name)}} @if(isset($level))<span class="fs-sm fw-light">({{str::title($level->name)}})</span>@endif

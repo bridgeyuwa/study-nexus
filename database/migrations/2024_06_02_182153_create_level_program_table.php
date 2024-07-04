@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('level_program', function (Blueprint $table) {
-            $table->id();
             $table->string('program_id');
             $table->unsignedBigInteger('level_id');
             $table->text('description')->nullable();
@@ -21,7 +20,7 @@ return new class extends Migration
             $table->text('utme_subjects')->nullable();
             $table->timestamps();
 
-            $table->unique(['program_id', 'level_id']);
+            $table->primary(['program_id', 'level_id']);
         });
     }
 

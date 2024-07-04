@@ -7,6 +7,8 @@ use App\Models\Institution;
 use App\Models\Program;
 use App\Models\Category;
 use App\Models\Level;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Spatie\SchemaOrg\Schema;
 
 class HomeController extends Controller {
 
@@ -17,7 +19,40 @@ class HomeController extends Controller {
 		$categories = Category::all();
 		$levels = Level::all(); 
         
-       return view('home', compact('institutions','programs','categories','levels'));
+        $SEOData = new SEOData( 
+                           description: 'Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.',
+                               );
+							   
+	$website = Schema::website()
+               ->url('/')
+               ->name('StudyNexus')	
+               ->description('Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.')	
+               ->publisher(
+                           Schema::organization()
+                               ->name('StudyNexus')
+                               ->url('http://studynexus.ng')
+                               ->logo('')
+                               ->sameAs(['https://facebook.com/studynexus_ng','https://x.com/studynexus_ng'])
+                            );	
+ 
+          $service1 = Schema::service()
+                   ->name('StudyNexus')
+                   ->url('http://studynexus.ng')
+                   ->logo('')
+                   ->serviceType('Educational Directory')
+                   ->description('');	
+
+         $service2 = Schema::service()
+                   ->name('StudyNexus')
+                   ->url('http://studynexus.ng')
+                   ->logo('')
+                   ->serviceType('')
+                   ->description();
+
+		   
+							     
+
+       return view('home', compact('institutions','programs','categories','levels','SEOData','jsonLd'));
     }
 
 }

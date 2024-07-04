@@ -18,7 +18,7 @@ use Illuminate\Support\Number;
                </h1>
 
                   <h2 class="h4 fs-md  fw-light text-white-75 ">
-                      @if(isset($institution->locality)) {{str::title($institution->locality)}}, @endif {{str::title($institution->lga->name)}} - @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
+                      @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
                     </h2>
 
                 <h2 class="h3 fw-light text-white">
@@ -67,7 +67,7 @@ use Illuminate\Support\Number;
                         {{$level->name}} <span class="text-muted">({{Str::of($program->name)->title()}})</span>
                       </div>                      
                       <p class="text-muted mb-0">                       
-                         ₦ {{ Number::format($level->programs->first()->pivot->tuition_fee)}} <span class="fs-sm">({{ Number::forHumans($level->programs->first()->pivot->tuition_fee)}} Naira) </span>
+                        @isset($level->programs->first()->pivot->tuition_fee) ₦ {{ Number::format($level->programs->first()->pivot->tuition_fee)}} <span class="fs-sm">({{ Number::forHumans($level->programs->first()->pivot->tuition_fee)}} Naira) </span> @endisset
                       </p>
                     </div>
                     <div>

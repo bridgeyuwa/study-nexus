@@ -39,7 +39,7 @@
         <div class="col-md-8 order-md-0">
            <div class="block block-rounded">
                           
-                    <h2 class="content-heading text-center">Nigerian Universities Commission Catchment Policy Regarding Federal Universities</h2>
+                    <h2 class="content-heading text-center">Nigerian Universities Catchment Policy</h2>
 
                            <p class="p-3">    policy   </p>
  
