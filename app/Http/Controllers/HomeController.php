@@ -23,34 +23,43 @@ class HomeController extends Controller {
                            description: 'Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.',
                                );
 							   
-	$website = Schema::website()
-               ->url('/')
-               ->name('StudyNexus')	
-               ->description('Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.')	
-               ->publisher(
-                           Schema::organization()
-                               ->name('StudyNexus')
-                               ->url('http://studynexus.ng')
-                               ->logo('')
-                               ->sameAs(['https://facebook.com/studynexus_ng','https://x.com/studynexus_ng'])
-                            );	
- 
-          $service1 = Schema::service()
-                   ->name('StudyNexus')
-                   ->url('http://studynexus.ng')
-                   ->logo('')
-                   ->serviceType('Educational Directory')
-                   ->description('');	
+$jsonLd = Schema::organization()
+    ->name('StudyNexus')
+    ->url(url('/'))
+    ->description('Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.')
+    ->address(Schema::postalAddress()->addressLocality('Nigeria'))
+    ->sameAs([
+        'https://facebook.com/studynexus_ng',
+        'https://x.com/studynexus_ng',
+        'http://instagram.com/studynexus_ng',
+        'http://linkedin.com/studynexus_ng',
+        'http://tiktok.com/studynexus_ng',
+        'http://youtube.com/studynexus_ng',
+    ])
+    ->logo(url('/logo.png'))
+    ->contactPoint(Schema::contactPoint()
+        ->contactType('customer service')
+        ->telephone('+234-902-100-4028')
+        ->email('contact@example.com')
+    )
+    
+    ->service(Schema::service()
+        ->name('University Search')
+        ->description('Search and compare universities, polytechnics and colleges of education in the Nigeria.')
+    )
+    ->service(Schema::service()
+        ->name('Scholarship Information')
+        ->description('Access information about scholarships available for Nigerian students.')
+    )
+    ->service(Schema::service()
+        ->name('Career Counseling')
+        ->description('Get guidance on career paths and opportunities after graduation.')
+    )
+    ->service(Schema::service()
+        ->name('Study Abroad')
+        ->description('Explore opportunities to study abroad for Nigerian students.')
+    );
 
-         $service2 = Schema::service()
-                   ->name('StudyNexus')
-                   ->url('http://studynexus.ng')
-                   ->logo('')
-                   ->serviceType('')
-                   ->description();
-
-		   
-							     
 
        return view('home', compact('institutions','programs','categories','levels','SEOData','jsonLd'));
     }

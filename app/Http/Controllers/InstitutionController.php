@@ -10,6 +10,8 @@ use App\Models\Program;
 use App\Models\Level;
 use App\Models\Category;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Spatie\SchemaOrg\Schema;
+use Spatie\SchemaOrg\PostalAddress;
 
 class InstitutionController extends Controller {
 
@@ -46,6 +48,9 @@ class InstitutionController extends Controller {
                                     title: $institution->name.' '.$level->name. ' Course Programs',
                                     description: 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.',
                                        );
+									   	
+							   
+									    
         return view('institution.programs', compact('institution', 'level', 'programs','SEOData'));
     }
 
@@ -340,9 +345,31 @@ private function computeRank($institution, $allInstitutions) {
                                           
 
                                        );
+									   
+			$jsonLd = Schema::EducationalOrganization()
+    ->name($institution->name)
+    ->url(url()->current())
+    ->address(
+        Schema::PostalAddress()
+            ->if(isset($institution->locality), function (PostalAddress $schema) use ($institution) {
+                $schema->addressLocality($institution->locality);
+            })
+            ->addressRegion($institution->state->name)
+            ->addressCountry("Nigeria")
+    );
+
+
+					   
+					dd($jsonLd);				   
+									   
+									   
        
-          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
+          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData', 'jsonLd'));
     }
+
+
+
+
 
 
 
@@ -357,7 +384,39 @@ private function computeRank($institution, $allInstitutions) {
                                     title: $level->name.' in ' .$program->name. ' offered at '.$institution->name,
                                     description: 'Detailed information about '.$level->name.' in ' .$program->name. ' offered at '.$institution->name.'. Course program highlights and overview ',
                                        );
+									   
+									   
+									   
+						$jsonLd = Schema::Course()
+    ->name($program->name)
+	->url(url()->current())
+    ->publisher(
+        Schema::Organization()
+            ->name("StudyNexus")
+            ->url(url('/'))
+    )
+    ->provider(
+        Schema::EducationalOrganization()
+            ->name($institution->name)
+            ->url(url("/institutions/{$institution->slug}"))
+    )
+    ->image([
+        url("/photos/1x1/photo.jpg"),
+		url("/photos/4x3/photo.jpg"),
+		url("/photos/16x9/photo.jpg")
+    ])
+   
+    ->inLanguage("en")
+    ->educationalCredentialAwarded([
+        Schema::EducationalOccupationalCredential()
+            ->name($level->name. " in ". $program->name)
+            ->url(url()->current())
+            ->credentialCategory($level->name)
+    ]);			   
+									   
+									   
+			dd($jsonLd);						   
 
-        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData'));
+        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData', 'jsonLd'));
     }
 }
