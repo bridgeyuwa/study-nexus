@@ -16,18 +16,14 @@ class Institution extends Model {
  
 
     public function programs() {
-        return $this->belongsToMany(Program::class,'institution_program','institution_id','program_id')->withPivot('level_id','description','duration','tuition_fee','utme_cutoff','utme_subjects','utme_o_level_req','direct_entry_req');
+        return $this->belongsToMany(Program::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff');
     }
 
    public function levels() {
-        return $this->belongsToMany(Level::class,'institution_program','institution_id','level_id')->withPivot('program_id','description','duration','tuition_fee','utme_cutoff','utme_subjects','utme_o_level_req','direct_entry_req');
+        return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('program_id','description','duration','tuition_fee','requirements','utme_cutoff');
     }
 
-   /*
-    public function colleges() {
-        return $this->hasManyThrough(College::class, Program::class);
-    }
-   */
+   
 
     public function state() {
         return $this->belongsTo(State::class);

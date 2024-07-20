@@ -8,7 +8,6 @@ use App\Models\Program;
 use App\Models\Category;
 use App\Models\Level;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Spatie\SchemaOrg\Schema;
 
 class HomeController extends Controller {
 
@@ -23,45 +22,58 @@ class HomeController extends Controller {
                            description: 'Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.',
                                );
 							   
-$jsonLd = Schema::organization()
-    ->name('StudyNexus')
-    ->url(url('/'))
-    ->description('Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.')
-    ->address(Schema::postalAddress()->addressLocality('Nigeria'))
-    ->sameAs([
-        'https://facebook.com/studynexus_ng',
-        'https://x.com/studynexus_ng',
-        'http://instagram.com/studynexus_ng',
-        'http://linkedin.com/studynexus_ng',
-        'http://tiktok.com/studynexus_ng',
-        'http://youtube.com/studynexus_ng',
-    ])
-    ->logo(url('/logo.png'))
-    ->contactPoint(Schema::contactPoint()
-        ->contactType('customer service')
-        ->telephone('+234-902-100-4028')
-        ->email('contact@example.com')
-    )
-    
-    ->service(Schema::service()
-        ->name('University Search')
-        ->description('Search and compare universities, polytechnics and colleges of education in the Nigeria.')
-    )
-    ->service(Schema::service()
-        ->name('Scholarship Information')
-        ->description('Access information about scholarships available for Nigerian students.')
-    )
-    ->service(Schema::service()
-        ->name('Career Counseling')
-        ->description('Get guidance on career paths and opportunities after graduation.')
-    )
-    ->service(Schema::service()
-        ->name('Study Abroad')
-        ->description('Explore opportunities to study abroad for Nigerian students.')
-    );
 
 
-       return view('home', compact('institutions','programs','categories','levels','SEOData','jsonLd'));
+
+/*
+$filePath = public_path('files.json');
+
+$fileContent = file_get_contents($filePath);
+
+$data = json_decode($fileContent);
+
+
+foreach($data as &$obj){
+	
+	$institution = $obj->institutions_list;
+	
+	unset($obj->institutions_list);
+	
+	$obj = (object) array_merge(['institutions_list' => $institution], (array) $obj);		
+}
+
+$allSql ='';
+
+foreach($data as &$obj){
+	
+	$institution = $obj->institutions_list;
+	
+	 unset($obj->institutions_list);  //to remove institution id from the json
+		
+	$program = $obj->title;
+	
+	unset($obj->title);   //to remove program id from the json
+	
+	 $encodedObj = json_encode($obj);
+	 $escapedData = addslashes($encodedObj);
+	 
+	//prepare SQL
+	$sql = "INSERT INTO institution_program (institution_id, program_id, level_id, requirement) VALUES ('$institution','$program',1,'$escapedData');";
+	
+	$allSql .= $sql .PHP_EOL ;	
+}
+
+ //$reorderedJson = json_encode($data, JSON_PRETTY_PRINT);
+
+$newFilePath = public_path('decodedFile.json');
+
+$newFileContent = file_put_contents($newFilePath, $allSql);
+
+*/
+
+
+
+       return view('home', compact('institutions','programs','categories','levels','SEOData'));
     }
 
 }

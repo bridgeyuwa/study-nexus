@@ -10,10 +10,17 @@ use App\Models\Program;
 use App\Models\Level;
 use App\Models\Category;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Spatie\SchemaOrg\Schema;
-use Spatie\SchemaOrg\PostalAddress;
+
 
 class InstitutionController extends Controller {
+	
+	public function test() {
+	
+	$institution = Institution::find('aau');
+	dd($institution->socials);	
+	return null;
+}
+	
 
     public function index() {
          
@@ -38,42 +45,8 @@ class InstitutionController extends Controller {
         return view('institution.index', compact('institutions', 'category','SEOData'));
     }
 
-    
 
-    public function programs(Institution $institution, Level $level) {
-        $programs = $institution->programs()->wherePivot('level_id', $level->id)->with('college')->get()->groupBy('college.name');
-
-
-        $SEOData = new SEOData(
-                                    title: $institution->name.' '.$level->name. ' Course Programs',
-                                    description: 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.',
-                                       );
-									   	
-							   
-									    
-        return view('institution.programs', compact('institution', 'level', 'programs','SEOData'));
-    }
-
-
-
-    /* list single program levels available (eg degree in accounting, diploma in accounting) */
-
-    public function programLevels(Institution $institution, Program $program) {
-        $levels = $institution->levels()->wherePivot('program_id', $program->id)->with([
-
-         'programs'=> function($query) use ($institution){
-
-           $query->wherePivot('institution_id', $institution->id);
-
-          }])->get();
-
-            $SEOData = new SEOData(
-                                    title: 'Available Levels for '.$program->name.' offered at '.$institution->name,
-                                    description: 'Explore the available study levels for '.$program->name.' offered at '.$institution->name.'.',
-                                       );
-
-        return view('institution.program-levels', compact('institution', 'program', 'levels','SEOData'));
-    }
+  
 
     public function location() {
        
@@ -123,7 +96,7 @@ class InstitutionController extends Controller {
                    public function showLocation(State $state) {
 
                         
-                   $institutions = $state->institutions()->with('category','schooltype')->get();
+                   $institutions = $state->institutions()->with('category','schooltype','state')->get();
 
                    $SEOData = new SEOData(
                                     title: 'All Institutions in '.$state->name,
@@ -139,7 +112,7 @@ class InstitutionController extends Controller {
 
         public function showCategoryLocation(Category $category, State $state) {
 
-              $institutions = $state->institutions()->where('category_id', $category->id)->with('category','schooltype')->get();
+              $institutions = $state->institutions()->where('category_id', $category->id)->with('category','schooltype','state')->get();
 
 
 if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
@@ -237,7 +210,7 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
 
                  function($query) use($region) {
                        $query->where('region_id', $region->id);
-                 })->with('state.region')->orderByRaw('rank IS NULL, rank')->paginate(100);          
+                 })->with('state.region','state.institutions','category')->orderByRaw('rank IS NULL, rank')->paginate(100);          
 
 
 
@@ -325,15 +298,21 @@ private function computeRank($institution, $allInstitutions) {
 
 
 
+
+
     public function show(Institution $institution) {
                  $allInstitutions = Institution::whereNotNull('rank')->where('category_id',$institution->category->id)->orderBy('rank')->get();  // get all institutions 
-                 $institution->load(['schooltype','category.institutions','term','catchments','state.institutions','state.region.institutions',
-
+				 
+				
+                 $institution->load(['schooltype','category.institutions','term','catchments','state.institutions','state.region.institutions','socials',
+                 
                                       'levels.programs' => function($query) use($institution) {
 
                                                    $query->wherePivot('institution_id', $institution->id);
                                                       }
-                                   ]);
+                                   ]);	
+								   
+						   
               
              $rank = $this->computeRank($institution, $allInstitutions);
              $levels = $institution->levels->unique();
@@ -346,30 +325,29 @@ private function computeRank($institution, $allInstitutions) {
 
                                        );
 									   
-			$jsonLd = Schema::EducationalOrganization()
-    ->name($institution->name)
-    ->url(url()->current())
-    ->address(
-        Schema::PostalAddress()
-            ->if(isset($institution->locality), function (PostalAddress $schema) use ($institution) {
-                $schema->addressLocality($institution->locality);
-            })
-            ->addressRegion($institution->state->name)
-            ->addressCountry("Nigeria")
-    );
+		
 
-
-					   
-					dd($jsonLd);				   
-									   
-									   
+				   
        
-          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData', 'jsonLd'));
+          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
 
 
+    // list programs offered by an institution at a Level
+  
+    public function programs(Institution $institution, Level $level) {
+        $programs = $institution->programs()->wherePivot('level_id', $level->id)->with('college')->get()->groupBy('college.name');
 
 
+        $SEOData = new SEOData(
+                                    title: $institution->name.' '.$level->name. ' Programs',
+                                    description: 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.',
+                                       );
+						
+							   
+									    
+        return view('institution.programs', compact('institution', 'level', 'programs','SEOData'));
+    }
 
 
 
@@ -378,45 +356,45 @@ private function computeRank($institution, $allInstitutions) {
     // show single institution program data
     public function program(Institution $institution, Level $level = null, Program $program) {
         $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first()->pivot;
-
+    // dd($institution_program->requirements->direct_entry);
  
             $SEOData = new SEOData(
                                     title: $level->name.' in ' .$program->name. ' offered at '.$institution->name,
-                                    description: 'Detailed information about '.$level->name.' in ' .$program->name. ' offered at '.$institution->name.'. Course program highlights and overview ',
+                                    description: 'Detailed information about '.$level->name.' in ' .$program->name. ' offered at '.$institution->name.'. program highlights and overview ',
                                        );
 									   
 									   
-									   
-						$jsonLd = Schema::Course()
-    ->name($program->name)
-	->url(url()->current())
-    ->publisher(
-        Schema::Organization()
-            ->name("StudyNexus")
-            ->url(url('/'))
-    )
-    ->provider(
-        Schema::EducationalOrganization()
-            ->name($institution->name)
-            ->url(url("/institutions/{$institution->slug}"))
-    )
-    ->image([
-        url("/photos/1x1/photo.jpg"),
-		url("/photos/4x3/photo.jpg"),
-		url("/photos/16x9/photo.jpg")
-    ])
-   
-    ->inLanguage("en")
-    ->educationalCredentialAwarded([
-        Schema::EducationalOccupationalCredential()
-            ->name($level->name. " in ". $program->name)
-            ->url(url()->current())
-            ->credentialCategory($level->name)
-    ]);			   
-									   
-									   
-			dd($jsonLd);						   
+		   
+									   						   
 
-        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData', 'jsonLd'));
+        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData'));
     }
+	
+	
+	
+	
+	  /* list  levels available for a single program (eg degree in accounting, diploma in accounting) */
+
+    public function programLevels(Institution $institution, Program $program) {
+        $levels = $institution->levels()->wherePivot('program_id', $program->id)->with([
+
+         'programs'=> function($query) use ($institution){
+
+           $query->wherePivot('institution_id', $institution->id);
+
+          }])->get();
+		  
+		  
+		$institution = $institution->load('state');  
+
+            $SEOData = new SEOData(
+                                    title: 'Available Levels for '.$program->name.' offered at '.$institution->name,
+                                    description: 'Explore the available study levels for '.$program->name.' offered at '.$institution->name.'.',
+                                       );
+
+        return view('institution.program-levels', compact('institution', 'program', 'levels','SEOData'));
+    }
+	
+	
+	
 }

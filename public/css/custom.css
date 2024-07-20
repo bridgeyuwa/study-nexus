@@ -1,8 +1,15 @@
 /* custom select */
 .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option {font-size: 14px;} 
 .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {font-size: 14px;}
+.select2-selection__rendered {font-size: 15px;}
 /* custom hamburger style */
 .studynexus-menu{ display: inline-block; cursor: pointer; } .studynexus-bar{ width: 21px; height: 2px; background-color: currentColor; margin: 3px ; } .studynexus-text{ font-family: Arial, san-serif; font-size: 8px; margin-left: ; }
 /* stripped rows */
 .bg-stripped:nth-child(even) { background-color: #e9ecef; padding-top: 3px; padding-bottom: 3px; }
 .bg-stripped:nth-child(odd) { padding-top: 3px; padding-bottom: 3px; }
+
+/* Hide the plus and minus signs by default */
+.toggle-icon::after { content: '+'; }
+/* Show the minus sign when the collapse is open */
+[aria-expanded="true"] .toggle-icon::after { content: '-'; }
+

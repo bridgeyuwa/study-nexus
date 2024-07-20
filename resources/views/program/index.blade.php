@@ -4,18 +4,7 @@
 
 @php use Illuminate\Support\Str;  @endphp
 
-<style>
-    /* Hide the plus and minus signs by default */
-    
-    .toggle-icon::after {
-        content: '+';
-    }
-    /* Show the minus sign when the collapse is open */
-    
-    [aria-expanded="true"] .toggle-icon::after {
-        content: '-';
-    }
-</style>
+
 
 
 <!-- Hero -->

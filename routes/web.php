@@ -11,7 +11,8 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-
+/*test*/
+Route::get('/test', [InstitutionController::class, 'test']);
 
 /* Home */
 Route::get('/', [HomeController::class, 'index'])->name('home');

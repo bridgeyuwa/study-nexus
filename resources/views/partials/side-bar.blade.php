@@ -42,6 +42,12 @@
                         <i class="nav-main-link-icon fa fa-home"></i>
                         <span class="nav-main-link-name">Home</span></a>
                 </li>
+				
+				<li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('search')}}">
+                        <i class="nav-main-link-icon fa fa-search"></i>
+                        <span class="nav-main-link-name">Search</span></a>
+                </li>
 
 
 

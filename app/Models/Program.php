@@ -22,13 +22,13 @@ class Program extends Model {
 // add "specific" as prefix to the many to many relationship for all functions of institution_program_level
 
     public function institutions() {
-        return $this->belongsToMany(Institution::class,'institution_program','program_id','institution_id')->withPivot('level_id','description','duration','tuition_fee','utme_cutoff','utme_subjects','utme_o_level_req','direct_entry_req');
+        return $this->belongsToMany(Institution::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff');
     }
 
     
     
     public function levels() {
-        return $this->belongsToMany(Level::class,'institution_program','program_id','level_id')->withPivot('institution_id','description','duration','tuition_fee','utme_cutoff','utme_subjects','utme_o_level_req','direct_entry_req');
+        return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('institution_id','description','duration','tuition_fee','requirements','utme_cutoff');
     }
 
 
@@ -36,7 +36,7 @@ class Program extends Model {
 // for level_program relationship
 
 public function __levels() {
-        return $this->belongsToMany(Program::class,'level_program','program_id','level_id')->withPivot('description','utme_subjects','utme_o_level_req','direct_entry_req');
+        return $this->belongsToMany(Program::class,'level_program')->using(InstitutionProgram::class);
     }
 
    

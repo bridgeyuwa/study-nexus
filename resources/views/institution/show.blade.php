@@ -160,7 +160,7 @@ use Illuminate\Support\Number;
 
                     <table class="table table-borderless">
 
-                        <tr>
+                        <tr class="">
                             <td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} </span></td>
                             <td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
                             <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
@@ -191,7 +191,7 @@ use Illuminate\Support\Number;
                     <h3 class="block-title">Contact and Social</h3>
                 </div>
                 <div class="block-content">
-                    <div class="mb-3">
+                    <div class="mb-3 px-3">
                         <div class="row bg-stripped">
                             <div class="col-3  fw-light text-black">Website <i class="fa fa-link text-dark"></i></div>
                             <div class="col"> <a href="">abu.edu.ng</a></div>
@@ -211,6 +211,7 @@ use Illuminate\Support\Number;
                             </div>
                         </div>
                         @endif
+						{{$institution->socials}}
 
                           @foreach($institution->socials as $social) 
                         <div class="row bg-stripped">

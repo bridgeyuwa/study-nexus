@@ -10,7 +10,7 @@ use Illuminate\Support\Number;
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
-                <h1><a class="fw-light text-white mb-1 " href="route('institutions.show', ['institution' => $institution->id])}}">{{Str::title($institution->name)}} @if(!empty($institution->abbr)) <span class="text-white-75">({{str::upper($institution->abbr)}})<span> @endif</a> </h1>
+                <h1><a class="fw-light text-white mb-1 " href="{{route('institutions.show', ['institution' => $institution->id])}}">{{Str::title($institution->name)}} @if(!empty($institution->abbr)) <span class="text-white-75">({{str::upper($institution->abbr)}})<span> @endif</a> </h1>
 
                   <h2 class="h4 fs-md  fw-light text-white-75 ">
                       @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
@@ -89,18 +89,18 @@ use Illuminate\Support\Number;
                             <table class="table">
 
                                 <tr>
-                                    <td class="fs-sm fw-semibold">UTME Cut-Off</td>
+                                    <td class="fs-sm fw-semibold">Cut-Off</td>
                                     <td>{{$institution_program->utme_cutoff}}</td>
                                 </tr>
 
                                 <tr>
-                                    <td class="fs-sm fw-semibold">UTME Subject Combination</td>
-                                    <td>{{$institution_program->utme_subjects}}</td>
+                                    <td class="fs-sm fw-semibold">Subject Combination</td>
+                                    <td>{{$institution_program->requirements->utme_subjects}}</td>
                                 </tr>
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">O'Level Requirement</td>
-                                    <td>{{$institution_program->utme_o_level_req}}</td>
+                                    <td>{{$institution_program->requirements->o_level}}</td>
                                 </tr>
                             </table>
 
@@ -115,7 +115,7 @@ use Illuminate\Support\Number;
                         </div>
                         <div class="block-content text-center">
 
-                            <div class="ms-2"> {{$institution_program->direct_entry_req}} </div>
+                            <div class="ms-2"> {{$institution_program->requirements->direct_entry}} </div>
                         </div>
                     </div>
                     <!-- END DE Admission Requirements -->

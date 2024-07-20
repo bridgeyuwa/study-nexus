@@ -67,8 +67,9 @@ use Illuminate\Support\Number;
                         {{$level->name}} <span class="text-muted">({{Str::of($program->name)->title()}})</span>
                       </div>                      
                       <p class="text-muted mb-0">                       
-                        @isset($level->programs->first()->pivot->tuition_fee) ₦ {{ Number::format($level->programs->first()->pivot->tuition_fee)}} <span class="fs-sm">({{ Number::forHumans($level->programs->first()->pivot->tuition_fee)}} Naira) </span> @endisset
-                      </p>
+                        @isset($level->programs->where('id', $program->id)->first()->pivot->tuition_fee) ₦ {{ Number::format($level->programs->where('id', $program->id)->first()->pivot->tuition_fee)}}  @endisset
+							 
+					  </p>
                     </div>
                     <div>
                       <i class="fa fa-circle-right  text-xwork text-primary"></i> 
