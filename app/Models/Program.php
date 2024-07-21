@@ -22,13 +22,13 @@ class Program extends Model {
 // add "specific" as prefix to the many to many relationship for all functions of institution_program_level
 
     public function institutions() {
-        return $this->belongsToMany(Institution::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff');
+        return $this->belongsToMany(Institution::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date');
     }
 
     
     
     public function levels() {
-        return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('institution_id','description','duration','tuition_fee','requirements','utme_cutoff');
+        return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('institution_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date');
     }
 
 

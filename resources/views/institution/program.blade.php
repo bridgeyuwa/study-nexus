@@ -82,11 +82,12 @@ use Illuminate\Support\Number;
                     <!-- UTME Admission Requirements -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <h3 class="block-title">UTME Requirements</h3>
+                            <h3 class="block-title"> <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME) - JAMB</a> Requirement</h3>
                         </div>
                         <div class="block-content">
 
                             <table class="table">
+							    
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">Cut-Off</td>
@@ -111,7 +112,7 @@ use Illuminate\Support\Number;
                     <!-- DE Admission Requirements -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <h3 class="block-title">Direct Entry Requirements</h3>
+                            <h3 class="block-title">Direct Entry - JAMB Requirements</h3>
                         </div>
                         <div class="block-content text-center">
 
@@ -122,6 +123,41 @@ use Illuminate\Support\Number;
                 </div>
             </div>
             <!-- END General Admission Requirements -->
+			
+			<!-- Accreditation -->
+            <div class="block block-rounded">
+                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                    <h3 class="block-title">Accreditation</h3>
+                </div>
+                <div class="block-content">
+                    
+					<table class="table">
+
+                                <tr>
+                                    <td class="fs-sm fw-semibold">Accreditation Body</td>
+                                    <td><a class="link-fx link-dark" href="{{$institution_program->accreditationBody->url}}">{{$institution_program->accreditationBody->name}} @isset($institution_program->accreditationBody->abbr) <span>({{str::upper($institution_program->accreditationBody->abbr)}})</span> @endisset </a> </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fs-sm fw-semibold">Course Accreditation Status</td>
+                                    <td>  
+									@isset($institution_program->accreditationStatus)
+									<button type="button" class="btn btn-{{$institution_program->accreditationStatus->class}} rounded-0" disabled>
+									{{$institution_program->accreditationStatus->name}}
+									</button>
+									@else
+										Not Available
+									@endisset
+					                </td>
+                                  
+								</tr>
+
+                               
+                            </table>
+					
+                </div>
+            </div>
+            <!-- END Accreditation -->
 
             <!-- Tuition Fee -->
             <div class="block block-rounded">

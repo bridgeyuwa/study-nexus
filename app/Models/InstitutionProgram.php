@@ -18,8 +18,6 @@ class InstitutionProgram extends Pivot
 	];
 	
 	
-	
-	
 	public function scopeWithRequirements(): Builder
 	
 	{
@@ -27,6 +25,15 @@ class InstitutionProgram extends Pivot
 		return $this->requirements->modelScope();
 		
 	}
+	
+	
+	public function accreditationBody() {
+        return $this->belongsTo(AccreditationBody::class);
+    }
+	
+	public function accreditationStatus() {
+        return $this->belongsTo(AccreditationStatus::class);
+    }
 	
 	
 }

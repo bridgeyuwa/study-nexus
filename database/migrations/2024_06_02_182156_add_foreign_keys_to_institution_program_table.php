@@ -15,6 +15,9 @@ return new class extends Migration
             $table->foreign(['institution_id'])->references(['id'])->on('institutions');
             $table->foreign(['program_id'])->references(['id'])->on('programs');
             $table->foreign(['level_id'])->references(['id'])->on('levels');
+			
+			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies');
+			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses');
         });
     }
 
@@ -27,6 +30,9 @@ return new class extends Migration
             $table->dropForeign('institution_program_institution_id_foreign');
             $table->dropForeign('institution_program_program_id_foreign');
             $table->dropForeign('institution_program_level_id_foreign');
+			
+			$table->dropForeign('institution_program_accreditation_body_id_foreign');
+			$table->dropForeign('institution_program_accreditation_status_id_foreign');
         });
     }
 };

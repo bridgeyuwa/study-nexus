@@ -232,7 +232,7 @@
                         <li class="nav-main-item">
                             <a class="nav-main-link" href="{{route('programs.index', ['level'=>'nce'])}}">
                                 
-                                <span class="nav-main-link-name">National Certificate of Education (N.C.E) Courses</span>
+                                <span class="nav-main-link-name">Nigeria Certificate in Education (N.C.E) Courses</span>
                             </a>
                         </li>
                         <li class="nav-main-item">

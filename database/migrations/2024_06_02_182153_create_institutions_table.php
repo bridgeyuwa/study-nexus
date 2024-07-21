@@ -25,10 +25,16 @@ return new class extends Migration
             $table->unsignedBigInteger('schooltype_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('term_id');
+			$table->unsignedBigInteger('accreditation_body_id');
+			$table->unsignedBigInteger('accreditation_status_id');
+			$table->string('slogan')->nullable();
             $table->string('address')->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->string('website')->nullable();
+            $table->json('coordinates')->nullable();
+            $table->string('url')->nullable();
+			$table->string('altUrl')->nullable();
+			$table->string('logo')->nullable();
+			$table->integer('postcode')->nullable();
+			
             $table->string('email')->nullable();
             $table->integer('rank')->nullable();
             $table->timestamps();

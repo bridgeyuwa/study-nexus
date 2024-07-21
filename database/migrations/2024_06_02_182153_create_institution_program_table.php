@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('duration')->nullable();
             $table->integer('tuition_fee')->nullable();
             $table->integer('utme_cutoff')->nullable();
-            $table->text('direct_entry_req')->nullable();
-            $table->text('utme_o_level_req')->nullable();
-            $table->text('utme_subjects')->nullable();
+            $table->json('requirements')->nullable();
+			$table->unsignedBigInteger('accreditation_body_id');
+			$table->unsignedBigInteger('accreditation_status_id')->nullable;
+			$table->date('accreditation_grant_date')->nullable;
+			$table->date('accreditation_expiry_date')->nullable;
             $table->timestamps();
 
             $table->primary(['institution_id', 'program_id', 'level_id']); 

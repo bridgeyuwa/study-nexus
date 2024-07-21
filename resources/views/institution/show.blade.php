@@ -185,6 +185,43 @@ use Illuminate\Support\Number;
             <!-- END Rankings -->
 
 
+             <!-- Accreditation -->
+            <div class="block block-rounded">
+                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                    <h3 class="block-title">Accreditation</h3>
+                </div>
+                <div class="block-content">
+                    
+					<table class="table">
+
+                                <tr>
+                                    <td class="fs-sm fw-semibold">Institution Accreditation Body</td>
+                                    <td><a class="link-fx link-dark" href="{{$institution->accreditationBody->url}}">{{$institution->accreditationBody->name}} @isset($institution->accreditationBody->abbr) <span>({{str::upper($institution->accreditationBody->abbr)}})</span> @endisset </a> </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="fs-sm fw-semibold">Accreditation Status</td>
+                                    <td>  
+									@isset($institution->accreditationStatus)
+									<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
+									{{$institution->accreditationStatus->name}}
+									</button>
+									@else
+										Not Available
+									@endisset
+					                </td>
+                                  
+								</tr>
+
+                               
+                            </table>
+					
+                </div>
+            </div>
+            <!-- END Accreditation -->
+
+
+
             <!-- Socials & Contact -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
@@ -194,11 +231,11 @@ use Illuminate\Support\Number;
                     <div class="mb-3 px-3">
                         <div class="row bg-stripped">
                             <div class="col-3  fw-light text-black">Website <i class="fa fa-link text-dark"></i></div>
-                            <div class="col"> <a href="">abu.edu.ng</a></div>
+                            <div class="col"> <a class="link-fx link-info" href="">abu.edu.ng</a></div>
                         </div>
                         <div class="row bg-stripped">
                             <div class="col-3  fw-light text-black">Email <i class="fas fa-envelope text-dark"></i></div>
-                            <div class="col"><a href="mailto:support@abu.edu.ng">support@abu.edu.ng</a></div>
+                            <div class="col"><a class="link-fx link-info" href="mailto:support@abu.edu.ng">support@abu.edu.ng</a></div>
                         </div>
 
                          @if($institution->phonenumbers->isNotEmpty())
@@ -206,17 +243,17 @@ use Illuminate\Support\Number;
                             <div class="col-3 fw-light text-black">Phone <i class="fa fa-phone-flip text-dark"></i></div>
                             <div class="col"> 
                                @foreach($institution->phonenumbers as $phone)
-                               <a href="tel:+234{{substr($phone->number, 1)}}">+234 {{substr($phone->number, 1)}} </a> @if(isset($phone->holder)) <span class="ms-2 fw-light">( {{$phone->holder}} ) </span> @endif <br>
+                               <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}">+234 {{substr($phone->number, 1)}} </a> @if(isset($phone->holder)) <span class="ms-2 fw-light">( {{$phone->holder}} ) </span> @endif <br>
                                @endforeach
                             </div>
                         </div>
                         @endif
-						{{$institution->socials}}
+						
 
                           @foreach($institution->socials as $social) 
                         <div class="row bg-stripped">
                             <div class="col-3 fw-light text-black"> {{$social->socialtype->name}}  <i class="{{$social->socialtype->icon}} text-dark"></i></div>
-                            <div class="col"> <a href="https://{{$social->url}}">{{$social->url}}</a>  </div>
+                            <div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}">{{$social->url}}</a>  </div>
                         </div>
                          @endforeach 
                     </div>

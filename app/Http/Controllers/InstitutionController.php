@@ -356,7 +356,9 @@ private function computeRank($institution, $allInstitutions) {
     // show single institution program data
     public function program(Institution $institution, Level $level = null, Program $program) {
         $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first()->pivot;
-    // dd($institution_program->requirements->direct_entry);
+    
+	
+	// dd($institution_program->accreditationStatus->name);
  
             $SEOData = new SEOData(
                                     title: $level->name.' in ' .$program->name. ' offered at '.$institution->name,
