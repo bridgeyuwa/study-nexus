@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('former_name')->nullable();
             $table->string('abbr')->nullable();
             $table->text('description')->nullable();
-            $table->integer('established')->nullable();
+            $table->year('established')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('lga_id');
             $table->string('locality')->nullable();
@@ -31,9 +31,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->json('coordinates')->nullable();
             $table->string('url')->nullable();
-			$table->string('altUrl')->nullable();
+			$table->string('alt_url')->nullable();
 			$table->string('logo')->nullable();
-			$table->integer('postcode')->nullable();
+			$table->integer('postal_code')->nullable();
 			
             $table->string('email')->nullable();
             $table->integer('rank')->nullable();

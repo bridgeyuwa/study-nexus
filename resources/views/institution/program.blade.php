@@ -68,61 +68,65 @@ use Illuminate\Support\Number;
             </div>
             <!-- END Program Description -->
 
-            <!--  Admission Requirements -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default justify-content-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <div>
-                        <h3 class="block-title row justify-content-center">Admission Requirement </h3>
+          <!-- Admission Requirements -->
+<div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
+    <div class="block-header block-header-default justify-content-center" style="background-image: url(/media/patterns/cubes.png)">
+        <div>
+            <h3 class="block-title row justify-content-center">Admission Requirement</h3>
+            <div class="fs-sm row text-center">{{Str::title($institution->name)}} Admission Requirement for {{Str::title($level->name)}} in {{Str::title($program->name)}}</div>
+        </div>
+    </div>
+    <div class="block-content">
 
-                        <div class="fs-sm row text-center">{{Str::title($institution->name)}} Admission Requirement for {{Str::title($level->name)}} in {{Str::title($program->name)}} </div>
-                    </div>
-                </div>
-                <div class="block-content">
+        <!-- UTME Admission Requirements -->
+        <div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
+            <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <h3 class="block-title">
+                    <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME) - JAMB Requirement</a>
+                </h3>
+            </div>
+            <div class="block-content">
+                <table class="table">
+                    <tr>
+                        <td class="fs-sm fw-semibold">Cut-Off</td>
+                        <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+                            <p itemprop="minValue" class="m-0">{{ $institution_program->utme_cutoff }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fs-sm fw-semibold">Subject Combination</td>
+                        <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+                            <p itemprop="description" class="m-0">{{ $institution_program->requirements->utme_subjects }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fs-sm fw-semibold">O'Level Requirement</td>
+                        <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+                            <p itemprop="description" class="m-0">{{ $institution_program->requirements->o_level }}</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- END UTME Admission Requirements -->
 
-                    <!-- UTME Admission Requirements -->
-                    <div class="block block-rounded">
-                        <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <h3 class="block-title"> <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME) - JAMB</a> Requirement</h3>
-                        </div>
-                        <div class="block-content">
-
-                            <table class="table">
-							    
-
-                                <tr>
-                                    <td class="fs-sm fw-semibold">Cut-Off</td>
-                                    <td>{{$institution_program->utme_cutoff}}</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="fs-sm fw-semibold">Subject Combination</td>
-                                    <td>{{$institution_program->requirements->utme_subjects}}</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="fs-sm fw-semibold">O'Level Requirement</td>
-                                    <td>{{$institution_program->requirements->o_level}}</td>
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-                    <!-- END UTME Admission Requirements -->
-
-                    <!-- DE Admission Requirements -->
-                    <div class="block block-rounded">
-                        <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <h3 class="block-title">Direct Entry - JAMB Requirements</h3>
-                        </div>
-                        <div class="block-content text-center">
-
-                            <div class="ms-2"> {{$institution_program->requirements->direct_entry}} </div>
-                        </div>
-                    </div>
-                    <!-- END DE Admission Requirements -->
+        <!-- DE Admission Requirements -->
+        <div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
+            <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <h3 class="block-title">Direct Entry - JAMB Requirements</h3>
+            </div>
+            <div class="block-content text-center">
+                <div class="ms-2" itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+                    <p itemprop="description">{{ $institution_program->requirements->direct_entry }}</p>
                 </div>
             </div>
-            <!-- END General Admission Requirements -->
+        </div>
+        <!-- END DE Admission Requirements -->
+
+    </div>
+</div>
+<!-- END Admission Requirements -->
+
 			
 			<!-- Accreditation -->
             <div class="block block-rounded">

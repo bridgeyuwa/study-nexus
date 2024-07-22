@@ -10,7 +10,7 @@ use App\Models\Program;
 use App\Models\Level;
 use App\Models\Category;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-
+use Spatie\SchemaOrg\Schema;
 
 class InstitutionController extends Controller {
 	
@@ -317,23 +317,64 @@ private function computeRank($institution, $allInstitutions) {
              $rank = $this->computeRank($institution, $allInstitutions);
              $levels = $institution->levels->unique();
 			 
-			 
-			 $SEOData = new SEOData(
+			 $description = 'Discover ' .$institution->name. ' with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.';
+			
+			$SEOData = new SEOData(
                                           title: $institution->name,
-                                          description: 'Discover ' .$institution->name. ' with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.',
+                                          description: $description,
                                           
 
                                        );
-									   
 		
+		$institutionMap = 'https://maps.google.com/place/1,university+drive+bsu,+makurdi';
+        $contacts = $institution->phonenumbers;
 
+$jsonLd = Schema::collegeOrUniversity()
+
+    ->name($institution->name)
+    ->alternateName($institution->former_name)
+	->description($description)
+    ->url(url()->current())
+    ->slogan($institution->slogan)
+    ->address(Schema::postalAddress()
+        ->streetAddress($institution->address)
+        ->addressLocality($institution->locality)
+        ->addressRegion($institution->state->name)
+        ->addressPostalCode($institution->postal_code)
+        ->addressCountry('NG')
+    )
+	->email($institution->email)
+	->foundingDate($institution->established)
+    ->logo($institution->logo)
+    ->sameAs($institution->url)
+    ->hasCredential(Schema::educationalOccupationalCredential()
+        ->credentialCategory('Accreditation')
+        ->recognizedBy(Schema::educationalOrganization()
+            ->name($institution->accreditationBody->name)
+            ->alternateName($institution->accreditationBody->abbr)
+            ->sameAs($institution->accreditationBody->url)
+        )
+    )
+    ->hasMap($institutionMap)
+	->if(
+        $contacts->isNotEmpty(),
+        function ($schema) use ($contacts) {
+            return $schema->contactPoint(
+                $contacts->map(function ($contact) {
+                    return Schema::contactPoint()
+                        ->contactType($contact['holder'])
+						->telephone($contact['number']);
+                })->toArray()
+            );
+        }
+    );
 				   
        
-          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
+          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData', 'jsonLd'));
     }
 
 
-    // list programs offered by an institution at a Level
+    // list of programs offered by an institution at a Level
   
     public function programs(Institution $institution, Level $level) {
         $programs = $institution->programs()->wherePivot('level_id', $level->id)->with('college')->get()->groupBy('college.name');
@@ -358,18 +399,53 @@ private function computeRank($institution, $allInstitutions) {
         $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first()->pivot;
     
 	
-	// dd($institution_program->accreditationStatus->name);
- 
             $SEOData = new SEOData(
                                     title: $level->name.' in ' .$program->name. ' offered at '.$institution->name,
                                     description: 'Detailed information about '.$level->name.' in ' .$program->name. ' offered at '.$institution->name.'. program highlights and overview ',
                                        );
-									   
-									   
-		   
+					
+
+	$programTitle = $level->name .' in '. $program->name;
+
+$jsonLd = Schema::EducationalOccupationalProgram()
+    ->name($programTitle)
+    ->url(url()->current())
+    ->provider(
+        Schema::CollegeOrUniversity()
+            ->name($institution->name)
+            ->sameAs($institution->url)
+            ->address(
+                Schema::PostalAddress()
+                    ->streetAddress($institution->address)
+                    ->addressLocality($institution->locality)
+                    ->addressRegion($institution->state->name)
+                    ->postalCode($institution->postal_code)
+                    ->addressCountry("NG")
+            )
+    )
+    ->timeToComplete("P".$institution_program->duration."Y")
+    ->educationalProgramMode("full-time")
+    ->educationalCredentialAwarded(
+        Schema::EducationalOccupationalCredential()
+            ->credentialCategory($programTitle)
+    )
+    ->if($institution_program->tuition_fee, function ($schema) use ($institution_program) {
+        return $schema->offers(
+            Schema::Offer()
+                ->category("Tuition Fee")
+                ->priceSpecification(
+                    Schema::PriceSpecification()
+                        ->price($institution_program->tuition_fee)
+                        ->priceCurrency("NGN")
+                )
+        );
+    });
+
+//dd($jsonLd);
+				   
 									   						   
 
-        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData'));
+        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData','jsonLd'));
     }
 	
 	

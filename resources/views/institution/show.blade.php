@@ -123,8 +123,8 @@ use Illuminate\Support\Number;
 
 
 
-                    <a class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.programs', ['institution' => $institution->id, 'level' => $level->slug])}}">
-                  <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+                    <a class="block block-rounded block-bordered block-link-shadow link-fx" href="{{route('institutions.programs', ['institution' => $institution->id, 'level' => $level->slug])}}">
+                  <div class="block-content block-content-full d-flex align-items-center justify-content-between p-2">
                     <div class="me-3">
                       <p class="fs-lg text-primary mb-0">
                         {{$level->name}} @if(!empty($level->abbr))<span class="fw-light text-black">({{str::upper($level->abbr)}})</span> @endif

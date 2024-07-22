@@ -5,10 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
- <!-- laravel-seo here -->
+     <!-- laravel-seo here -->
      @isset($SEOData) {!! seo($SEOData) !!} @endisset
-
- <!-- Schema -->
+	 
+	 <!-- Schema -->
+     @isset($jsonLd) {!! $jsonLd !!}  @endisset
     
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
