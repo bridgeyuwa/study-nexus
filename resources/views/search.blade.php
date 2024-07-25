@@ -1,6 +1,5 @@
 @extends('layouts.backend')
 
-
 @section('content')
 @php 
 use Illuminate\Support\Number; 
@@ -8,23 +7,23 @@ use Illuminate\Support\Str;
 @endphp
 
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
-          <div class="bg-black-75">
-            <div class="content content-full content-top text-center pt-5 pb-0">
-              <div id="search" class="pt-4 pb-3">
-                 <h1 class="fw-light text-white mb-1">Search</h1>
+<div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+    <div class="bg-black-75">
+        <div class="content content-full content-top text-center pt-6 pb-0">
+            <div id="search" class="pt-4 pb-3">
+                <h1 class="fw-light text-white mb-1">Search</h1>
 
-                 <h2 class="h4 fs-md  fw-light text-white-75 ">
-                     Discover Academic Institutions and Courses
-                 </h2>
+                <h2 class="h4 fs-md  fw-light text-white-75 ">
+                    Discover Academic Institutions and Programmes
+                </h2>
 
-                   <livewire:search-form fullSearch /> 
+                <livewire:search-form fullSearch /> 
 
-              </div>
             </div>
-          </div>
         </div>
-        <!-- END Hero -->
+    </div>
+</div>
+<!-- END Hero -->
 
 
 
@@ -70,119 +69,117 @@ use Illuminate\Support\Str;
                         </div>
                         <div class="d-flex justify-content-center">
                             <a href="{{url("#search")}}" class="btn btn-sm btn-hero btn-info me-1 mb-3 ">
-                    <i class="fa fa-fw fa-arrow-up me-1"></i> back to search
-                    </a>
+                                <i class="fa fa-fw fa-arrow-up me-1"></i> back to search
+                            </a>
                         </div>
                     </div>
 
                     @else 
-						
-				{{ $institutions->onEachSide(1)->links() }} 
-				
-				    @foreach ($institutions as $institution)
+
+                    {{ $institutions->onEachSide(1)->links() }} 
+
+                    @foreach ($institutions as $institution)
                     <!-- institution/program item -->
                     <a href="
-                   @if(!empty($program) && !empty($level))  
-                  {{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}} 
-                  @elseif(!empty($program))
-                  {{route('institutions.program.levels', ['institution' => $institution->id, 'program' => $program->id])}}
-                  @else  
-                  {{route('institutions.show', ['institution' => $institution->id])}}    
-                  @endif 
-                " 
-               class="block block-rounded bg-dark">
-                <div class="block block-header-default bg-image mb-0"
-                    style="background-image: url('media/photos/photo11.jpg');">
-                    <div class="bg-black-75 text-center pt-3 pb-1">
-                        <div class="h4 fw-normal text-white mb-0">{{str::title($institution->name)}}
-                            @if(!empty($institution->abbr))({{str::upper($institution->abbr)}}) @endif</div>
+                       @if(!empty($program) && !empty($level))  
+                       {{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}} 
+                       @elseif(!empty($program))
+                       {{route('institutions.program.levels', ['institution' => $institution->id, 'program' => $program->id])}}
+                       @else  
+                       {{route('institutions.show', ['institution' => $institution->id])}}    
+                       @endif 
+                       " 
+                       class="block block-rounded bg-dark">
+                        <div class="block block-header-default bg-image mb-0 fw-light"
+                             style="background-image: url('media/photos/photo11.jpg');">
+                            <div class="bg-black-75 text-center pt-3 pb-1">
+                                <div class="fs-4 fw-light text-white mb-0">{{str::title($institution->name)}}
+                                    @if(!empty($institution->abbr))({{str::upper($institution->abbr)}}) @endif 
+                                </div>
 
-                          @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span class="text-white-75 fw-light">{{str::title($institution->former_name)}}</span> </div> @endif 
+                                @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span class="text-white-75 fw-light">{{str::title($institution->former_name)}}</span> </div> @endif 
 
-                        <div class="h6 fw-normal text-white-75 mb-2 fs-sm">{{str::title($institution->schooltype->name)}}
-                            {{str::title($institution->category->name)}}. <i
-                                class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
+                                <div class=" text-white-75 mb-2 fs-sm">{{str::title($institution->schooltype->name)}}
+                                    {{str::title($institution->category->name)}}. <i
+                                        class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
 
-@if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
+                                    @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif   {{str::title($institution->state->name)}} 
 
-</div>
-                        @if(!empty($program)) <div class="h6 fw-normal mb-2 text-white"> {{str::title($program->name)}} @if(isset($level))<span class="fs-sm fw-light">({{str::title($level->name)}})</span>@endif
-                        </div> @endif
-                    </div>
-                </div>
-
-
-                 @if(@empty($level) && !@empty($program))
-                <div class="py-0 bg-secondary d-flex justify-content-center">
-                    <table class="mx-auto text-white">
-                       <tr>
-                            <td class=" text-center fs-sm fw-semibold">Available Study Level(s)</td>
-                        </tr>
-
-                          @foreach($institution->levels as $program_level)
-                          <tr>
-                            <td class="text-center fs-sm mb-0">
-                           <i class="fa fa-certificate me-2"></i>{{str::title($program_level->name)}} @if(!empty($program_level->abbr))  ({{str::upper($program_level->abbr)}}) @endif 
-                            </td> 
-                        </tr>
-                         @endforeach 
-                     </table>
-                </div>
-                   @endif
-              
-                
-
-                 @php
-                  $min_tuition = $institution->programs->min(function ($program){ return $program->pivot->tuition_fee;});
-                  $max_tuition = $institution->programs->max(function ($program){ return $program->pivot->tuition_fee;});
-                 @endphp
-
-
-                <!-- card footer -->
-                <div class="block block-header-default  pt-1 border-bottom ">
-                    <div class="row justify-content-center">
-                        
-
-                        <div class=" text-center mb-1">
-                            
-
-                      <span>
-                   @if(isset($min_tuition)) 
-                         @if($min_tuition == $max_tuition)
-                                 @if($min_tuition >= 1010000) 
-                                  <i class="far fa-money-bill-1 text-success"></i>    {{Number::abbreviate($min_tuition, precision: 2)}} Naira(₦) 
-                                 @else 
-                                  <i class="far fa-money-bill-1 text-success"></i>   {{Number::abbreviate($min_tuition)}} Naira(₦) 
-                                 @endif
-                         @else 
-                                 @if($min_tuition >= 1010000) 
-                                   <i class="far fa-money-bill-1 text-success"></i>  {{Number::abbreviate($min_tuition, precision: 2)}} 
-                                  @else 
-                                   <i class="far fa-money-bill-1 text-success"></i> {{Number::abbreviate($min_tuition)}} 
-                                 @endif
-
-                                   <span class="fw-semibold">-</span> 
-
-                                @if($max_tuition >= 1010000)   
-                                    {{Number::abbreviate($max_tuition, precision: 2)}} Naira(₦) 
-                                @else 
-                                    {{Number::abbreviate($max_tuition)}} Naira(₦) 
-                                @endif
-                        @endif 
-                                 
-                  @endif 
-                     </span> 
+                                </div>
+                                @if(!empty($program)) <div class="h6 mb-2 text-white"> {{str::title($program->name)}} @isset($level)<span class="fs-sm fw-light">({{str::title($level->name)}})</span>@endif
+                                </div> @endif
+                            </div>
                         </div>
 
-                        
-                    </div>
-                </div>
-                <!-- End card footer -->
-            </a>
+
+                        @if(empty($level) && !empty($program))
+                        <div class="py-0 bg-secondary d-flex justify-content-center">
+                            <table class="mx-auto text-white">
+                                <tr>
+                                    <td class=" text-center fs-sm fw-semibold">Available Study Level(s)</td>
+                                </tr>
+
+                                @foreach($institution->levels as $program_level)
+                                <tr>
+                                    <td class="text-center fs-sm mb-0">
+                                        <i class="fa fa-certificate me-2"></i>{{str::title($program_level->name)}} @if(!empty($program_level->abbr))  ({{str::upper($program_level->abbr)}}) @endif 
+                                    </td> 
+                                </tr>
+                                @endforeach 
+                            </table>
+                        </div>
+                        @endif
 
 
 
-                    <!-- END institution/program item -->
+                        @php
+                        $min_tuition = $institution->programs->min(function ($program){ return $program->pivot->tuition_fee;});
+                        $max_tuition = $institution->programs->max(function ($program){ return $program->pivot->tuition_fee;});
+                        @endphp
+
+
+                        <!-- card footer -->
+                        <div class="block block-header-default  pt-1 border-bottom ">
+                            <div class="row justify-content-center">
+
+
+                                <div class=" text-center mb-1 fs-sm">
+
+
+                                    <span>
+                                        @if(isset($min_tuition)) 
+                                        @if($min_tuition == $max_tuition)
+                                        @if($min_tuition >= 1010000) 
+                                        <i class="far fa-money-bill-1 text-success"></i>    {{Number::abbreviate($min_tuition, precision: 2)}} Naira(₦) 
+                                        @else 
+                                        <i class="far fa-money-bill-1 text-success"></i>   {{Number::abbreviate($min_tuition)}} Naira(₦) 
+                                        @endif
+                                        @else 
+                                        @if($min_tuition >= 1010000) 
+                                        <i class="far fa-money-bill-1 text-success"></i>  {{Number::abbreviate($min_tuition, precision: 2)}} 
+                                        @else 
+                                        <i class="far fa-money-bill-1 text-success"></i> {{Number::abbreviate($min_tuition)}} 
+                                        @endif
+
+                                        <span class="fw-semibold">-</span> 
+
+                                        @if($max_tuition >= 1010000)   
+                                        {{Number::abbreviate($max_tuition, precision: 2)}} Naira(₦) 
+                                        @else 
+                                        {{Number::abbreviate($max_tuition)}} Naira(₦) 
+                                        @endif
+                                        @endif 
+
+                                        @endif 
+                                    </span> 
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <!-- End card footer -->
+                    </a>
+					<!-- END institution/program item -->
                     @endforeach {{ $institutions->links() }} @endif
 
                 </div>
@@ -205,14 +202,6 @@ use Illuminate\Support\Str;
 
 
 <!-- END Page Content -->
-
-
-
-
-
-
-
-
 
 
 

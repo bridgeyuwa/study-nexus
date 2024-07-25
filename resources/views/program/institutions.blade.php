@@ -72,13 +72,13 @@
 
 <!-- Page Content -->
 <div class="content">
-    <div class="block block-rounded">
+    <div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
         <div class="block-content">
-            <h2 class="content-heading text-center">Accredited Schools Offering {{str::title($level->name)}} in {{Str::title($program->name)}} in Nigeria</h2>
+            <h2 itemprop="name" class="content-heading text-center">Academic Institutions Offering {{str::title($level->name)}} in {{Str::title($program->name)}} in Nigeria</h2>
             <div class="row items-push">
                 <div class="col-lg-4">
-                    <p class="text-muted sticky-top" style="top: 100px;">
-                        A comprehensive list of accredited schools offering <span class="text-black">{{str::title($level->name)}}</span> in <span class="text-black">{{str::title($program->name)}}</span> in Nigeria.
+                    <p itemprop="description" class="text-muted sticky-top" style="top: 100px;">
+                        A list of higher institutions offering <span class="text-black">{{str::title($level->name)}}</span> in <span class="text-black">{{str::title($program->name)}}</span> in Nigeria.
                     </p>
                 </div>
                 <div class="col-lg-8">
@@ -86,19 +86,38 @@
                     <div id="programs" role="tablist" aria-multiselectable="true">
 
                         @foreach( $institutions as $institution )
-                        <a href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}" class="block block-rounded mb-3">
-                  <div class="block block-header-default bg-image mb-0"
-                      style="background-image: url('/media/photos/photo11.jpg');">
-                      <div class="bg-black-75 text-center p-3">
-                          <div class="fs-lg fw-normal text-white mb-1">{{str::upper($institution->name)}}
-                           @if(!empty($institution->abbr))<span class="text-white-75 fw-light">({{str::upper($institution->abbr)}})</span> @endif </div>
-                          <div class="h6 fw-normal fs-sm text-white-75 mb-0">{{str::title($institution->schooltype->name)}} {{str::title($institution->category->name)}}. <i
-                                  class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>Makurdi,
-                              {{str::title($institution->state->name)}}, Nigeria</div>
-                          
-                      </div>
-                  </div>
-                </a> @endforeach
+						
+				  
+						<div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
+								<a itemprop="url" href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}" class="block block-rounded mb-3">
+								@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
+								  <div class="block block-header-default bg-image mb-0 fw-light"
+									  style="background-image: url('/media/photos/photo11.jpg');">
+									  <div class="bg-black-75 text-center p-3">
+										  <div class="fs-4 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
+										   @if(!empty($institution->abbr))<span class="text-white-75 ">({{str::upper($institution->abbr)}})</span> @endif 
+										</div>
+
+									@if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
+										  <div class="fs-sm text-white-75 mb-0">
+										   {{str::title($institution->schooltype->name)}} 
+										   {{str::title($institution->category->name)}}. 
+												<i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
+										<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" >  
+										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}}</span> - @endif    <span itemprop="addressRegion">{{str::title($institution->state->name)}}</span> 
+										
+										@if(!empty($institution->address)) <meta itemprop="streetAddress" content="{{$institution->address}}" /> @endif
+										@if(!empty($institution->postal_code)) <meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif
+										<meta itemprop="addressCountry" content="NG" />
+										</span>
+										</div>
+										  
+									  </div>
+								  </div>
+								</a> 
+						</div>
+				
+				         @endforeach
 
                     </div>
                    {{$institutions->links()}}

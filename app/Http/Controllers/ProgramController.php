@@ -67,7 +67,7 @@ $jsonLd = Schema::ItemList()
         })->toArray()
     );
 						   
-				dd($jsonLd);					   
+				//dd($jsonLd);					   
 									   
 									   
  

@@ -7,6 +7,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Number;
 @endphp
 
+
+<span itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
+<meta itemprop="name" content="{{$level->name}} in {{$program->name}}" />
+<link itemprop="url" content="{{url()->current()}}" />
+
+
 <!-- Hero -->
 <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
     <div class="bg-black-75">
@@ -80,13 +86,40 @@ use Illuminate\Support\Number;
     <div class="row">
         <div class="col-md-4 order-md-1">
 
-            <!-- Ad block -->
-            <div class="block block-rounded d-none d-lg-block sticky-top" style="top: 100px;">
+            <!-- highlights -->
+            <div class="block block-rounded ">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">
-                    Ads
+                    <ul class="fa-ul list-icons">
+							@isset($program->duration)
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-university"></i>
+								</span>
+								<div class="fw-semibold">Duration</div>
+								<div class="text-muted">{{$program->duration}} Years</div>
+								<meta itemprop="timeToComplete" content="P{{$program->duration}}Y" />
+							</li>
+							 @endisset
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-calendar"></i>
+								</span>
+								<div class="fw-semibold">Program Mode</div>
+								<div itemprop="educationalProgramMode" class="text-muted">Full-time</div>
+							</li>
+							<li itemprop="educationalCredentialAwarded" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-calendar"></i>
+								</span>
+								<div class="fw-semibold">Credential Awarded</div>
+								<div itemprop="credentialCategory" class="text-muted">{{$level->name}}</div>
+							</li>
+							
+							
+						</ul>
                 </div>
             </div>
             <!-- END Ad block -->
@@ -100,7 +133,7 @@ use Illuminate\Support\Number;
                     <h3 class="block-title">Course Overview</h3>
                 </div>
                 <div class="block-content">
-                    <p>{!!$program->pivot->description!!}</p>
+                    <p itemprop="description">{!!$program->pivot->description!!}</p>
                 </div>
             </div>
             <!-- END Program Description -->
@@ -114,10 +147,10 @@ use Illuminate\Support\Number;
 
 
                     <!-- UTME Admission Requirements -->
-                    <div class="block block-rounded">
+                    <div itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <h3 class="block-title">UTME Requirements</h3>
-                        </div>
+                            <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME)</a>  - JAMB Requirement
+						</div>
                         <div class="block-content">
 
                             <table class="table">
@@ -129,12 +162,16 @@ use Illuminate\Support\Number;
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">UTME Subject Combination</td>
-                                    <td>{{$program->pivot->utme_subjects}}</td>
+                                    <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+								<p itemprop="description" class="m-0"> asdhhhh	{{$program->pivot->utme_subjects}} </p>
+									</td>
                                 </tr>
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">O'Level Requirement</td>
-                                    <td>{{$program->pivot->utme_o_level_req}}</td>
+                                    <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+									<p itemprop="description"> zzzzzz {{$program->pivot->utme_o_level_req}} </p>
+									</td>
                                 </tr>
                             </table>
 
@@ -143,14 +180,13 @@ use Illuminate\Support\Number;
                     <!-- END UTME Admission Requirements -->
 
                     <!-- DE Admission Requirements -->
-                    @if($level->id == 'bachelor')
+                    @if($level->id == 'bachelor')      <!-- fix this -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                             <h3 class="block-title">Direct Entry Requirements</h3>
                         </div>
-                        <div class="block-content text-center">
-
-                            {{$program->pivot->direct_entry_req}}
+                        <div itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block-content text-center">
+								<span itemprop="description" class="m-0"> asdfghgfd {{$program->pivot->direct_entry_req}} </span>
                         </div>
                     </div>
                     @endif
@@ -164,13 +200,13 @@ use Illuminate\Support\Number;
 
 
             <!-- Tuition Range -->
-            <div class="block block-rounded">
+            <div itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                     <h3 class="block-title">Tuition Fee <span class="fw-light">(Range)</span></h3>
                 </div>
-                <div class="block-content text-center">
+                <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center">
                     <p class="fs-lg text-muted">
-                        ₦ {{Number::format($min_tuition)}} - ₦ {{Number::format($max_tuition)}}
+                       <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="minPrice">  {{Number::format($min_tuition)}} </span> - <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="maxPrice">  {{Number::format($max_tuition)}} </span>
                     </p>
                 </div>
             </div>
@@ -193,6 +229,6 @@ use Illuminate\Support\Number;
 </div>
 <!-- END Page Content -->
 
-
+</span>
 
 @endsection

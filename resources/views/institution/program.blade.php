@@ -9,8 +9,7 @@ use Illuminate\Support\Number;
 
 <span itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
 <meta itemprop="name" content="{{$level->name}} in {{$program->name}}" />
-<link itemprop="url" content="{{url()->current()}}" />
-<meta itemprop="" content="" />
+
 		<!-- Hero  -->
         <div itemprop="provider" itemscope itemtype="https://schema.org/CollegeOrUniversity" class="bg-image" style="background-image: url('/media/photos/photo13@2x.jpg');">
 			<div  class="bg-black-75">
@@ -73,6 +72,7 @@ use Illuminate\Support\Number;
                 </div>
                 <div class="block-content">
                     <ul class="fa-ul list-icons">
+					        @isset($program->duration)
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-university"></i>
@@ -81,12 +81,20 @@ use Illuminate\Support\Number;
 								<div class="text-muted">{{$institution_program->duration}} Years</div>
 								<meta itemprop="timeToComplete" content="P{{$institution_program->duration}}Y" />
 							</li>
+							 @endisset
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
 								<div class="fw-semibold">Program Mode</div>
-								<div  class="text-muted">Full-time</div>
+								<div itemprop="educationalProgramMode" class="text-muted">Full-time</div>
+							</li>
+							<li itemprop="educationalCredentialAwarded" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-calendar"></i>
+								</span>
+								<div class="fw-semibold">Credential Awarded</div>
+								<div itemprop="credentialCategory" class="text-muted">{{$level->name}}</div>
 							</li>
 							
 							
@@ -125,7 +133,7 @@ use Illuminate\Support\Number;
     <div class="block-content">
 
         <!-- UTME Admission Requirements -->
-        <div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
+        <div itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded" >
             <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                 <h3 class="block-title">
                     <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME)</a>  - JAMB Requirement
@@ -216,7 +224,7 @@ use Illuminate\Support\Number;
                 </div>
                 <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center text-center">
                     <p class="fs-lg">
-                        @if(!empty($institution_program->tuition_fee)) <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="minPrice"> {{Number::format($institution_program->tuition_fee, precision: 0)}}</span>  @else Tuition Fee not available! @endif
+                        @if(!empty($institution_program->tuition_fee)) <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="Price"> {{Number::format($institution_program->tuition_fee, precision: 0)}}</span>  @else Tuition Fee not available! @endif
                     </p>
                     
                 </div>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('college_id');
             $table->text('description')->nullable();
+			$table->integer('duration')->nullable()
             $table->text('direct_entry_req')->nullable();
             $table->text('utme_o_level_req')->nullable();
             $table->text('utme_subjects')->nullable();
