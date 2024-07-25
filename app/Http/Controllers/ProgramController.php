@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Program;
 use App\Models\Level;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Spatie\SchemaOrg\Schema;
 
 class ProgramController extends Controller
 {
@@ -45,6 +46,30 @@ foreach ($programs as $program) {
                                           description: 'Discover '.$level->name. ' programs across academic institutions in Nigeria. Compare and choose the best course program for your academic journey.',
 
                                        );
+									   
+			$programs = $programs = $level->__programs()->with('college')->get()->groupBy('college.name');
+			
+			//dd($programs);
+						   
+$jsonLd = Schema::ItemList()
+    ->name($level->name . ' Programs')
+    ->itemListElement(
+        $programs->map(function ($programGroup, $collegeName) {
+            return Schema::EducationalOrganization()
+                ->name($collegeName)
+                ->programs(
+                    $programGroup->map(function ($program) {
+                        return Schema::EducationalOccupationalProgram()
+                            ->name($program->name)
+                            ->description($program->description);
+                    })->toArray()
+                );
+        })->toArray()
+    );
+						   
+				dd($jsonLd);					   
+									   
+									   
  
            return view('program.index', compact('colleges','level','SEOData'));
     }

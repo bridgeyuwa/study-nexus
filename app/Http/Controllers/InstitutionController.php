@@ -326,68 +326,65 @@ private function computeRank($institution, $allInstitutions) {
 
                                        );
 		
-		$institutionMap = 'https://maps.google.com/place/1,university+drive+bsu,+makurdi';
-        $contacts = $institution->phonenumbers;
-
-$jsonLd = Schema::collegeOrUniversity()
-
-    ->name($institution->name)
-    ->alternateName($institution->former_name)
-	->description($description)
-    ->url(url()->current())
-    ->slogan($institution->slogan)
-    ->address(Schema::postalAddress()
-        ->streetAddress($institution->address)
-        ->addressLocality($institution->locality)
-        ->addressRegion($institution->state->name)
-        ->addressPostalCode($institution->postal_code)
-        ->addressCountry('NG')
-    )
-	->email($institution->email)
-	->foundingDate($institution->established)
-    ->logo($institution->logo)
-    ->sameAs($institution->url)
-    ->hasCredential(Schema::educationalOccupationalCredential()
-        ->credentialCategory('Accreditation')
-        ->recognizedBy(Schema::educationalOrganization()
-            ->name($institution->accreditationBody->name)
-            ->alternateName($institution->accreditationBody->abbr)
-            ->sameAs($institution->accreditationBody->url)
-        )
-    )
-    ->hasMap($institutionMap)
-	->if(
-        $contacts->isNotEmpty(),
-        function ($schema) use ($contacts) {
-            return $schema->contactPoint(
-                $contacts->map(function ($contact) {
-                    return Schema::contactPoint()
-                        ->contactType($contact['holder'])
-						->telephone($contact['number']);
-                })->toArray()
-            );
-        }
-    );
-				   
-       
-          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData', 'jsonLd'));
+		
+		$institution['description_alt']= $description;
+		
+		//dd($institution->description_alt);
+		     
+          return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
 
 
-    // list of programs offered by an institution at a Level
+    // list of programs offered by an institution at a Level /institutions/{institution}/levels/{level}/programs
   
     public function programs(Institution $institution, Level $level) {
         $programs = $institution->programs()->wherePivot('level_id', $level->id)->with('college')->get()->groupBy('college.name');
 
-
+       $description = 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.';
         $SEOData = new SEOData(
-                                    title: $institution->name.' '.$level->name. ' Programs',
-                                    description: 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.',
+                                    title:  $institution->name.' '.$level->name. ' Programs',
+                                    description: $description,
                                        );
-						
+			
+  $jsonLd = Schema::CollegeOrUniversity()
+    ->name($institution->name)
+    ->alternateName($institution->former_name)
+    ->description($description)
+    ->slogan($institution->slogan)
+    ->address(Schema::PostalAddress()
+        ->streetAddress($institution->address)
+        ->addressLocality($institution->locality)
+        ->addressRegion($institution->state->name)
+        ->postalCode($institution->postal_code)
+        ->addressCountry('NG')
+    )
+    ->logo($institution->logo)
+    ->url(url()->current())
+    ->sameAs($institution->url)
+    ->hasOfferCatalog(
+        Schema::OfferCatalog()
+            ->name($level->name. ' Programs') 
+            ->itemListElement(
+                $programs->map(function ($programGroup, $collegeName) use ($institution, $level) {
+                    return $programGroup->map(function ($program) use($institution, $level) {
+                        return Schema::EducationalOccupationalProgram()
+                            ->name($program->name)
+                            ->description($program->description)
+							->url(route('institutions.program',['institution'=>$institution->id,'level'=>$level->slug ,'program'=>$program->id]));
+                    });
+                })->toArray()
+            )
+    );
+
+
+
+
+// Output or use the schema
+//dd($jsonLd);
+			
 							   
 									    
-        return view('institution.programs', compact('institution', 'level', 'programs','SEOData'));
+        return view('institution.programs', compact('institution', 'level', 'programs','SEOData','jsonLd'));
     }
 
 
@@ -440,8 +437,8 @@ $jsonLd = Schema::EducationalOccupationalProgram()
                 )
         );
     });
-
 //dd($jsonLd);
+ //dd($jsonLd->toScript());
 				   
 									   						   
 

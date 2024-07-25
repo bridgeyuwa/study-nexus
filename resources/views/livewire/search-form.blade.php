@@ -7,7 +7,7 @@
 
     <div class="row">
         <div wire:ignore class="mb-2 col-12 col-md-4">
-            <label class="form-label fw-light text-white" for="location">Location</label>
+            <label class="form-label fw-light text-white" for="location">Study Location</label>
             <select id="location" name="location" class="form-select">
                                   <option value="">Any Location</option>
                                     @foreach( $states as $state)
@@ -19,7 +19,7 @@
 
 
         <div wire:ignore class="mb-2 col-12 col-md-4">
-            <label class="form-label fw-light text-white" for="level">Level </label>
+            <label class="form-label fw-light text-white" for="level">Study Level </label>
             <select wire:model.live="selectedLevel" id="level" name="level" class="form-select">
                                     <option value="">Any Level</option>
                                       @foreach($levels  as $level)
@@ -29,12 +29,12 @@
                              </select>
         </div>
         
-        <div class="mb-2 col-12 col-md-4 text-white" wire:key="a4569oh-kjhf-{{$count}}>
+        <div class="mb-2 col-12 col-md-4 fw-light text-white" wire:key="a4569oh-kjhf-{{$count}}>
               
-                <label class="form-label fw-light text-white" for="course" >Course</label>
+                <label class="form-label  " for="course" >Study Programme</label>
                     <div class="mt-1" wire:ignore>
                                <select  id="program" name="program" class="form-select">
-                                    <option value="">Any Course </option>
+                                    <option value="">Any Programme </option>
                                     @foreach($programs as $program)
                                     <option value="{{$program->id}}" @if( $program->id ==
                                         request()->get('program') ) {{'selected = "true"'}} @endif >{{\Illuminate\Support\Str::title($program->name)}} 
@@ -58,10 +58,10 @@
 @else
 
  <!-- include Livewire search form here -->
-                         <form class="p-2 bg-light" action="{{url("/search")}}" method="GET">
+                         <form class="p-2" action="{{url("/search")}}" method="GET">
                        
                        <div wire:ignore class="mb-2 col-12">
-                         <label class="form-label" for="location">Location</label>
+                         <label class="form-label fw-light text-white" for="location">Study Location</label>
                          <select id="location-m" name="location" class="form-select"> 
                                    <option value="">Any Location</option>
                                     @foreach( $states as $state)
@@ -73,7 +73,7 @@
                          </div>
                         
                          <div wire:ignore class="mb-2 col-12">
-                         <label class="form-label" for="level">Level</label>
+                         <label class="form-label fw-light text-white" for="level">Study Level</label>
                         <select id="level-m" wire:model.live="selectedLevel"  name="level" class="form-select"> 
                                      <option value="">Any Level</option>
                                       @foreach($levels  as $level)
@@ -84,11 +84,11 @@
                          </select>
                          </div>
 
-                          <div class="mb-2 col-12 fw-semibold" wire:key="a4569oh-kjhf-{{$count}}>
-                         <label class="form-label " for="program">Program</label>
+                          <div class="mb-2 col-12 fw-light text-white" wire:key="a4569oh-kjhf-{{$count}}>
+                         <label class="form-label" for="program"> Study Programme</label>
                         <div class="mt-1" wire:ignore>
                         <select id="program-m" name="program" class="form-select"> 
-                         <option value="">Any Course </option>
+                         <option value="">Any Programme </option>
                                     @foreach($programs as $program)
                                     <option value="{{$program->id}}" @if( $program->id ==
                                         request()->get('program') ) {{'selected = "true"'}} @endif >{{\Illuminate\Support\Str::title($program->name)}} 

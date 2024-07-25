@@ -25,9 +25,9 @@ class SearchForm extends Component
 
      public function mount()
       {
-           $this->allLevels = Level::with('__programs')->get();
-           $this->levels = $this->allLevels;
-
+           $this->allLevels = Level::with('__programs')->get(); //remove eagerloading in production from this Livewire
+		   $this->levels = $this->allLevels;
+		   
            $this->allPrograms = Program::all();
            $this->programs = $this->allPrograms;
 
@@ -41,8 +41,15 @@ class SearchForm extends Component
                if($value){
 
                     $levels = $this->allLevels->where('slug',$value)->first();
-                    $this->programs = $levels->__programs;
-                    } 
+					
+						if ($levels) {
+							 $levels->load('__programs'); // Explicitly load the relationship remove in production
+							$this->programs = $levels->__programs;
+						} else {
+							$this->programs = $this->allPrograms;
+						}
+					
+					} 
                    else {
                        $this->programs = $this->allPrograms;
                     }

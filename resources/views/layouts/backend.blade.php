@@ -78,12 +78,12 @@
 
                     <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-content-hero-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside" ><i class="fa fa-fw fa-search"></i> <span class="ms-1 d-none d-sm-inline-block">Search</span> </button>
 
-                    <div id="search-dropdown" class="dropdown-menu dropdown-menu-xxl dropdown-menu-start mt-0 w-100" aria-labelledby="dropdown-content-hero-primary">
-                      
+                    <div id="search-dropdown" class="dropdown-menu dropdown-menu-xxl dropdown-menu-start mt-0 w-100" aria-labelledby="dropdown-content-hero-primary" style="background-image: url('{{asset('media/photos/photo13@2x.jpg')}}');">
+                      <div class="bg-black-75">
                      <!-- include Livewire search form here -->
                        <livewire:search-form />
                       <!-- End livewire search form -->
-                       
+                       </div>
                     </div>
                </div>
             @endif

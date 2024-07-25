@@ -7,286 +7,332 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Number; 
 @endphp
 
-
-<!-- Hero -->
-<div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
-    <div class="bg-black-75">
-        <div class="content content-full content-top text-center pt-7">
-            <div class="pt-4 pb-3">
-                <h1 class="fw-light text-white mb-1">{{Str::title($institution->name)}} @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif</h1>
-
-                <h2 class="h4 fs-md  fw-light text-white-75 mb-1">
-                     @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
-                </h2>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END Hero -->
-
-
-<!-- Page Content -->
-<div class="content content-boxed">
-    <div class="row">
-        <div class="col-md-4 order-md-1">
-
-            <!-- Institution Summary -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Highlights</h3>
-                </div>
-                <div class="block-content fs-sm">
-                    <ul class="fa-ul list-icons">
-                        <li class="mb-1">
-                            <span class="fa-li text-primary">
-                  <i class="fa fa-university"></i>
-                </span>
-                            <div class="fw-semibold">Type</div>
-                            <div class="text-muted">{{str::title($institution->schooltype->name)}} {{$institution->category->name}}</div>
-                        </li>
-                        <li class="mb-1">
-                            <span class="fa-li text-primary">
-                  <i class="fa fa-calendar"></i>
-                </span>
-                            <div class="fw-semibold">Term Structure</div>
-                            <div class="text-muted">{{str::title($institution->term->name)}}</div>
-                        </li>
-                        <li class="mb-1">
-                            <span class="fa-li text-primary">
-                  <i class="fa fa-calendar-check"></i>
-                </span>
-                            <div class="fw-semibold">Established</div>
-                            <div class="text-muted">{{$institution->established}}</div>
-                        </li>
-                        <li class="mb-1">
-                            <span class="fa-li text-primary">
-                  <i class="fa fa-map-marker-alt"></i>
-                </span>
-                            <div class="fw-semibold">Location</div>
-                            <div class="text-muted"> @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- END Summary -->
-        </div>
-
-        <div class="col-md-8 order-md-0">
-
-            <!-- Institution Description -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Overview</h3>
-                </div>
-                <div class="block-content pb-3">
-
-
-                    {{$institution->description}}
-
-                </div>
-            </div>
-            <!-- END Institution Description -->
-
-
-            
-            <!-- Catchment Areas -->
-            <div class="block block-rounded text-center">
-                <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Catchment Areas</h3>
-                </div>
-                <div class="block-content">
-
-                    @if($institution->catchments->isNotEmpty())
-                    <ul class="list-inline">
-                        @foreach($institution->catchments as $catchment)
-                        <li class="list-inline-item"><a class="" href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}">{{str::title($catchment->name)}}</a> </li>
-                        @endforeach
-                    </ul>
-                    @else All states of the federation. <span class="fs-sm">(Check <a href="{{route('institutions.catchments.policy')}}">Catchment Area Policy</a>). </span> @endif
-
-
-                </div>
-            </div>
-            <!-- END Catchment Areas -->
-            
-
-
-            <!-- Academic Tiers -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title text-center">Academic Tiers</h3>
-                </div>
-                <div class="block-content">
-
-                    @foreach($levels as $level)
-
-
-
-                    <a class="block block-rounded block-bordered block-link-shadow link-fx" href="{{route('institutions.programs', ['institution' => $institution->id, 'level' => $level->slug])}}">
-                  <div class="block-content block-content-full d-flex align-items-center justify-content-between p-2">
-                    <div class="me-3">
-                      <p class="fs-lg text-primary mb-0">
-                        {{$level->name}} @if(!empty($level->abbr))<span class="fw-light text-black">({{str::upper($level->abbr)}})</span> @endif
-                      </p>
-                      <p class="text-muted mb-0">
-                      @if(!empty($level->programs->min('pivot.tuition_fee')))
-                             @if($level->programs->min('pivot.tuition_fee') == $level->programs->max('pivot.tuition_fee'))
-                               ₦{{Number::format($level->programs->min('pivot.tuition_fee'))}}
-                             @else                            
-                               ₦{{Number::format($level->programs->min('pivot.tuition_fee'))}} - ₦{{Number::format($level->programs->max('pivot.tuition_fee'))}}  
-                             @endif
-                       @endif
-                       
-                      </p>
-                    </div>
-                    <div>
-                      <div class="h6 mb-0">Courses</div> 
-                      <div class="text-center">(<span class="text-primary">{{$level->programs->count()}}</span>)</div>
+<span itemscope itemtype="https://schema.org/CollegeOrUniversity">
+	
+	
+	<!-- Hero  -->
+        <div class="bg-image" style="background-image: url('/media/photos/photo13@2x.jpg');">
+          <div class="bg-black-75">
+            <div class="content content-boxed content-full py-5 pt-7">
+              <div class="row">
+			    @isset($institution->logo)
+				
+			    <div class="col-md-4 d-flex align-items-center">
+                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+                    <div class="block-content block-content-full px-2 py-2">
+					
+                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;"></img>
+                      <link itemprop="logo" href="{{$institution->logo}}">
                     </div>
                   </div>
-                </a> @endforeach
                 </div>
-            </div>
-            <!-- END Academic Tiers -->
+				@endisset
+				
+                <div class=" @isset($institution->logo) col-md-8 @endisset d-flex align-items-center py-3">
+					 <div class="w-100 text-center @isset($institution->logo)text-md-start @endisset">
+						<h1>  <a itemprop="url" class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+                          <link itemprop="sameAs" href="{{$institution->url}}">
+						  
 
-
-            <!-- Rankings -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Rankings</h3>
-                </div>
-                <div class="block-content">
-
-                    <table class="table table-borderless">
-
-                        <tr class="">
-                            <td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} </span></td>
-                            <td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
-                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
-                        </tr>
-
-                        <tr>
-                            <td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">{{str::title($institution->state->region->name)}}</span></td>
-                            <td>@if ($rank['region']) <span class="fw-semibold text-black">{{Number::ordinal($rank['region'])}}</span> @else NR @endif out of {{$institution->state->region->institutions->where('category_id',$institution->category->id)->count()}}
-                                @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
-                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['category' => $institution->category->slug, 'region' => $institution->state->region->slug])}}"> View </a> </td>
-                        </tr>
-
-                        <tr>
-                            <td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
-                            <td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
-                            <td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['category' => $institution->category->slug])}}"> View </a> </td>
-                        </tr>
-
-                    </table>
-                </div>
-            </div>
-            <!-- END Rankings -->
-
-
-             <!-- Accreditation -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Accreditation</h3>
-                </div>
-                <div class="block-content">
-                    
-					<table class="table">
-
-                                <tr>
-                                    <td class="fs-sm fw-semibold">Institution Accreditation Body</td>
-                                    <td><a class="link-fx link-dark" href="{{$institution->accreditationBody->url}}">{{$institution->accreditationBody->name}} @isset($institution->accreditationBody->abbr) <span>({{str::upper($institution->accreditationBody->abbr)}})</span> @endisset </a> </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="fs-sm fw-semibold">Accreditation Status</td>
-                                    <td>  
-									@isset($institution->accreditationStatus)
-									<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
-									{{$institution->accreditationStatus->name}}
-									</button>
-									@else
-										Not Available
-									@endisset
-					                </td>
-                                  
-								</tr>
-
-                               
-                            </table>
-					
-                </div>
-            </div>
-            <!-- END Accreditation -->
-
-
-
-            <!-- Socials & Contact -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Contact and Social</h3>
-                </div>
-                <div class="block-content">
-                    <div class="mb-3 px-3">
-                        <div class="row bg-stripped">
-                            <div class="col-3  fw-light text-black">Website <i class="fa fa-link text-dark"></i></div>
-                            <div class="col"> <a class="link-fx link-info" href="">abu.edu.ng</a></div>
-                        </div>
-                        <div class="row bg-stripped">
-                            <div class="col-3  fw-light text-black">Email <i class="fas fa-envelope text-dark"></i></div>
-                            <div class="col"><a class="link-fx link-info" href="mailto:support@abu.edu.ng">support@abu.edu.ng</a></div>
-                        </div>
-
-                         @if($institution->phonenumbers->isNotEmpty())
-                        <div class="row bg-stripped">
-                            <div class="col-3 fw-light text-black">Phone <i class="fa fa-phone-flip text-dark"></i></div>
-                            <div class="col"> 
-                               @foreach($institution->phonenumbers as $phone)
-                               <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}">+234 {{substr($phone->number, 1)}} </a> @if(isset($phone->holder)) <span class="ms-2 fw-light">( {{$phone->holder}} ) </span> @endif <br>
-                               @endforeach
-                            </div>
-                        </div>
-                        @endif
+						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
+							<meta itemprop="streetAddress" content="{{$institution->address}}">
+							@isset($institution->locality) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endisset  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @isset($institution->state->type) State @endisset </span> 
+						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
+							<meta itemprop="addressCountry" content="NG">
 						
-
-                          @foreach($institution->socials as $social) 
-                        <div class="row bg-stripped">
-                            <div class="col-3 fw-light text-black"> {{$social->socialtype->name}}  <i class="{{$social->socialtype->icon}} text-dark"></i></div>
-                            <div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}">{{$social->url}}</a>  </div>
-                        </div>
-                         @endforeach 
-                    </div>
-                </div>
-            </div>
-            <!-- End Socials & Contact -->
-
-                            
-
-              @if(isset($institution->address))
-            <!-- Address -->
-              <div class="block block-rounded text-center">
-                <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
-                  <h3 class="block-title">Location</h3>
-                </div>
-                <div class="block-content">
-                  <div class="mb-3">
-                    <span class="fw-semibold me-2">Address:</span>
-                    795 Folsom Ave, Suite 600, San Francisco, CA 94107 
-                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                  </div>                   
-                  <div class="map bg-success w-100 mx-auto mb-3" style="height: 300px;"> 
-                        Map Goes Here! {{$institution->address}}
-                  </div                  
+						</h2>
+						<div class="text-white">
+						@isset($institution->slogan)( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endisset
+						</div>
+					 </div>
                 </div>
               </div>
-              <!-- END Address -->
-                @endif
-
-
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-<!-- END Page Content -->
+        <!-- END Hero -->
 
+
+	<!-- Page Content -->
+	<div class="content content-boxed">
+		<div class="row">
+			<div class="col-md-4 order-md-1">
+
+				<!-- Institution Summary -->
+				<div class="block block-rounded">
+					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+							<h3 class="block-title">Highlights</h3>
+					</div>
+					<div class="block-content fs-sm">
+						<ul class="fa-ul list-icons">
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-university"></i>
+								</span>
+								<div class="fw-semibold">Type</div>
+								<div class="text-muted">{{str::title($institution->schooltype->name)}} {{$institution->category->name}}</div>
+							</li>
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-calendar"></i>
+								</span>
+								<div class="fw-semibold">Term Structure</div>
+								<div class="text-muted">{{str::title($institution->term->name)}}</div>
+							</li>
+							
+							@isset($institution->established)
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-calendar-check"></i>
+								</span>
+								<div class="fw-semibold">Established</div>
+								<div itemprop="foundingDate" class="text-muted">{{$institution->established}}</div>
+							</li>
+							@endisset
+							
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-map-marker-alt"></i>
+								</span>
+								<div class="fw-semibold">Location</div>
+								<div class="text-muted"> @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif </div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- END Summary -->
+			</div>
+
+			<div class="col-md-8 order-md-0">
+
+				<!-- Institution Description -->
+				<div class="block block-rounded">
+					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 class="block-title">Overview</h3>
+					</div>
+					<div  class="block-content pb-3">
+					
+						@isset($institution->description)
+						<span itemprop="description">{{$institution->description}}</span>
+						@else
+                        <span itemprop="description">{{$institution->description_alt}}</span>
+					    @endisset
+	
+					</div>
+				</div>
+				<!-- END Institution Description -->
+
+                @if($institution->catchments->isNotEmpty())
+				<!-- Catchment Areas -->
+				<div class="block block-rounded text-center">
+					<div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 class="block-title">Catchment Areas</h3>
+					</div>
+					<div class="block-content">
+						<ul class="list-inline">
+							@foreach($institution->catchments as $catchment)
+								<li itemprop="serviceArea" itemscope itemtype="https://schema.org/Place" class="list-inline-item">
+									<a  href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}">
+									<span itemprop="name">	{{str::title($catchment->name)}} </span>
+							        </a> 
+								</li>
+							@endforeach
+						</ul>
+						<span class="fs-sm">(Check <a href="{{route('institutions.catchments.policy')}}">Catchment Area Policy</a>). </span> 						
+					</div>
+				</div>
+				@endif
+				<!-- END Catchment Areas -->
+										
+
+
+				<!-- Academic Tiers -->
+				<div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
+					<div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 itemprop="name" class="block-title text-center">Academic Tiers</h3>
+					</div>
+					<div class="block-content">
+
+					@foreach($levels as $level)
+
+					<a  class="block block-rounded block-bordered block-link-shadow link-fx" href="{{route('institutions.programs', ['institution' => $institution->id, 'level' => $level->slug])}}">
+						
+						<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"  class="block-content block-content-full d-flex align-items-center justify-content-between p-2">
+							<meta itemprop="position" content="{{$loop->iteration}}"/>
+							<div itemprop="item" itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="me-3">
+							    <p class="fs-lg text-primary mb-0">
+								   <span itemprop="name"> {{$level->name}}</span> @if(!empty($level->abbr))<span class="fw-light text-black">({{str::upper($level->abbr)}})</span> @endif
+							    </p>
+								
+								<span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+								<p itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="text-muted mb-0">
+								  @if(!empty($level->programs->min('pivot.tuition_fee')))
+										 @if($level->programs->min('pivot.tuition_fee') == $level->programs->max('pivot.tuition_fee'))
+										<span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="minPrice"> {{Number::format($level->programs->min('pivot.tuition_fee'))}} </span>
+										 @else                            
+										<span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="minPrice"> {{Number::format($level->programs->min('pivot.tuition_fee'))}}</span> - <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="maxPrice">{{Number::format($level->programs->max('pivot.tuition_fee'))}} </span>
+										 @endif
+								   @endif								   
+								</p>
+								</span>
+							</div>
+						<div>
+						  <div class="h6 mb-0">Courses</div> 
+						  <div class="text-center">(<span class="text-primary">{{$level->programs->count()}}</span>)</div>
+						</div>
+					  </div>
+					</a> @endforeach
+					</div>
+				</div>
+				<!-- END Academic Tiers -->
+
+
+				<!-- Rankings -->
+				<div class="block block-rounded">
+					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 class="block-title">Rankings</h3>
+					</div>
+					<div class="block-content">
+
+						<table class="table table-borderless">
+							<tr class="">
+								<td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} </span></td>
+								<td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
+							</tr>
+
+							<tr>
+								<td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">{{str::title($institution->state->region->name)}}</span></td>
+								<td>@if ($rank['region']) <span class="fw-semibold text-black">{{Number::ordinal($rank['region'])}}</span> @else NR @endif out of {{$institution->state->region->institutions->where('category_id',$institution->category->id)->count()}}
+									@if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['category' => $institution->category->slug, 'region' => $institution->state->region->slug])}}"> View </a> </td>
+							</tr>
+
+							<tr>
+								<td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
+								<td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['category' => $institution->category->slug])}}"> View </a> </td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- END Rankings -->
+
+
+				<!-- Accreditation -->
+				<div itemprop="hasCredential" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block block-rounded">
+					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 itemprop="credentialCategory" class="block-title">Accreditation</h3>
+					</div>
+					<div itemprop="recognizedBy" itemscope itemtype="https://schema.org/EducationalOrganization" class="block-content">
+						<table class="table">
+							<tr>
+								<td class="fs-sm fw-semibold">Institution Accreditation Body</td>
+								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @isset($institution->accreditationBody->abbr) (<span itemprop="alternateName">{{str::upper($institution->accreditationBody->abbr)}}</span>) @endisset </a> </td>
+							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
+							</tr>
+							<tr>
+								<td class="fs-sm fw-semibold">Accreditation Status</td>
+								<td>  
+								@isset($institution->accreditationStatus)
+								<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
+								{{$institution->accreditationStatus->name}}
+								</button>
+								@else
+									Not Available
+								@endisset
+								</td>
+							</tr>		   
+						</table>
+					</div>
+				</div>
+				<!-- END Accreditation -->
+
+
+
+				<!-- Socials & Contact -->
+				<div class="block block-rounded">
+					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 class="block-title">Contact and Social</h3>
+					</div>
+					<div class="block-content">
+						<div class="mb-3 px-3">
+						    @isset($institution->url)
+							<div class="row bg-stripped">
+								<div class="col-3  fw-light text-black"><i class="fa fa-link text-dark me-1"></i>Website </div>
+								<div class="col"> <a class="link-fx link-info" href="{{$institution->url}}">{{$institution->url}}</a></div>
+							</div>
+							@endisset
+							
+							@isset($institution->email)
+							<div class="row bg-stripped">
+								<div class="col-3  fw-light text-black"> <i class="fas fa-envelope text-dark me-1"></i>Email</div>
+								<div class="col"><a class="link-fx link-info" href="mailto:{{$institution->email}}"> <span itemprop="email">{{$institution->email}}</span></a></div>
+							</div>
+							@endisset
+
+							@if($institution->phonenumbers->isNotEmpty())
+							<div  class="row bg-stripped">
+								<div  class="col-3 fw-light text-black"><i class="fa fa-phone text-dark me-1"></i>Phone </div>
+								<div itemprop="contactPoint" itemscope itemtype="https://schema.org/ContactPoint" class="col"> 
+								   @foreach($institution->phonenumbers as $phone)
+								   <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}"> <span itemprop="telephone">+234 {{substr($phone->number, 1)}}</span> </a> @if(isset($phone->holder)) <span itemprop="contactType" class="ms-2 fw-light fs-sm">({{$phone->holder}}) </span> @endif <br>
+								   @endforeach
+								</div>
+							</div>
+							@endif
+							
+
+							@foreach($institution->socials as $social) 
+							<div class="row bg-stripped">
+								<div class="col-3 fw-light text-black"> <i class="{{$social->socialtype->icon}} text-dark me-1"></i> {{$social->socialtype->name}} </div>
+								<div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}">{{$social->url}}</a>  </div>
+							</div>
+							@endforeach 
+						</div>
+					</div>
+				</div>
+				<!-- End Socials & Contact -->
+
+														
+				<!-- Address -->
+				<div  class="block block-rounded">
+					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+					  <h3 class="block-title">Location</h3>
+					</div>
+					<div class="block-content">
+						<div class="mb-3 px-3">
+							   @isset($institution->address) <span class="me-2 d-block"> {{$institution->address}} </span> @endisset
+							   @isset($institution->locality) <span class="me-2 d-block"> {{$institution->locality}}</span> @endisset
+								<span class="me-2 d-block">{{$institution->state->name}} @isset($institution->state->type) State @endisset <span class="fs-sm">(NG-{{$institution->state->code}})</span> </span>
+								@isset($institution->postal_code)<span class="me-2 d-block"> {{$institution->postal_code}}</span>@endisset
+								<span class="me-2 d-block"> Nigeria (<span class="fs-sm">NG</span>)</span>
+							   
+						</div> 
+                        @isset($institution->coordinates)						
+						<div class="map bg-success w-100 mx-auto mb-3" style="height: 300px;"> 
+				<link itemprop="hasMap" href="https://maps.google.com/place/1,university+drive+bsu,+makurdi">
+						
+						
+						<iframe
+							  width="400"
+							  height="250"
+							  frameborder="0" style="border:0"
+							  referrerpolicy="no-referrer-when-downgrade"
+							  src="https://www.google.com/maps/embed/v1/MAP_MODE?key=YOUR_API_KEY&PARAMETERS"
+							  allowfullscreen>
+					    </iframe>
+						
+						
+						
+						</div> 
+                        @endisset						
+					</div>
+				</div>	
+				<!-- END Address -->
+				
+		</div>
+	</div>
+	<!-- END Page Content -->
+</span>
 @endsection
