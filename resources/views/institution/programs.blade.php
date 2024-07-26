@@ -31,9 +31,10 @@ use Illuminate\Support\Number;
 				
                 <div class=" @isset($institution->logo) col-md-8 @endisset d-flex align-items-center py-3">
 					 <div class="w-100 text-center @isset($institution->logo)text-md-start @endisset">
-						<h1 class="mb-1">  <a itemprop="url" class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
-                          <link itemprop="sameAs" href="{{$institution->url}}">
-						  
+						<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+                          
+						  <link itemprop="url" href="{{url()->current()}}">
+						  <link itemprop="sameAs" href="{{$institution->url}}">
 
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">

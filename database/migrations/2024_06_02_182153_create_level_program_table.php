@@ -15,9 +15,8 @@ return new class extends Migration
             $table->string('program_id');
             $table->unsignedBigInteger('level_id');
             $table->text('description')->nullable();
-            $table->text('direct_entry_req')->nullable();
-            $table->text('utme_o_level_req')->nullable();
-            $table->text('utme_subjects')->nullable();
+			$table->integer('duration')->nullable();
+            $table->json('requirements')->nullable();
             $table->timestamps();
 
             $table->primary(['program_id', 'level_id']);

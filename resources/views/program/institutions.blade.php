@@ -73,6 +73,8 @@
 <!-- Page Content -->
 <div class="content">
     <div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
+	<link itemprop="url"  content="{{url()->current()}}" />
+	
         <div class="block-content">
             <h2 itemprop="name" class="content-heading text-center">Academic Institutions Offering {{str::title($level->name)}} in {{Str::title($program->name)}} in Nigeria</h2>
             <div class="row items-push">
@@ -94,7 +96,7 @@
 								  <div class="block block-header-default bg-image mb-0 fw-light"
 									  style="background-image: url('/media/photos/photo11.jpg');">
 									  <div class="bg-black-75 text-center p-3">
-										  <div class="fs-4 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
+										  <div class="fs-5 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
 										   @if(!empty($institution->abbr))<span class="text-white-75 ">({{str::upper($institution->abbr)}})</span> @endif 
 										</div>
 

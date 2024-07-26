@@ -55,9 +55,10 @@
 			
 			
             <div itemscope itemtype="https://schema.org/ItemList" class="row items-push">
-                <div itemprop="name" class="col-lg-4">
+			<link itemprop="url"  content="{{url()->current()}}" />
+                <div  class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
-                        <p class="text-muted ">
+                        <p itemprop="name" class="text-muted ">
                              list of  
 							@if(!empty($category)) 
 							    @if($category->id === 4)
@@ -71,7 +72,17 @@
 							in Nigeria.
                         </p>
 
-                        <p class="fs-sm">We provide comprehensive information about each of the schools as well as detailed insights into every course offered by these institutions. (eg. description, catchment areas, tuition fees, admission requirements, etc.)</p>
+                        <p itemprop="description" class="fs-sm">We provide comprehensive information about each of the 
+						@if(!empty($category)) 
+							    @if($category->id === 4)
+                                    <span class="text-black"> Colleges of Education</span> 
+								@else
+                                     <span class="text-black">{{ Str::of($category->name)->plural()}} </span> 
+								@endif 
+							@else 
+								Higher Institutions 
+							@endif 
+							as well as detailed insights into every course offered by these institutions. (eg. description, catchment areas, tuition fees, admission requirements, etc.)</p>
 
                     </div>
                 </div>

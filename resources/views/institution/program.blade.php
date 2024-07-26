@@ -30,8 +30,10 @@ use Illuminate\Support\Number;
 							
 						<div class=" @isset($institution->logo) col-md-8 @endisset d-flex align-items-center py-3">
 							<div class="w-100 text-center @isset($institution->logo)text-md-start @endisset">
-									<h1 class="mb-1">  <a itemprop="url" class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
-									  <link itemprop="sameAs" href="{{$institution->url}}">
+									<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+									  
+									<link itemprop="url" href="{{url()->current()}}">
+									<link itemprop="sameAs" href="{{$institution->url}}">
 									  
 
 									<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
@@ -136,7 +138,8 @@ use Illuminate\Support\Number;
         <div itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded" >
             <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                 <h3 class="block-title">
-                    <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME)</a>  - JAMB Requirement
+                    JAMB Unified Tertiary Matriculation Examination (UTME) Requirement
+					<a class="d-none" href="https://jamb.gov.ng">Jamb Integrated Brochure and Syllabus System</a>
                 </h3>
             </div>
             <div class="block-content">
@@ -167,7 +170,7 @@ use Illuminate\Support\Number;
         <!-- DE Admission Requirements -->
         <div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
             <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                <h3 class="block-title">Direct Entry - JAMB Requirements</h3>
+                <h3 class="block-title">JAMB Direct Entry Requirements</h3>
             </div>
             <div class="block-content text-center">
                 <div class="ms-2" itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
@@ -199,13 +202,13 @@ use Illuminate\Support\Number;
                                 <tr>
                                     <td class="fs-sm fw-semibold">Course Accreditation Status</td>
                                     <td>  
-									@isset($institution_program->accreditationStatus)
+									@if(!empty($institution_program->accreditationStatus))
 									<button type="button" class="btn btn-{{$institution_program->accreditationStatus->class}} rounded-0" disabled>
 									{{$institution_program->accreditationStatus->name}}
 									</button>
 									@else
 										Not Available
-									@endisset
+									@endif
 					                </td>
                                   
 								</tr>

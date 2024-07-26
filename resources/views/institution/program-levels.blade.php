@@ -6,25 +6,52 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Number;  
 @endphp
 
-<!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+
+<span itemscope itemtype="https://schema.org/CollegeOrUniversity">
+
+		
+		<!-- Hero  -->
+        <div class="bg-image" style="background-image: url('/media/photos/photo13@2x.jpg');">
           <div class="bg-black-75">
-            <div class="content content-full content-top text-center pt-6">
-              <div class="pt-4 pb-3">
-                <h1> 
-                   <a class="fw-light text-white mb-1" href="{{route('institutions.show', ['institution' => $institution->id])}}">
-                     {{Str::title($institution->name)}} @if(!empty($institution->abbr)) <span class="text-white-75">({{str::upper($institution->abbr)}})<span> @endif
-                   </a> 
-               </h1>
+            <div class="content content-boxed content-full py-5 pt-7">
+              <div class="row">
+			    @isset($institution->logo)
+				
+			    <div class="col-md-4 d-flex align-items-center">
+                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+                    <div class="block-content block-content-full px-2 py-2">
+					
+                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;"></img>
+                      <link itemprop="logo" href="{{$institution->logo}}">
+                    </div>
+                  </div>
+                </div>
+				@endisset
+				
+                <div class=" @isset($institution->logo) col-md-8 @endisset d-flex align-items-center py-3">
+					 <div class="w-100 text-center @isset($institution->logo)text-md-start @endisset">
+						<h1 class="mb-1">  <a  class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+                         
+						  <link itemprop="url" href="{{url()->current()}}">
+						  <link itemprop="sameAs" href="{{$institution->url}}">
+						  
 
-                  <h2 class="h4 fs-md  fw-light text-white-75 ">
-                      @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif  @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif
-                    </h2>
-
-                <h2 class="h3 fw-light text-white">
+						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
+							<meta itemprop="streetAddress" content="{{$institution->address}}">
+							@isset($institution->locality) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endisset  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @isset($institution->state->type) State @endisset </span> 
+						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
+							<meta itemprop="addressCountry" content="NG">
+						
+						</h2>
+						<div class="text-white mb-3">
+						@isset($institution->slogan)( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endisset
+						</div>
+						
+						<h2 class="h3 fw-light text-white">
                     {{Str::title($program->name)}} Programs <span class="text-white-75">(Levels)</span>
-                </h2> 
-
+                </h2>
+					 </div>
+                </div>
               </div>
             </div>
           </div>
@@ -53,21 +80,26 @@ use Illuminate\Support\Number;
         <div class="col-md-8 order-md-0">
 
             <!-- Program Levels -->
-            <div class="block block-rounded">
+            <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Program Levels</h3>
+                    <h3 itemprop="name" class="block-title">{{$program->name}} Program Levels</h3>
                 </div>
                 <div class="block-content">
 
                     @foreach($levels as $level)
-                    <a class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
+					<div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog">
+                    <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">
-                        {{$level->name}} <span class="text-muted">({{Str::of($program->name)->title()}})</span>
+                       <span itemprop="name"> {{$level->name}} <span class="text-muted">({{Str::of($program->name)->title()}})</span> </span>
                       </div>                      
-                      <p class="text-muted mb-0">                       
-                        @isset($level->programs->where('id', $program->id)->first()->pivot->tuition_fee) ₦ {{ Number::format($level->programs->where('id', $program->id)->first()->pivot->tuition_fee)}}  @endisset
+                      <p itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="text-muted mb-0">                       
+                        @if(!empty($level->programs->where('id', $program->id)->first()->pivot->tuition_fee))
+					<span itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification">	
+				     <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="Price">{{ Number::format($level->programs->where('id', $program->id)->first()->pivot->tuition_fee)}} </span>  
+				</span>
+						@endif
 							 
 					  </p>
                     </div>
@@ -76,7 +108,7 @@ use Illuminate\Support\Number;
                     </div>
                   </div>
                 </a> @endforeach
-
+                 </div>
                 </div>
             </div>
             <!-- END Program Levels -->
@@ -86,7 +118,7 @@ use Illuminate\Support\Number;
 </div>
 <!-- END Page Content -->
 
-
+</span>
 
 
 @endsection

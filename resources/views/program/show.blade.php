@@ -133,7 +133,7 @@ use Illuminate\Support\Number;
                     <h3 class="block-title">Course Overview</h3>
                 </div>
                 <div class="block-content">
-                    <p itemprop="description">{!!$program->pivot->description!!}</p>
+                    <p itemprop="description" class="fs-6">{!!$program->pivot->description!!}</p>
                 </div>
             </div>
             <!-- END Program Description -->
@@ -149,7 +149,8 @@ use Illuminate\Support\Number;
                     <!-- UTME Admission Requirements -->
                     <div itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <a class="link-dark link-fx" href="https://jamb.gov.ng">Unified Tertiary Matriculation Examination (UTME)</a>  - JAMB Requirement
+                         <h3 class="block-title"> JAMB Unified Tertiary Matriculation Examination (UTME) Requirements </h3>
+						    
 						</div>
                         <div class="block-content">
 
@@ -163,16 +164,20 @@ use Illuminate\Support\Number;
                                 <tr>
                                     <td class="fs-sm fw-semibold">UTME Subject Combination</td>
                                     <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-								<p itemprop="description" class="m-0"> asdhhhh	{{$program->pivot->utme_subjects}} </p>
+								<p itemprop="description" class="m-0">{{$program->pivot->requirements->utme_subjects}} </p>
 									</td>
                                 </tr>
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">O'Level Requirement</td>
                                     <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-									<p itemprop="description"> zzzzzz {{$program->pivot->utme_o_level_req}} </p>
+									<p itemprop="description" class="m-0"> {{$program->pivot->requirements->o_level}} </p>
 									</td>
                                 </tr>
+								<tr>  
+								
+								<td class="text-danger fw-light" colspan="2" style="font-size: 0.75rem;">UTME Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions. Ensure to check the institution of choice for its specific requirements. </td>
+								</tr>
                             </table>
 
                         </div>
@@ -180,19 +185,23 @@ use Illuminate\Support\Number;
                     <!-- END UTME Admission Requirements -->
 
                     <!-- DE Admission Requirements -->
-                    @if($level->id == 'bachelor')      <!-- fix this -->
+                    @if($level->id == 1)      <!-- fix this -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                            <h3 class="block-title">Direct Entry Requirements</h3>
+                            <h3 class="block-title">JAMB Direct Entry Requirements</h3>
                         </div>
-                        <div itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block-content text-center">
-								<span itemprop="description" class="m-0"> asdfghgfd {{$program->pivot->direct_entry_req}} </span>
+                        <div itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block-content text-center pb-2">
+								<span itemprop="description"> {{$program->pivot->requirements->direct_entry}} </span>
+								
                         </div>
+						<span class="text-danger fw-light d-block px-4 py-2 border-top " style="font-size: 0.75rem;">Direct Entry Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions, and some may not accept Direct Entry for {{$program->name}}.  Ensure to check the institution of choice for its specific requirements. </span>
+								
                     </div>
                     @endif
                     <!-- END DE Admission Requirements -->
 
                 </div>
+				SOURCE <a class="d-none" href="https://jamb.gov.ng/ibass">Jamb Integrated Brochure and Syllabus System</a>
             </div>
             <!-- END General Admission Requirements -->
 
@@ -202,7 +211,7 @@ use Illuminate\Support\Number;
             <!-- Tuition Range -->
             <div itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Tuition Fee <span class="fw-light">(Range)</span></h3>
+                    <h3 class="block-title"> <span itemprop="name"> Tuition Fee </span> <span class="fw-light">(Range)</span></h3>
                 </div>
                 <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center">
                     <p class="fs-lg text-muted">
@@ -218,7 +227,7 @@ use Illuminate\Support\Number;
                     <h3 class="block-title">Institutions Offering {{str::title($level->name)}} in {{Str::title($program->name)}}</h3>
                 </div>
                 <div class="block-content">
-                    <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level->slug, 'program' => $program->id])}}">
+                    <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level->slug, 'program'=> $program->id])}}">
                View Institutions
             </a>
 

@@ -132,11 +132,6 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
         public function institutionRanking(Category $category) {
 
 
-            /*  $institutions = Institution::whereHas('category', function ( $query) use ($category) {
-                $query->where('categories.id', $category->id);
-            })->with(['state.region','category','state.institutions','state.region.institutions'])->orderByRaw('rank IS NULL, rank')->get();          
-
-          */
 
               $institutions = Institution::where('category_id', $category->id)->with(['state.region','category','state.institutions','state.region.institutions'])->orderByRaw('rank IS NULL, rank')->paginate(100); 
 
@@ -345,46 +340,10 @@ private function computeRank($institution, $allInstitutions) {
                                     title:  $institution->name.' '.$level->name. ' Programs',
                                     description: $description,
                                        );
-			
-  $jsonLd = Schema::CollegeOrUniversity()
-    ->name($institution->name)
-    ->alternateName($institution->former_name)
-    ->description($description)
-    ->slogan($institution->slogan)
-    ->address(Schema::PostalAddress()
-        ->streetAddress($institution->address)
-        ->addressLocality($institution->locality)
-        ->addressRegion($institution->state->name)
-        ->postalCode($institution->postal_code)
-        ->addressCountry('NG')
-    )
-    ->logo($institution->logo)
-    ->url(url()->current())
-    ->sameAs($institution->url)
-    ->hasOfferCatalog(
-        Schema::OfferCatalog()
-            ->name($level->name. ' Programs') 
-            ->itemListElement(
-                $programs->map(function ($programGroup, $collegeName) use ($institution, $level) {
-                    return $programGroup->map(function ($program) use($institution, $level) {
-                        return Schema::EducationalOccupationalProgram()
-                            ->name($program->name)
-                            ->description($program->description)
-							->url(route('institutions.program',['institution'=>$institution->id,'level'=>$level->slug ,'program'=>$program->id]));
-                    });
-                })->toArray()
-            )
-    );
 
-
-
-
-// Output or use the schema
-//dd($jsonLd);
-			
-							   
+						   
 									    
-        return view('institution.programs', compact('institution', 'level', 'programs','SEOData','jsonLd'));
+        return view('institution.programs', compact('institution', 'level', 'programs','SEOData'));
     }
 
 
@@ -394,8 +353,7 @@ private function computeRank($institution, $allInstitutions) {
     // show single institution program data
     public function program(Institution $institution, Level $level = null, Program $program) {
         $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first()->pivot;
-    
-	
+        
             $SEOData = new SEOData(
                                     title: $level->name.' in ' .$program->name. ' offered at '.$institution->name,
                                     description: 'Detailed information about '.$level->name.' in ' .$program->name. ' offered at '.$institution->name.'. program highlights and overview ',
@@ -404,45 +362,9 @@ private function computeRank($institution, $allInstitutions) {
 
 	$programTitle = $level->name .' in '. $program->name;
 
-$jsonLd = Schema::EducationalOccupationalProgram()
-    ->name($programTitle)
-    ->url(url()->current())
-    ->provider(
-        Schema::CollegeOrUniversity()
-            ->name($institution->name)
-            ->sameAs($institution->url)
-            ->address(
-                Schema::PostalAddress()
-                    ->streetAddress($institution->address)
-                    ->addressLocality($institution->locality)
-                    ->addressRegion($institution->state->name)
-                    ->postalCode($institution->postal_code)
-                    ->addressCountry("NG")
-            )
-    )
-    ->timeToComplete("P".$institution_program->duration."Y")
-    ->educationalProgramMode("full-time")
-    ->educationalCredentialAwarded(
-        Schema::EducationalOccupationalCredential()
-            ->credentialCategory($programTitle)
-    )
-    ->if($institution_program->tuition_fee, function ($schema) use ($institution_program) {
-        return $schema->offers(
-            Schema::Offer()
-                ->category("Tuition Fee")
-                ->priceSpecification(
-                    Schema::PriceSpecification()
-                        ->price($institution_program->tuition_fee)
-                        ->priceCurrency("NGN")
-                )
-        );
-    });
-//dd($jsonLd);
- //dd($jsonLd->toScript());
-				   
-									   						   
+							   						   
 
-        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData','jsonLd'));
+        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData'));
     }
 	
 	

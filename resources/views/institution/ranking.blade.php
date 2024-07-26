@@ -18,7 +18,7 @@ use Illuminate\Support\Number;
                 <h1  itemprop="name"  ><a class="fw-light text-white mb-1" href="{{route('institutions.categories.ranking', ['category' => $category->slug])}}">{{str::title($category->name)}} Rankings</a></h1>
                 <meta itemprop="sameAs" content="https://webometrics.info/en/Africa/Nigeria">
 				<meta itemprop="url" content="{{url()->current()}}">
-itemprop="url"
+
                 <h2 class="h4 fs-md  fw-light text-white-75 mb-1">
                     @if(isset($state)) {{str::title($state->name)}} - Nigeria @elseif(isset($region)) {{str::title($region->name)}} - Nigeria @else Nigeria @endif
                 </h2>
@@ -54,7 +54,8 @@ itemprop="url"
 
                     <!-- full Table -->
                     <table class="table table-bordered table-striped table-vcenter ">
-                        <thead class="table-dark">
+                       
+						<thead class="table-dark">
                             <tr class="fs-sm">
                                 <th class="text-center" style="width: 150px; min-width: 85px">
                                 <i class="fa fa-star me-1"></i>@if(isset($state)) {{str::title($state->name)}} @elseif(isset($region)) {{str::title($region->name)}} @else Nigeria @endif Rank 
@@ -66,8 +67,8 @@ itemprop="url"
                             </tr>
                         </thead>
 
-                        <tbody itemscope itemtype="https://schema.org/ItemList">
-						<meta itemprop="name" content="Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(isset($state)) {{str::title($state->name)}}, Nigeria @elseif(isset($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif">
+                        <tbody itemscope itemtype="https://schema.org/ItemList" >
+						<meta itemprop="name" content="Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(isset($state)) {{str::title($state->name)}}, Nigeria @elseif(isset($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif" />
                             @foreach($institutions as $institution)
 							
 							
@@ -79,8 +80,15 @@ itemprop="url"
                                 <td class="fs-sm">
                                    <a itemscope itemtype="https://schema.org/CollegeOrUniversity" itemprop="item" href="{{route('institutions.show', ['institution' => $institution->id])}}">
 									<span itemprop="name">{{str::of($institution->name)->title()}}</span>
-									<meta itemprop="url" content="{{route('institutions.show', ['institution' => $institution->id])}}">
-									@isset($institution->url)<meta itemprop="sameAs" content="{{$institution->url}}"> @endisset
+									<link itemprop="url" content="{{route('institutions.show', ['institution' => $institution->id])}}">
+									@if(!empty($institution->url))<meta itemprop="sameAs" content="{{$institution->url}}"> @endif
+									<span  itemprop="address" itemscope itemtype="https://schema.org/PostalAddress"> 
+										@if(!empty($institution->address))<meta itemprop="streetAddress" content="{{$institution->address}}" />@endif
+										@if(!empty($institution->locality))<meta itemprop="addressLocality" content="{{$institution->locality}}" />@endif
+										<meta itemprop="addressRegion" content="{{$institution->state->name}}" />
+										@if(!empty($institution->postal_code))<meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif
+										<meta itemprop="addressCountry" content="NG" />
+									</span>	
 										
 									</a>
                                 </td>

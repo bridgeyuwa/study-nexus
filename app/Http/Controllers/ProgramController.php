@@ -48,27 +48,7 @@ foreach ($programs as $program) {
                                        );
 									   
 			$programs = $programs = $level->__programs()->with('college')->get()->groupBy('college.name');
-			
-			//dd($programs);
 						   
-$jsonLd = Schema::ItemList()
-    ->name($level->name . ' Programs')
-    ->itemListElement(
-        $programs->map(function ($programGroup, $collegeName) {
-            return Schema::EducationalOrganization()
-                ->name($collegeName)
-                ->programs(
-                    $programGroup->map(function ($program) {
-                        return Schema::EducationalOccupationalProgram()
-                            ->name($program->name)
-                            ->description($program->description);
-                    })->toArray()
-                );
-        })->toArray()
-    );
-						   
-				//dd($jsonLd);					   
-									   
 									   
  
            return view('program.index', compact('colleges','level','SEOData'));
@@ -97,6 +77,8 @@ $level->load([ 'programs' => function ($query) use($program) {
                                           title: $level->name. ' in '.$program->name. ' in Nigeria',
                                        );
 
+
+  // dd($program->requirements->direct_entry);
 
 return view('program.show', compact('level','program','SEOData'));
     }

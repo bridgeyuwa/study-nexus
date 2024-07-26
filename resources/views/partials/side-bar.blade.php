@@ -256,7 +256,7 @@
                         <li class="nav-main-item">  
                               <a class="nav-main-link" href="{{route('institutions.catchments.index')}}">
                                 
-                                <span class="nav-main-link-name">Federal University Catchments</span>
+                                <span class="nav-main-link-name">University Catchments</span>
                             </a>
                         </li>
                         

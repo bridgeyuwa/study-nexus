@@ -26,7 +26,7 @@ class Level extends Model
 
 // for level_programs relationship
     public function __programs() {
-        return $this->belongsToMany(Program::class,'level_program')->using(InstitutionProgram::class);
+        return $this->belongsToMany(Program::class,'level_program')->using(LevelProgram::class)->withPivot('description','requirements');
     }
 
 

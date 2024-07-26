@@ -31,7 +31,7 @@ use Illuminate\Support\Number;
 
         <div itemscope itemtype="https://schema.org/ItemList" class="block-content">
 
-
+          <link itemprop="url"  content="{{url()->current()}}" />
 
             <!-- Introduction -->
             <h2 itemprop="name" class="content-heading text-center"> @isset($category) <span class="text-black">  @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif   </span> @else All Tertiary Institutions @endisset in <span class="text-black">{{str::title($state->name)}} @if($state->id != 15) State @endif </span>,
