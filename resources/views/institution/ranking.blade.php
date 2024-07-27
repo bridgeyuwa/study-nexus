@@ -20,7 +20,7 @@ use Illuminate\Support\Number;
 				<meta itemprop="url" content="{{url()->current()}}">
 
                 <h2 class="h4 fs-md  fw-light text-white-75 mb-1">
-                    @if(isset($state)) {{str::title($state->name)}} - Nigeria @elseif(isset($region)) {{str::title($region->name)}} - Nigeria @else Nigeria @endif
+                    @if(!empty($state)) {{str::title($state->name)}} - Nigeria @elseif(!empty($region)) {{str::title($region->name)}} - Nigeria @else Nigeria @endif
                 </h2>
 
             </div>
@@ -36,12 +36,12 @@ use Illuminate\Support\Number;
     <div class="block block-rounded">
         <div class="block-content">
 
-            <h2 class="content-heading text-center">Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(isset($state)) {{str::title($state->name)}}, Nigeria @elseif(isset($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif </h2>
+            <h2 class="content-heading text-center">Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}}, Nigeria @elseif(!empty($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif </h2>
             <div itemprop="description" class="row items-push">
                 <div>
                         <p class="text-muted ">
                             Discover the top-ranked Nigerian @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif with our comprehensive ranking table. Explore accreditation details, admission criteria, and courses offered by
-                            the best @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(isset($state)) {{str::title($state->name)}} state, @elseif(isset($region)) {{str::title($region->name)}}, @endif Nigeria. Whether
+                            the best @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}} state, @elseif(!empty($region)) {{str::title($region->name)}}, @endif Nigeria. Whether
                             you are searching for the top @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in Nigeria or seeking valuable insights into higher education, our list provides essential
                             information.
                         </p>
@@ -58,22 +58,22 @@ use Illuminate\Support\Number;
 						<thead class="table-dark">
                             <tr class="fs-sm">
                                 <th class="text-center" style="width: 150px; min-width: 85px">
-                                <i class="fa fa-star me-1"></i>@if(isset($state)) {{str::title($state->name)}} @elseif(isset($region)) {{str::title($region->name)}} @else Nigeria @endif Rank 
+                                <i class="fa fa-star me-1"></i>@if(!empty($state)) {{str::title($state->name)}} @elseif(!empty($region)) {{str::title($region->name)}} @else Nigeria @endif Rank 
                                 </th>
                                 <th style="min-width: 265px;">{{$category->name}}</th>
-                                <th class="@if(isset($state)) d-none @endif" style="width: 15%; min-width: 140px;">State Rank</th>
-                                <th class="@if(isset($region)) d-none @endif" style="width: 18% ; min-width: 157px;">Region Rank</th>
+                                <th class="@if(!empty($state)) d-none @endif" style="width: 15%; min-width: 140px;">State Rank</th>
+                                <th class="@if(!empty($region)) d-none @endif" style="width: 18% ; min-width: 157px;">Region Rank</th>
                                 <th class="text-center" style="width: 10%;"><span data-bs-toggle="tooltip" data-bs-placement="top" title="World Rank (Webometrics)">WR</span></th>
                             </tr>
                         </thead>
 
                         <tbody itemscope itemtype="https://schema.org/ItemList" >
-						<meta itemprop="name" content="Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(isset($state)) {{str::title($state->name)}}, Nigeria @elseif(isset($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif" />
+						<meta itemprop="name" content="Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}}, Nigeria @elseif(!empty($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif" />
                             @foreach($institutions as $institution)
 							
 							
                             <tr itemscope itemprop="itemListElement" itemtype="https://schema.org/ListItem">
-							@isset($institution->rank) <meta itemprop="position" content="{{$rank[$institution->id]['institution']}}"> @endisset
+							@if(!empty($institution->rank)) <meta itemprop="position" content="{{$rank[$institution->id]['institution']}}"> @endif
                                 <td class="fw-semibold fs-sm text-center text-black">
                                  @if(!empty($rank[$institution->id]['institution'])) {{Number::ordinal($rank[$institution->id]['institution'])}} @else NR @endif
                                 </td>
@@ -92,7 +92,7 @@ use Illuminate\Support\Number;
 										
 									</a>
                                 </td>
-                                <td class="fs-sm @if(isset($state)) d-none @endif">
+                                <td class="fs-sm @if(!empty($state)) d-none @endif">
 
                                     @if(!empty($rank[$institution->id]['state'])) {{Number::ordinal($rank[$institution->id]['state'])}} @else NR @endif in
 
@@ -100,7 +100,7 @@ use Illuminate\Support\Number;
 
                                 </td>
 
-                                <td class="fs-sm @if(isset($region)) d-none @endif">
+                                <td class="fs-sm @if(!empty($region)) d-none @endif">
 
                                     @if(!empty($rank[$institution->id]['region'])) {{Number::ordinal($rank[$institution->id]['region'])}} @else NR @endif in
 

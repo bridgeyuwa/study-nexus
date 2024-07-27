@@ -16,7 +16,7 @@ use Illuminate\Support\Number;
           <div class="bg-black-75">
             <div class="content content-boxed content-full py-5 pt-7">
               <div class="row">
-			    @isset($institution->logo)
+			    @if(!empty($institution->logo))
 				
 			    <div class="col-md-4 d-flex align-items-center">
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
@@ -27,10 +27,10 @@ use Illuminate\Support\Number;
                     </div>
                   </div>
                 </div>
-				@endisset
+				@endif
 				
-                <div class=" @isset($institution->logo) col-md-8 @endisset d-flex align-items-center py-3">
-					 <div class="w-100 text-center @isset($institution->logo)text-md-start @endisset">
+                <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
+					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
 						<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
@@ -38,13 +38,13 @@ use Illuminate\Support\Number;
 
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
-							@isset($institution->locality) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endisset  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @isset($institution->state->type) State @endisset </span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->type)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						
 						</h2>
 						<div class="text-white mb-3">
-						@isset($institution->slogan)( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endisset
+						@if(!empty($institution->slogan)) ( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endif
 						</div>
 						
 						<h2 class="h3 fw-light text-white">{{str::title($level->name)}} Programs</h2>

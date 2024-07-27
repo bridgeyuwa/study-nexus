@@ -41,7 +41,7 @@ use Illuminate\Support\Number;
 
 
 
-                               @if(isset($min_tuition)) 
+                               @if(!empty($min_tuition)) 
                          @if($min_tuition == $max_tuition)
                                  @if($min_tuition >= 1010000) 
                                  ₦ {{Number::abbreviate($min_tuition, precision: 2)}}  
@@ -93,7 +93,7 @@ use Illuminate\Support\Number;
                 </div>
                 <div class="block-content">
                     <ul class="fa-ul list-icons">
-							@isset($program->duration)
+							@if(!empty($program->duration))
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-university"></i>
@@ -102,7 +102,7 @@ use Illuminate\Support\Number;
 								<div class="text-muted">{{$program->duration}} Years</div>
 								<meta itemprop="timeToComplete" content="P{{$program->duration}}Y" />
 							</li>
-							 @endisset
+							 @endif
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
@@ -201,8 +201,9 @@ use Illuminate\Support\Number;
                     <!-- END DE Admission Requirements -->
 
                 </div>
-				SOURCE <a class="d-none" href="https://jamb.gov.ng/ibass">Jamb Integrated Brochure and Syllabus System</a>
-            </div>
+				<div class="d-flex justify-content-center fs-sm"> <span class="text-black"> Source: <a class="text-gray-dark" href="https://jamb.gov.ng/ibass">Jamb Integrated Brochure and Syllabus System</a> </span> </div>
+           
+				 </div>
             <!-- END General Admission Requirements -->
 
 

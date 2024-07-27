@@ -69,16 +69,20 @@ $level->load([ 'programs' => function ($query) use($program) {
 }]);
 
 
+
+
 /* for generic program data at levels */
  $program = $level->__programs()->where('program_id', $program->id)->first();
-
-
+ 
+ if(!$program){
+ abort(503,'Programme not available for this study level');
+ }
+ 
   $SEOData = new SEOData(
                                           title: $level->name. ' in '.$program->name. ' in Nigeria',
                                        );
 
 
-  // dd($program->requirements->direct_entry);
 
 return view('program.show', compact('level','program','SEOData'));
     }

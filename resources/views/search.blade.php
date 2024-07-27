@@ -106,7 +106,10 @@ use Illuminate\Support\Str;
                                     @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif   {{str::title($institution->state->name)}} 
 
                                 </div>
-                                @if(!empty($program)) <div class="h6 mb-2 text-white"> {{str::title($program->name)}} @isset($level)<span class="fs-sm fw-light">({{str::title($level->name)}})</span>@endif
+                                @if(!empty($program)) <div class="h6 mb-2 text-white"> {{str::title($program->name)}} 
+									@if(!empty($level))
+										<span class="fs-sm fw-light">({{str::title($level->name)}})</span>
+									@endif
                                 </div> @endif
                             </div>
                         </div>
@@ -147,28 +150,28 @@ use Illuminate\Support\Str;
 
 
                                     <span>
-                                        @if(isset($min_tuition)) 
-                                        @if($min_tuition == $max_tuition)
-                                        @if($min_tuition >= 1010000) 
-                                        <i class="far fa-money-bill-1 text-success"></i>    {{Number::abbreviate($min_tuition, precision: 2)}} Naira(₦) 
-                                        @else 
-                                        <i class="far fa-money-bill-1 text-success"></i>   {{Number::abbreviate($min_tuition)}} Naira(₦) 
-                                        @endif
-                                        @else 
-                                        @if($min_tuition >= 1010000) 
-                                        <i class="far fa-money-bill-1 text-success"></i>  {{Number::abbreviate($min_tuition, precision: 2)}} 
-                                        @else 
-                                        <i class="far fa-money-bill-1 text-success"></i> {{Number::abbreviate($min_tuition)}} 
-                                        @endif
+                                        @if(!empty($min_tuition)) 
+											@if($min_tuition == $max_tuition)
+												@if($min_tuition >= 1010000) 
+												<i class="far fa-money-bill-1 text-success"></i>    {{Number::abbreviate($min_tuition, precision: 2)}} Naira(₦) 
+												@else 
+												<i class="far fa-money-bill-1 text-success"></i>   {{Number::abbreviate($min_tuition)}} Naira(₦) 
+												@endif
+											@else 
+												@if($min_tuition >= 1010000) 
+												<i class="far fa-money-bill-1 text-success"></i>  {{Number::abbreviate($min_tuition, precision: 2)}} 
+												@else 
+												<i class="far fa-money-bill-1 text-success"></i> {{Number::abbreviate($min_tuition)}} 
+												@endif
 
-                                        <span class="fw-semibold">-</span> 
+												<span class="fw-semibold">-</span> 
 
-                                        @if($max_tuition >= 1010000)   
-                                        {{Number::abbreviate($max_tuition, precision: 2)}} Naira(₦) 
-                                        @else 
-                                        {{Number::abbreviate($max_tuition)}} Naira(₦) 
-                                        @endif
-                                        @endif 
+												@if($max_tuition >= 1010000)   
+												{{Number::abbreviate($max_tuition, precision: 2)}} Naira(₦) 
+												@else 
+												{{Number::abbreviate($max_tuition)}} Naira(₦) 
+												@endif
+											@endif 
 
                                         @endif 
                                     </span> 

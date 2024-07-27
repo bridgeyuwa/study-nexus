@@ -10,29 +10,29 @@
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
-                                    @isset($category)
+                                    @if(!empty($category))
                                         @if($category->id === 4) 
                                           Colleges Of Education 
                                         @else 
                                           {{ Str::of($category->name)->plural()->title()}}
                                         @endif
 
-                                     @else
-                                 Tertiary Institutions
-                                    @endisset in Nigeria
+                                    @else
+										Tertiary Institutions
+                                    @endif in Nigeria
                </h1>
 
                   <h2 class="h4 fs-md  fw-light text-white-75 ">
-                     ( Locate @isset($category)
+                     ( Locate @if(!empty($category))
                                         @if($category->id === 4) 
                                           Colleges Of Education 
                                         @else 
                                           {{ Str::of($category->name)->plural()->title()}}
                                         @endif
 
-                                     @else
-                                 Academic Institutions
-                                    @endisset by Region/State )
+                                    @else
+										Academic Institutions
+                                    @endif by Region/State )
                     </h2>
 
            
@@ -88,22 +88,22 @@
                         @foreach( $region->states as $state )
                         <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
                             <a href="
-                              @isset($category)
+                              @if(!empty($category))
                               {{route('institutions.categories.location.show', ['category' => $category->slug, 'state' => $state->slug])}}
                               @else 
                               {{route('institutions.location.show', ['state' => $state->slug])}}
-                              @endisset
+                              @endif
 
                                " class="fw-normal fs-normal">{{str::title($state->name)}} 
                             </a>
 
 
                             <a href="
-                               @isset($category)
+                               @if(!empty($category))
                                {{route('institutions.categories.location.show', ['category' => $category->slug, 'state' => $state->slug])}}
                                @else 
                                {{route('institutions.location.show', ['state' => $state->slug])}}
-                               @endisset
+                               @endif
                                " class="btn btn-light w-25 text-secondary"> 
 
                                <span class="badge rounded-pill bg-info">

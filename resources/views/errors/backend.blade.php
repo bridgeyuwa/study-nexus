@@ -3,15 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
-     <!-- laravel-seo here -->
-     @isset($SEOData) {!! seo($SEOData) !!} @endisset
-	 
-	 <!-- Schema -->
-    
-  <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+  
   
   <!-- Icons -->
   <link rel="shortcut icon" href="{{ asset('media/favicons/favicon.png') }}">
@@ -26,25 +19,22 @@
   <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
   <!-- <link rel="stylesheet" id="css-theme" href="{{ asset('css/themes/xwork.css') }}"> -->
   @yield('css_after')
+   <link rel="stylesheet"  href="{{ asset('css/custom.css') }}">
 
 
 <link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2-bootstrap-5-theme.min.css') }}">
 
-<link rel="stylesheet"  href="{{ asset('css/custom.css') }}">
-
   <!-- Scripts -->
-  <script>
-    window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-  </script>
+  
 </head>
 
 <body>
   <!-- Page Container -->
 
-  <div id="page-container" class="sidebar-o sidebar-dark side-scroll page-header-fixed main-content-narrow page-header-dark page-header-glass">
+  <div id="page-container" class=" @if($exception->getStatusCode() != 500 && $exception->getStatusCode() != 503)sidebar-o @endif sidebar-dark side-scroll page-header-fixed main-content-narrow page-header-dark page-header-glass">
     
-
+@if($exception->getStatusCode() != 500 && $exception->getStatusCode() != 503)
     <!-- Sidebar -->
     @include('partials.side-bar')
     <!-- END Sidebar -->
@@ -192,11 +182,52 @@
       <!-- END Header Loader -->
     </header>
     <!-- END Header -->
-
+@endif
     <!-- Main Container -->
     <main id="main-container">
 
-      @yield('content') 
+     <!-- Page Content -->
+        <div class="bg-image" style="background-image: url('/media/photos/photo18@2x.jpg');">
+          <div class="row g-0 justify-content-end bg-black-50">
+            <!-- Main Section -->
+            <div class=" col-md-5 d-flex flex-column bg-body-extra-light pt-4">
+              <!-- Header -->
+              <div class="flex-grow-0 p-5">
+               
+				<a href="{{route('home')}}"> <h1 class="display-4 text-dark">Study<span class="text-info">Nexus</span>.<span class="text-success fs-1">ng</span></h1></a>
+           
+                
+              </div>
+              <!-- END Header -->
+
+              <!-- Content -->
+              <div class="flex-grow-1 d-flex align-items-center p-5 bg-body-light">
+                <div class="w-100">
+				   @if($exception->getStatusCode() != 503)
+                  <p class="text-danger fs-4 fw-bold text-uppercase mb-2">
+                    @yield('code') Error
+                  </p>
+				  @endif
+                  <h1 class="fw-bold mb-2">
+                    @yield('title')
+                  </h1>
+                  <p class="fs-4 fw-medium text-muted mb-5">
+                    @yield('message')
+                  </p>
+					@if($exception->getStatusCode() != 503) 	
+					<a class="btn btn-lg btn-alt-danger" href="{{route('home')}}">
+                        <i class="fa fa-arrow-left opacity-50 me-1"></i> @if($exception->getStatusCode() == 500)  Try Returning to Home Page @else  Return to Home Page  @endif
+					</a>
+					@endif
+                </div>
+              </div>
+              <!-- END Content -->
+
+            </div>
+            <!-- END Main Section -->
+          </div>
+        </div>
+        <!-- END Page Content --> 
 
     </main>
     <!-- END Main Container -->

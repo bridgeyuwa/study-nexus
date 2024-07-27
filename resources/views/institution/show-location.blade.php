@@ -15,7 +15,7 @@ use Illuminate\Support\Number;
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
 
-                     @isset($category) @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif @else Tertiary Institutions                      @endisset in {{str::title($state->name)}} @if($state->id != 15) State @endif  - Nigeria
+                     @if(!empty($category)) @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif @else Tertiary Institutions                      @endif in {{str::title($state->name)}} @if($state->id != 15) State @endif  - Nigeria
              </h1>
               
               </div>
@@ -34,15 +34,15 @@ use Illuminate\Support\Number;
           <link itemprop="url"  content="{{url()->current()}}" />
 
             <!-- Introduction -->
-            <h2 itemprop="name" class="content-heading text-center"> @isset($category) <span class="text-black">  @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif   </span> @else All Tertiary Institutions @endisset in <span class="text-black">{{str::title($state->name)}} @if($state->id != 15) State @endif </span>,
+            <h2 itemprop="name" class="content-heading text-center"> @if(!empty($category)) <span class="text-black">  @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif   </span> @else All Tertiary Institutions @endif in <span class="text-black">{{str::title($state->name)}} @if($state->id != 15) State @endif </span>,
                 Nigeria
             </h2>
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
                         <p itemprop="description" class="text-muted ">
-                            A List of accredited @isset($category) <span class="text-black"> @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif </span> @else <span class="text-black">Universities</span>,
-                            <span class="text-black">Polytechnics</span>, <span class="text-black">Monotechnics</span>, <span class="text-black">Colleges of Education</span> and <span class="text-black">Innovation Enterprise Institutions</span>@endisset
+                            A List of accredited @if(!empty($category)) <span class="text-black"> @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif </span> @else <span class="text-black">Universities</span>,
+                            <span class="text-black">Polytechnics</span>, <span class="text-black">Monotechnics</span>, <span class="text-black">Colleges of Education</span> and <span class="text-black">Innovation Enterprise Institutions</span>@endif
                             in <span class="text-black">{{str::title($state->name)}} @if($state->id != 15) State, @endif </span> Nigeria.
                         </p>
                     </div>

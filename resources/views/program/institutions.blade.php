@@ -29,7 +29,7 @@
 
 
 
-                               @if(isset($min_tuition)) 
+                               @if(!empty($min_tuition)) 
                          @if($min_tuition == $max_tuition)
                                  @if($min_tuition >= 1010000) 
                                  ₦ {{Number::abbreviate($min_tuition, precision: 2)}}  

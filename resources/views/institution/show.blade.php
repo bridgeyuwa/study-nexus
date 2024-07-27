@@ -15,7 +15,7 @@ use Illuminate\Support\Number;
           <div class="bg-black-75">
             <div class="content content-boxed content-full py-5 pt-7">
               <div class="row">
-			    @isset($institution->logo)
+			    @if(!empty($institution->logo))
 				
 			    <div class="col-md-4 d-flex align-items-center">
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
@@ -26,10 +26,10 @@ use Illuminate\Support\Number;
                     </div>
                   </div>
                 </div>
-				@endisset
+				@endif
 				
-                <div class=" @isset($institution->logo) col-md-8 @endisset d-flex align-items-center py-3">
-					 <div class="w-100 text-center @isset($institution->logo)text-md-start @endisset">
+                <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
+					 <div class="w-100 text-center @if(!empty($institution->logo)text-md-start @endif">
 						<h1>  <a class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
@@ -37,13 +37,13 @@ use Illuminate\Support\Number;
 						  
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
-							@isset($institution->locality) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endisset  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @isset($institution->state->type) State @endisset </span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->type)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						
 						</h2>
 						<div class="text-white">
-						@isset($institution->slogan)( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endisset
+						@if(!empty($institution->slogan))( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endif
 						</div>
 					 </div>
                 </div>
@@ -81,7 +81,7 @@ use Illuminate\Support\Number;
 								<div class="text-muted">{{str::title($institution->term->name)}}</div>
 							</li>
 							
-							@isset($institution->established)
+							@if(!empty($institution->established))
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar-check"></i>
@@ -89,14 +89,14 @@ use Illuminate\Support\Number;
 								<div class="fw-semibold">Established</div>
 								<div itemprop="foundingDate" class="text-muted">{{$institution->established}}</div>
 							</li>
-							@endisset
+							@endif
 							
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-map-marker-alt"></i>
 								</span>
 								<div class="fw-semibold">Location</div>
-								<div class="text-muted"> @if(isset($institution->locality)) {{str::title($institution->locality)}} - @endif @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif </div>
+								<div class="text-muted"> @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif </div>
 							</li>
 						</ul>
 					</div>
@@ -113,11 +113,11 @@ use Illuminate\Support\Number;
 					</div>
 					<div  class="block-content pb-3">
 					
-						@isset($institution->description)
+						@if(!empty($institution->description))
 						<span itemprop="description">{{$institution->description}}</span>
 						@else
                         <span itemprop="description">{{$institution->description_alt}}</span>
-					    @endisset
+					    @endif
 	
 					</div>
 				</div>
@@ -229,19 +229,19 @@ use Illuminate\Support\Number;
 						<table class="table">
 							<tr>
 								<td class="fs-sm fw-semibold">Institution Accreditation Body</td>
-								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @isset($institution->accreditationBody->abbr) (<span itemprop="alternateName">{{str::upper($institution->accreditationBody->abbr)}}</span>) @endisset </a> </td>
+								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{str::upper($institution->accreditationBody->abbr)}}</span>) @endif </a> </td>
 							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
 							</tr>
 							<tr>
 								<td class="fs-sm fw-semibold">Accreditation Status</td>
 								<td>  
-								@isset($institution->accreditationStatus)
+								@if(!empty($institution->accreditationStatus))
 								<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
 								{{$institution->accreditationStatus->name}}
 								</button>
 								@else
 									Not Available
-								@endisset
+								@endif
 								</td>
 							</tr>		   
 						</table>
@@ -258,26 +258,26 @@ use Illuminate\Support\Number;
 					</div>
 					<div class="block-content">
 						<div class="mb-3 px-3">
-						    @isset($institution->url)
+						    @if(!empty($institution->url))
 							<div class="row bg-stripped">
 								<div class="col-3  fw-light text-black"><i class="fa fa-link text-dark me-1"></i>Website </div>
 								<div class="col"> <a class="link-fx link-info" href="{{$institution->url}}">{{$institution->url}}</a></div>
 							</div>
-							@endisset
+							@endif
 							
-							@isset($institution->email)
+							@if(!empty($institution->email))
 							<div class="row bg-stripped">
 								<div class="col-3  fw-light text-black"> <i class="fas fa-envelope text-dark me-1"></i>Email</div>
 								<div class="col"><a class="link-fx link-info" href="mailto:{{$institution->email}}"> <span itemprop="email">{{$institution->email}}</span></a></div>
 							</div>
-							@endisset
+							@endif
 
 							@if($institution->phonenumbers->isNotEmpty())
 							<div  class="row bg-stripped">
 								<div  class="col-3 fw-light text-black"><i class="fa fa-phone text-dark me-1"></i>Phone </div>
 								<div itemprop="contactPoint" itemscope itemtype="https://schema.org/ContactPoint" class="col"> 
 								   @foreach($institution->phonenumbers as $phone)
-								   <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}"> <span itemprop="telephone">+234 {{substr($phone->number, 1)}}</span> </a> @if(isset($phone->holder)) <span itemprop="contactType" class="ms-2 fw-light fs-sm">({{$phone->holder}}) </span> @endif <br>
+								   <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}"> <span itemprop="telephone">+234 {{substr($phone->number, 1)}}</span> </a> @if(!empty($phone->holder)) <span itemprop="contactType" class="ms-2 fw-light fs-sm">({{$phone->holder}}) </span> @endif <br>
 								   @endforeach
 								</div>
 							</div>
@@ -303,14 +303,14 @@ use Illuminate\Support\Number;
 					</div>
 					<div class="block-content">
 						<div class="mb-3 px-3">
-							   @isset($institution->address) <span class="me-2 d-block"> {{$institution->address}} </span> @endisset
-							   @isset($institution->locality) <span class="me-2 d-block"> {{$institution->locality}}</span> @endisset
-								<span class="me-2 d-block">{{$institution->state->name}} @isset($institution->state->type) State @endisset <span class="fs-sm">(NG-{{$institution->state->code}})</span> </span>
-								@isset($institution->postal_code)<span class="me-2 d-block"> {{$institution->postal_code}}</span>@endisset
+							   @if(!empty($institution->address)) <span class="me-2 d-block"> {{$institution->address}} </span> @endif
+							   @if(!empty($institution->locality)) <span class="me-2 d-block"> {{$institution->locality}}</span> @endif
+								<span class="me-2 d-block">{{$institution->state->name}} @if(!empty($institution->state->type)) State @endif <span class="fs-sm">(NG-{{$institution->state->code}})</span> </span>
+								@if(!empty($institution->postal_code))<span class="me-2 d-block"> {{$institution->postal_code}}</span>@endif
 								<span class="me-2 d-block"> Nigeria (<span class="fs-sm">NG</span>)</span>
 							   
 						</div> 
-                        @isset($institution->coordinates)						
+                        @if(!empty($institution->coordinates))						
 						<div class="map bg-success w-100 mx-auto mb-3" style="height: 300px;"> 
 				<link itemprop="hasMap" href="https://maps.google.com/place/1,university+drive+bsu,+makurdi">
 						
@@ -327,7 +327,7 @@ use Illuminate\Support\Number;
 						
 						
 						</div> 
-                        @endisset						
+                        @endif						
 					</div>
 				</div>	
 				<!-- END Address -->
