@@ -74,8 +74,9 @@ $level->load([ 'programs' => function ($query) use($program) {
 /* for generic program data at levels */
  $program = $level->__programs()->where('program_id', $program->id)->first();
  
+ //Throw 404 if program does nor exist at a level
  if(!$program){
- abort(503,'Programme not available for this study level');
+ abort(404);
  }
  
   $SEOData = new SEOData(
