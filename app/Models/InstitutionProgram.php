@@ -36,4 +36,9 @@ class InstitutionProgram extends Pivot
     }
 	
 	
+	
+	public function programMode() {
+        return $this->belongsTo(ProgramMode::class);
+    }
+	
 }

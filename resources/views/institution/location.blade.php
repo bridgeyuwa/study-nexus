@@ -32,11 +32,11 @@
 
                                     @else
 										Academic Institutions
-                                    @endif by Region/State )
+                                    @endif by Regions/State )
                     </h2>
 
            
-            <h2 class="h3 fw-light text-white">Region/States</h2>
+            <h2 class="h3 fw-light text-white">Regions/States</h2>
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@
                               {{route('institutions.location.show', ['state' => $state->slug])}}
                               @endif
 
-                               " class="fw-normal fs-normal">{{str::title($state->name)}} 
+                               " class="fw-normal fs-normal">{{str::title($state->name)}} @if(!empty($state->is_state)) State @endif
                             </a>
 
 

@@ -20,7 +20,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->year('established')->nullable();
             $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('lga_id');
             $table->string('locality')->nullable();
             $table->unsignedBigInteger('schooltype_id');
             $table->unsignedBigInteger('category_id');

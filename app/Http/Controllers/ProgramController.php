@@ -6,6 +6,9 @@ use App\Models\Level;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\SchemaOrg\Schema;
 
+use Illuminate\Support\Facades\DB;
+
+
 class ProgramController extends Controller
 {
     /* list programs at a particular Level of study */
@@ -16,28 +19,15 @@ $level->load('programs');
     
 
 // Get the programs with the college relationship eager loaded
-$programs = $level->__programs()->with('college')->get();
 
-// Initialize an empty array to store programs grouped by college
-$colleges = [];
+//$programs = $level->__programs()->with('college')->get()->groupBy('college.name');
 
-// Iterate over each program
-foreach ($programs as $program) {
-    // Retrieve the college name associated with the program
-    $collegeName = $program->college->name;
-
-    // Check if the college exists in the array
-    if (!isset($colleges[$collegeName])) {
-        // If not, initialize an empty array for the college
-        $colleges[$collegeName] = [];
-    }
-
-    // Add the program to the array under the college
-    $colleges[$collegeName][] = $program;
-}
-
-// Now $colleges is an associative array where keys are college names
-// and values are arrays of programs associated with each college
+$programs = $level->__programs()->with('college')->get()
+    ->groupBy(function ($program) {
+        return $program->college->name;
+    })->sortKeys()->map(function ($group) {
+                return $group->sortBy(fn($program) => $program->name);  // Sort the programs within each college by name
+            });
 
 
 
@@ -47,11 +37,10 @@ foreach ($programs as $program) {
 
                                        );
 									   
-			$programs = $programs = $level->__programs()->with('college')->get()->groupBy('college.name');
 						   
 									   
  
-           return view('program.index', compact('colleges','level','SEOData'));
+           return view('program.index', compact('programs','level','SEOData'));
     }
 
 
@@ -70,7 +59,6 @@ $level->load([ 'programs' => function ($query) use($program) {
 
 
 
-
 /* for generic program data at levels */
  $program = $level->__programs()->where('program_id', $program->id)->first();
  
@@ -79,13 +67,18 @@ $level->load([ 'programs' => function ($query) use($program) {
  abort(404);
  }
  
+ $program_levels = $program->__levels()->get();
+
+
+
+
   $SEOData = new SEOData(
                                           title: $level->name. ' in '.$program->name. ' in Nigeria',
                                        );
 
 
 
-return view('program.show', compact('level','program','SEOData'));
+return view('program.show', compact('level','program','program_levels','SEOData'));
     }
     
 
@@ -100,7 +93,7 @@ $level->load([ 'programs' => function ($query) use($program) {
 }]);
 
 
-$institutions = $program->institutions()->with(['schooltype','category','state'])->wherePivot('level_id', $level->id)->paginate(60);
+$institutions = $program->institutions()->with(['schooltype','category','state'])->wherePivot('level_id', $level->id)->orderBy('name')->paginate(60);
 
 
 

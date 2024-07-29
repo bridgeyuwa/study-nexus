@@ -8,62 +8,13 @@
 <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-6">
-            <div class="row">
-                <div class="col-md-8 pt-4 pb-3">
+           
+                <div class="pt-4 pb-3">
                     <h1 class="fw-light text-white mb-1 h2"> Academic Institutions Offering {{Str::title($level->name)}} in {{Str::title($program->name)}} in Nigeria</h1>
 
                     
                 </div>
 
-                <div class="col-md-4 d-flex align-items-center">
-                    <div class="block block-rounded block-transparent bg-black-50 text-center mb-0 mx-auto">
-                        <div class="block-content block-content-full px-4 py-4">
-                            <div class="fs-2 fw-semibold text-white">
-                                
-
-                                @php  
-                               $min_tuition = $level->programs->min('pivot.tuition_fee');
-                               $max_tuition = $level->programs->max('pivot.tuition_fee');
-                          @endphp
-
-
-
-
-                               @if(!empty($min_tuition)) 
-                         @if($min_tuition == $max_tuition)
-                                 @if($min_tuition >= 1010000) 
-                                 ₦ {{Number::abbreviate($min_tuition, precision: 2)}}  
-                                 @else 
-                                 ₦ {{Number::abbreviate($min_tuition)}} 
-                                 @endif
-                         @else 
-                                 @if($min_tuition >= 1010000) 
-                                  ₦ {{Number::abbreviate($min_tuition, precision: 2)}} 
-                                  @else 
-                                  ₦ {{Number::abbreviate($min_tuition)}} 
-                                 @endif
-
-                                   <span class="fw-semibold">-</span> 
-
-                                @if($max_tuition >= 1010000)   
-                                   ₦ {{Number::abbreviate($max_tuition, precision: 2)}} 
-                                @else 
-                                   ₦ {{Number::abbreviate($max_tuition)}} 
-                                @endif
-                        @endif 
-                                 
-                  @endif
-
-
-
-                            </div>
-                            <div class="fs-sm fw-semibold text-uppercase text-white-50 mt-1 push">Annual Tuition</div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
 </div>
@@ -100,13 +51,13 @@
 										   @if(!empty($institution->abbr))<span class="text-white-75 ">({{str::upper($institution->abbr)}})</span> @endif 
 										</div>
 
-									@if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
+									@if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
 										  <div class="fs-sm text-white-75 mb-0">
 										   {{str::title($institution->schooltype->name)}} 
 										   {{str::title($institution->category->name)}}. 
 												<i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
 										<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" >  
-										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}}</span> - @endif    <span itemprop="addressRegion">{{str::title($institution->state->name)}}</span> 
+										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}}</span> - @endif    <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif</span> 
 										
 										@if(!empty($institution->address)) <meta itemprop="streetAddress" content="{{$institution->address}}" /> @endif
 										@if(!empty($institution->postal_code)) <meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif

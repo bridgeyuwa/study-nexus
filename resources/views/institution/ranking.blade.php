@@ -20,7 +20,7 @@ use Illuminate\Support\Number;
 				<meta itemprop="url" content="{{url()->current()}}">
 
                 <h2 class="h4 fs-md  fw-light text-white-75 mb-1">
-                    @if(!empty($state)) {{str::title($state->name)}} - Nigeria @elseif(!empty($region)) {{str::title($region->name)}} - Nigeria @else Nigeria @endif
+                    @if(!empty($state)) {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif - Nigeria @elseif(!empty($region)) {{str::title($region->name)}} - Nigeria @else Nigeria @endif
                 </h2>
 
             </div>
@@ -36,12 +36,12 @@ use Illuminate\Support\Number;
     <div class="block block-rounded">
         <div class="block-content">
 
-            <h2 class="content-heading text-center">Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}}, Nigeria @elseif(!empty($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif </h2>
+            <h2 class="content-heading text-center">Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif </h2>
             <div itemprop="description" class="row items-push">
                 <div>
                         <p class="text-muted ">
                             Discover the top-ranked Nigerian @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif with our comprehensive ranking table. Explore accreditation details, admission criteria, and courses offered by
-                            the best @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}} state, @elseif(!empty($region)) {{str::title($region->name)}}, @endif Nigeria. Whether
+                            the best @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif, @elseif(!empty($region)) {{str::title($region->name)}}, @endif Nigeria. Whether
                             you are searching for the top @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in Nigeria or seeking valuable insights into higher education, our list provides essential
                             information.
                         </p>
@@ -58,7 +58,7 @@ use Illuminate\Support\Number;
 						<thead class="table-dark">
                             <tr class="fs-sm">
                                 <th class="text-center" style="width: 150px; min-width: 85px">
-                                <i class="fa fa-star me-1"></i>@if(!empty($state)) {{str::title($state->name)}} @elseif(!empty($region)) {{str::title($region->name)}} @else Nigeria @endif Rank 
+                                <i class="fa fa-star me-1"></i>@if(!empty($state)) {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif @elseif(!empty($region)) {{str::title($region->name)}} @else Nigeria @endif Rank 
                                 </th>
                                 <th style="min-width: 265px;">{{$category->name}}</th>
                                 <th class="@if(!empty($state)) d-none @endif" style="width: 15%; min-width: 140px;">State Rank</th>
@@ -68,7 +68,7 @@ use Illuminate\Support\Number;
                         </thead>
 
                         <tbody itemscope itemtype="https://schema.org/ItemList" >
-						<meta itemprop="name" content="Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}}, Nigeria @elseif(!empty($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif" />
+						<meta itemprop="name" content="Ranking of @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural()}} @endif in @if(!empty($state)) {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{str::title($region->name)}}, Nigeria @else Nigeria @endif" />
                             @foreach($institutions as $institution)
 							
 							
@@ -83,10 +83,10 @@ use Illuminate\Support\Number;
 									<link itemprop="url" content="{{route('institutions.show', ['institution' => $institution->id])}}">
 									@if(!empty($institution->url))<meta itemprop="sameAs" content="{{$institution->url}}"> @endif
 									<span  itemprop="address" itemscope itemtype="https://schema.org/PostalAddress"> 
-										@if(!empty($institution->address))<meta itemprop="streetAddress" content="{{$institution->address}}" />@endif
-										@if(!empty($institution->locality))<meta itemprop="addressLocality" content="{{$institution->locality}}" />@endif
-										<meta itemprop="addressRegion" content="{{$institution->state->name}}" />
-										@if(!empty($institution->postal_code))<meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif
+										@if(!empty($institution->address))<meta itemprop="streetAddress" content="{{$institution->address}}" >@endif
+										@if(!empty($institution->locality))<meta itemprop="addressLocality" content="{{$institution->locality}}" >@endif
+										<meta itemprop="addressRegion" content="{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif" >
+										@if(!empty($institution->postal_code))<meta itemprop="postalCode" content="{{$institution->postal_code}}" > @endif
 										<meta itemprop="addressCountry" content="NG" />
 									</span>	
 										
@@ -96,7 +96,7 @@ use Illuminate\Support\Number;
 
                                     @if(!empty($rank[$institution->id]['state'])) {{Number::ordinal($rank[$institution->id]['state'])}} @else NR @endif in
 
-                                    <a href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> {{str::title($institution->state->name)}} </a>
+                                    <a href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> {{str::title($institution->state->name)}}  </a>
 
                                 </td>
 

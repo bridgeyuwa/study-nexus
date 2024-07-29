@@ -38,7 +38,7 @@ use Illuminate\Support\Number;
 
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
-							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->type)) State @endif </span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						

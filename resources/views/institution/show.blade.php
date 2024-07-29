@@ -29,15 +29,20 @@ use Illuminate\Support\Number;
 				@endif
 				
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
-					 <div class="w-100 text-center @if(!empty($institution->logo)text-md-start @endif">
-						<h1>  <a class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
+						<h1>  <a class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> 
+						<span itemprop="name">{{Str::title($institution->name)}}</span> 
+						@if(!empty($institution->abbr))
+							<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>
+						@endif 
+						</a></h1>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
 						  
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
-							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->type)) State @endif </span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						
@@ -64,7 +69,7 @@ use Illuminate\Support\Number;
 					<div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
 							<h3 class="block-title">Highlights</h3>
 					</div>
-					<div class="block-content fs-sm">
+					<div class="block-content">
 						<ul class="fa-ul list-icons">
 							<li class="mb-1">
 								<span class="fa-li text-primary">
@@ -96,7 +101,7 @@ use Illuminate\Support\Number;
 									<i class="fa fa-map-marker-alt"></i>
 								</span>
 								<div class="fw-semibold">Location</div>
-								<div class="text-muted"> @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif @if($institution->state->id == 15) FCT @else {{str::title($institution->state->name)}} State @endif </div>
+								<div class="text-muted"> @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif {{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif  </div>
 							</li>
 						</ul>
 					</div>
@@ -178,7 +183,7 @@ use Illuminate\Support\Number;
 								</span>
 							</div>
 						<div>
-						  <div class="h6 mb-0">Courses</div> 
+						  <div class="h6 mb-0">Programmes</div> 
 						  <div class="text-center">(<span class="text-primary">{{$level->programs->count()}}</span>)</div>
 						</div>
 					  </div>
@@ -197,7 +202,7 @@ use Illuminate\Support\Number;
 
 						<table class="table table-borderless">
 							<tr class="">
-								<td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} </span></td>
+								<td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span></td>
 								<td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
 								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
 							</tr>
@@ -228,12 +233,12 @@ use Illuminate\Support\Number;
 					<div itemprop="recognizedBy" itemscope itemtype="https://schema.org/EducationalOrganization" class="block-content">
 						<table class="table">
 							<tr>
-								<td class="fs-sm fw-semibold">Institution Accreditation Body</td>
+								<td class="fw-semibold">Institution Accreditation Body</td>
 								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{str::upper($institution->accreditationBody->abbr)}}</span>) @endif </a> </td>
 							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
 							</tr>
 							<tr>
-								<td class="fs-sm fw-semibold">Accreditation Status</td>
+								<td class="fw-semibold">Accreditation Status</td>
 								<td>  
 								@if(!empty($institution->accreditationStatus))
 								<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
@@ -305,7 +310,7 @@ use Illuminate\Support\Number;
 						<div class="mb-3 px-3">
 							   @if(!empty($institution->address)) <span class="me-2 d-block"> {{$institution->address}} </span> @endif
 							   @if(!empty($institution->locality)) <span class="me-2 d-block"> {{$institution->locality}}</span> @endif
-								<span class="me-2 d-block">{{$institution->state->name}} @if(!empty($institution->state->type)) State @endif <span class="fs-sm">(NG-{{$institution->state->code}})</span> </span>
+								<span class="me-2 d-block">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif <span class="fs-sm">(NG-{{$institution->state->code}})</span> </span>
 								@if(!empty($institution->postal_code))<span class="me-2 d-block"> {{$institution->postal_code}}</span>@endif
 								<span class="me-2 d-block"> Nigeria (<span class="fs-sm">NG</span>)</span>
 							   

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('phonenumbers', function (Blueprint $table) {
-            $table->foreign(['institution_id'])->references(['id'])->on('institutions');
+            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
         });
     }
 

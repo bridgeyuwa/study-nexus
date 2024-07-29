@@ -15,7 +15,7 @@ use Illuminate\Support\Number;
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
 
-                     @if(!empty($category)) @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif @else Tertiary Institutions                      @endif in {{str::title($state->name)}} @if($state->id != 15) State @endif  - Nigeria
+                     @if(!empty($category)) @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif @else Tertiary Institutions                      @endif in {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif  - Nigeria
              </h1>
               
               </div>
@@ -34,7 +34,7 @@ use Illuminate\Support\Number;
           <link itemprop="url"  content="{{url()->current()}}" />
 
             <!-- Introduction -->
-            <h2 itemprop="name" class="content-heading text-center"> @if(!empty($category)) <span class="text-black">  @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif   </span> @else All Tertiary Institutions @endif in <span class="text-black">{{str::title($state->name)}} @if($state->id != 15) State @endif </span>,
+            <h2 itemprop="name" class="content-heading text-center"> @if(!empty($category)) <span class="text-black">  @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif   </span> @else All Tertiary Institutions @endif in <span class="text-black">{{str::title($state->name)}} @if(!empty($state->is_state)) State @endif </span>,
                 Nigeria
             </h2>
             <div class="row items-push">
@@ -43,7 +43,7 @@ use Illuminate\Support\Number;
                         <p itemprop="description" class="text-muted ">
                             A List of accredited @if(!empty($category)) <span class="text-black"> @if($category->id == 4) Colleges of Education @else {{str::of($category->name)->title()->plural}} @endif </span> @else <span class="text-black">Universities</span>,
                             <span class="text-black">Polytechnics</span>, <span class="text-black">Monotechnics</span>, <span class="text-black">Colleges of Education</span> and <span class="text-black">Innovation Enterprise Institutions</span>@endif
-                            in <span class="text-black">{{str::title($state->name)}} @if($state->id != 15) State, @endif </span> Nigeria.
+                            in <span class="text-black">{{str::title($state->name)}} @if(!empty($institution->state->is_state)) State @endif </span>, Nigeria.
                         </p>
                     </div>
                 </div>
@@ -57,17 +57,17 @@ use Illuminate\Support\Number;
 					  <div class="block block-header-default bg-image mb-0 fw-light"
                           style="background-image: url('/media/photos/photo11.jpg');">
                           <div class="bg-black-75 text-center p-3">
-                              <div class="fs-4 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
+                              <div class="fs-5 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
                                @if(!empty($institution->abbr))<span class="text-white-75 ">({{str::upper($institution->abbr)}})</span> @endif 
                             </div>
 
-                        @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
+                        @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
                               <div class="fs-sm text-white-75 mb-0">
                                {{str::title($institution->schooltype->name)}} 
                                {{str::title($institution->category->name)}}. 
                                     <i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
                             <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" >  
-							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}}</span> - @endif    <span itemprop="addressRegion">{{str::title($institution->state->name)}}</span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}}</span> - @endif    <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif</span> 
 							
 							@if(!empty($institution->address)) <meta itemprop="streetAddress" content="{{$institution->address}}" /> @endif
 							@if(!empty($institution->postal_code)) <meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif

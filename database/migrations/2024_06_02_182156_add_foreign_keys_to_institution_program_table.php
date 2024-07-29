@@ -12,13 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('institution_program', function (Blueprint $table) {
-            $table->foreign(['institution_id'])->references(['id'])->on('institutions');
-            $table->foreign(['program_id'])->references(['id'])->on('programs');
-            $table->foreign(['level_id'])->references(['id'])->on('levels');
+            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
+            $table->foreign(['program_id'])->references(['id'])->on('programs')->onUpdate('cascade');
+            $table->foreign(['level_id'])->references(['id'])->on('levels')->onUpdate('cascade');
 			
-			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies');
-			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses');
-        });
+			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->onUpdate('cascade');
+			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->onUpdate('cascade');
+            $table->foreign(['program_mode_id'])->references(['id'])->on('program_modes')->onUpdate('cascade');
+       
+	   });
     }
 
     /**

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('catchment_institution', function (Blueprint $table) {
-            $table->foreign(['catchment_id'])->references(['id'])->on('catchments');
-            $table->foreign(['institution_id'])->references(['id'])->on('institutions');
+            $table->foreign(['catchment_id'])->references(['id'])->on('catchments')->onUpdate('cascade');
+            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
         });
     }
 

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('states', function (Blueprint $table) {
-            $table->foreign(['region_id'])->references(['id'])->on('regions')->onUpdate('cascade');
+        Schema::create('program_modes', function (Blueprint $table) {
+            $table->id();
+			$table->string('name');
+			$table->text('description');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('states', function (Blueprint $table) {
-            $table->dropForeign('states_region_id_foreign');
-        });
+        Schema::dropIfExists('program_modes');
     }
 };

@@ -12,6 +12,7 @@ use App\Models\Category;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Spatie\SchemaOrg\Schema;
 
+
 class InstitutionController extends Controller {
 	
 	public function test() {
@@ -96,7 +97,7 @@ class InstitutionController extends Controller {
                    public function showLocation(State $state) {
 
                         
-                   $institutions = $state->institutions()->with('category','schooltype','state')->get();
+                   $institutions = $state->institutions()->with('category','schooltype','state')->orderBy('name')->get();
 
                    $SEOData = new SEOData(
                                     title: 'All Institutions in '.$state->name,
@@ -112,7 +113,7 @@ class InstitutionController extends Controller {
 
         public function showCategoryLocation(Category $category, State $state) {
 
-              $institutions = $state->institutions()->where('category_id', $category->id)->with('category','schooltype','state')->get();
+              $institutions = $state->institutions()->where('category_id', $category->id)->with('category','schooltype','state')->orderBy('name')->get();
 
 
 if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
@@ -307,7 +308,9 @@ private function computeRank($institution, $allInstitutions) {
                                                       }
                                    ]);	
 								   
-						   
+					
+            
+					
               
              $rank = $this->computeRank($institution, $allInstitutions);
              $levels = $institution->levels->unique();
@@ -325,6 +328,8 @@ private function computeRank($institution, $allInstitutions) {
 		$institution['description_alt']= $description;
 		
 		//dd($institution->description_alt);
+		
+		//dd($institution->socials);
 		     
           return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
@@ -333,8 +338,13 @@ private function computeRank($institution, $allInstitutions) {
     // list of programs offered by an institution at a Level /institutions/{institution}/levels/{level}/programs
   
     public function programs(Institution $institution, Level $level) {
-        $programs = $institution->programs()->wherePivot('level_id', $level->id)->with('college')->get()->groupBy('college.name');
-
+        $programs = $institution->programs()->wherePivot('level_id', $level->id)->with('college')->get()->groupBy(function ($program) {
+        return $program->college->name;
+    })->sortKeys()->map(function ($group) {
+                return $group->sortBy(fn($program) => $program->name);  // Sort the programs within each college by name
+            });
+			
+			
        $description = 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.';
         $SEOData = new SEOData(
                                     title:  $institution->name.' '.$level->name. ' Programs',
@@ -352,19 +362,27 @@ private function computeRank($institution, $allInstitutions) {
 
     // show single institution program data
     public function program(Institution $institution, Level $level = null, Program $program) {
-        $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first()->pivot;
+        $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first();
         
+		if(!$institution_program)
+		{
+			abort(404);
+		}
+											  
+			$program_levels = $institution->levels()->wherePivot('program_id', $program->id)->get();										  
+		
             $SEOData = new SEOData(
                                     title: $level->name.' in ' .$program->name. ' offered at '.$institution->name,
                                     description: 'Detailed information about '.$level->name.' in ' .$program->name. ' offered at '.$institution->name.'. program highlights and overview ',
                                        );
 					
+     
+//dd($institution_program->pivot->programMode->name);	 
 
-	$programTitle = $level->name .' in '. $program->name;
 
-							   						   
 
-        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','SEOData'));
+
+        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData'));
     }
 	
 	

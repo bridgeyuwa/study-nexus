@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('institutions', function (Blueprint $table) {
-            $table->foreign(['category_id'])->references(['id'])->on('categories');
-            $table->foreign(['lga_id'])->references(['id'])->on('lgas');
-            $table->foreign(['schooltype_id'])->references(['id'])->on('schooltypes');
-            $table->foreign(['state_id'])->references(['id'])->on('states');
-            $table->foreign(['term_id'])->references(['id'])->on('terms');
-			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies');
-			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses');
+            $table->foreign(['category_id'])->references(['id'])->on('categories')->onUpdate('cascade');
+            $table->foreign(['schooltype_id'])->references(['id'])->on('schooltypes')->onUpdate('cascade');
+            $table->foreign(['state_id'])->references(['id'])->on('states')->onUpdate('cascade');
+            $table->foreign(['term_id'])->references(['id'])->on('terms')->onUpdate('cascade');
+			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->onUpdate('cascade');
+			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->onUpdate('cascade');
 			
         });
     }

@@ -50,11 +50,11 @@
 					  <div class="block block-header-default bg-image mb-0 fw-light"
                           style="background-image: url('/media/photos/photo11.jpg');">
                           <div class="bg-black-75 text-center p-3">
-                              <div class="fs-4 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
+                              <div class="fs-5 text-white mb-1"> <span itemprop="name">{{str::title($institution->name)}}</span>
                                @if(!empty($institution->abbr))<span class="text-white-75 ">({{str::upper($institution->abbr)}})</span> @endif 
                             </div>
 
-                        @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Former: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
+                        @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
                               <div class="fs-sm text-white-75 mb-0">
                                {{str::title($institution->schooltype->name)}} 
                                {{str::title($institution->category->name)}}. 

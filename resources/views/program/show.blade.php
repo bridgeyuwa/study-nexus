@@ -5,6 +5,10 @@
 @php 
 use Illuminate\Support\Str;
 use Illuminate\Support\Number;
+
+$min_tuition = $level->programs->min('pivot.tuition_fee');
+$max_tuition = $level->programs->max('pivot.tuition_fee');
+
 @endphp
 
 
@@ -18,7 +22,7 @@ use Illuminate\Support\Number;
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="row">
-                <div class="col-md-8 pt-4 pb-3">
+                <div class="pt-4 pb-3">
                     <h1 class="fw-light text-white mb-1 ">{{Str::title($program->name)}}</h1>
                     <h2 class="h4 fs-md  fw-light text-white-75 ">
                      {{Str::title($level->name)}}
@@ -26,53 +30,7 @@ use Illuminate\Support\Number;
                     
                 </div>
 
-                <div class="col-md-4 d-flex align-items-center">
-                    <div class="block block-rounded block-transparent bg-black-50 text-center mb-0 mx-auto">
-                        <div class="block-content block-content-full px-4 py-4">
-                            <div class="fs-2 fw-semibold text-white">
-                                
-
-
-                               @php  
-                               $min_tuition = $level->programs->min('pivot.tuition_fee');
-                               $max_tuition = $level->programs->max('pivot.tuition_fee');
-                          @endphp
-
-
-
-
-                               @if(!empty($min_tuition)) 
-                         @if($min_tuition == $max_tuition)
-                                 @if($min_tuition >= 1010000) 
-                                 ₦ {{Number::abbreviate($min_tuition, precision: 2)}}  
-                                 @else 
-                                 ₦ {{Number::abbreviate($min_tuition)}} 
-                                 @endif
-                         @else 
-                                 @if($min_tuition >= 1010000) 
-                                  ₦ {{Number::abbreviate($min_tuition, precision: 2)}} 
-                                  @else 
-                                  ₦ {{Number::abbreviate($min_tuition)}} 
-                                 @endif
-
-                                   <span class="fw-semibold">-</span> 
-
-                                @if($max_tuition >= 1010000)   
-                                   ₦ {{Number::abbreviate($max_tuition, precision: 2)}} 
-                                @else 
-                                   ₦ {{Number::abbreviate($max_tuition)}} 
-                                @endif
-                        @endif 
-                                 
-                  @endif
-
-
-                            </div>
-                            <div class="fs-sm fw-semibold text-uppercase text-white-50 mt-1 push">Annual Tuition</div>
-
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
         </div>
@@ -83,6 +41,37 @@ use Illuminate\Support\Number;
       
         <!-- Page Content -->
 <div class="content content-boxed">
+
+    <div class="col-md-12 order-md-1">
+
+            <!-- nav -->
+            <div class="block block-rounded">
+			
+                
+                    <ul class="nav nav-tabs nav-tabs-block bg-gray-lighter">
+					@foreach($program_levels as $program_level)
+						
+                  <li class="nav-item">
+                    <a href="{{route('programs.show', ['level' => $program_level->slug, 'program' => $program->id])}}"><button
+					@if(
+					route('programs.show', ['level' => $program_level->slug, 'program' => $program->id]) == url()->current()
+					) 
+					class="nav-link active" disabled
+					@else
+						class="nav-link"
+					@endif
+					> {{$program_level->name}}
+					</button>
+					</a>
+                  </li>
+				  @endforeach
+                  
+                </ul>
+            </div>
+            <!-- END nav -->
+        </div>
+
+
     <div class="row">
         <div class="col-md-4 order-md-1">
 
@@ -93,29 +82,28 @@ use Illuminate\Support\Number;
                 </div>
                 <div class="block-content">
                     <ul class="fa-ul list-icons">
-							@if(!empty($program->duration))
+							
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-university"></i>
 								</span>
-								<div class="fw-semibold">Duration</div>
-								<div class="text-muted">{{$program->duration}} Years</div>
+								<div class="fw-semibold">Average Duration</div>
+								<div class=""> @if(!empty($program->pivot->duration)){{$program->pivot->duration}} Years @else N/A @endif</div>
 								<meta itemprop="timeToComplete" content="P{{$program->duration}}Y" />
 							</li>
-							 @endif
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
-								<div class="fw-semibold">Program Mode</div>
-								<div itemprop="educationalProgramMode" class="text-muted">Full-time</div>
+								<div class="fw-semibold">Programme Mode</div>
+								<div itemprop="educationalProgramMode" class="">Full-time</div>
 							</li>
 							<li itemprop="educationalCredentialAwarded" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
 								<div class="fw-semibold">Credential Awarded</div>
-								<div itemprop="credentialCategory" class="text-muted">{{$level->name}}</div>
+								<div itemprop="credentialCategory" class="">{{$level->name}}</div>
 							</li>
 							
 							
@@ -130,10 +118,10 @@ use Illuminate\Support\Number;
             <!-- Program Description -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Course Overview</h3>
+                    <h3 class="block-title">Programme Overview</h3>
                 </div>
                 <div class="block-content">
-                    <p itemprop="description" class="fs-6">{!!$program->pivot->description!!}</p>
+                    <p itemprop="description">{!!$program->pivot->description!!}</p>
                 </div>
             </div>
             <!-- END Program Description -->
@@ -176,25 +164,25 @@ use Illuminate\Support\Number;
                                 </tr>
 								<tr>  
 								
-								<td class="text-danger fw-light" colspan="2" style="font-size: 0.75rem;">UTME Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions. Ensure to check the institution of choice for its specific requirements. </td>
+								<td class="text-danger fw-light fs-sm" colspan="2" >UTME Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions. Ensure to check the institution of choice for its specific requirements. </td>
 								</tr>
                             </table>
 
                         </div>
                     </div>
                     <!-- END UTME Admission Requirements -->
-
+					
                     <!-- DE Admission Requirements -->
-                    @if($level->id == 1)      <!-- fix this -->
+                    @if($level->id == 1)      <!-- use this -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                             <h3 class="block-title">JAMB Direct Entry Requirements</h3>
                         </div>
                         <div itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block-content text-center pb-2">
-								<span itemprop="description"> {{$program->pivot->requirements->direct_entry}} </span>
+							@if(!empty($program->pivot->requirements->direct_entry))	<span itemprop="description"> {{$program->pivot->requirements->direct_entry}} </span> @else No Direct Entry @endif
 								
                         </div>
-						<span class="text-danger fw-light d-block px-4 py-2 border-top " style="font-size: 0.75rem;">Direct Entry Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions, and some may not accept Direct Entry for {{$program->name}}.  Ensure to check the institution of choice for its specific requirements. </span>
+						<span class="text-danger fw-light d-block px-4 py-2 border-top fs-sm" >Direct Entry Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions, and some may not accept Direct Entry for {{$program->name}}.  Ensure to check the institution of choice for its specific requirements. </span>
 								
                     </div>
                     @endif
@@ -208,20 +196,20 @@ use Illuminate\Support\Number;
 
 
 
-
+            
             <!-- Tuition Range -->
             <div itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                     <h3 class="block-title"> <span itemprop="name"> Tuition Fee </span> <span class="fw-light">(Range)</span></h3>
                 </div>
                 <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center">
-                    <p class="fs-lg text-muted">
-                       <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="minPrice">  {{Number::format($min_tuition)}} </span> - <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="maxPrice">  {{Number::format($max_tuition)}} </span>
+                    <p class="fs-lg">
+                       @if(!empty($min_tuition))<span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="minPrice">  {{Number::format($min_tuition)}} </span> - <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="maxPrice">  {{Number::format($max_tuition)}} </span> @else <span class="fs-5"> Tuition fee not available.</span> @endif
                     </p>
                 </div>
             </div>
             <!-- END Tuition Range -->
-
+             
             <!-- Instititions Offering Program -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">

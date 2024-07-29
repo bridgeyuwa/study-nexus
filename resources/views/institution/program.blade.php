@@ -38,7 +38,7 @@ use Illuminate\Support\Number;
 
 									<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 										<meta itemprop="streetAddress" content="{{$institution->address}}">
-										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->type)) State @endif </span> 
+										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
 										 <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 										<meta itemprop="addressCountry" content="NG">
 									
@@ -64,7 +64,44 @@ use Illuminate\Support\Number;
 
          <!-- Page Content -->
 <div class="content content-boxed">
+
+    <div class="col-md-12 order-md-1">
+
+            <!-- nav -->
+            <div class="block block-rounded">
+			
+                
+                    <ul class="nav nav-tabs nav-tabs-block bg-gray-lighter">
+					@foreach($program_levels as $program_level)
+						
+                  <li class="nav-item">
+                    <a href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id])}}"><button
+					@if(
+					route('institutions.program', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id]) == url()->current()
+					) 
+					class="nav-link active" disabled
+					@else
+						class="nav-link"
+					@endif
+					> {{$program_level->name}}
+					</button>
+					</a>
+                  </li>
+				  @endforeach
+                  
+                </ul>
+            </div>
+            <!-- END nav -->
+        </div>
+   
+   
+   
     <div class="row">
+		
+		
+		
+		
+	
         <div class="col-md-4 order-md-1">
 
             <!-- Ads -->
@@ -74,22 +111,21 @@ use Illuminate\Support\Number;
                 </div>
                 <div class="block-content">
                     <ul class="fa-ul list-icons">
-					        @if(!empty($program->duration))
+					       
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-university"></i>
 								</span>
 								<div class="fw-semibold">Duration</div>
-								<div class="text-muted">{{$institution_program->duration}} Years</div>
+								<div class="text-muted">@if(!empty($institution_program->pivot->duration)){{$institution_program->pivot->duration}} Years @else N/A @endif</div>
 								<meta itemprop="timeToComplete" content="P{{$institution_program->duration}}Y" />
 							</li>
-							 @endif
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
 								<div class="fw-semibold">Program Mode</div>
-								<div itemprop="educationalProgramMode" class="text-muted">Full-time</div>
+								<div itemprop="educationalProgramMode" class="text-muted">@if(!empty($institution_program->pivot->programMode)){{$institution_program->pivot->programMode->name}} @else N/A @endif</div>
 							</li>
 							<li itemprop="educationalCredentialAwarded" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="mb-1">
 								<span class="fa-li text-primary">
@@ -107,7 +143,8 @@ use Illuminate\Support\Number;
         </div>
 
         <div  class="col-md-8 order-md-0">
-
+             
+			@if(!empty($institution_program->pivot->description))
             <!-- Program Description -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
@@ -117,13 +154,15 @@ use Illuminate\Support\Number;
 
                 
                     <span itemprop="description">
-                        @if(!empty($institution_program)) {!! $institution_program->description !!} @else {!! $program->description !!} @endif
+                         {!! $institution_program->pivot->description !!}  
                     </span>
 
                 </div>
             </div>
             <!-- END Program Description -->
-
+           @endif
+		   
+		   
           <!-- Admission Requirements -->
 <div class="block block-rounded">
     <div class="block-header block-header-default justify-content-center" style="background-image: url(/media/patterns/cubes.png)">
@@ -146,19 +185,19 @@ use Illuminate\Support\Number;
                     <tr>
                         <td class="fs-sm fw-semibold">Cut-Off</td>
                         <td >
-                            <p class="m-0">{{ $institution_program->utme_cutoff }}</p>
+                            <p class="m-0">{{ $institution_program->pivot->utme_cutoff }}</p>
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-sm fw-semibold">Subject Combination</td>
                         <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                            <p itemprop="description" class="m-0">{{ $institution_program->requirements->utme_subjects }}</p>
+                            <p itemprop="description" class="m-0">{{ $institution_program->pivot->requirements->utme_subjects }}</p>
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-sm fw-semibold">O'Level Requirement</td>
                         <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                            <p itemprop="description" class="m-0">{{ $institution_program->requirements->o_level }}</p>
+                            <p itemprop="description" class="m-0">{{ $institution_program->pivot->requirements->o_level }}</p>
                         </td>
                     </tr>
                 </table>
@@ -166,6 +205,7 @@ use Illuminate\Support\Number;
         </div>
         <!-- END UTME Admission Requirements -->
 
+		@if($level->id == 1)
         <!-- DE Admission Requirements -->
         <div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
             <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
@@ -173,12 +213,13 @@ use Illuminate\Support\Number;
             </div>
             <div class="block-content text-center">
                 <div class="ms-2" itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                    <p itemprop="description" class="m-0">{{ $institution_program->requirements->direct_entry }}</p>
+                    @if(!empty($institution_program->pivot->requirements->direct_entry))<p itemprop="description" class="m-0">{{ $institution_program->pivot->requirements->direct_entry }}</p> @else <span>No Direct Entry</span>  @endif
                 </div>
             </div>
         </div>
         <!-- END DE Admission Requirements -->
-
+         @endif
+		 
     </div>
 	<div class="d-flex justify-content-center fs-sm"> <span class="text-black"> Source: <a class="text-gray-dark" href="https://jamb.gov.ng/ibass">Jamb Integrated Brochure and Syllabus System</a> </span> </div>
             
@@ -197,15 +238,15 @@ use Illuminate\Support\Number;
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">Accreditation Body</td>
-                                    <td><a class="link-fx link-dark" href="{{$institution_program->accreditationBody->url}}">{{$institution_program->accreditationBody->name}} @if(!empty($institution_program->accreditationBody->abbr)) <span>({{str::upper($institution_program->accreditationBody->abbr)}})</span> @endif </a> </td>
+                                    <td><a class="link-fx link-dark" href="{{$institution_program->pivot->accreditationBody->url}}">{{$institution_program->pivot->accreditationBody->name}} @if(!empty($institution_program->pivot->accreditationBody->abbr)) <span>({{str::upper($institution_program->pivot->accreditationBody->abbr)}})</span> @endif </a> </td>
                                 </tr>
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">Course Accreditation Status</td>
                                     <td>  
-									@if(!empty($institution_program->accreditationStatus))
-									<button type="button" class="btn btn-{{$institution_program->accreditationStatus->class}} rounded-0" disabled>
-									{{$institution_program->accreditationStatus->name}}
+									@if(!empty($institution_program->pivot->accreditationStatus))
+									<button type="button" class="btn btn-{{$institution_program->pivot->accreditationStatus->class}} rounded-0" disabled>
+									{{$institution_program->pivot->accreditationStatus->name}}
 									</button>
 									@else
 										Not Available
@@ -228,7 +269,7 @@ use Illuminate\Support\Number;
                 </div>
                 <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center text-center">
                     <p class="fs-lg">
-                        @if(!empty($institution_program->tuition_fee)) <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="Price"> {{Number::format($institution_program->tuition_fee, precision: 0)}}</span>  @else Tuition Fee not available! @endif
+                        @if(!empty($institution_program->pivot->tuition_fee)) <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="Price"> {{Number::format($institution_program->pivot->tuition_fee, precision: 0)}}</span>  @else <span class="fs-5">Tuition Fee not available</span> @endif
                     </p>
                     
                 </div>
