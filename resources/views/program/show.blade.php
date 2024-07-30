@@ -23,9 +23,9 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
         <div class="content content-full content-top text-center pt-7">
             <div class="row">
                 <div class="pt-4 pb-3">
-                    <h1 class="fw-light text-white mb-1 ">{{Str::title($program->name)}}</h1>
+                    <h1 class="fw-light text-white mb-1 ">{{$program->name}}</h1>
                     <h2 class="h4 fs-md  fw-light text-white-75 ">
-                     {{Str::title($level->name)}}
+                     {{$level->name}}
                     </h2>
                     
                 </div>
@@ -38,6 +38,10 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
 </div>
 <!-- END Hero -->
 
+
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
       
         <!-- Page Content -->
 <div class="content content-boxed">
@@ -56,9 +60,9 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
 					@if(
 					route('programs.show', ['level' => $program_level->slug, 'program' => $program->id]) == url()->current()
 					) 
-					class="nav-link active" disabled
+					class="btn-sm nav-link active" disabled
 					@else
-						class="nav-link"
+						class="btn-sm nav-link"
 					@endif
 					> {{$program_level->name}}
 					</button>
@@ -213,7 +217,7 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
             <!-- Instititions Offering Program -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Institutions Offering {{str::title($level->name)}} in {{Str::title($program->name)}}</h3>
+                    <h3 class="block-title">Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">
                     <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level->slug, 'program'=> $program->id])}}">

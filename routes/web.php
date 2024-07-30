@@ -96,7 +96,7 @@ Route::prefix('institutions')->name('institutions.')->group(function () {
     Route::get('{institution}/levels/{level:slug}/programs', [InstitutionController::class, 'programs'])->name('programs');
 
     /* Show an institution program of a particular level */
-    Route::get('{institution}/levels/{level:slug}/programs/{program}', [InstitutionController::class, 'program'])->name('program');
+    Route::get('{institution}/levels/{level:slug}/programs/{program}', [InstitutionController::class, 'showProgram'])->name('program.show');
 
     /* show available Levels of an institution program */
     Route::get('{institution}/programs/{program}', [InstitutionController::class, 'programLevels'])->name('program.levels');

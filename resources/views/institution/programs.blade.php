@@ -31,14 +31,14 @@ use Illuminate\Support\Number;
 				
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
-						<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+						<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
 
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
-							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}} </span>- @endif  <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						
@@ -47,7 +47,7 @@ use Illuminate\Support\Number;
 						@if(!empty($institution->slogan)) ( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endif
 						</div>
 						
-						<h2 class="h3 fw-light text-white">{{str::title($level->name)}} Programs</h2>
+						<h2 class="h3 fw-light text-white">{{$level->name}} Programs</h2>
 					 </div>
                 </div>
               </div>
@@ -55,19 +55,57 @@ use Illuminate\Support\Number;
           </div>
         </div>
         <!-- END Hero -->
-
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
         <!-- Page Content -->
 <div class="content">
+
+
+
+	 <div class="col-md-12">
+
+            <!-- nav -->
+            <div class="block block-rounded">
+			
+                
+                    <ul class="nav nav-tabs nav-tabs-block bg-gray-lighter">
+					@foreach($program_levels as $program_level)
+							
+                  <li class="nav-item">
+                    <a href="{{route('institutions.programs', ['institution' => $institution->id, 'level' =>$program_level->slug])}}"><button
+					@if(
+					route('institutions.programs', ['institution' => $institution->id, 'level' =>$program_level->slug]) == url()->current()
+					
+					) 
+					class="btn-sm nav-link active" disabled
+					@else
+						class="btn-sm nav-link"
+					@endif
+					> {{$program_level->name}} Programmes
+					</button>
+					</a>
+                  </li>
+				  @endforeach
+                  
+                </ul>
+            </div>
+            <!-- END nav -->
+        </div>
+
+
+
+
     <div class="block block-rounded">
 
         <div class="block-content">
            
-            <h2  class="content-heading text-center">Accredited Courses Offered at {{Str::title($institution->name)}}</h2>
+            <h2  class="content-heading text-center">Accredited Courses Offered at {{$institution->name}}</h2>
             <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="row items-push">
                 <div class="col-lg-4">
                     <p class="text-muted sticky-top" style="top: 100px;">
-                        Explore the official list of accredited <span itemprop="name" class="text-black-75">{{str::title($level->name)}} programmes </span> grouped by their various disciplines offered at <span class="text-black-75">{{Str::title($institution->name)}}</span>.
+                        Explore the official list of accredited <span itemprop="name" class="text-black-75">{{$level->name}} programmes </span> grouped by their various disciplines offered at <span class="text-black-75">{{$institution->name}}</span>.
                     </p>
                 </div>
                 
@@ -78,7 +116,7 @@ use Illuminate\Support\Number;
                         <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
                             <a class="fs-lg link-primary fw-semibold" data-bs-toggle="collapse" data-bs-parent="#programs" href="#programs_q{{$loop->iteration}}" aria-expanded="false" aria-controls="programs_q{{$loop->iteration}}">
 								<div class="block-header block-header-default fs-5" role="tab" id="programs_h{{$loop->iteration}}">
-								     <div itemprop="name">{{str::title($collegeName)}}</div>  <span class="toggle-icon fw-light fs-2 "></span>
+								     <div itemprop="name">{{$collegeName}}</div>  <span class="toggle-icon fw-light fs-2 "></span>
 								</div>
                             </a>
                             <div id="programs_q{{$loop->iteration}}" class="collapse" role="tabpanel" aria-labelledby="programs_h{{$loop->iteration}}" data-bs-parent="#programs">
@@ -86,9 +124,9 @@ use Illuminate\Support\Number;
 
                                     @foreach($programs as $program)
                                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
-                                        <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal" href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
+                                        <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal" href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
 											<div class="block-header block-header-default fs-6">
-											 <span itemprop="name"> {{Str::title($program->name)}} </span>
+											 <span itemprop="name"> {{$program->name}} </span>
 											</div>
                                           </a>
                                     </div>

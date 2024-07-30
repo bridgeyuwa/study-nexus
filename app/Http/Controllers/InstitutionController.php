@@ -10,15 +10,19 @@ use App\Models\Program;
 use App\Models\Level;
 use App\Models\Category;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Spatie\SchemaOrg\Schema;
-
+use Illuminate\Support\Facades\DB;
 
 class InstitutionController extends Controller {
 	
 	public function test() {
 	
-	$institution = Institution::find('aau');
-	dd($institution->socials);	
+	$programs = Program::all();
+	
+	
+	
+dd($programs);
+
+	
 	return null;
 }
 	
@@ -26,24 +30,23 @@ class InstitutionController extends Controller {
     public function index() {
          
            $institutions = Institution::with(['state','schooltype','category'])->orderBy('name')->paginate(60);
-           
+           $categories = Category::all();
            $SEOData = new SEOData(
                                     title: 'Academic Institutions in Nigeria',
                                     description: 'Browse a comprehensive list of universities, polytechnics, monotechnics, and colleges of education. Find the best institution for your needs.',
                                        );
            
-        return view('institution.index', compact('institutions','SEOData'));
+        return view('institution.index', compact('institutions','categories','SEOData'));
     }
 
     public function category(Category $category) {
         $institutions = $category->institutions()->with(['state','schooltype','category'])->orderBy('name')->paginate(60);
-                      
-                 if($category->id==4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
-         $SEOData = new SEOData(
-                                    title:  $categoryPlural. ' in Nigeria',
-                                    description: ' Browse a comprehensive list of ' .$categoryPlural.'. Find the best ' .$category->name.' for your needs.',
+          $categories = Category::all();            
+                   $SEOData = new SEOData(
+                                    title:  $category->name_plural. ' in Nigeria',
+                                    description: ' Browse a comprehensive list of ' .$category->name_plural.'. Find the best ' .$category->name.' for your needs.',
                                        );
-        return view('institution.index', compact('institutions', 'category','SEOData'));
+        return view('institution.index', compact('institutions', 'category','categories','SEOData'));
     }
 
 
@@ -53,7 +56,7 @@ class InstitutionController extends Controller {
        
           
                 $regions = Region::with(['institutions','states.institutions'])->get();
-
+                $categories = Category::all();
 
            $SEOData = new SEOData(
                                     title: 'Academic Institutions in Nigeria by Location',
@@ -61,7 +64,7 @@ class InstitutionController extends Controller {
 ',
                                        );
 
-              return view('institution.location', compact('regions','SEOData'));
+              return view('institution.location', compact('regions','categories','SEOData'));
     }
 
 
@@ -83,14 +86,14 @@ class InstitutionController extends Controller {
                                                        ]);  
                                               }
                                      ])->get();
-     if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
+			 $categories = Category::all();
 
             $SEOData = new SEOData(
-                                    title: $categoryPlural. ' in Nigeria by Location',
-                                    description: 'Discover '.$categoryPlural.' in your preferred location. Find the best educational institutions near you.',
+                                    title: $category->name_plural. ' in Nigeria by Location',
+                                    description: 'Discover '.$category->name_plural.' in your preferred location. Find the best educational institutions near you.',
                                        );
 
-            return view('institution.location', compact('regions', 'category','SEOData'));
+            return view('institution.location', compact('regions', 'category','categories','SEOData'));
          }
 
 
@@ -98,14 +101,14 @@ class InstitutionController extends Controller {
 
                         
                    $institutions = $state->institutions()->with('category','schooltype','state')->orderBy('name')->get();
-
+                   $categories = Category::all();
                    $SEOData = new SEOData(
                                     title: 'All Institutions in '.$state->name,
                                     description: 'Explore top institutions in '. $state->name.'. Compare programs and find the best fit for your education needs.
 ',
                                        );
                             
-                   return view('institution.show-location', compact( 'state','institutions','SEOData'));
+                   return view('institution.show-location', compact( 'state','institutions','categories','SEOData'));
                  }
 
 
@@ -114,16 +117,15 @@ class InstitutionController extends Controller {
         public function showCategoryLocation(Category $category, State $state) {
 
               $institutions = $state->institutions()->where('category_id', $category->id)->with('category','schooltype','state')->orderBy('name')->get();
+              $categories = Category::all();
 
-
-if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
 
               $SEOData = new SEOData(
-                                    title: $categoryPlural.' in '.$state->name.', Nigeria',
-                                    description: 'Explore '.$categoryPlural.' in '.$state->name.', Nigeria. Compare programs and find the best fit for your education needs.',
+                                    title: $category->name_plural.' in '.$state->name.', Nigeria',
+                                    description: 'Explore '.$category->name_plural.' in '.$state->name.', Nigeria. Compare programs and find the best fit for your education needs.',
                                        );
                           
-              return view('institution.show-location', compact( 'state','institutions','category', 'SEOData'));
+              return view('institution.show-location', compact( 'state','institutions','category','categories', 'SEOData'));
           }
 
 
@@ -135,8 +137,9 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
 
 
               $institutions = Institution::where('category_id', $category->id)->with(['state.region','category','state.institutions','state.region.institutions'])->orderByRaw('rank IS NULL, rank')->paginate(100); 
-
-
+              $categories = Category::all();
+			
+				if($institutions->isNotEmpty()){
               foreach($institutions as $institution) {
               
                 $computedRank = $this->computeRank($institution, $institutions);
@@ -148,15 +151,22 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
                                 'state' =>$computedRank['state']
                                 ];
                            }
-                           if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
+				}else 
+                {    
 
+					$rank = null; 
+
+				}			
+						   
+						   
+                           
                      $SEOData = new SEOData(
                                     title: $category->name.' Rankings in Nigeria',
-                                    description: 'Discover the top-ranked '.$categoryPlural.' in Nigeria. Compare rankings and find the best schools in the country.',
+                                    description: 'Discover the top-ranked '.$category->name_plural.' in Nigeria. Compare rankings and find the best schools in the country.',
                                        );
 
 
-        return view('institution.ranking', compact('institutions','rank', 'category','SEOData'));
+        return view('institution.ranking', compact('institutions','rank', 'category','categories','SEOData'));
     }
 
 
@@ -166,8 +176,12 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
           $institutions = Institution::where('state_id', $state->id)->where('category_id', $category->id)->with([
                      'state.region','category','state.institutions'
                    ])->orderByRaw('rank IS NULL, rank')->paginate(100);          
-
-   
+        
+		
+		$state->load('institutions.category');
+		
+        $categories = $state->institutions->pluck('category')->unique('id')->sort();
+		//dd($categories);
 
            if($institutions->isNotEmpty()){
     foreach($institutions as $institution) {
@@ -187,14 +201,13 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
 
             }
 
-            if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
-
+     
                      $SEOData = new SEOData(
                                     title:  $category->name.' Rankings in '.$state->name.', Nigeria',
-                                    description: 'Discover the top-ranked '.$categoryPlural.' in '.$state->name.', Nigeria. Compare rankings and find the best schools.',
+                                    description: 'Discover the top-ranked '.$category->name_plural.' in '.$state->name.', Nigeria. Compare rankings and find the best $category->name_plural.',
                                        );
 
-        return view('institution.ranking', compact('institutions','rank', 'category','state','SEOData'));
+        return view('institution.ranking', compact('institutions','rank', 'category','categories','state','SEOData'));
     }
 
 
@@ -208,7 +221,10 @@ if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categ
                        $query->where('region_id', $region->id);
                  })->with('state.region','state.institutions','category')->orderByRaw('rank IS NULL, rank')->paginate(100);          
 
-
+			$region->load('institutions.category');
+			$categories = $region->institutions->pluck('category')->unique('id')->sort();
+		
+		
 
           if($institutions->isNotEmpty()){
     foreach($institutions as $institution) {
@@ -229,14 +245,13 @@ $rank = null;
 }
 
 
-                      if($category->id == 4){$categoryPlural = "Colleges of Education";} else { $categoryPlural = \Illuminate\Support\Str::plural($category->name);}
-
+                      
                            $SEOData = new SEOData(
                                     title:  $category->name.' Rankings in '.$region->name.', Nigeria',
-                                    description: 'Discover the top-ranked '.$categoryPlural.' in '.$region->name.', Nigeria. Compare rankings and find the best schools in the region.',
+                                    description: 'Discover the top-ranked '.$category->name_plural.' in '.$region->name.', Nigeria. Compare rankings and find the best $category->name_plural in the region.',
                                        );
 
-        return view('institution.ranking', compact('institutions','rank', 'category','region','SEOData'));
+        return view('institution.ranking', compact('institutions','rank', 'category','categories','region','SEOData'));
     }
 
 
@@ -344,7 +359,9 @@ private function computeRank($institution, $allInstitutions) {
                 return $group->sortBy(fn($program) => $program->name);  // Sort the programs within each college by name
             });
 			
-			
+		
+     $program_levels = $institution->levels->unique();
+		
        $description = 'Explore ' .$level->name. ' programs offered at '.$institution->name.'. Compare and choose the best program for your academic journey.';
         $SEOData = new SEOData(
                                     title:  $institution->name.' '.$level->name. ' Programs',
@@ -353,7 +370,7 @@ private function computeRank($institution, $allInstitutions) {
 
 						   
 									    
-        return view('institution.programs', compact('institution', 'level', 'programs','SEOData'));
+        return view('institution.programs', compact('institution', 'level', 'programs','program_levels','SEOData'));
     }
 
 
@@ -361,7 +378,7 @@ private function computeRank($institution, $allInstitutions) {
 
 
     // show single institution program data
-    public function program(Institution $institution, Level $level = null, Program $program) {
+    public function showProgram(Institution $institution, Level $level = null, Program $program) {
         $institution_program = $institution->programs()->where('program_id', $program->id)->wherePivot('level_id', $level->id)->first();
         
 		if(!$institution_program)
@@ -382,7 +399,7 @@ private function computeRank($institution, $allInstitutions) {
 
 
 
-        return view('institution.program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData'));
+        return view('institution.show-program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData'));
     }
 	
 	

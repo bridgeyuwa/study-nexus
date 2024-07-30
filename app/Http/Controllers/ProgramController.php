@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Program;
 use App\Models\Level;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Spatie\SchemaOrg\Schema;
 
-use Illuminate\Support\Facades\DB;
+
 
 
 class ProgramController extends Controller
@@ -17,10 +16,9 @@ class ProgramController extends Controller
 //eager load programs for tuition computation
 $level->load('programs');
     
+$program_levels = Level::all();
 
 // Get the programs with the college relationship eager loaded
-
-//$programs = $level->__programs()->with('college')->get()->groupBy('college.name');
 
 $programs = $level->__programs()->with('college')->get()
     ->groupBy(function ($program) {
@@ -40,7 +38,7 @@ $programs = $level->__programs()->with('college')->get()
 						   
 									   
  
-           return view('program.index', compact('programs','level','SEOData'));
+           return view('program.index', compact('programs','level','program_levels','SEOData'));
     }
 
 
@@ -95,13 +93,13 @@ $level->load([ 'programs' => function ($query) use($program) {
 
 $institutions = $program->institutions()->with(['schooltype','category','state'])->wherePivot('level_id', $level->id)->orderBy('name')->paginate(60);
 
-
+		$program_levels = $program->__levels()->get();
 
       $SEOData = new SEOData(
                                title: 'Academic Institutions Offering '.$level->name. ' in '.$program->name.' in Nigeria',
                                description: 'Academic institutions offering '.$level->name. ' in ' .$program->name. '. Explore the collection of institutions to make informed decisions.',
                                        );
-      return view('program.institutions', compact('level','program','institutions','SEOData'));
+      return view('program.institutions', compact('level','program','institutions','program_levels','SEOData'));
     }
     
 }

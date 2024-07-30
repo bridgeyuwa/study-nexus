@@ -30,7 +30,7 @@ use Illuminate\Support\Number;
 				
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo))text-md-start @endif">
-						<h1 class="mb-1">  <a  class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+						<h1 class="mb-1">  <a  class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
                          
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
@@ -39,7 +39,7 @@ use Illuminate\Support\Number;
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
 							@if(!empty($institution->locality)) 
-<span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
+<span itemprop="addressLocality">{{$institution->locality}} </span>- @endif  <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						
@@ -49,7 +49,7 @@ use Illuminate\Support\Number;
 						</div>
 						
 						<h2 class="h3 fw-light text-white">
-                    {{Str::title($program->name)}} Programs <span class="text-white-75">(Levels)</span>
+                    {{$program->name}} Programs <span class="text-white-75">(Levels)</span>
                 </h2>
 					 </div>
                 </div>
@@ -59,7 +59,9 @@ use Illuminate\Support\Number;
         </div>
         <!-- END Hero -->
 
-
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
          <!-- Page Content -->
 <div class="content content-boxed">
@@ -89,11 +91,11 @@ use Illuminate\Support\Number;
 
                     @foreach($levels as $level)
 					<div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog">
-                    <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
+                    <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">
-                       <span itemprop="name"> {{$level->name}} <span class="text-muted">({{Str::of($program->name)->title()}})</span> </span>
+                       <span itemprop="name"> {{$level->name}} <span class="text-muted">({{$program->name}})</span> </span>
                       </div>                      
                       <p itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="text-muted mb-0">                       
                         @if(!empty($level->programs->where('id', $program->id)->first()->pivot->tuition_fee))

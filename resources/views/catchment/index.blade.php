@@ -24,7 +24,9 @@
         </div>
         <!-- END Hero -->
 
-
+		<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
 
         <!-- Page Content -->
@@ -55,7 +57,7 @@
             <div class="block block-rounded">
                 <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
 
-                    <h3 class="block-title d-flex justify-content-between align-items-center">{{str::title($region->name)}} Catchment Areas
+                    <h3 class="block-title d-flex justify-content-between align-items-center">{{$region->name}} Catchment Areas
 
                     </h3>
 
@@ -66,7 +68,7 @@
 
                         @foreach( $region->catchments as $catchment )
                         <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
-                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}" class="fw-normal fs-normal">{{str::title($catchment->name)}}</a>
+                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}" class="fw-normal fs-normal">{{$catchment->name}}</a>
 
                             <a href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}" class="btn btn-light w-25 text-secondary"> 
                                 <span class="badge rounded-pill bg-info"> {{ $catchment->institutions->count()}}</span> Schools

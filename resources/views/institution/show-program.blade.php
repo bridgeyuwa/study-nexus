@@ -30,7 +30,7 @@ use Illuminate\Support\Number;
 							
 						<div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 							<div class="w-100 text-center @if(!empty($institution->logo))text-md-start @endif">
-									<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{Str::title($institution->name)}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>@endif </a></h1>
+									<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
 									  
 									<link itemprop="url" href="{{url()->current()}}">
 									<link itemprop="sameAs" href="{{$institution->url}}">
@@ -38,7 +38,7 @@ use Illuminate\Support\Number;
 
 									<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 										<meta itemprop="streetAddress" content="{{$institution->address}}">
-										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
+										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}} </span>- @endif  <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span> 
 										 <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 										<meta itemprop="addressCountry" content="NG">
 									
@@ -49,23 +49,27 @@ use Illuminate\Support\Number;
 									
 									<h2> 
 									   <a class="h3 fw-light text-white link-fx" href="{{route('programs.show', ['level' => $level->slug, 'program' => $program->id])}}">
-											{{Str::title($program->name)}} <span class="h4 fw-light text-white-75" >({{str::title($level->name)}}@if(!empty($level->abbr))({{str::title($level->abbr)}})@endif)</span> 
+											{{$program->name}} <span class="h4 fw-light text-white-75" >({{$level->name}}@if(!empty($level->abbr))({{$level->abbr}})@endif)</span> 
 										</a> 
 
 									 </h2>
 							</div>
 					    </div>
 				    </div>
+					
 				</div>
             </div>
         </div>
         <!-- END Hero -->
-
-
+  
+		 <!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
+  
          <!-- Page Content -->
 <div class="content content-boxed">
 
-    <div class="col-md-12 order-md-1">
+    <div class="col-md-12">
 
             <!-- nav -->
             <div class="block block-rounded">
@@ -75,13 +79,14 @@ use Illuminate\Support\Number;
 					@foreach($program_levels as $program_level)
 						
                   <li class="nav-item">
-                    <a href="{{route('institutions.program', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id])}}"><button
+                    <a href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id])}}">
+					<button
 					@if(
-					route('institutions.program', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id]) == url()->current()
+					route('institutions.program.show', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id]) == url()->current()
 					) 
-					class="nav-link active" disabled
+					class="btn-sm nav-link active" disabled
 					@else
-						class="nav-link"
+						class="btn-sm nav-link"
 					@endif
 					> {{$program_level->name}}
 					</button>
@@ -168,7 +173,7 @@ use Illuminate\Support\Number;
     <div class="block-header block-header-default justify-content-center" style="background-image: url(/media/patterns/cubes.png)">
         <div>
             <h3 class="block-title row justify-content-center">Admission Requirement</h3>
-            <div class="fs-sm row text-center">{{Str::title($institution->name)}} Admission Requirement for {{Str::title($level->name)}} in {{Str::title($program->name)}}</div>
+            <div class="fs-sm row text-center">{{Str::title($institution->name)}} Admission Requirement for {{Str::title($level->name)}} in {{$program->name}}</div>
         </div>
     </div>
     <div class="block-content">
@@ -238,7 +243,7 @@ use Illuminate\Support\Number;
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">Accreditation Body</td>
-                                    <td><a class="link-fx link-dark" href="{{$institution_program->pivot->accreditationBody->url}}">{{$institution_program->pivot->accreditationBody->name}} @if(!empty($institution_program->pivot->accreditationBody->abbr)) <span>({{str::upper($institution_program->pivot->accreditationBody->abbr)}})</span> @endif </a> </td>
+                                    <td><a class="link-fx link-dark" href="{{$institution_program->pivot->accreditationBody->url}}">{{$institution_program->pivot->accreditationBody->name}} @if(!empty($institution_program->pivot->accreditationBody->abbr)) <span>({{$institution_program->pivot->accreditationBody->abbr}})</span> @endif </a> </td>
                                 </tr>
 
                                 <tr>
@@ -280,7 +285,7 @@ use Illuminate\Support\Number;
 			<!-- All Instititions Offering Program -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">All Institutions Offering {{str::title($level->name)}} in {{Str::title($program->name)}}</h3>
+                    <h3 class="block-title">All Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">
                     <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level->slug, 'program' => $program->id])}}">

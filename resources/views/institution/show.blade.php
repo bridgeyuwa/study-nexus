@@ -31,9 +31,9 @@ use Illuminate\Support\Number;
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
 						<h1>  <a class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> 
-						<span itemprop="name">{{Str::title($institution->name)}}</span> 
+						<span itemprop="name">{{$institution->name}}</span> 
 						@if(!empty($institution->abbr))
-							<span class="text-white-75">({{Str::upper($institution->abbr)}})</span>
+							<span class="text-white-75">({{$institution->abbr}})</span>
 						@endif 
 						</a></h1>
                           
@@ -42,7 +42,7 @@ use Illuminate\Support\Number;
 						  
 						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
-							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{str::title($institution->locality)}} </span>- @endif  <span itemprop="addressRegion">{{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span> 
+							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}} </span>- @endif  <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
 							<meta itemprop="addressCountry" content="NG">
 						
@@ -57,7 +57,9 @@ use Illuminate\Support\Number;
           </div>
         </div>
         <!-- END Hero -->
-
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
 	<!-- Page Content -->
 	<div class="content content-boxed">
@@ -76,14 +78,14 @@ use Illuminate\Support\Number;
 									<i class="fa fa-university"></i>
 								</span>
 								<div class="fw-semibold">Type</div>
-								<div class="text-muted">{{str::title($institution->schooltype->name)}} {{$institution->category->name}}</div>
+								<div class="text-muted">{{$institution->schooltype->name}} {{$institution->category->name}}</div>
 							</li>
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
 								<div class="fw-semibold">Term Structure</div>
-								<div class="text-muted">{{str::title($institution->term->name)}}</div>
+								<div class="text-muted">{{$institution->term->name}}</div>
 							</li>
 							
 							@if(!empty($institution->established))
@@ -101,7 +103,7 @@ use Illuminate\Support\Number;
 									<i class="fa fa-map-marker-alt"></i>
 								</span>
 								<div class="fw-semibold">Location</div>
-								<div class="text-muted"> @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif {{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif  </div>
+								<div class="text-muted"> @if(!empty($institution->locality)) {{$institution->locality}} - @endif {{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif  </div>
 							</li>
 						</ul>
 					</div>
@@ -139,7 +141,7 @@ use Illuminate\Support\Number;
 							@foreach($institution->catchments as $catchment)
 								<li itemprop="serviceArea" itemscope itemtype="https://schema.org/Place" class="list-inline-item">
 									<a  href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}">
-									<span itemprop="name">	{{str::title($catchment->name)}} </span>
+									<span itemprop="name">	{{$catchment->name}} </span>
 							        </a> 
 								</li>
 							@endforeach
@@ -167,7 +169,7 @@ use Illuminate\Support\Number;
 							<meta itemprop="position" content="{{$loop->iteration}}"/>
 							<div itemprop="item" itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="me-3">
 							    <p class="fs-lg text-primary mb-0">
-								   <span itemprop="name"> {{$level->name}}</span> @if(!empty($level->abbr))<span class="fw-light text-black">({{str::upper($level->abbr)}})</span> @endif
+								   <span itemprop="name"> {{$level->name}}</span> @if(!empty($level->abbr))<span class="fw-light text-black">({{$level->abbr}})</span> @endif
 							    </p>
 								
 								<span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
@@ -202,21 +204,20 @@ use Illuminate\Support\Number;
 
 						<table class="table table-borderless">
 							<tr class="">
-								<td class=""> {{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold"> {{str::title($institution->state->name)}} @if(!empty($institution->state->is_state)) State @endif </span></td>
-								<td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
+								<td class=""> {{$institution->category->name}} Rank in <span class="text-black fw-semibold"> {{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span></td>
+								<td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} {{$institution->category->name_plural}}</td>
 								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
 							</tr>
 
 							<tr>
-								<td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">{{str::title($institution->state->region->name)}}</span></td>
-								<td>@if ($rank['region']) <span class="fw-semibold text-black">{{Number::ordinal($rank['region'])}}</span> @else NR @endif out of {{$institution->state->region->institutions->where('category_id',$institution->category->id)->count()}}
-									@if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
+								<td class="">{{$institution->category->name}} Rank in <span class="text-black fw-semibold">{{$institution->state->region->name}}</span></td>
+								<td>@if ($rank['region']) <span class="fw-semibold text-black">{{Number::ordinal($rank['region'])}}</span> @else NR @endif out of {{$institution->state->region->institutions->where('category_id',$institution->category->id)->count()}} {{$institution->category->name_plural}}</td>
 								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['category' => $institution->category->slug, 'region' => $institution->state->region->slug])}}"> View </a> </td>
 							</tr>
 
 							<tr>
-								<td class="">{{str::title($institution->category->name)}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
-								<td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} @if($institution->category->id == 4) Colleges of Education  @else {{str::of($institution->category->name)->title()->plural()}} @endif</td>
+								<td class="">{{$institution->category->name}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
+								<td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} {{$institution->category->name_plural}} </td>
 								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['category' => $institution->category->slug])}}"> View </a> </td>
 							</tr>
 						</table>
@@ -234,7 +235,7 @@ use Illuminate\Support\Number;
 						<table class="table">
 							<tr>
 								<td class="fw-semibold">Institution Accreditation Body</td>
-								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{str::upper($institution->accreditationBody->abbr)}}</span>) @endif </a> </td>
+								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a> </td>
 							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
 							</tr>
 							<tr>

@@ -11,26 +11,16 @@
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
                                     @if(!empty($category))
-                                        @if($category->id === 4) 
-                                          Colleges Of Education 
-                                        @else 
-                                          {{ Str::of($category->name)->plural()->title()}}
-                                        @endif
-
-                                    @else
+                                        {{$category->name_plural}}
+									@else
 										Tertiary Institutions
                                     @endif in Nigeria
                </h1>
 
                   <h2 class="h4 fs-md  fw-light text-white-75 ">
                      ( Locate @if(!empty($category))
-                                        @if($category->id === 4) 
-                                          Colleges Of Education 
-                                        @else 
-                                          {{ Str::of($category->name)->plural()->title()}}
-                                        @endif
-
-                                    @else
+										{{$category->name_plural}}
+									@else
 										Academic Institutions
                                     @endif by Regions/State )
                     </h2>
@@ -43,10 +33,60 @@
         </div>
         <!-- END Hero -->
 
-
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
             <!-- Page Content -->
 <div class="content content-boxed">
+
+
+ <div class="col-md-12 order-md-1">
+
+            <!-- nav -->
+            <div class="block block-rounded">
+			
+					 <ul class="nav nav-tabs nav-tabs-block bg-gray-lighter">
+					
+					<li class="nav-item">
+                    <a href="{{route('institutions.location')}}"><button
+					@if(
+					route('institutions.location') == url()->current()
+					) 
+					class="btn-sm nav-link active" disabled
+					@else
+						class="btn-sm nav-link"
+					@endif
+					> All Institution Locations
+					</button>
+					</a>
+                  </li>
+					
+					
+					
+					@foreach($categories as $institution_category)
+					
+					<li class="nav-item">
+                    <a href="{{route('institutions.categories.location', ['category' => $institution_category->slug])}}"><button
+					@if(
+					route('institutions.categories.location', $institution_category) == url()->current()
+					) 
+					class="btn-sm nav-link active" disabled
+					@else
+						class="btn-sm nav-link"
+					@endif
+					> {{$institution_category->name}} Locations
+					</button>
+					</a>
+                  </li>
+				  @endforeach
+                  
+                </ul>
+            </div>
+            <!-- END nav -->
+        </div>
+
+
 
     <div class="row">
         <div class="col-md-4 order-md-1"> 
@@ -73,7 +113,7 @@
             <div class="block block-rounded">
                 <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
 
-                    <h3 class="block-title d-flex justify-content-between align-items-center">{{str::title($region->name)}}
+                    <h3 class="block-title d-flex justify-content-between align-items-center">{{$region->name}}
                         <span> 
                       {{$region->institutions->count() }} Schools 
                         </span>
@@ -94,7 +134,7 @@
                               {{route('institutions.location.show', ['state' => $state->slug])}}
                               @endif
 
-                               " class="fw-normal fs-normal">{{str::title($state->name)}} @if(!empty($state->is_state)) State @endif
+                               " class="fw-normal fs-normal">{{$state->name}} @if(!empty($state->is_state)) State @endif
                             </a>
 
 

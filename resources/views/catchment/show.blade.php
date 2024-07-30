@@ -18,13 +18,15 @@
         </div>
         <!-- END Hero -->
 
-
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
       <!-- Page Content -->
 <div class="content">
     <div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
         <div class="block-content">
-            <h2 itemprop="name"  class="content-heading text-center">Universities with {{str::title($catchment->name)}} @if($catchment->id != 15) State @endif as Catchment Area</h2>
+            <h2 itemprop="name"  class="content-heading text-center">Universities with {{str::title($catchment->name)}} @if(!empty($catchment->is_state)) State @endif as Catchment Area</h2>
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">

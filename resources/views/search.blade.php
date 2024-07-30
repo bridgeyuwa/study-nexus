@@ -24,7 +24,9 @@ use Illuminate\Support\Str;
     </div>
 </div>
 <!-- END Hero -->
-
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
 
 <!-- Page Content -->
@@ -33,12 +35,12 @@ use Illuminate\Support\Str;
         <div class="block-content">
 
             <!-- Introduction -->
-            <h2 class="content-heading text-center">Academic Institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{str::title($level->name)}}  @endif @if(!empty($program)) in {{Str::of($program->name)->title()}} @endif in @if(!is_null($state)) {{str::title($state->name)}} @if(!empty($state->is_state)) State @endif @endif - Nigeria</h2>
+            <h2 class="content-heading text-center">Academic Institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{$level->name}}  @endif @if(!empty($program)) in {{$program->name}} @endif in @if(!is_null($state)) {{$state->name}} @if(!empty($state->is_state)) State, @endif @endif  Nigeria</h2>
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
                         <p class="text-muted  mb-2">
-                            Search Results of academic institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) <span class="text-black">{{str::title($level->name)}}</span> in @endif @if(!empty($program)) <span class="text-black">{{Str::of($program->name)->title()}}</span>   @endif in @if(!is_null($state)) <span class="text-black">{{str::title($state->name)}} @if(!empty($state->is_state)) State @endif</span>, @endif Nigeria
+                            Search Results of academic institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{$level->name}} in @endif @if(!empty($program)) {{$program->name}}  @endif in @if(!is_null($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, @endif Nigeria
                         </p>
                         <p class="text-muted fs-sm">
                             We provide comprehensive information about each of the academic institutions as well as detailed insights into every course offered by these institutions. (eg. description, catchment areas, tuition fees, admission requirements, etc.)
@@ -93,22 +95,22 @@ use Illuminate\Support\Str;
                         <div class="block block-header-default bg-image mb-0 fw-light"
                              style="background-image: url('media/photos/photo11.jpg');">
                             <div class="bg-black-75 text-center pt-3 pb-1">
-                                <div class="fs-5 fw-light text-white mb-0">{{str::title($institution->name)}}
-                                    @if(!empty($institution->abbr))({{str::upper($institution->abbr)}}) @endif 
+                                <div class="fs-5 fw-light text-white mb-0">{{$institution->name}}
+                                    @if(!empty($institution->abbr))({{$institution->abbr}}) @endif 
                                 </div>
 
-                                @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span class="text-white-75 fw-light">{{str::title($institution->former_name)}}</span> </div> @endif 
+                                @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span class="text-white-75 fw-light">{{$institution->former_name}}</span> </div> @endif 
 
-                                <div class=" text-white-75 mb-2 fs-sm">{{str::title($institution->schooltype->name)}}
-                                    {{str::title($institution->category->name)}}. <i
+                                <div class=" text-white-75 mb-2 fs-sm">{{$institution->schooltype->name}}
+                                    {{$institution->category->name}}. <i
                                         class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
 
-                                    @if(!empty($institution->locality)) {{str::title($institution->locality)}} - @endif   {{str::title($institution->state->name)}}  @if(!empty($institution->state->is_state)) State @endif
+                                    @if(!empty($institution->locality)) {{$institution->locality}} - @endif   {{$institution->state->name}}  @if(!empty($institution->state->is_state)) State @endif
 
                                 </div>
-                                @if(!empty($program)) <div class="h6 mb-2 text-white"> {{str::title($program->name)}} 
+                                @if(!empty($program)) <div class="h6 mb-2 text-white"> {{$program->name}} 
 									@if(!empty($level))
-										<span class="fs-sm fw-light">({{str::title($level->name)}})</span>
+										<span class="fs-sm fw-light">({{$level->name}})</span>
 									@endif
                                 </div> @endif
                             </div>
@@ -125,7 +127,7 @@ use Illuminate\Support\Str;
                                 @foreach($institution->levels as $program_level)
                                 <tr>
                                     <td class="text-center fs-sm mb-0">
-                                        <i class="fa fa-certificate me-2"></i>{{str::title($program_level->name)}} @if(!empty($program_level->abbr))  ({{str::upper($program_level->abbr)}}) @endif 
+                                        <i class="fa fa-certificate me-2"></i>{{$program_level->name}} @if(!empty($program_level->abbr))  ({{$program_level->abbr}}) @endif 
                                     </td> 
                                 </tr>
                                 @endforeach 
