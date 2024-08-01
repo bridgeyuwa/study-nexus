@@ -17,7 +17,7 @@ class HomeController extends Controller {
         $programs = Program::all();
 		$categories = Category::all();
 		$levels = Level::all(); 
-        
+      
         $SEOData = new SEOData( 
                            description: 'Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.',
                                );

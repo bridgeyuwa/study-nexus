@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('institutions', function (Blueprint $table) {
             $table->foreign(['category_id'])->references(['id'])->on('categories')->onUpdate('cascade');
-            $table->foreign(['schooltype_id'])->references(['id'])->on('schooltypes')->onUpdate('cascade');
+            $table->foreign(['institution_type_id'])->references(['id'])->on('schooltypes')->onUpdate('cascade');
             $table->foreign(['state_id'])->references(['id'])->on('states')->onUpdate('cascade');
             $table->foreign(['term_id'])->references(['id'])->on('terms')->onUpdate('cascade');
 			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->onUpdate('cascade');
@@ -29,8 +29,7 @@ return new class extends Migration
     {
         Schema::table('institutions', function (Blueprint $table) {
             $table->dropForeign('institutions_category_id_foreign');
-            $table->dropForeign('institutions_lga_id_foreign');
-            $table->dropForeign('institutions_schooltype_id_foreign');
+            $table->dropForeign('institutions_institution_type_id_foreign');
             $table->dropForeign('institutions_state_id_foreign');
             $table->dropForeign('institutions_term_id_foreign');
 			$table->dropForeign('institutions_accreditation_body_id_foreign');

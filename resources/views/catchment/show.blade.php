@@ -58,7 +58,7 @@
 
                         @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span itemprop="alternateName" class="text-white-75">{{str::title($institution->former_name)}}</span> </div> @endif  
                               <div class="fs-sm text-white-75 mb-0">
-                               {{str::title($institution->schooltype->name)}} 
+                               {{str::title($institution->institutionType->name)}} 
                                {{str::title($institution->category->name)}}. 
                                     <i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
                             <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" >  

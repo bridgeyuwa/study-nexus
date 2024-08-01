@@ -54,7 +54,7 @@ class SearchController extends Controller {
         /* eager load after all above filtering */
           $query->with([
                       'state:id,name,is_state,code',
-                      'schooltype:id,name',
+                      'institutionType:id,name',
                       'category:id,name'
                        
                        ]);

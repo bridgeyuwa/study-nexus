@@ -8,8 +8,8 @@ class Social extends Model {
 
     use HasFactory;
 
-    public function socialtype() {
-        return $this->belongsTo(Socialtype::class);
+    public function socialType() {
+        return $this->belongsTo(SocialType::class);
     }
 
    public function institution() {

@@ -78,7 +78,7 @@ use Illuminate\Support\Number;
 									<i class="fa fa-university"></i>
 								</span>
 								<div class="fw-semibold">Type</div>
-								<div class="text-muted">{{$institution->schooltype->name}} {{$institution->category->name}}</div>
+								<div class="text-muted">{{$institution->institutionType->name}} {{$institution->category->name}}</div>
 							</li>
 							<li class="mb-1">
 								<span class="fa-li text-primary">
@@ -292,7 +292,7 @@ use Illuminate\Support\Number;
 
 							@foreach($institution->socials as $social) 
 							<div class="row bg-stripped">
-								<div class="col-3 fw-light text-black"> <i class="{{$social->socialtype->icon}} text-dark me-1"></i> {{$social->socialtype->name}} </div>
+								<div class="col-3 fw-light text-black"> <i class="{{$social->socialType->icon}} text-dark me-1"></i> {{$social->socialType->name}} </div>
 								<div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}">{{$social->url}}</a>  </div>
 							</div>
 							@endforeach 

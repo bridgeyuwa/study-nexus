@@ -29,19 +29,23 @@
                              </select>
         </div>
         
-        <div class="mb-2 col-12 col-md-4 fw-light text-white" wire:key="a4569oh-kjhf-{{$count}}>
+        <div class="mb-2 col-12 col-md-4" >
               
-                <label class="form-label  " for="course" >Study Programme</label>
-                    <div class="mt-1" wire:ignore>
-                               <select  id="program" name="program" class="form-select">
-                                    <option value="">Any Programme </option>
-                                    @foreach($programs as $program)
-                                    <option value="{{$program->id}}" @if( $program->id ==
-                                        request()->get('program') ) {{'selected = "true"'}} @endif >{{\Illuminate\Support\Str::title($program->name)}} 
-                                    </option>
-                                    @endforeach
-                                </select>    
-                   </div> 
+            <label class="form-label fw-light text-white" for="course" >Study Programme</label>
+				
+			<div wire:key="a4569oh-kjhf-{{$count}}" > 
+				<div class="mt-1" wire:ignore>
+						   <select  id="program" name="program" class="form-select">
+								<option value="">Any Programme </option>
+								@foreach($programs as $program)
+								<option value="{{$program->id}}" @if( $program->id ==
+									request()->get('program') ) {{'selected = "true"'}} @endif >{{\Illuminate\Support\Str::title($program->name)}} 
+								</option>
+								@endforeach
+							</select>    
+			    </div> 
+			   
+			</div>
         </div>
 
   </div>
@@ -84,8 +88,10 @@
                          </select>
                          </div>
 
-                          <div class="mb-2 col-12 fw-light text-white" wire:key="a4569oh-kjhf-{{$count}}>
-                         <label class="form-label" for="program"> Study Programme</label>
+                          <div class="mb-2 col-12" >
+                         <label class="form-label fw-light text-white" for="program"> Study Programme</label>
+						 
+						 <div  wire:key="a4569oh-kjhf-{{$count}}" >
                         <div class="mt-1" wire:ignore>
                         <select id="program-m" name="program" class="form-select"> 
                          <option value="">Any Programme </option>
@@ -97,6 +103,8 @@
                       
                          </select>
                          </div>
+						 </div>
+						 
                          </div>
 
                        <div class="mt-4">  <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary w-100">Search</button> </div>

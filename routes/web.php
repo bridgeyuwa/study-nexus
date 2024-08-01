@@ -6,13 +6,9 @@ use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatchmentController;
+use App\Livewire\Search;
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
 
-/*test*/
-Route::get('/test', [InstitutionController::class, 'test']);
 
 /* Home */
 Route::get('/', [HomeController::class, 'index'])->name('home');

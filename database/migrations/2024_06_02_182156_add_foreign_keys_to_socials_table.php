@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('socials', function (Blueprint $table) {
             $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
-            $table->foreign(['socialtype_id'])->references(['id'])->on('socialtypes')->onUpdate('cascade');
+            $table->foreign(['social_type_id'])->references(['id'])->on('socialtypes')->onUpdate('cascade');
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('socials', function (Blueprint $table) {
             $table->dropForeign('socials_institution_id_foreign');
-            $table->dropForeign('socials_socialtype_id_foreign');
+            $table->dropForeign('socials_social_type_id_foreign');
         });
     }
 };

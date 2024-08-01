@@ -34,8 +34,8 @@ class Institution extends Model {
     }
     
     
-    public function schooltype() {
-        return $this->belongsTo(Schooltype::class);
+    public function institutionType() {
+        return $this->belongsTo(InstitutionType::class);
     }
 
     public function term() {
@@ -52,8 +52,8 @@ class Institution extends Model {
     }
     
 
-    public function phonenumbers() {
-        return $this->hasMany(Phonenumber::class);
+    public function phoneNumbers() {
+        return $this->hasMany(PhoneNumber::class);
     }
 
 

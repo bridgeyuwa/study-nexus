@@ -91,7 +91,7 @@ $level->load([ 'programs' => function ($query) use($program) {
 }]);
 
 
-$institutions = $program->institutions()->with(['schooltype','category','state'])->wherePivot('level_id', $level->id)->orderBy('name')->paginate(60);
+$institutions = $program->institutions()->with(['institutionType','category','state'])->wherePivot('level_id', $level->id)->orderBy('name')->paginate(60);
 
 		$program_levels = $program->__levels()->get();
 

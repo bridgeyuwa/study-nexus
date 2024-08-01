@@ -22,7 +22,7 @@ class CatchmentController extends Controller {
     }
 
     public function show(Catchment $catchment) {
-        $institutions = $catchment->institutions()->with(['state', 'schooltype', 'category'])->orderBy('name')->get();
+        $institutions = $catchment->institutions()->with(['state', 'institutionType', 'category'])->orderBy('name')->get();
 
         $SEOData = new SEOData(
                 title: 'Universities with ' . $catchment->name . ' as Catchment Area]',

@@ -84,7 +84,7 @@ use Illuminate\Support\Str;
 					<!-- institution/program item -->
                     <a href="
                        @if(!empty($program) && !empty($level))  
-                       {{route('institutions.program', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}} 
+                       {{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}} 
                        @elseif(!empty($program))
                        {{route('institutions.program.levels', ['institution' => $institution->id, 'program' => $program->id])}}
                        @else  
@@ -101,7 +101,7 @@ use Illuminate\Support\Str;
 
                                 @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span class="text-white-75 fw-light">{{$institution->former_name}}</span> </div> @endif 
 
-                                <div class=" text-white-75 mb-2 fs-sm">{{$institution->schooltype->name}}
+                                <div class=" text-white-75 mb-2 fs-sm">{{$institution->institutionType->name}}
                                     {{$institution->category->name}}. <i
                                         class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
 

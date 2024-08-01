@@ -14,22 +14,12 @@ use Illuminate\Support\Facades\DB;
 
 class InstitutionController extends Controller {
 	
-	public function test() {
-	
-	$programs = Program::all();
-	
-	
-	
-dd($programs);
 
-	
-	return null;
-}
 	
 
     public function index() {
          
-           $institutions = Institution::with(['state','schooltype','category'])->orderBy('name')->paginate(60);
+           $institutions = Institution::with(['state','institutionType','category'])->orderBy('name')->paginate(60);
            $categories = Category::all();
            $SEOData = new SEOData(
                                     title: 'Academic Institutions in Nigeria',
@@ -40,7 +30,7 @@ dd($programs);
     }
 
     public function category(Category $category) {
-        $institutions = $category->institutions()->with(['state','schooltype','category'])->orderBy('name')->paginate(60);
+        $institutions = $category->institutions()->with(['state','institutionType','category'])->orderBy('name')->paginate(60);
           $categories = Category::all();            
                    $SEOData = new SEOData(
                                     title:  $category->name_plural. ' in Nigeria',
@@ -100,7 +90,7 @@ dd($programs);
                    public function showLocation(State $state) {
 
                         
-                   $institutions = $state->institutions()->with('category','schooltype','state')->orderBy('name')->get();
+                   $institutions = $state->institutions()->with('category','institutionType','state')->orderBy('name')->get();
                    $categories = Category::all();
                    $SEOData = new SEOData(
                                     title: 'All Institutions in '.$state->name,
@@ -116,7 +106,7 @@ dd($programs);
 
         public function showCategoryLocation(Category $category, State $state) {
 
-              $institutions = $state->institutions()->where('category_id', $category->id)->with('category','schooltype','state')->orderBy('name')->get();
+              $institutions = $state->institutions()->where('category_id', $category->id)->with('category','institutionType','state')->orderBy('name')->get();
               $categories = Category::all();
 
 
@@ -314,8 +304,7 @@ private function computeRank($institution, $allInstitutions) {
     public function show(Institution $institution) {
                  $allInstitutions = Institution::whereNotNull('rank')->where('category_id',$institution->category->id)->orderBy('rank')->get();  // get all institutions 
 				 
-				
-                 $institution->load(['schooltype','category.institutions','term','catchments','state.institutions','state.region.institutions','socials',
+                 $institution->load(['institutionType','category.institutions','term','catchments','state.institutions','state.region.institutions','socials',
                  
                                       'levels.programs' => function($query) use($institution) {
 
@@ -323,7 +312,8 @@ private function computeRank($institution, $allInstitutions) {
                                                       }
                                    ]);	
 								   
-					
+					//dd($institution);
+				
             
 					
               
