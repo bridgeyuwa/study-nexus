@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('phonenumbers', function (Blueprint $table) {
-            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
+        Schema::create('religious_affiliations', function (Blueprint $table) {
+            $table->id();
+			$table->string('name');
+			$table->unsignedBigInteger('religious_affiliation_category_id');
+			$table->string('description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('phonenumbers', function (Blueprint $table) {
-            $table->dropForeign('phonenumbers_institution_id_foreign');
-        });
+        Schema::dropIfExists('religious_affiliations');
     }
 };

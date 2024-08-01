@@ -14,4 +14,10 @@ class InstitutionType extends Model
         return $this->hasMany(Institution::class);
     }
     
+	
+	public function institutionTypeCategory() 
+	{
+        return $this->belongsTo(InstitutionTypeCategory::class);
+    }
+	
 }

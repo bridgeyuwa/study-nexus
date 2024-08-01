@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('socials', function (Blueprint $table) {
-            $table->unsignedBigInteger('social_type_id');
-            $table->string('institution_id');
-            $table->string('url');
-
-            $table->primary(['socialtype_id', 'institution_id']);
+        Schema::table('phone_numbers', function (Blueprint $table) {
+            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('socials');
+        Schema::table('phone_numbers', function (Blueprint $table) {
+            $table->dropForeign('phone_numbers_institution_id_foreign');
+        });
     }
 };

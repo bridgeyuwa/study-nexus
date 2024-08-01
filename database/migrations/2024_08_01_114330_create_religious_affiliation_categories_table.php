@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('lgas', function (Blueprint $table) {
-            $table->foreign(['state_id'])->references(['id'])->on('states')->onUpdate('cascade');
+        Schema::create('religious_affiliation_categories', function (Blueprint $table) {
+            $table->id();
+			$table->string('name');
+			$table->string('description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('lgas', function (Blueprint $table) {
-            $table->dropForeign('lgas_state_id_foreign');
-        });
+        Schema::dropIfExists('religious_affiliation_categories');
     }
 };

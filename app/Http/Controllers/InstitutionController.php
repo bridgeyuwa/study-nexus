@@ -334,8 +334,11 @@ private function computeRank($institution, $allInstitutions) {
 		
 		//dd($institution->description_alt);
 		
-		//dd($institution->socials);
-		     
+		//dd($institution->religiousAffiliation->religiousAffiliationCategory->name, $institution->religiousAffiliation->name, $institution->institutionType->institutionTypeCategory->name, $institution->institutionType->name);
+		  
+         dd($institution->parent);		
+
+		 
           return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
 
@@ -384,8 +387,6 @@ private function computeRank($institution, $allInstitutions) {
                                        );
 					
      
-//dd($institution_program->pivot->programMode->name);	 
-
 
 
 

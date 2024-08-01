@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('socials', function (Blueprint $table) {
-            $table->unsignedBigInteger('social_type_id');
-            $table->string('institution_id');
-            $table->string('url');
-
-            $table->primary(['socialtype_id', 'institution_id']);
+        Schema::create('institution_type_categories', function (Blueprint $table) {
+            $table->id();
+			$table->string('name');
+			$table->string('description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('socials');
+        Schema::dropIfExists('institution_type_categories');
     }
 };

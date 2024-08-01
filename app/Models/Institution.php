@@ -71,4 +71,20 @@ class Institution extends Model {
     }
 	
     
+	public function religiousAffiliation() 
+	{
+        return $this->belongsTo(ReligiousAffiliation::class);
+    }
+	
+	
+	public function parent()
+	{
+		return $this->belongsTo(Institution::class,'parent_id');
+	}
+	
+	
+	public function children()
+	{
+		return $this->hasMany(Institution::class,'parent_id');
+	}
 }
