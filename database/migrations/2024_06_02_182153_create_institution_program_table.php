@@ -23,8 +23,10 @@ return new class extends Migration
             $table->json('requirements')->nullable();
 			$table->unsignedBigInteger('accreditation_body_id');
 			$table->unsignedBigInteger('accreditation_status_id')->nullable();
+			$table->boolean('is_distinguished')->default(0);
 			$table->date('accreditation_grant_date')->nullable();
 			$table->date('accreditation_expiry_date')->nullable();
+			
             $table->timestamps();
 
             $table->primary(['institution_id', 'program_id', 'level_id']); 

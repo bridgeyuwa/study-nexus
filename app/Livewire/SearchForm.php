@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\State;
 use App\Models\Level;
 use App\Models\Program;
+use Illuminate\Http\Request;
+
 
 class SearchForm extends Component
 {
@@ -21,9 +23,18 @@ class SearchForm extends Component
   
 
    public $selectedLevel = null;
+   
+    public $selectedType = '';
+    public $selectedCategory = '';
+    public $selectedReligion = '';
+    public $selectedSort = ''; // Default sort
+   
+   
+   
+   
+   
 
-
-     public function mount()
+     public function mount(Request $request)
       {
            $this->allLevels = Level::with('__programs')->get(); //remove eagerloading in production from this Livewire
 		   $this->levels = $this->allLevels;
@@ -32,6 +43,15 @@ class SearchForm extends Component
            $this->programs = $this->allPrograms;
 
            $this->states = State::all();
+		   
+		$this->selectedLevel = $request->query('level', $this->selectedLevel); 
+		
+		
+		$this->selectedType = $request->query('type', $this->selectedType);
+        $this->selectedCategory = $request->query('category', $this->selectedCategory);
+        $this->selectedReligion = $request->query('religion', $this->selectedReligion);
+        $this->selectedSort = $request->query('sort', $this->selectedSort);
+		   
 
        }
 
@@ -45,6 +65,7 @@ class SearchForm extends Component
 						if ($levels) {
 							 $levels->load('__programs'); // Explicitly load the relationship remove in production
 							$this->programs = $levels->__programs;
+							
 						} else {
 							$this->programs = $this->allPrograms;
 						}
@@ -59,6 +80,18 @@ class SearchForm extends Component
 
          
    }
+   
+   
+   public function clearFilters()
+{
+    $this->selectedType = '';
+    $this->selectedCategory = '';
+    $this->selectedReligion = '';
+    $this->selectedSort = ''; // Default sort
+
+    // Clear other filter properties if applicable
+}
+   
 
 
 

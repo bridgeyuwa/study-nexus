@@ -336,7 +336,7 @@ private function computeRank($institution, $allInstitutions) {
 		
 		//dd($institution->religiousAffiliation->religiousAffiliationCategory->name, $institution->religiousAffiliation->name, $institution->institutionType->institutionTypeCategory->name, $institution->institutionType->name);
 		  
-         dd($institution->parent);		
+         //dd($institution->affiliatedInstitutions);		
 
 		 
           return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
