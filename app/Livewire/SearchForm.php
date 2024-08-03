@@ -7,6 +7,8 @@ use App\Models\State;
 use App\Models\Level;
 use App\Models\Program;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 
 
 class SearchForm extends Component
@@ -29,31 +31,31 @@ class SearchForm extends Component
     public $selectedReligion = '';
     public $selectedSort = ''; // Default sort
    
-   
+   public $isSearchPage = false;
    
    
    
 
      public function mount(Request $request)
-      {
-           $this->allLevels = Level::with('__programs')->get(); //remove eagerloading in production from this Livewire
-		   $this->levels = $this->allLevels;
+        {
+		    $this->allLevels = Level::with('__programs')->get(); //remove eagerloading in production from this Livewire
+		    $this->levels = $this->allLevels;
 		   
-           $this->allPrograms = Program::all();
-           $this->programs = $this->allPrograms;
+		    $this->allPrograms = Program::all();
+		    $this->programs = $this->allPrograms;
 
-           $this->states = State::all();
+		    $this->states = State::all();
 		   
-		$this->selectedLevel = $request->query('level', $this->selectedLevel); 
+			$this->selectedLevel = $request->query('level', $this->selectedLevel); 
 		
 		
-		$this->selectedType = $request->query('type', $this->selectedType);
-        $this->selectedCategory = $request->query('category', $this->selectedCategory);
-        $this->selectedReligion = $request->query('religion', $this->selectedReligion);
-        $this->selectedSort = $request->query('sort', $this->selectedSort);
-		   
-
-       }
+			$this->selectedType = $request->query('type', $this->selectedType);
+			$this->selectedCategory = $request->query('category', $this->selectedCategory);
+			$this->selectedReligion = $request->query('religion', $this->selectedReligion);
+			$this->selectedSort = $request->query('sort', $this->selectedSort);
+			   
+		    $this->isSearchPage = Route::is('search');
+        }
 
 
         public function updatedSelectedLevel($value)
@@ -65,36 +67,34 @@ class SearchForm extends Component
 						if ($levels) {
 							 $levels->load('__programs'); // Explicitly load the relationship remove in production
 							$this->programs = $levels->__programs;
-							
 						} else {
 							$this->programs = $this->allPrograms;
 						}
-					
 					} 
                    else {
                        $this->programs = $this->allPrograms;
                     }
-          
           $this->count = $this->count + 1 ;
-          $this->dispatch('programSelected');
-
-         
+		  $this->dispatch('programSelected');  
    }
    
    
-   public function clearFilters()
-{
-    $this->selectedType = '';
-    $this->selectedCategory = '';
-    $this->selectedReligion = '';
-    $this->selectedSort = ''; // Default sort
+	
 
-    // Clear other filter properties if applicable
-}
+    public function shouldDisableReligiousAffiliation()
+    {
+        return in_array($this->selectedType, ['public', 'federal', 'state']);
+    }
    
 
 
-
+     public function clearFilters()
+	{
+		$this->selectedType = '';
+		$this->selectedCategory = '';
+		$this->selectedReligion = '';
+		$this->selectedSort = '';
+	}
 
 
 

@@ -50,29 +50,31 @@
 		
 		
 		
-		
+		@if($isSearchPage)
 		<div class="mt-3">
+	<div class="text-white text-start mb-2"><i class="fa fa-sliders-h me-1"></i> Filters </div>
+	
     <div class="mb-2 col-12 text-start text-white fw-light">
         <div class="bg-white-25 px-2 fs-sm rounded">
             <div class="mb-1 fw-semibold">Type</div>
             <div class="radio d-inline">
-                <input type="radio" id="type_all" name="type" value="" wire:model="selectedType" >
+                <input type="radio" id="type_all" name="type" value="" wire:model.live="selectedType" >
                 <label class="me-1" for="type_all">All</label>
             </div>
             <div class="radio d-inline">
-                <input type="radio" id="type_public" name="type" value="public" wire:model="selectedType"  >
+                <input type="radio" id="type_public" name="type" value="public" wire:model.live="selectedType"  >
                 <label class="me-1" for="type_public">Public</label>
             </div>
             <div class="radio d-inline">
-                <input type="radio" id="type_federal" name="type" value="federal" wire:model="selectedType" >
+                <input type="radio" id="type_federal" name="type" value="federal" wire:model.live="selectedType" >
                 <label class="me-1" for="type_federal">Federal</label>
             </div>
             <div class="radio d-inline">
-                <input type="radio" id="type_state" name="type" value="state" wire:model="selectedType" >
+                <input type="radio" id="type_state" name="type" value="state" wire:model.live="selectedType" >
                 <label class="me-1" for="type_state">State</label>
             </div>
             <div class="radio d-inline">
-                <input type="radio" id="type_private" name="type" value="private" wire:model="selectedType" >
+                <input type="radio" id="type_private" name="type" value="private" wire:model.live="selectedType" >
                 <label class="me-1" for="type_private">Private</label>
             </div>
         </div>
@@ -107,19 +109,19 @@
             <div class="mb-1 fw-semibold">Religious Affiliation</div>
             <div class="fs-sm">
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_all" name="religion" value="" wire:model="selectedReligion">
+                    <input type="radio" id="religion_all" name="religion" value=""  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_all">All</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_non_religious" name="religion" value="non-sectarian" wire:model="selectedReligion" >
+                    <input type="radio" id="religion_non_religious" name="religion" value="non-sectarian" wire:model="selectedReligion" @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_non_religious">Non-Religious</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_christian" name="religion" value="christian" wire:model="selectedReligion" >
+                    <input type="radio" id="religion_christian" name="religion" value="christian" wire:model="selectedReligion"  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_christian">Christian</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_islam" name="religion" value="islam"  wire:model="selectedReligion" >
+                    <input type="radio" id="religion_islam" name="religion" value="islam"  wire:model="selectedReligion"  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_islam">Islam</label>
                 </div>
             </div>
@@ -131,42 +133,35 @@
             <div class="mb-1 fw-semibold">Sort By</div>
             <div class="fs-sm">
                 <div class="radio d-inline">
-                    <input type="radio" id="sort_az" name="sort" value="" wire:model="selectedSort">
-                    <label class="me-1" for="sort_az">A-Z (default)</label>
+                    <input type="radio" id="az" name="sort" value="" wire:model="selectedSort">
+                    <label class="me-1" for="az"><i class="fa fa-arrow-down-a-z me-1"></i>A-Z (default)</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="sort_za" name="sort" value="za" disabled wire:model="selectedSort" >
-                    <label class="me-1" for="sort_za">Z-A</label>
+                    <input type="radio" id="za" name="sort" value="za"  wire:model="selectedSort" >
+                    <label class="me-1" for="za"><i class="fa fa-arrow-down-z-a me-1"></i>Z-A</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="sort_rank" name="sort" value="rank" disabled wire:model="selectedSort">
-                    <label class="me-1" for="sort_rank">Rank</label>
+                    <input type="radio" id="rank" name="sort" value="rank"  wire:model="selectedSort">
+                    <label class="me-1" for="rank">Rank</label>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-	
-  </div>
-  
-  <div class="d-flex flex-row">
-  @php  
-  $loc = request()->get('location');    
-  $lvl = request()->get('level');
-  $pgm = request()->get('program');
-  
-  
-  @endphp
-  
-  
-<a href="{{url("/search?location={$loc}&level={$lvl}&program={$pgm}&type=&category=&religion=&sort=")}}">Clear Filters</a>
+	<div class="d-flex flex-row">
+		<button wire:click="clearFilters" type="button" class="btn btn-sm btn-outline-light fw-light"><i class="fa fa-times me-1"></i> Clear filters </button>
+	</div>
+@endif
+
 </div>
+  
+	
 
 
     <div class=" pt-2">
         <div class="d-flex  justify-content-center justify-content-md-end me-md-5 ">
-            <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary"> Search</button>
+            <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary"> @if($isSearchPage) Apply Filters @else Search @endif </button>
         </div>
     </div>
 
