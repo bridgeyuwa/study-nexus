@@ -20,5 +20,8 @@ class Category extends Model
         return $this->hasMany(Institution::class);
     }
     
+	public function categoryClass() {
+        return $this->belongsTo(CategoryClass::class);
+    }
     
 }

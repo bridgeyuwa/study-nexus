@@ -15,8 +15,8 @@ use Illuminate\Support\Number;
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
 
-                     @if(!empty($category)) 
-						{{$category->name_plural}}
+                     @if(!empty($categoryClass)) 
+						{{$categoryClass->name_plural}}
 					@else 
 						Tertiary Institutions                      
 					@endif in {{$state->name}} @if(!empty($state->is_state)) State @endif  - Nigeria
@@ -58,10 +58,10 @@ use Illuminate\Support\Number;
 					
 					
 					
-					@foreach($categories as $institution_category)
+					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
-                    <a href="{{route('institutions.categories.location.show', ['category' => $institution_category->slug, 'state' => $state->slug])}}"><button
+                    <a href="{{route('institutions.categories.location.show', ['categoryClass' => $institution_category->slug, 'state' => $state->slug])}}"><button
 					@if(
 					route('institutions.categories.location.show', [$institution_category, $state]) == url()->current()
 					) 
@@ -89,14 +89,14 @@ use Illuminate\Support\Number;
           <link itemprop="url"  content="{{url()->current()}}" />
 
             <!-- Introduction -->
-            <h2 itemprop="name" class="content-heading text-center"> @if(!empty($category)) {{$category->name_plural}} </span> @else All Tertiary Institutions @endif in <span class="text-black">{{$state->name}} @if(!empty($state->is_state)) State @endif </span>,
+            <h2 itemprop="name" class="content-heading text-center"> @if(!empty($categoryClass)) {{$categoryClass->name_plural}} </span> @else All Tertiary Institutions @endif in <span class="text-black">{{$state->name}} @if(!empty($state->is_state)) State @endif </span>,
                 Nigeria
             </h2>
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
                         <p itemprop="description" class="text-muted ">
-                            A List of accredited @if(!empty($category)) <span class="text-black"> {{$category->name_plural}} </span> @else <span class="text-black">Universities</span>,
+                            A List of accredited @if(!empty($categoryClass)) <span class="text-black"> {{$categoryClass->name_plural}} </span> @else <span class="text-black">Universities</span>,
                             <span class="text-black">Polytechnics</span>, <span class="text-black">Monotechnics</span>, <span class="text-black">Colleges of Education</span> and <span class="text-black">Innovation Enterprise Institutions</span>@endif
                             in <span class="text-black">{{$state->name}} @if(!empty($institution->state->is_state)) State @endif </span>, Nigeria.
                         </p>

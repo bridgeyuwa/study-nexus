@@ -66,26 +66,26 @@
       <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" style="background-image: url(/media/patterns/grid-me.pngx)">
               
               <div class="px-2 px-sm-5">
-                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($institutions))}}</p>
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($institutions->count())}}</p>
                 <p class="text-muted mb-0">
                   Institutions
                 </p>
               </div>
 			      <div class="px-2 px-sm-5 border-start">
-                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($categories))}}</p>
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($categoryClasses->count())}}</p>
                 <p class="text-muted mb-0">
                  Categories
                 </p>
               </div>
               <div class="px-2 px-sm-5 border-start">
-                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($programs))}}</p>
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($programs->count())}}</p>
                 <p class="text-muted mb-0">
                   Course Programs
                 </p>
               </div>
              
               <div class="px-2 px-sm-5 border-start">
-                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format(count($levels))}}</p>
+                <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($levels->count())}}</p>
                 <p class="text-muted mb-0">
                   Study Levels
                 </p>
@@ -172,14 +172,13 @@
             <div class="col-md-6 d-flex">
                 <div class="block block-rounded flex-fill d-flex flex-column">
                     <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
-                        <h3 class="fw-light mb-1">Academic Course Programs Library</h3>
+                        <h3 class="fw-light mb-1">Academic Course Programmes Library</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
-                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'bachelors'])}}">Bachelor's Degree Courses</a></p>
-                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'diploma'])}}">Diploma Courses</a></p>
-                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'nce'])}}">National Certificate of Education Courses</a></p>
-                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => 'nid'])}}">National Innovation Diploma Courses</a></p>
-                    </div>
+					  @foreach($levels as $level)
+                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => $level->slug])}}">{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}}) @endif</a></p>
+						@endforeach
+					  </div>
 
                 </div>
             </div>
@@ -191,13 +190,12 @@
                         <h3 class=" fw-light mb-1">Academic Institutions Library</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
-
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'university'])}}">Universities</a></p>
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'polytechnic'])}}">Polytechnics</a></p>
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'monotechnic'])}}">Monotechnics</a></p>
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'college-of-education'])}}">Colleges of Education</a></p>
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['category' => 'innovation-enterprise-institution'])}}">Innovation Enterprise Institutions</a></p>
-
+							
+							@foreach($categoryClasses as $categoryClass)
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name_plural}}</a></p>
+                        @endforeach
+						
+				
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
                         <a class="btn btn-hero btn-alt-primary rounded-0 w-100" href="{{route('institutions.index')}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View all Institutions</a>
@@ -211,13 +209,9 @@
                         <h3 class="fw-light mb-1">Academic Institutions by Location</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
-
-                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'university'])}}">University Locations</a></p>
-                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'polytechnic'])}}">Polytechnic Locations</a></p>
-                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'monotechnic'])}}">Montechnic Locations</a></p>
-                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'college-of-education'])}}">College of Education Locations</a></p>
-                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['category' => 'innovation-enterprise-institution'])}}">Innovation Enterprise Institution Locations</a></p>
-
+						@foreach($categoryClasses as $categoryClass)
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name}} Locations</a></p>
+                        @endforeach
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
                         <a class="btn btn-hero btn-alt-primary rounded-0 w-100" href="{{route('institutions.location')}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View All Locations</a>
@@ -231,12 +225,9 @@
                         <h3 class="fw-light mb-1">Academic Institution Rankings</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
-
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'university'])}}">University Rankings</a></p>
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'polytechnic'])}}">Polytechnic Rankings</a></p>
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'monotechnic'])}}">Montechnic Rankings</a></p>
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['category' => 'college-of-education'])}}">Colleges of Education Rankings</a></p>
-
+						@foreach($categoryClasses as $categoryClass)
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name}} Rankings</a></p>
+                        @endforeach
                     </div>
 
                 </div>

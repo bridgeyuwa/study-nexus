@@ -25,8 +25,8 @@ class CatchmentController extends Controller {
         $institutions = $catchment->institutions()->with(['state', 'institutionType', 'category'])->orderBy('name')->get();
 
         $SEOData = new SEOData(
-                title: 'Universities with ' . $catchment->name . ' as Catchment Area]',
-                description: 'Explore institutions within the ' . $catchment->name . ' catchment area of Nigeria. Find programs and compare institutions.',);
+                title: "Universities with  {$catchment->name} as Catchment Area",
+                description: "Explore institutions within the  {$catchment->name} catchment area of Nigeria. Find programs and compare institutions.",);
 
         return view('catchment.show', compact('catchment', 'institutions', 'SEOData'));
     }

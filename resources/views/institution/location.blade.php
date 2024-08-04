@@ -10,16 +10,16 @@
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
-                                    @if(!empty($category))
-                                        {{$category->name_plural}}
+                                    @if(!empty($categoryClass))
+                                        {{$categoryClass->name_plural}}
 									@else
 										Tertiary Institutions
                                     @endif in Nigeria
                </h1>
 
                   <h2 class="h4 fs-md  fw-light text-white-75 ">
-                     ( Locate @if(!empty($category))
-										{{$category->name_plural}}
+                     ( Locate @if(!empty($categoryClass))
+										{{$categoryClass->name_plural}}
 									@else
 										Academic Institutions
                                     @endif by Regions/State )
@@ -64,10 +64,10 @@
 					
 					
 					
-					@foreach($categories as $institution_category)
+					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
-                    <a href="{{route('institutions.categories.location', ['category' => $institution_category->slug])}}"><button
+                    <a href="{{route('institutions.categories.location', ['categoryClass' => $institution_category->slug])}}"><button
 					@if(
 					route('institutions.categories.location', $institution_category) == url()->current()
 					) 
@@ -128,8 +128,8 @@
                         @foreach( $region->states as $state )
                         <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
                             <a href="
-                              @if(!empty($category))
-                              {{route('institutions.categories.location.show', ['category' => $category->slug, 'state' => $state->slug])}}
+                              @if(!empty($categoryClass))
+                              {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass->slug, 'state' => $state->slug])}}
                               @else 
                               {{route('institutions.location.show', ['state' => $state->slug])}}
                               @endif
@@ -139,8 +139,8 @@
 
 
                             <a href="
-                               @if(!empty($category))
-                               {{route('institutions.categories.location.show', ['category' => $category->slug, 'state' => $state->slug])}}
+                               @if(!empty($categoryClass))
+                               {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass->slug, 'state' => $state->slug])}}
                                @else 
                                {{route('institutions.location.show', ['state' => $state->slug])}}
                                @endif

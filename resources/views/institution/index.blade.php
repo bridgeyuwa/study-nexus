@@ -12,9 +12,9 @@
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
 
-                 @if(!empty($category))
+                 @if(!empty($categoryClass))
                    
-                        {{$category->name_plural}}
+                        {{$categoryClass->name_plural}}
                       
                  @else
                     Tertiary Institutions
@@ -59,12 +59,12 @@
 					
 					
 					
-					@foreach($categories as $institution_category)
+					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
-                    <a href="{{route('institutions.categories.index', ['category' => $institution_category->slug])}}"><button
+                    <a href="{{route('institutions.categories.index', ['categoryClass' => $institution_category->slug])}}"><button
 					@if(
-					route('institutions.categories.index', ['category' => $institution_category->slug]) == url()->current()
+					route('institutions.categories.index', ['categoryClass' => $institution_category->slug]) == url()->current()
 					) 
 					class="btn-sm nav-link active" disabled
 					@else
@@ -86,8 +86,8 @@
         <div class="block-content">
 
             <h2 class="content-heading text-center"> List of 
-			@if(!empty($category)) 
-               {{$category->name_plural}}
+			@if(!empty($categoryClass)) 
+               {{$categoryClass->name_plural}}
 			@else 
 				Academic Institutions of Higher Learning 
 			@endif 
@@ -103,8 +103,8 @@
                     <div class="sticky-top" style="top: 100px;">
                         <p itemprop="name" class="text-muted ">
                              List of  
-							@if(!empty($category)) 
-							    {{$category->name_plural}} 
+							@if(!empty($categoryClass)) 
+							    {{$categoryClass->name_plural}} 
 							@else 
 								Higher Institutions 
 							@endif 
@@ -112,8 +112,8 @@
                         </p>
 
                         <p itemprop="description" class="fs-sm">We provide comprehensive information about each of the 
-						@if(!empty($category)) 
-							  {{$category->name_plural}}
+						@if(!empty($categoryClass)) 
+							  {{$categoryClass->name_plural}}
 							@else 
 								Higher Institutions 
 							@endif 

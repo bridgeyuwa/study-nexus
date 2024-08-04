@@ -15,7 +15,7 @@ use Illuminate\Support\Number;
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="pt-4 pb-3">
-                <h1  itemprop="name"  ><a class="fw-light text-white mb-1" href="{{route('institutions.categories.ranking', ['category' => $category->slug])}}">{{$category->name}} Rankings</a></h1>
+                <h1  itemprop="name"  ><a class="fw-light text-white mb-1" href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name}} Rankings</a></h1>
                 <meta itemprop="sameAs" content="https://webometrics.info/en/Africa/Nigeria">
 				<meta itemprop="url" content="{{url()->current()}}">
 
@@ -43,16 +43,16 @@ use Illuminate\Support\Number;
 			
 					 <ul class="nav nav-tabs nav-tabs-block bg-gray-lighter">
 					
-					@foreach($categories as $institution_category)
+					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
 						@if(!empty($state))
 							<a href=" 
-							{{route('institutions.categories.ranking.state', ['category' => $institution_category->slug, 'state' => $state->slug])}}
+							{{route('institutions.categories.ranking.state', ['categoryClass' => $institution_category->slug, 'state' => $state->slug])}}
 							"><button
 							
 							@if(
-							route('institutions.categories.ranking.state', ['category' => $institution_category->slug, 'state' => $state->slug]) == url()->current()
+							route('institutions.categories.ranking.state', ['categoryClass' => $institution_category->slug, 'state' => $state->slug]) == url()->current()
 							) 
 							class="btn-sm nav-link active" disabled
 							@else
@@ -64,11 +64,11 @@ use Illuminate\Support\Number;
 							</a>
 						@elseif(!empty($region))
 							<a href="
-							{{route('institutions.categories.ranking.region', ['category' => $institution_category->slug, 'region' => $region->slug])}}
+							{{route('institutions.categories.ranking.region', ['categoryClass' => $institution_category->slug, 'region' => $region->slug])}}
 							"><button
 							
 							@if(
-							route('institutions.categories.ranking.region', ['category' => $institution_category->slug, 'region' => $region->slug]) == url()->current()
+							route('institutions.categories.ranking.region', ['categoryClass' => $institution_category->slug, 'region' => $region->slug]) == url()->current()
 							) 
 							class="btn-sm nav-link active" disabled
 							@else
@@ -80,11 +80,11 @@ use Illuminate\Support\Number;
 							</a>
 						@else
 							<a href="
-							{{route('institutions.categories.ranking', ['category' => $institution_category->slug])}}
+							{{route('institutions.categories.ranking', ['categoryClass' => $institution_category->slug])}}
 							"><button
 							
 							@if(
-							route('institutions.categories.ranking', ['category' => $institution_category->slug]) == url()->current()
+							route('institutions.categories.ranking', ['categoryClass' => $institution_category->slug]) == url()->current()
 							) 
 							class="btn-sm nav-link active" disabled
 							@else
@@ -108,13 +108,13 @@ use Illuminate\Support\Number;
     <div class="block block-rounded">
         <div class="block-content">
 
-            <h2 class="content-heading text-center">Ranking of {{$category->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{$region->name}}, Nigeria @else Nigeria @endif </h2>
+            <h2 class="content-heading text-center">Ranking of {{$categoryClass->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{$region->name}}, Nigeria @else Nigeria @endif </h2>
             <div itemprop="description" class="row items-push">
                 <div>
                         <p>
-                            Discover the top-ranked Nigerian {{$category->name_plural}} with our comprehensive ranking table. Explore accreditation details, admission criteria, and courses offered by
-                            the best {{$category->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State, @endif @elseif(!empty($region)) {{$region->name}}, @endif Nigeria. Whether
-                            you are searching for the top @if($category->id == 4) Colleges of Education @else {{$category->name_plural}} @endif in Nigeria or seeking valuable insights into higher education, our list provides essential
+                            Discover the top-ranked Nigerian {{$categoryClass->name_plural}} with our comprehensive ranking table. Explore accreditation details, admission criteria, and courses offered by
+                            the best {{$categoryClass->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State, @endif @elseif(!empty($region)) {{$region->name}}, @endif Nigeria. Whether
+                            you are searching for the top  {{$categoryClass->name_plural}} in Nigeria or seeking valuable insights into higher education, our list provides essential
                             information.
                         </p>
                 </div>
@@ -132,7 +132,7 @@ use Illuminate\Support\Number;
                                 <th class="text-center" style="width: 150px; min-width: 85px">
                                 <i class="fa fa-star me-1"></i>@if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif @elseif(!empty($region)) {{$region->name}} @else Nigeria @endif Rank 
                                 </th>
-                                <th style="min-width: 265px;">{{$category->name}}</th>
+                                <th style="min-width: 265px;">{{$categoryClass->name}}</th>
                                 <th class="@if(!empty($state)) d-none @endif" style="width: 15%; min-width: 140px;">State Rank</th>
                                 <th class="@if(!empty($region)) d-none @endif" style="width: 18% ; min-width: 157px;">Region Rank</th>
                                 <th class="text-center" style="width: 10%;"><span data-bs-toggle="tooltip" data-bs-placement="top" title="World Rank (Webometrics)">WR</span></th>
@@ -140,7 +140,7 @@ use Illuminate\Support\Number;
                         </thead>
 
                         <tbody itemscope itemtype="https://schema.org/ItemList" >
-						<meta itemprop="name" content="Ranking of {{$category->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{$region->name}}, Nigeria @else Nigeria @endif" />
+						<meta itemprop="name" content="Ranking of {{$categoryClass->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{$region->name}}, Nigeria @else Nigeria @endif" />
                             @foreach($institutions as $institution)
 							
 							
@@ -168,7 +168,7 @@ use Illuminate\Support\Number;
 
                                     @if(!empty($rank[$institution->id]['state'])) {{Number::ordinal($rank[$institution->id]['state'])}} @else NR @endif in
 
-                                    <a href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> {{$institution->state->name}}  </a>
+                                    <a href="{{route('institutions.categories.ranking.state', ['categoryClass' => $institution->category->categoryClass->slug, 'state' => $institution->state->slug])}}"> {{$institution->state->name}}  </a>
 
                                 </td>
 
@@ -176,7 +176,7 @@ use Illuminate\Support\Number;
 
                                     @if(!empty($rank[$institution->id]['region'])) {{Number::ordinal($rank[$institution->id]['region'])}} @else NR @endif in
 
-                                    <a href="{{route('institutions.categories.ranking.region', ['category' => $institution->category->slug, 'region' => $institution->state->region->slug])}}">{{$institution->state->region->name}}</a>
+                                    <a href="{{route('institutions.categories.ranking.region', ['categoryClass' => $institution->category->categoryClass->slug, 'region' => $institution->state->region->slug])}}">{{$institution->state->region->name}}</a>
 
                                 </td>
                                 <td class="fs-sm text-center">

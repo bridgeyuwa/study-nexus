@@ -72,7 +72,7 @@ Route::prefix('institutions')->name('institutions.')->group(function () {
     });
 
     /* Institutions Categories */
-    Route::prefix('category/{category:slug}')->name('categories.')->group(function () {
+    Route::prefix('category/{categoryClass:slug}')->name('categories.')->group(function () {
         Route::get('/', [InstitutionController::class, 'category'])->name('index');
         Route::get('location', [InstitutionController::class, 'categoryLocation'])->name('location');
         Route::get('location/{state:slug}', [InstitutionController::class, 'showCategoryLocation'])->withoutScopedBindings()->name('location.show');

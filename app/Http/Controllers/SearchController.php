@@ -112,8 +112,8 @@ class SearchController extends Controller
         $institutions = $query->paginate(30);
 
         $SEOData = new SEOData(
-            title: 'Search Nigerian Academic Institutions and Programs',
-            description: 'Use our advanced search to find universities, polytechnics, monotechnics, colleges of education, etc., and course programs in Nigeria that match your criteria. Filter by location, study level, course program, and more.'
+            title: "Search Nigerian Academic Institutions and Programs",
+            description: "Use our advanced search to find universities, polytechnics, monotechnics, colleges of education, etc., and course programs in Nigeria that match your criteria. Filter by location, study level, course program, and more."
         );
 
         return view('search', compact('institutions', 'program', 'state', 'level', 'SEOData'));

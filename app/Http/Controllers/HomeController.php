@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Institution;
 use App\Models\Program;
-use App\Models\Category;
+use App\Models\CategoryClass;
 use App\Models\Level;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
@@ -15,12 +15,13 @@ class HomeController extends Controller {
 
         $institutions = Institution::all();
         $programs = Program::all();
-		$categories = Category::all();
+		$categoryClasses = CategoryClass::all();
+		
 		$levels = Level::all(); 
       
         $SEOData = new SEOData( 
-                           description: 'Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.',
-                               );
+            description: "Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.",
+        );
 							   
 
 
@@ -73,7 +74,7 @@ $newFileContent = file_put_contents($newFilePath, $allSql);
 
 
 
-       return view('home', compact('institutions','programs','categories','levels','SEOData'));
+       return view('home', compact('institutions','programs','categoryClasses','levels','SEOData'));
     }
 
 }

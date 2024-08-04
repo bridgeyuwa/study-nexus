@@ -222,19 +222,19 @@ use Illuminate\Support\Number;
 							<tr class="">
 								<td class=""> {{$institution->category->name}} Rank in <span class="text-black fw-semibold"> {{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span></td>
 								<td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} {{$institution->category->name_plural}}</td>
-								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['category' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['categoryClass' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
 							</tr>
 
 							<tr>
 								<td class="">{{$institution->category->name}} Rank in <span class="text-black fw-semibold">{{$institution->state->region->name}}</span></td>
 								<td>@if ($rank['region']) <span class="fw-semibold text-black">{{Number::ordinal($rank['region'])}}</span> @else NR @endif out of {{$institution->state->region->institutions->where('category_id',$institution->category->id)->count()}} {{$institution->category->name_plural}}</td>
-								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['category' => $institution->category->slug, 'region' => $institution->state->region->slug])}}"> View </a> </td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['categoryClass' => $institution->category->slug, 'region' => $institution->state->region->slug])}}"> View </a> </td>
 							</tr>
 
 							<tr>
 								<td class="">{{$institution->category->name}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
 								<td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} {{$institution->category->name_plural}} </td>
-								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['category' => $institution->category->slug])}}"> View </a> </td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['categoryClass' => $institution->category->slug])}}"> View </a> </td>
 							</tr>
 						</table>
 					</div>
