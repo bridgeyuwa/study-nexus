@@ -54,7 +54,7 @@ use Illuminate\Support\Str;
                 </div>
 
                 <!-- start col-lg-8 -->
-                <div class="col-lg-8 border px-lg-4 pt-3">
+                <div class="col-lg-8 border  pt-3">
 
                     @if($institutions->isEmpty())
 

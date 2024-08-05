@@ -119,10 +119,18 @@
 							@endif 
 							as well as detailed insights into every course offered by these institutions. (eg. description, catchment areas, tuition fees, admission requirements, etc.)</p>
 
+                   
+						<div class="d-flex flex-row justify-content-between">
+							<a href="{{route('search', $parameters)}}" ><button  type="button" class="btn btn-sm btn-outline-primary fw-light"><i class="fa fa-sliders-h me-1"></i> Filter </button> </a> <a href="" > <button  type="button" class="btn btn-sm btn-outline-dark fw-light"><i class="fa fa-trophy me-1"></i> Ranking </button> </a>
+						</div>
+						
+
                     </div>
                 </div>
-
-                <div class="col-lg-8">
+				
+				
+				
+                <div class="col-lg-8 border pt-3">
 
                     {{ $institutions->onEachSide(1)->links() }} 
 					

@@ -100,6 +100,26 @@ use Illuminate\Support\Number;
                             <span class="text-black">Polytechnics</span>, <span class="text-black">Monotechnics</span>, <span class="text-black">Colleges of Education</span> and <span class="text-black">Innovation Enterprise Institutions</span>@endif
                             in <span class="text-black">{{$state->name}} @if(!empty($institution->state->is_state)) State @endif </span>, Nigeria.
                         </p>
+						
+						<div class="d-flex flex-row justify-content-between">
+							<a href="{{route('search', $parameters)}}" ><button  type="button" class="btn btn-sm btn-outline-primary fw-light"><i class="fa fa-sliders-h me-1"></i> Filter </button> </a> 
+							
+							
+							@if(!empty($categoryClass))
+							<a href="
+							
+							@if(!empty($state))
+							{{route('institutions.categories.ranking.state', ['categoryClass' => $categoryClass->slug, 'state' => $state->slug])}}
+							@else
+							{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}} 
+							@endif
+							
+							
+							" > 
+							<button  type="button" class="btn btn-sm btn-outline-dark fw-light"><i class="fa fa-trophy me-1"></i> Ranking </button> </a>
+						@endif
+						</div>
+						
                     </div>
                 </div>
 

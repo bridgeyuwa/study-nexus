@@ -63,6 +63,7 @@ class ProgramController extends Controller
 
 		$SEOData = new SEOData(
             title: "{$level->name} in {$program->name} in Nigeria",
+			description: "Detailed infomation about {$level->name} in {$program->name}",
         );
 
 		return view('program.show', compact('level','program','program_levels','SEOData'));

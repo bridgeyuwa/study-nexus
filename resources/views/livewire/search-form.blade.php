@@ -93,7 +93,7 @@
                     <label class="me-1" for="category_universities">University</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="category_poly" name="category" value="polytechnic" wire:model="selectedCategory" >
+                    <input type="radio" id="category_poly" name="category" value="polytechnic-monotechnic" wire:model="selectedCategory" >
                     <label class="me-1" for="category_poly">Polytechnic</label>
                 </div>
                 <div class="radio d-inline">
@@ -172,8 +172,8 @@
  <!-- include Livewire search form here -->
                          <form class="p-2" action="{{url("/search")}}" method="GET">
                        
-                       <div wire:ignore class="mb-2 col-12">
-                         <label class="me-1" class="form-label fw-light text-white" for="location">Study Location</label>
+                       <div wire:ignore class="mb-2 col-12 text-white">
+                         <label class="me-1" class="form-label" for="location">Study Location</label>
                          <select id="location-m" name="location" class="form-select"> 
                                    <option value="">Any Location</option>
                                     @foreach( $states as $state)
@@ -184,8 +184,8 @@
                          </select>
                          </div>
                         
-                         <div wire:ignore class="mb-2 col-12">
-                         <label class="me-1" class="form-label fw-light text-white" for="level">Study Level</label>
+                         <div wire:ignore class="mb-2 col-12 text-white">
+                         <label class="me-1" class="form-label" for="level">Study Level</label>
                         <select id="level-m" wire:model.live="selectedLevel"  name="level" class="form-select"> 
                                      <option value="">Any Level</option>
                                       @foreach($levels  as $level)
@@ -196,8 +196,8 @@
                          </select>
                          </div>
 
-                          <div class="mb-2 col-12" >
-                         <label class="me-1" class="form-label fw-light text-white" for="program"> Study Programme</label>
+                          <div class="mb-2 col-12 text-white" >
+                         <label class="me-1" class="form-label" for="program"> Study Programme</label>
 						 
 						 <div  wire:key="a4569oh-kjhf-{{$count}}" >
                         <div class="mt-1" wire:ignore>

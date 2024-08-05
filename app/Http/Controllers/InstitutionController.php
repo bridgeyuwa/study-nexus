@@ -8,7 +8,6 @@ use App\Models\State;
 use App\Models\Region;
 use App\Models\Program;
 use App\Models\Level;
-use App\Models\Category;
 use App\Models\CategoryClass;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +23,9 @@ class InstitutionController extends Controller {
             title: "Academic Institutions in Nigeria",
             description: "Browse a comprehensive list of universities, polytechnics, monotechnics, and colleges of education. Find the best institution for your needs.",
         );
-        return view('institution.index', compact('institutions','categoryClasses','SEOData'));
+		$parameters = ['location' => '', 'level' => '', 'program' => '', 'category' => '' ];
+		
+        return view('institution.index', compact('institutions','categoryClasses','SEOData','parameters'));
     }
 
     public function category(CategoryClass $categoryClass) {
@@ -34,18 +35,20 @@ class InstitutionController extends Controller {
             ->paginate(60);
         $categoryClasses = CategoryClass::all();
         $SEOData = new SEOData(
-	title: "{$categoryClass->name_plural} in Nigeria",
+			title: "{$categoryClass->name_plural} in Nigeria",
             description: "Browse a comprehensive list of {$categoryClass->name_plural}. Find the best {$categoryClass->name} for your needs.",
         );
-        return view('institution.index', compact('institutions', 'categoryClass','categoryClasses','SEOData'));
+		$parameters = ['location' => '', 'level' => '', 'program' => '', 'category' => $categoryClass->slug ];
+        
+        return view('institution.index', compact('institutions', 'categoryClass','categoryClasses','SEOData','parameters'));
     }
 
     public function location() {
 		$regions = Region::with(['institutions', 'states.institutions'])->get();
         $categoryClasses = CategoryClass::all();
         $SEOData = new SEOData(
-            title: 'Academic Institutions in Nigeria by Location',
-            description: 'Discover academic institutions in your preferred location. Find the best educational institutions near you.',
+            title: "Academic Institutions in Nigeria by Location",
+            description: "Discover academic institutions in your preferred location. Find the best educational institutions near you.",
         );
 
         return view('institution.location', compact('regions','categoryClasses','SEOData'));
@@ -67,8 +70,8 @@ class InstitutionController extends Controller {
 		
         $categoryClasses = CategoryClass::all();
         $SEOData = new SEOData(
-            title: $categoryClass->name_plural . ' in Nigeria by Location',
-            description: 'Discover ' . $categoryClass->name_plural . ' in your preferred location. Find the best educational institutions near you.',
+			title: "{$categoryClass->name_plural} in Nigeria by Location",
+			description: "Discover {$categoryClass->name_plural} in your preferred location. Find the best educational institutions near you.",
         );
 		
         return view('institution.location', compact('regions', 'categoryClass','categoryClasses','SEOData'));
@@ -81,11 +84,14 @@ class InstitutionController extends Controller {
 		->get();
         $categoryClasses = CategoryClass::all();
         $SEOData = new SEOData(
-            title: 'All Institutions in ' . $state->name,
-            description: 'Explore top institutions in ' . $state->name . '. Compare programs and find the best fit for your education needs.',
+            title: "All Institutions in {$state->name}",
+			description: "Explore top institutions in {$state->name} Compare programmes and find the best fit for your education needs.",
         );
-                            
-        return view('institution.show-location', compact( 'state','institutions','categoryClasses','SEOData'));
+           
+         $parameters = ['location' => $state->slug, 'level' => '', 'program' => '', 'category' => '' ];
+        
+		   
+        return view('institution.show-location', compact( 'state','institutions','categoryClasses','SEOData','parameters'));
 	}
 
 	public function showCategoryLocation(CategoryClass $categoryClass, State $state) {
@@ -102,11 +108,14 @@ class InstitutionController extends Controller {
 		$categoryClasses = CategoryClass::all();
 		
 		$SEOData = new SEOData(
-			title: $categoryClass->name_plural . ' in ' . $state->name . ', Nigeria',
-			description: 'Explore ' . $categoryClass->name_plural . ' in ' . $state->name . ', Nigeria. Compare programs and find the best fit for your education needs.',
+			title: "{$categoryClass->name_plural} in {$state->name} Nigeria",
+			description: "Explore {$categoryClass->name_plural} in {$state->name}, Nigeria. Compare programs and find the best fit for your education needs.",
 		);
 		
-		return view('institution.show-location', compact('state', 'institutions', 'categoryClass', 'categoryClasses', 'SEOData'));
+		$parameters = ['location' => $state->slug, 'level' => '', 'program' => '', 'category' => $categoryClass->slug ];
+        
+		
+		return view('institution.show-location', compact('state', 'institutions', 'categoryClass', 'categoryClasses', 'SEOData','parameters'));
 	}
 
     public function institutionRanking(CategoryClass $categoryClass) {
@@ -129,23 +138,23 @@ class InstitutionController extends Controller {
 
 
 	public function stateRanking(CategoryClass $categoryClass, State $state) {
-    $institutions = Institution::where('state_id', $state->id)
-        ->whereIn('category_id', $categoryClass->categories->pluck('id'))
-        ->with(['state.region', 'category.categoryClass', 'state.institutions'])
-        ->orderByRaw('rank IS NULL, rank')
-        ->paginate(100);
+		$institutions = Institution::where('state_id', $state->id)
+			->whereIn('category_id', $categoryClass->categories->pluck('id'))
+			->with(['state.region', 'category.categoryClass', 'state.institutions'])
+			->orderByRaw('rank IS NULL, rank')
+			->paginate(100);
 
-    $state->load('institutions.category');
-    $categoryClasses = CategoryClass::all();
+		$state->load('institutions.category');
+		$categoryClasses = CategoryClass::all();
 
-    $rank = $institutions->isNotEmpty() ? $this->computeRankings($institutions) : null;
+		$rank = $institutions->isNotEmpty() ? $this->computeRankings($institutions) : null;
 
-    $SEOData = new SEOData(
-        title: "{$categoryClass->name_plural} Rankings in {$state->name}, Nigeria",
-        description: "Discover the top-ranked {$categoryClass->name_plural} in {$state->name}, Nigeria. Compare rankings and find the best {$categoryClass->name_plural}.",
-    );
+		$SEOData = new SEOData(
+			title: "{$categoryClass->name_plural} Rankings in {$state->name}, Nigeria",
+			description: "Discover the top-ranked {$categoryClass->name_plural} in {$state->name}, Nigeria. Compare rankings and find the best {$categoryClass->name_plural}.",
+		);
 
-    return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'state', 'SEOData'));
+		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'state', 'SEOData'));
 }
 
 
@@ -236,15 +245,15 @@ class InstitutionController extends Controller {
 								   
 		$rank = $this->computeRank($institution, $allInstitutions);
         $levels = $institution->levels->unique();
-		$description = 'Discover ' .$institution->name. ' with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.';
-		$SEOData = new SEOData(
-			title: $institution->name,
-			description: $description,
+		 $SEOData = new SEOData(
+			title: "{$institution->name}",
+			description: "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.",
            // image: $institution->getFirstMediaUrl('profile', 'main'),                           
 
         );
 		
-		$institution['description_alt']= $description; // to be fixed
+		$institution['description_alt']= "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.";
+            // to be fixed
 		 
         return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
@@ -264,10 +273,9 @@ class InstitutionController extends Controller {
 			
 		$program_levels = $institution->levels->unique();
 		
-        $description = 'Explore ' . $level->name . ' programs offered at ' . $institution->name . '. Compare and choose the best program for your academic journey.';
 		$SEOData = new SEOData(
-			title: $institution->name . ' ' . $level->name . ' Programs',
-			description: $description,
+			title: "{$institution->name} {$level->name} Programmes",
+			description: "Explore {$level->name} programs offered at {$institution->name}. Compare and choose the best program for your academic journey.",
 		);				   
 									    
         return view('institution.programs', compact('institution', 'level', 'programs','program_levels','SEOData'));
@@ -289,8 +297,8 @@ class InstitutionController extends Controller {
 			->get();										  
 		
 		$SEOData = new SEOData(
-			title: $level->name . ' in ' . $program->name . ' offered at ' . $institution->name,
-			description: 'Detailed information about ' . $level->name . ' in ' . $program->name . ' offered at ' . $institution->name . '. Program highlights and overview'
+			title: "{$level->name} in {$program->name} offered at {$institution->name}",
+			description: "Detailed information about {$level->name} in {$program->name} offered at {$institution->name}. Program highlights and overview",
 		);
 
         return view('institution.show-program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData'));
@@ -300,7 +308,7 @@ class InstitutionController extends Controller {
 		// Eager load 'levels' with 'programs' and 'state' for the institution
 		$institution->load([
 			'state',
-			'levels' => function ($query) use ($program) {
+			'levels' => function ($query) use ($program, $institution) {
 				$query->wherePivot('program_id', $program->id)
 					->with(['programs' => function ($query) use ($institution) {
 						$query->wherePivot('institution_id', $institution->id);
@@ -313,11 +321,10 @@ class InstitutionController extends Controller {
 
 		// Prepare SEO data
 		$SEOData = new SEOData(
-			title: 'Available Levels for ' . $program->name . ' offered at ' . $institution->name,
-			description: 'Explore the available study levels for ' . $program->name . ' offered at ' . $institution->name . '.'
+			title: "Available Levels for {$program->name} offered at {$institution->name}",
+			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.",
 		);
 
-		// Return the view with the necessary data
 		return view('institution.program-levels', compact('institution', 'program', 'levels', 'SEOData'));
 	}
 	

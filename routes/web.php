@@ -6,16 +6,14 @@ use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatchmentController;
-use App\Livewire\Search;
-
+use App\Http\Controllers\SitemapController;
 
 
 /* Home */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 /* Search institutions / Programs and filter */
-Route::get('search', [SearchController::class, 'index'])->name('search');
-
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 
 Route::get('/about', function () {
@@ -23,7 +21,6 @@ Route::get('/about', function () {
 $aboutFile = resource_path('markdown/about.md');
     return view('about',['about' => Str::markdown(file_get_contents($aboutFile)),]);
 })->name('about');
-
 
 Route::get('/terms-of-service', function () {
 
@@ -37,13 +34,9 @@ Route::get('/privacy-policy', function () {
     return view('policy', ['policy' => Str::markdown(file_get_contents($policyFile)),]);
 })->name('policy');
 
-
-
 Route::get('/contact', function () {
     return view('welcome');
 })->name('contact');
-
-
 
 /* Programs by Level */
 Route::prefix('{level:slug}/programs')->name('programs.')->group(function () {

@@ -116,7 +116,7 @@ use Illuminate\Support\Number;
                         <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
                             <a class="fs-lg link-primary fw-semibold" data-bs-toggle="collapse" data-bs-parent="#programs" href="#programs_q{{$loop->iteration}}" aria-expanded="false" aria-controls="programs_q{{$loop->iteration}}">
 								<div class="block-header block-header-default fs-5" role="tab" id="programs_h{{$loop->iteration}}">
-								     <div itemprop="name">{{$collegeName}}</div>  <span class="toggle-icon fw-light fs-2 "></span>
+								     <div itemprop="name">{{$collegeName}}</div>    <div><span class="text-black fs-sm me-3 ">{{$programs->count()}} </span><span class="toggle-icon fw-light fs-2"> </span> </div>
 								</div>
                             </a>
                             <div id="programs_q{{$loop->iteration}}" class="collapse" role="tabpanel" aria-labelledby="programs_h{{$loop->iteration}}" data-bs-parent="#programs">
