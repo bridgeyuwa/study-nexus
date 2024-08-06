@@ -15,13 +15,7 @@ use Illuminate\Support\Facades\DB;
 class InstitutionController extends Controller {
 	
 	public function index() {
-		
-$url = route('institutions.program.show', [$institution, $level->id, $program]);
-		dd($url);
-		
-		
-		
-		
+	
          $institutions = Institution::with(['state', 'institutionType', 'category'])
             ->orderBy('name')
             ->paginate(60);
