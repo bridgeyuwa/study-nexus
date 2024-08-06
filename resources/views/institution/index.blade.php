@@ -136,7 +136,7 @@
 					
 					@foreach($institutions as $institution)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-						<a itemprop="url" href="{{route('institutions.show', ['institution' => $institution->id])}}" class="block block-rounded mb-3">
+						<a itemprop="url" href="{{route('institutions.show', ['institution' => $institution])}}" class="block block-rounded mb-3">
 						@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
 						  <div class="block block-header-default bg-image mb-0 fw-light"
 							  style="background-image: url('/media/photos/photo11.jpg');">

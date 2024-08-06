@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\DB;
 class InstitutionController extends Controller {
 	
 	public function index() {
+		
+$url = route('institutions.program.show', [$institution, $level->id, $program]);
+		dd($url);
+		
+		
+		
+		
          $institutions = Institution::with(['state', 'institutionType', 'category'])
             ->orderBy('name')
             ->paginate(60);
@@ -254,7 +261,7 @@ class InstitutionController extends Controller {
 		
 		$institution['description_alt']= "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.";
             // to be fixed
-		 
+		// dd(route('institutions.show', $institution->id));
         return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
 
@@ -281,8 +288,9 @@ class InstitutionController extends Controller {
         return view('institution.programs', compact('institution', 'level', 'programs','program_levels','SEOData'));
     }
 
-    public function showProgram(Institution $institution, Level $level = null, Program $program) {
-        $institution_program = $institution->programs()
+    public function showProgram(Institution $institution, Level $level, Program $program) {
+      //dd(route('institutions.program.show', [$institution, $level, $program]));
+		$institution_program = $institution->programs()
 			->where('program_id', $program->id)
 			->wherePivot('level_id', $level->id)
 			->first();

@@ -30,7 +30,7 @@ use Illuminate\Support\Number;
 				
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
-						<h1>  <a class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> 
+						<h1>  <a class="fw-light text-white mb-1 link-fx" href="{{route('institutions.show',['institution' => $institution])}}"> 
 						<span itemprop="name">{{$institution->name}}</span> 
 						@if(!empty($institution->abbr))
 							<span class="text-white-75">({{$institution->abbr}})</span>
