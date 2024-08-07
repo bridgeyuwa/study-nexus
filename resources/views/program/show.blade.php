@@ -56,9 +56,9 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
 					@foreach($program_levels as $program_level)
 						
                   <li class="nav-item">
-                    <a href="{{route('programs.show', ['level' => $program_level->slug, 'program' => $program->id])}}"><button
+                    <a href="{{route('programs.show', ['level' => $program_level, 'program' => $program])}}"><button
 					@if(
-					route('programs.show', ['level' => $program_level->slug, 'program' => $program->id]) == url()->current()
+					route('programs.show', ['level' => $program_level, 'program' => $program]) == url()->current()
 					) 
 					class="btn-sm nav-link active" disabled
 					@else
@@ -220,7 +220,7 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
                     <h3 class="block-title">Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">
-                    <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level->slug, 'program'=> $program->id])}}">
+                    <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level, 'program'=> $program])}}">
                View Institutions
             </a>
 

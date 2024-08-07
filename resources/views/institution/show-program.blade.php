@@ -30,7 +30,7 @@ use Illuminate\Support\Number;
 							
 						<div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 							<div class="w-100 text-center @if(!empty($institution->logo))text-md-start @endif">
-									<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
+									<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
 									  
 									<link itemprop="url" href="{{url()->current()}}">
 									<link itemprop="sameAs" href="{{$institution->url}}">
@@ -48,7 +48,7 @@ use Illuminate\Support\Number;
 									</div>
 									
 									<h2> 
-									   <a class="h3 fw-light text-white link-fx" href="{{route('programs.show', ['level' => $level->slug, 'program' => $program->id])}}">
+									   <a class="h3 fw-light text-white link-fx" href="{{route('programs.show', ['level' => $level, 'program' => $program])}}">
 											{{$program->name}} <span class="h4 fw-light text-white-75" >({{$level->name}}@if(!empty($level->abbr))({{$level->abbr}})@endif)</span> 
 										</a> 
 
@@ -79,10 +79,10 @@ use Illuminate\Support\Number;
 					@foreach($program_levels as $program_level)
 						
                   <li class="nav-item">
-                    <a href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id])}}">
+                    <a href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $program_level, 'program' => $program])}}">
 					<button
 					@if(
-					route('institutions.program.show', ['institution' => $institution->id, 'level' => $program_level->slug, 'program' => $program->id]) == url()->current()
+					route('institutions.program.show', ['institution' => $institution, 'level' => $program_level, 'program' => $program]) == url()->current()
 					) 
 					class="btn-sm nav-link active" disabled
 					@else
@@ -288,7 +288,7 @@ use Illuminate\Support\Number;
                     <h3 class="block-title">All Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">
-                    <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level->slug, 'program' => $program->id])}}">
+                    <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level, 'program' => $program])}}">
                View Institutions
             </a>
 

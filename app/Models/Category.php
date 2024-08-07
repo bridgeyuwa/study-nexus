@@ -4,17 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 
 class Category extends Model
 {
     use HasFactory;
-    
-    protected $table = "categories";
-
-    protected $primaryKey = 'id';
-    public $incrementing = false;
-    protected $keyType = 'string';
-
+    use HasSelfHealingUrls;
+	
+	protected  $slug = 'name';
+	
     public function institutions()
     {
         return $this->hasMany(Institution::class);

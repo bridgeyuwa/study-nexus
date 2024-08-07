@@ -42,17 +42,17 @@ Breadcrumbs::for('contact', function (BreadcrumbTrail $trail) {
 // Programs by Level
 Breadcrumbs::for('programs.index', function (BreadcrumbTrail $trail, $level) {
     $trail->parent('home');
-    $trail->push($level->name . ' Programmes', route('programs.index', $level));
+    $trail->push($level->name . ' Programmes', route('programs.index', ['level' => $level]));
 });
 
 Breadcrumbs::for('programs.show', function (BreadcrumbTrail $trail, $level, $program) {
     $trail->parent('programs.index', $level);
-    $trail->push($program->name, route('programs.show', [$level, $program]));
+    $trail->push($program->name, route('programs.show', ['level' => $level, 'program' => $program]));
 });
 
 Breadcrumbs::for('programs.institutions', function (BreadcrumbTrail $trail, $level, $program) {
     $trail->parent('programs.show', $level, $program);
-    $trail->push('Institutions', route('programs.institutions', [$level, $program]));
+    $trail->push('Institutions', route('programs.institutions', ['level' => $level, 'program' => $program]));
 });
 
 // Institutions
@@ -68,7 +68,7 @@ Breadcrumbs::for('institutions.location', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('institutions.location.show', function (BreadcrumbTrail $trail, $state) {
     $trail->parent('institutions.location');
-    $trail->push($state->name . ($state->is_state ? ' State' : ''), route('institutions.location.show', $state));
+    $trail->push($state->name . ($state->is_state ? ' State' : ''), route('institutions.location.show', ['state' => $state]));
 });
 
 // Institutions Catchments
@@ -84,61 +84,61 @@ Breadcrumbs::for('institutions.catchments.policy', function (BreadcrumbTrail $tr
 
 Breadcrumbs::for('institutions.catchments.show', function (BreadcrumbTrail $trail, $catchment) {
     $trail->parent('institutions.catchments.index');
-    $trail->push($catchment->name, route('institutions.catchments.show', $catchment));
+    $trail->push($catchment->name, route('institutions.catchments.show', ['catchment' => $catchment]));
 });
 
 // Institutions Categories
-Breadcrumbs::for('institutions.categories.index', function (BreadcrumbTrail $trail, $category) {
+Breadcrumbs::for('institutions.categories.index', function (BreadcrumbTrail $trail, $categoryClass) {
     $trail->parent('institutions.index');
-    $trail->push($category->name_plural, route('institutions.categories.index', $category));
+    $trail->push($categoryClass->name_plural, route('institutions.categories.index', ['categoryClass' => $categoryClass]));
 });
 
-Breadcrumbs::for('institutions.categories.location', function (BreadcrumbTrail $trail, $category) {
-    $trail->parent('institutions.categories.index', $category);
-    $trail->push('Locations', route('institutions.categories.location', $category));
+Breadcrumbs::for('institutions.categories.location', function (BreadcrumbTrail $trail, $categoryClass) {
+    $trail->parent('institutions.categories.index', $categoryClass);
+    $trail->push('Locations', route('institutions.categories.location', ['categoryClass' => $categoryClass]));
 });
 
-Breadcrumbs::for('institutions.categories.location.show', function (BreadcrumbTrail $trail, $category, $state) {
-    $trail->parent('institutions.categories.location', $category);
-$trail->push($state->name . ($state->is_state ? ' State' : ''), route('institutions.categories.location.show', [$category, $state]));
+Breadcrumbs::for('institutions.categories.location.show', function (BreadcrumbTrail $trail, $categoryClass, $state) {
+    $trail->parent('institutions.categories.location', $categoryClass);
+$trail->push($state->name . ($state->is_state ? ' State' : ''), route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state]));
 });
 
 // Institutions Ranking
-Breadcrumbs::for('institutions.categories.ranking', function (BreadcrumbTrail $trail, $category) {
-    $trail->parent('institutions.categories.index', $category);
-    $trail->push('Rankings', route('institutions.categories.ranking', $category));
+Breadcrumbs::for('institutions.categories.ranking', function (BreadcrumbTrail $trail, $categoryClass) {
+    $trail->parent('institutions.categories.index', $categoryClass);
+    $trail->push('Rankings', route('institutions.categories.ranking', ['categoryClass' => $categoryClass]));
 });
 
-Breadcrumbs::for('institutions.categories.ranking.state', function (BreadcrumbTrail $trail, $category, $state) {
-    $trail->parent('institutions.categories.ranking', $category);
-    $trail->push($state->name, route('institutions.categories.ranking.state', [$category, $state]));
+Breadcrumbs::for('institutions.categories.ranking.state', function (BreadcrumbTrail $trail, $categoryClass, $state) {
+    $trail->parent('institutions.categories.ranking', $categoryClass);
+    $trail->push($state->name, route('institutions.categories.ranking.state', ['categoryClass' => $categoryClass, 'state' => $state]));
 });
 
-Breadcrumbs::for('institutions.categories.ranking.region', function (BreadcrumbTrail $trail, $category, $region) {
-    $trail->parent('institutions.categories.ranking', $category);
-    $trail->push($region->name, route('institutions.categories.ranking.region', [$category, $region]));
+Breadcrumbs::for('institutions.categories.ranking.region', function (BreadcrumbTrail $trail, $categoryClass, $region) {
+    $trail->parent('institutions.categories.ranking', $categoryClass);
+    $trail->push($region->name, route('institutions.categories.ranking.region', ['categoryClass' => $categoryClass, 'region' => $region]));
 });
 
 // Institutions Show
 Breadcrumbs::for('institutions.show', function (BreadcrumbTrail $trail, $institution) {
     $trail->parent('institutions.index');
-    $trail->push($institution->name, route('institutions.show', $institution));
+    $trail->push($institution->name, route('institutions.show', ['institution' => $institution]));
 });
 
 // List institution programs of a particular study level
 Breadcrumbs::for('institutions.programs', function (BreadcrumbTrail $trail, $institution, $level) {
     $trail->parent('institutions.show', $institution);
-    $trail->push($level->name . ' Programmes', route('institutions.programs', [$institution, $level]));
+    $trail->push($level->name . ' Programmes', route('institutions.programs', ['institution' => $institution, 'level' => $level]));
 });
 
 // Show an institution program of a particular level
 Breadcrumbs::for('institutions.program.show', function (BreadcrumbTrail $trail, $institution, $level, $program) {
     $trail->parent('institutions.programs', $institution, $level);
-    $trail->push($program->name, route('institutions.program.show', [$institution, $level, $program]));
+    $trail->push($program->name, route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program]));
 });
 
 // Show available Levels of an institution program
 Breadcrumbs::for('institutions.program.levels', function (BreadcrumbTrail $trail, $institution, $program) {
     $trail->parent('institutions.show', $institution);
-    $trail->push($program->name, route('institutions.program.levels', [$institution, $program]));
+    $trail->push($program->name, route('institutions.program.levels', ['institution' => $institution, 'program' => $program]));
 });

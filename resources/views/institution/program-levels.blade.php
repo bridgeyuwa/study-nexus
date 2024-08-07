@@ -30,7 +30,7 @@ use Illuminate\Support\Number;
 				
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo))text-md-start @endif">
-						<h1 class="mb-1">  <a  class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
+						<h1 class="mb-1">  <a  class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
                          
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
@@ -91,7 +91,7 @@ use Illuminate\Support\Number;
 
                     @foreach($levels as $level)
 					<div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog">
-                    <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
+                    <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}}">
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">

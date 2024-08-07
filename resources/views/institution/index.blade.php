@@ -62,9 +62,9 @@
 					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
-                    <a href="{{route('institutions.categories.index', ['categoryClass' => $institution_category->slug])}}"><button
+                    <a href="{{route('institutions.categories.index', ['categoryClass' => $institution_category])}}"><button
 					@if(
-					route('institutions.categories.index', ['categoryClass' => $institution_category->slug]) == url()->current()
+					route('institutions.categories.index', ['categoryClass' => $institution_category]) == url()->current()
 					) 
 					class="btn-sm nav-link active" disabled
 					@else

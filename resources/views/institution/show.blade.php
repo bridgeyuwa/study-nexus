@@ -137,7 +137,7 @@ use Illuminate\Support\Number;
 							
 						  <div class="block bg-body-light p-2">
 							
-					       <span class="fw-semibold me-1">Parent Institution: </span>  <a href="{{route('institutions.show', ['institution' => $institution->parentInstitution->id])}}"> {{$institution->parentInstitution->name}} </a>
+					       <span class="fw-semibold me-1">Parent Institution: </span>  <a href="{{route('institutions.show', ['institution' => $institution->parentInstitution])}}"> {{$institution->parentInstitution->name}} </a>
 
 						
 						</div>
@@ -156,7 +156,7 @@ use Illuminate\Support\Number;
 						<ul class="list-inline">
 							@foreach($institution->catchments as $catchment)
 								<li itemprop="serviceArea" itemscope itemtype="https://schema.org/Place" class="list-inline-item">
-									<a  href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}">
+									<a  href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}">
 									<span itemprop="name">	{{$catchment->name}} </span>
 							        </a> 
 								</li>
@@ -179,7 +179,7 @@ use Illuminate\Support\Number;
 
 					@foreach($levels as $level)
 
-					<a  class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.programs', ['institution' => $institution->id, 'level' => $level->slug])}}">
+					<a  class="block block-rounded block-bordered block-link-shadow" href="{{route('institutions.programs', ['institution' => $institution, 'level' => $level])}}">
 						
 						<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"  class="block-content block-content-full d-flex align-items-center justify-content-between p-2">
 							<meta itemprop="position" content="{{$loop->iteration}}"/>
@@ -222,19 +222,19 @@ use Illuminate\Support\Number;
 							<tr class="">
 								<td class=""> {{$institution->category->name}} Rank in <span class="text-black fw-semibold"> {{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span></td>
 								<td>@if ($rank['state']) <span class="fw-semibold text-black">{{Number::ordinal($rank['state'])}} </span> @else NR @endif out of {{$institution->state->institutions->where('category_id',$institution->category->id)->count()}} {{$institution->category->name_plural}}</td>
-								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['categoryClass' => $institution->category->slug, 'state' => $institution->state->slug])}}"> View </a> </td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.state', ['categoryClass' => $institution->category, 'state' => $institution->state])}}"> View </a> </td>
 							</tr>
 
 							<tr>
 								<td class="">{{$institution->category->name}} Rank in <span class="text-black fw-semibold">{{$institution->state->region->name}}</span></td>
 								<td>@if ($rank['region']) <span class="fw-semibold text-black">{{Number::ordinal($rank['region'])}}</span> @else NR @endif out of {{$institution->state->region->institutions->where('category_id',$institution->category->id)->count()}} {{$institution->category->name_plural}}</td>
-								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['categoryClass' => $institution->category->slug, 'region' => $institution->state->region->slug])}}"> View </a> </td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking.region', ['categoryClass' => $institution->category, 'region' => $institution->state->region])}}"> View </a> </td>
 							</tr>
 
 							<tr>
 								<td class="">{{$institution->category->name}} Rank in <span class="text-black fw-semibold">Nigeria</span></td>
 								<td>@if ($rank['institution']) <span class="fw-semibold text-black">{{Number::ordinal($rank['institution'])}}</span> @else NR @endif out of {{$institution->category->institutions->count()}} {{$institution->category->name_plural}} </td>
-								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['categoryClass' => $institution->category->slug])}}"> View </a> </td>
+								<td> <a class="btn btn-sm btn-info" href="{{route('institutions.categories.ranking', ['categoryClass' => $institution->category])}}"> View </a> </td>
 							</tr>
 						</table>
 					</div>
@@ -281,7 +281,7 @@ use Illuminate\Support\Number;
 					<meta itemprop="name"  content="Subsidiary Institutions of {{$institution->name}}" >
 					@foreach($institution->childInstitutions as $childInstitution)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-						<a itemprop="url" href="{{route('institutions.show', ['institution' => $childInstitution->id])}}" class="block block-rounded mb-1">
+						<a itemprop="url" href="{{route('institutions.show', ['institution' => $childInstitution])}}" class="block block-rounded mb-1">
 						@if(!empty($childInstitution->url))  <link itemprop="sameAs" content="{{$childInstitution->url}}" /> @endif
 						  <div class="block block-header-default bg-image mb-0">
 							  <div class="bg-body-light text-center p-1">
@@ -315,7 +315,7 @@ use Illuminate\Support\Number;
 					<meta itemprop="name"  content="Institutions affiliated with {{$institution->name}}" >
 					@foreach($institution->affiliatedInstitutions as $affiliatedInstitution)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-						<a itemprop="url" href="{{route('institutions.show', ['institution' => $affiliatedInstitution->id])}}" class="block block-rounded mb-1">
+						<a itemprop="url" href="{{route('institutions.show', ['institution' => $affiliatedInstitution])}}" class="block block-rounded mb-1">
 						@if(!empty($affiliatedInstitution->url))  <link itemprop="sameAs" content="{{$affiliatedInstitution->url}}" /> @endif
 						  <div class="block block-header-default bg-image mb-0">
 							  <div class="bg-body-light text-center p-1">

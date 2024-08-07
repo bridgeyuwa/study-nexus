@@ -39,7 +39,7 @@ Route::get('/contact', function () {
 })->name('contact');
 
 /* Programs by Level */
-Route::prefix('{level:slug}/programs')->name('programs.')->group(function () {
+Route::prefix('{level}/programs')->name('programs.')->group(function () {
     /* list Programs of a Level */
     Route::get('/', [ProgramController::class, 'index'])->name('index');
     
@@ -55,37 +55,37 @@ Route::prefix('institutions')->name('institutions.')->group(function () {
     /* list all institutions */
     Route::get('/', [InstitutionController::class, 'index'])->name('index');
     Route::get('location', [InstitutionController::class, 'location'])->name('location');
-    Route::get('location/{state:slug}', [InstitutionController::class, 'showLocation'])->name('location.show');
+    Route::get('location/{state}', [InstitutionController::class, 'showLocation'])->name('location.show');
 
     /* All Institutions Catchments */
     Route::prefix('catchments')->name('catchments.')->group(function () {
         Route::get('/', [CatchmentController::class, 'index'])->name('index');
         Route::get('policy', [CatchmentController::class, 'policy'])->name('policy');
-        Route::get('{catchment:slug}', [CatchmentController::class, 'show'])->name('show');
+        Route::get('{catchment}', [CatchmentController::class, 'show'])->name('show');
     });
 
     /* Institutions Categories */
-    Route::prefix('category/{categoryClass:slug}')->name('categories.')->group(function () {
+    Route::prefix('category/{categoryClass}')->name('categories.')->group(function () {
         Route::get('/', [InstitutionController::class, 'category'])->name('index');
         Route::get('location', [InstitutionController::class, 'categoryLocation'])->name('location');
-        Route::get('location/{state:slug}', [InstitutionController::class, 'showCategoryLocation'])->withoutScopedBindings()->name('location.show');
+        Route::get('location/{state}', [InstitutionController::class, 'showCategoryLocation'])->withoutScopedBindings()->name('location.show');
         
         /* Institutions Ranking */
         Route::get('ranking', [InstitutionController::class, 'institutionRanking'])->name('ranking');
         /* State Ranking */
-        Route::get('ranking/state/{state:slug}', [InstitutionController::class, 'stateRanking'])->withoutScopedBindings()->name('ranking.state');
+        Route::get('ranking/state/{state}', [InstitutionController::class, 'stateRanking'])->withoutScopedBindings()->name('ranking.state');
         /* Region Ranking */
-        Route::get('ranking/region/{region:slug}', [InstitutionController::class, 'regionRanking'])->withoutScopedBindings()->name('ranking.region');
+        Route::get('ranking/region/{region}', [InstitutionController::class, 'regionRanking'])->withoutScopedBindings()->name('ranking.region');
     });
 
     /* Institutions Show (show an institution) */
     Route::get('{institution}', [InstitutionController::class, 'show'])->name('show');
 
     /* List institution programs of a particular study level */
-    Route::get('{institution}/levels/{level:slug}/programs', [InstitutionController::class, 'programs'])->name('programs');
+    Route::get('{institution}/levels/{level}/programs', [InstitutionController::class, 'programs'])->name('programs');
 
     /* Show an institution program of a particular level */
-    Route::get('{institution}/levels/{level:slug}/programs/{program}', [InstitutionController::class, 'showProgram'])->name('program.show');
+    Route::get('{institution}/levels/{level}/programs/{program}', [InstitutionController::class, 'showProgram'])->name('program.show');
 
     /* show available Levels of an institution program */
     Route::get('{institution}/programs/{program}', [InstitutionController::class, 'programLevels'])->name('program.levels');

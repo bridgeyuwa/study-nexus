@@ -31,7 +31,7 @@ use Illuminate\Support\Number;
 				
                 <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
-						<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution->id])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
+						<h1 class="mb-1">  <a class="fw-light text-white link-fx" href="{{route('institutions.show',['institution' => $institution])}}"> <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </a></h1>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
@@ -74,9 +74,9 @@ use Illuminate\Support\Number;
 					@foreach($program_levels as $program_level)
 							
                   <li class="nav-item">
-                    <a href="{{route('institutions.programs', ['institution' => $institution->id, 'level' =>$program_level->slug])}}"><button
+                    <a href="{{route('institutions.programs', ['institution' => $institution, 'level' =>$program_level])}}"><button
 					@if(
-					route('institutions.programs', ['institution' => $institution->id, 'level' =>$program_level->slug]) == url()->current()
+					route('institutions.programs', ['institution' => $institution, 'level' =>$program_level]) == url()->current()
 					
 					) 
 					class="btn-sm nav-link active" disabled
@@ -124,7 +124,7 @@ use Illuminate\Support\Number;
 
                                     @foreach($programs as $program)
                                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
-                                        <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal" href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}">
+                                        <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal" href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}}">
 											<div class="block-header block-header-default fs-6">
 											 <span itemprop="name"> {{$program->name}} </span>
 											</div>

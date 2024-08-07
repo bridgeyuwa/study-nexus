@@ -61,7 +61,7 @@ use Illuminate\Support\Number;
 					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
-                    <a href="{{route('institutions.categories.location.show', ['categoryClass' => $institution_category->slug, 'state' => $state->slug])}}"><button
+                    <a href="{{route('institutions.categories.location.show', ['categoryClass' => $institution_category, 'state' => $state])}}"><button
 					@if(
 					route('institutions.categories.location.show', [$institution_category, $state]) == url()->current()
 					) 
@@ -109,7 +109,7 @@ use Illuminate\Support\Number;
 							<a href="
 							
 							@if(!empty($state))
-							{{route('institutions.categories.ranking.state', ['categoryClass' => $categoryClass->slug, 'state' => $state->slug])}}
+							{{route('institutions.categories.ranking.state', ['categoryClass' => $categoryClass, 'state' => $state])}}
 							@else
 							{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}} 
 							@endif
@@ -127,7 +127,7 @@ use Illuminate\Support\Number;
 
                     @foreach($institutions as $institution)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-                    <a itemprop="url" href="{{route('institutions.show', ['institution' => $institution->id])}}" class="block block-rounded mb-3">
+                    <a itemprop="url" href="{{route('institutions.show', ['institution' => $institution])}}" class="block block-rounded mb-3">
                     @if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
 					  <div class="block block-header-default bg-image mb-0 fw-light"
                           style="background-image: url('/media/photos/photo11.jpg');">

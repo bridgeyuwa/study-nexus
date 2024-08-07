@@ -68,9 +68,9 @@
 
                         @foreach( $region->catchments as $catchment )
                         <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
-                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}" class="fw-normal fs-normal">{{$catchment->name}}</a>
+                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}" class="fw-normal fs-normal">{{$catchment->name}}</a>
 
-                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment->slug])}}" class="btn btn-light w-25 text-secondary"> 
+                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}" class="btn btn-light w-25 text-secondary"> 
                                 <span class="badge rounded-pill bg-info"> {{ $catchment->institutions->count()}}</span> Schools
                                </a>
                         </li>

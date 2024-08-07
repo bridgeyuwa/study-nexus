@@ -80,7 +80,7 @@
               <div class="px-2 px-sm-5 border-start">
                 <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($programs->count())}}</p>
                 <p class="text-muted mb-0">
-                  Course Programs
+                 Programmes
                 </p>
               </div>
              
@@ -172,11 +172,11 @@
             <div class="col-md-6 d-flex">
                 <div class="block block-rounded flex-fill d-flex flex-column">
                     <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
-                        <h3 class="fw-light mb-1">Academic Course Programmes Library</h3>
+                        <h3 class="fw-light mb-1">Academic Programmes Library</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
 					  @foreach($levels as $level)
-                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => $level->slug])}}">{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}}) @endif</a></p>
+                        <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => $level])}}">{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}}) @endif</a></p>
 						@endforeach
 					  </div>
 
@@ -192,7 +192,7 @@
                     <div class="block-content mb-auto pb-2">
 							
 							@foreach($categoryClasses as $categoryClass)
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name_plural}}</a></p>
+                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name_plural}}</a></p>
                         @endforeach
 						
 				
@@ -210,7 +210,7 @@
                     </div>
                     <div class="block-content mb-auto pb-2">
 						@foreach($categoryClasses as $categoryClass)
-                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name}} Locations</a></p>
+                        <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Locations</a></p>
                         @endforeach
                     </div>
                     <div class="block-content block-content-full block-content-sm bg-body-light fs-sm">
@@ -226,7 +226,7 @@
                     </div>
                     <div class="block-content mb-auto pb-2">
 						@foreach($categoryClasses as $categoryClass)
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name}} Rankings</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Rankings</a></p>
                         @endforeach
                     </div>
 

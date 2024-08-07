@@ -15,7 +15,7 @@ use Illuminate\Support\Number;
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="pt-4 pb-3">
-                <h1  itemprop="name"  ><a class="fw-light text-white mb-1" href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass->slug])}}">{{$categoryClass->name}} Rankings</a></h1>
+                <h1  itemprop="name"  ><a class="fw-light text-white mb-1" href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Rankings</a></h1>
                 <meta itemprop="sameAs" content="https://webometrics.info/en/Africa/Nigeria">
 				<meta itemprop="url" content="{{url()->current()}}">
 
@@ -48,11 +48,11 @@ use Illuminate\Support\Number;
 					<li class="nav-item">
 						@if(!empty($state))
 							<a href=" 
-							{{route('institutions.categories.ranking.state', ['categoryClass' => $institution_category->slug, 'state' => $state->slug])}}
+							{{route('institutions.categories.ranking.state', ['categoryClass' => $institution_category, 'state' => $state])}}
 							"><button
 							
 							@if(
-							route('institutions.categories.ranking.state', ['categoryClass' => $institution_category->slug, 'state' => $state->slug]) == url()->current()
+							route('institutions.categories.ranking.state', ['categoryClass' => $institution_category, 'state' => $state]) == url()->current()
 							) 
 							class="btn-sm nav-link active" disabled
 							@else
@@ -64,11 +64,11 @@ use Illuminate\Support\Number;
 							</a>
 						@elseif(!empty($region))
 							<a href="
-							{{route('institutions.categories.ranking.region', ['categoryClass' => $institution_category->slug, 'region' => $region->slug])}}
+							{{route('institutions.categories.ranking.region', ['categoryClass' => $institution_category, 'region' => $region])}}
 							"><button
 							
 							@if(
-							route('institutions.categories.ranking.region', ['categoryClass' => $institution_category->slug, 'region' => $region->slug]) == url()->current()
+							route('institutions.categories.ranking.region', ['categoryClass' => $institution_category, 'region' => $region]) == url()->current()
 							) 
 							class="btn-sm nav-link active" disabled
 							@else
@@ -80,11 +80,11 @@ use Illuminate\Support\Number;
 							</a>
 						@else
 							<a href="
-							{{route('institutions.categories.ranking', ['categoryClass' => $institution_category->slug])}}
+							{{route('institutions.categories.ranking', ['categoryClass' => $institution_category])}}
 							"><button
 							
 							@if(
-							route('institutions.categories.ranking', ['categoryClass' => $institution_category->slug]) == url()->current()
+							route('institutions.categories.ranking', ['categoryClass' => $institution_category]) == url()->current()
 							) 
 							class="btn-sm nav-link active" disabled
 							@else
@@ -150,9 +150,9 @@ use Illuminate\Support\Number;
                                  @if(!empty($rank[$institution->id]['institution'])) {{Number::ordinal($rank[$institution->id]['institution'])}} @else NR @endif
                                 </td>
                                 <td class="fs-sm">
-                                   <a itemscope itemtype="https://schema.org/CollegeOrUniversity" itemprop="item" href="{{route('institutions.show', ['institution' => $institution->id])}}">
+                                   <a itemscope itemtype="https://schema.org/CollegeOrUniversity" itemprop="item" href="{{route('institutions.show', ['institution' => $institution])}}">
 									<span itemprop="name">{{$institution->name}}</span>
-									<link itemprop="url" content="{{route('institutions.show', ['institution' => $institution->id])}}">
+									<link itemprop="url" content="{{route('institutions.show', ['institution' => $institution])}}">
 									@if(!empty($institution->url))<meta itemprop="sameAs" content="{{$institution->url}}"> @endif
 									<span  itemprop="address" itemscope itemtype="https://schema.org/PostalAddress"> 
 										@if(!empty($institution->address))<meta itemprop="streetAddress" content="{{$institution->address}}" >@endif
@@ -168,7 +168,7 @@ use Illuminate\Support\Number;
 
                                     @if(!empty($rank[$institution->id]['state'])) {{Number::ordinal($rank[$institution->id]['state'])}} @else NR @endif in
 
-                                    <a href="{{route('institutions.categories.ranking.state', ['categoryClass' => $institution->category->categoryClass->slug, 'state' => $institution->state->slug])}}"> {{$institution->state->name}}  </a>
+                                    <a href="{{route('institutions.categories.ranking.state', ['categoryClass' => $institution->category->categoryClass, 'state' => $institution->state])}}"> {{$institution->state->name}}  </a>
 
                                 </td>
 
@@ -176,7 +176,7 @@ use Illuminate\Support\Number;
 
                                     @if(!empty($rank[$institution->id]['region'])) {{Number::ordinal($rank[$institution->id]['region'])}} @else NR @endif in
 
-                                    <a href="{{route('institutions.categories.ranking.region', ['categoryClass' => $institution->category->categoryClass->slug, 'region' => $institution->state->region->slug])}}">{{$institution->state->region->name}}</a>
+                                    <a href="{{route('institutions.categories.ranking.region', ['categoryClass' => $institution->category->categoryClass, 'region' => $institution->state->region])}}">{{$institution->state->region->name}}</a>
 
                                 </td>
                                 <td class="fs-sm text-center">

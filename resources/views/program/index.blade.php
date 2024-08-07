@@ -89,7 +89,7 @@
 							
                                     @foreach($programs as $program)
                                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
-                                        <a itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal " href="{{route('programs.show', ['level' => $level->slug, 'program' => $program->id])}}" >
+                                        <a itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal " href="{{route('programs.show', ['level' => $level, 'program' => $program])}}" >
 											<div class="block-header block-header-default fs-6">
 											<span itemprop="name">  {{$program->name}} </span>
 											</div>

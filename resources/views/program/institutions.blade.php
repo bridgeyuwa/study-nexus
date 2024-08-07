@@ -35,9 +35,9 @@
 					@foreach($program_levels as $program_level)
 						
                   <li class="nav-item">
-                    <a href="{{route('programs.institutions', ['level' => $program_level->slug, 'program' => $program->id])}}"><button
+                    <a href="{{route('programs.institutions', ['level' => $program_level, 'program' => $program])}}"><button
 					@if(
-					route('programs.institutions', ['level' => $program_level->slug, 'program' => $program->id]) == url()->current()
+					route('programs.institutions', ['level' => $program_level, 'program' => $program]) == url()->current()
 					) 
 					class="btn-sm nav-link active" disabled
 					@else
@@ -76,7 +76,7 @@
 						
 				  
 						<div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-								<a itemprop="url" href="{{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}}" class="block block-rounded mb-3">
+								<a itemprop="url" href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}}" class="block block-rounded mb-3">
 								@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
 								  <div class="block block-header-default bg-image mb-0 fw-light"
 									  style="background-image: url('/media/photos/photo11.jpg');">

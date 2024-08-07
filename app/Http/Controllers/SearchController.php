@@ -15,12 +15,12 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $stateSlug = $request->input('location');
-        $levelSlug = $request->input('level');
+        $stateId = $request->input('location');
+        $levelId = $request->input('level');
         $programId = $request->input('program');
         $typeSlug = $request->input('type');
-        $categoryClassSlug = $request->input('category');
-        $religionSlug = $request->input('religion');
+        $categoryClassId = $request->input('category');
+        $religionId = $request->input('religion');
         $sortBy = $request->input('sort');
 
         $query = Institution::query();
@@ -42,31 +42,31 @@ class SearchController extends Controller
        
 		
 		// Categories Filter
-        $categoryClass = $categoryClassSlug ? CategoryClass::where('slug', $categoryClassSlug)->first() : null;
+        $categoryClass = $categoryClassId ? CategoryClass::find($categoryClassId) : null;
         if ($categoryClass) {
-            $query->whereHas('category.categoryClass', function ($q) use ($categoryClassSlug) {
-                $q->where('slug', $categoryClassSlug);
+            $query->whereHas('category.categoryClass', function ($q) use ($categoryClassId) {
+                $q->where('id', $categoryClassId);
             });
         }
 		
 
 
         // Religious Affiliation Filter
-        $religiousAffiliationCategory = $religionSlug ? ReligiousAffiliationCategory::where('slug', $religionSlug)->first() : null;
+        $religiousAffiliationCategory = $religionId ? ReligiousAffiliationCategory::find($religionId) : null;
         if ($religiousAffiliationCategory) {
-            $query->whereHas('religiousAffiliation.religiousAffiliationCategory', function ($q) use ($religionSlug) {
-                $q->where('slug', $religionSlug);
+            $query->whereHas('religiousAffiliation.religiousAffiliationCategory', function ($q) use ($religionId) {
+                $q->where('id', $religionId);
             });
         }
 
         // State Filter
-        $state = $stateSlug ? State::where('slug', $stateSlug)->first() : null;
+        $state = $stateId ? State::find($stateId) : null;
         if ($state) {
             $query->where('state_id', $state->id);
         }
 
         // Level Filter
-        $level = $levelSlug ? Level::where('slug', $levelSlug)->first() : null;
+        $level = $levelId ? Level::find($levelId) : null;
         if ($level) {
             $query->whereHas('levels', function ($q) use ($level) {
                 $q->where('levels.id', $level->id);
@@ -90,11 +90,11 @@ class SearchController extends Controller
             'state:id,name,is_state,code',
             'institutionType:id,name',
             'category:id,name',
-            'programs' => function ($q) use ($programId, $levelSlug) {
+            'programs' => function ($q) use ($programId, $levelId) {
                 if ($programId) {
                     $q->where('program_id', $programId);
-                    if ($levelSlug) {
-                        $level = Level::where('slug', $levelSlug)->first();
+                    if ($levelId) {
+                        $level = Level::where('id', $levelId)->first();
                         if ($level) {
                             $q->wherePivot('level_id', $level->id);
                         }

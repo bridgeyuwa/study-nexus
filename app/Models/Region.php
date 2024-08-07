@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Institution;
-use App\Models\State;
+use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 
 class Region extends Model {
 
     use HasFactory;
+	use HasSelfHealingUrls;
+	
+	protected  $slug = 'name';
 
     public function states() {
         return $this->hasMany(State::class);

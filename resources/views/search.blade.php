@@ -84,11 +84,11 @@ use Illuminate\Support\Str;
 					<!-- institution/program item -->
                     <a href="
                        @if(!empty($program) && !empty($level))  
-                       {{route('institutions.program.show', ['institution' => $institution->id, 'level' => $level->slug, 'program' => $program->id])}} 
+                       {{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}} 
                        @elseif(!empty($program))
-                       {{route('institutions.program.levels', ['institution' => $institution->id, 'program' => $program->id])}}
+                       {{route('institutions.program.levels', ['institution' => $institution, 'program' => $program])}}
                        @else  
-                       {{route('institutions.show', ['institution' => $institution->id])}}    
+                       {{route('institutions.show', ['institution' => $institution])}}    
                        @endif 
                        " 
                        class="block block-rounded bg-dark">

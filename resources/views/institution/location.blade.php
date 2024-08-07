@@ -67,7 +67,7 @@
 					@foreach($categoryClasses as $institution_category)
 					
 					<li class="nav-item">
-                    <a href="{{route('institutions.categories.location', ['categoryClass' => $institution_category->slug])}}"><button
+                    <a href="{{route('institutions.categories.location', ['categoryClass' => $institution_category])}}"><button
 					@if(
 					route('institutions.categories.location', $institution_category) == url()->current()
 					) 
@@ -129,9 +129,9 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
                             <a href="
                               @if(!empty($categoryClass))
-                              {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass->slug, 'state' => $state->slug])}}
+                              {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state])}}
                               @else 
-                              {{route('institutions.location.show', ['state' => $state->slug])}}
+                              {{route('institutions.location.show', ['state' => $state])}}
                               @endif
 
                                " class="fw-normal fs-normal">{{$state->name}} @if(!empty($state->is_state)) State @endif
@@ -140,9 +140,9 @@
 
                             <a href="
                                @if(!empty($categoryClass))
-                               {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass->slug, 'state' => $state->slug])}}
+                               {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state])}}
                                @else 
-                               {{route('institutions.location.show', ['state' => $state->slug])}}
+                               {{route('institutions.location.show', ['state' => $state])}}
                                @endif
                                " class="btn btn-light w-25 text-secondary"> 
 

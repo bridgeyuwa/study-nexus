@@ -11,7 +11,7 @@
             <select id="location" name="location" class="form-select">
                                   <option value="">Any Location</option>
                                     @foreach( $states as $state)
-                                    <option value="{{$state->slug}}" @if( $state->slug == request()->get('location')
+                                    <option value="{{$state->id}}" @if( $state->id == request()->get('location')
                                         ) {{'selected = "true"'}} @endif >{{$state->name}} </option>
                                     @endforeach
                                 </select>
@@ -23,7 +23,7 @@
             <select wire:model.live="selectedLevel" id="level" name="level" class="form-select">
                                     <option value="">Any Level</option>
                                       @foreach($levels  as $level)
-                                    <option value="{{$level->slug}}" @if( $level->slug == request()->get('level')
+                                    <option value="{{$level->id}}" @if( $level->id == request()->get('level')
                                         ) {{'selected = "true"'}} @endif >{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}}) @endif </option>
                                     @endforeach
                              </select>
@@ -89,15 +89,15 @@
                     <label class="me-1" for="category_all">All</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="category_universities" name="category" value="university"  wire:model="selectedCategory" >
+                    <input type="radio" id="category_universities" name="category" value="1"  wire:model="selectedCategory" >
                     <label class="me-1" for="category_universities">University</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="category_poly" name="category" value="polytechnic-monotechnic" wire:model="selectedCategory" >
+                    <input type="radio" id="category_poly" name="category" value="2" wire:model="selectedCategory" >
                     <label class="me-1" for="category_poly">Polytechnic</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="category_colleges" name="category" value="college-of-education" wire:model="selectedCategory" >
+                    <input type="radio" id="category_colleges" name="category" value="3" wire:model="selectedCategory" >
                     <label class="me-1" for="category_colleges">College of Education</label>
                 </div>
             </div>
@@ -113,15 +113,15 @@
                     <label class="me-1" for="religion_all">All</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_non_religious" name="religion" value="non-sectarian" wire:model="selectedReligion" @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
+                    <input type="radio" id="religion_non_religious" name="religion" value="1" wire:model="selectedReligion" @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_non_religious">Non-Religious</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_christian" name="religion" value="christian" wire:model="selectedReligion"  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
+                    <input type="radio" id="religion_christian" name="religion" value="2" wire:model="selectedReligion"  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_christian">Christian</label>
                 </div>
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_islam" name="religion" value="islam"  wire:model="selectedReligion"  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
+                    <input type="radio" id="religion_islam" name="religion" value="3"  wire:model="selectedReligion"  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_islam">Islam</label>
                 </div>
             </div>
@@ -177,7 +177,7 @@
                          <select id="location-m" name="location" class="form-select"> 
                                    <option value="">Any Location</option>
                                     @foreach( $states as $state)
-                                    <option value="{{$state->slug}}" @if( $state->slug == request()->get('location')
+                                    <option value="{{$state->id}}" @if( $state->id == request()->get('location')
                                         ) {{'selected = "true"'}} @endif >{{$state->name}} </option>
                                     @endforeach
                          
@@ -189,7 +189,7 @@
                         <select id="level-m" wire:model.live="selectedLevel"  name="level" class="form-select"> 
                                      <option value="">Any Level</option>
                                       @foreach($levels  as $level)
-                                    <option value="{{$level->slug}}" @if( $level->slug == request()->get('level')
+                                    <option value="{{$level->id}}" @if( $level->id == request()->get('level')
                                         ) {{'selected = "true"'}} @endif >{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}}) @endif </option>
                                     @endforeach
                       
