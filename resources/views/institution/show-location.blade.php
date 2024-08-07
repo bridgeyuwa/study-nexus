@@ -95,7 +95,7 @@ use Illuminate\Support\Number;
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
-                        <p itemprop="description" class="text-muted ">
+                        <p itemprop="description" class=" ">
                             A List of accredited @if(!empty($categoryClass)) <span class="text-black"> {{$categoryClass->name_plural}} </span> @else <span class="text-black">Universities</span>,
                             <span class="text-black">Polytechnics</span>, <span class="text-black">Monotechnics</span>, <span class="text-black">Colleges of Education</span> and <span class="text-black">Innovation Enterprise Institutions</span>@endif
                             in <span class="text-black">{{$state->name}} @if(!empty($institution->state->is_state)) State @endif </span>, Nigeria.

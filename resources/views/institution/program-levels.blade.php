@@ -49,7 +49,7 @@ use Illuminate\Support\Number;
 						</div>
 						
 						<h2 class="h3 fw-light text-white">
-                    {{$program->name}} Programs <span class="text-white-75">(Levels)</span>
+                    {{$program->name}} Programmes <span class="text-white-75">(Levels)</span>
                 </h2>
 					 </div>
                 </div>
@@ -82,10 +82,10 @@ use Illuminate\Support\Number;
 
         <div class="col-md-8 order-md-0">
 
-            <!-- Program Levels -->
+            <!-- Programme Levels -->
             <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 itemprop="name" class="block-title">{{$program->name}} Program Levels</h3>
+                    <h3 itemprop="name" class="block-title">{{$program->name}} Programme Levels</h3>
                 </div>
                 <div class="block-content">
 
@@ -95,9 +95,9 @@ use Illuminate\Support\Number;
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">
-                       <span itemprop="name"> {{$level->name}} <span class="text-muted">({{$program->name}})</span> </span>
+                       <span itemprop="name"> {{$level->name}} <span class="">({{$program->name}})</span> </span>
                       </div>                      
-                      <p itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="text-muted mb-0">                       
+                      <p itemprop="offers" itemscope itemtype="https://schema.org/Offer" class=" mb-0">                       
                         @if(!empty($level->programs->where('id', $program->id)->first()->pivot->tuition_fee))
 					<span itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification">	
 				     <span itemprop="priceCurrency" content="NGN">₦</span> <span itemprop="Price">{{ Number::format($level->programs->where('id', $program->id)->first()->pivot->tuition_fee)}} </span>  
@@ -114,7 +114,7 @@ use Illuminate\Support\Number;
                  </div>
                 </div>
             </div>
-            <!-- END Program Levels -->
+            <!-- END Programme Levels -->
 
         </div>
     </div>

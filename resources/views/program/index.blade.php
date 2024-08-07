@@ -67,7 +67,7 @@
             <h2 itemprop="name"class="content-heading text-center">Accredited {{$level->name}} Programmes Offered in Nigeria </h2>
             <div class="row items-push">
                 <div class="col-lg-4">
-                    <p class="text-muted sticky-top" style="top: 100px;">
+                    <p class=" sticky-top" style="top: 100px;">
                         Explore the official list of accredited <span class="text-black-75">{{$level->name}}</span> programmes grouped by their various disciplines offered in various Nigerian Institutions of higher learning.
                     </p>
 

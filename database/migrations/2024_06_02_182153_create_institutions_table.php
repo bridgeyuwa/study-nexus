@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('slug')->unique();
             $table->string('name');
             $table->string('former_name')->nullable();
             $table->string('abbr')->nullable();
@@ -30,8 +29,9 @@ return new class extends Migration
 			$table->unsignedBigInteger('religious_affiliation_id');
 			$table->string('slogan')->nullable();
             $table->string('address')->nullable();
+			$table->json('head')->nullable();  //head of the institution eg: VC, Provost, Rector, Commandant.  
             $table->json('coordinates')->nullable();
-            $table->string('url')->nullable();
+			$table->string('url')->nullable();
 			$table->string('alt_url')->nullable();
 			$table->string('logo')->nullable();
 			$table->integer('postal_code')->nullable();

@@ -255,7 +255,7 @@ class InstitutionController extends Controller {
 		
 		$institution['description_alt']= "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.";
             // to be fixed
-		// dd(route('institutions.show', $institution->id));
+	       // dd($institution->head->title, $institution->head->name);
         return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
     }
 

@@ -30,7 +30,7 @@
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
-                        <p  itemprop="description" class="text-muted ">
+                        <p  itemprop="description" class=" ">
                              List of <span class="text-black">Universities</span> in Nigeria which have <span class="text-black">{{str::title($catchment->name)}} @if(!empty($catchment->is_state)) State @endif</span> as a Catchment Area.
                         </p>
 

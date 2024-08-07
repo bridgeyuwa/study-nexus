@@ -34,16 +34,53 @@ use Illuminate\Support\Str;
     <div class="block block-rounded">
         <div class="block-content">
 
-            <!-- Introduction -->
-            <h2 class="content-heading text-center">Academic Institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{$level->name}}  @endif @if(!empty($program)) in {{$program->name}} @endif in @if(!is_null($state)) {{$state->name}} @if(!empty($state->is_state)) State, @endif @endif  Nigeria</h2>
+            <!-- Heading -->
+     
+							
+				<h2 class="content-heading text-center">  
+				
+							@if(!empty($typeSlug)) {{ ucfirst($typeSlug) }}   @endif
+							@if(!empty($categoryClass))
+								{{ $categoryClass->name_plural }}
+							@else
+								Academic Institutions
+							@endif 
+							
+							@if(!empty($level) || !empty($program)) Offering @endif
+						
+							
+							@if(!empty($level)) {{ $level->name }} @if(empty($program)) Programmes @endif @endif
+							
+							@if(!empty($level) && !empty($program)) in @endif
+							
+							@if(!empty($program)) {{ $program->name }} @endif
+							in @if(!empty($state)) {{ $state->name }} @if(!empty($state->is_state)) State @endif @endif 
+							@if(!empty($state)) - Nigeria. @else Nigeria @endif
+				
+				</h2>			
+							
+				<!-- End Heading -->			
+							
             <div class="row items-push">
                 <div class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
-                        <p class="text-muted  mb-2">
-                            Search Results of academic institutions @if(!empty($level) || !empty($program)) offering @endif @if(!empty($level)) {{$level->name}} in @endif @if(!empty($program)) {{$program->name}}  @endif in @if(!is_null($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, @endif Nigeria
-                        </p>
-                        <p class="text-muted fs-sm">
-                            We provide comprehensive information about each of the academic institutions as well as detailed insights into every course offered by these institutions. (eg. description, catchment areas, tuition fees, admission requirements, etc.)
+					   
+					
+						<p class="fs-sm mb-2">
+							
+						
+						 @if(!empty($religiousAffiliationCategory))
+							<div class="fs-sm"><span class="fw-semibold">Religious Affiliation:</span>  {{ $religiousAffiliationCategory->name }} </div>
+						 @endif
+						 
+						 
+						
+						</p>
+						
+						
+						
+                        <p class=" fs-sm">
+                            We provide comprehensive information about each of the academic institutions as well as detailed insights into every programme offered by these institutions. (eg. description, catchment areas, tuition fees, admission requirements, etc.)
                         </p>
                         <div class="d-none d-lg-block d-flex justify-content-center">
                             <a class="btn btn-sm btn-hero btn-info" href="{{url("#search")}}">
@@ -55,18 +92,19 @@ use Illuminate\Support\Str;
 
                 <!-- start col-lg-8 -->
                 <div class="col-lg-8 border  pt-3">
+				
 
                     @if($institutions->isEmpty())
 
                     <div class="content content-full mb-3">
                         <p class="h3 text-center">No results found.</p>
                         <p class="mb-0 fs-sm text-center">There is no result for the combination of your search.</p>
-                        <p class="mb-0 fs-sm text-center">Try Refining your search</p>
+                        <p class="mb-0 fs-sm text-center">Try Refining your search.</p>
                         <div class="d-flex justify-content-center">
-                            <ul>
-                                <li class="mb-0 fs-sm">Change the location</li>
-                                <li class="mb-0 fs-sm">Change the level of study</li>
-                                <li class="mb-0 fs-sm">Change the course</li>
+						      
+                            <ul> 
+                                <li class="mb-0 fs-sm">Change search combination</li>
+								<li class="mb-0 fs-sm">Change or Clear filters</li>
                             </ul>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -77,6 +115,12 @@ use Illuminate\Support\Str;
                     </div>
 
                     @else 
+						
+					@if(!empty($sortOrder))
+						<div class="d-flex justify-content-end mb-2">
+                      <div class=" me-5"> <span class="fw-semibold"> Sort Order: </span> {{ ucfirst($sortOrder) }}  </div>
+					  </div>
+                   @endif
 
                     {{ $institutions->onEachSide(1)->links() }} 
 

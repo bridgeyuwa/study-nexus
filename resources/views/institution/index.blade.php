@@ -101,7 +101,7 @@
 			<link itemprop="url"  content="{{url()->current()}}" />
                 <div  class="col-lg-4">
                     <div class="sticky-top" style="top: 100px;">
-                        <p itemprop="name" class="text-muted ">
+                        <p itemprop="name" class=" ">
                              List of  
 							@if(!empty($categoryClass)) 
 							    {{$categoryClass->name_plural}} 

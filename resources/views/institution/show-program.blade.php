@@ -122,22 +122,22 @@ use Illuminate\Support\Number;
 									<i class="fa fa-university"></i>
 								</span>
 								<div class="fw-semibold">Duration</div>
-								<div class="text-muted">@if(!empty($institution_program->pivot->duration)){{$institution_program->pivot->duration}} Years @else N/A @endif</div>
+								<div class="">@if(!empty($institution_program->pivot->duration)){{$institution_program->pivot->duration}} Years @else N/A @endif</div>
 								<meta itemprop="timeToComplete" content="P{{$institution_program->duration}}Y" />
 							</li>
 							<li class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
-								<div class="fw-semibold">Program Mode</div>
-								<div itemprop="educationalProgramMode" class="text-muted">@if(!empty($institution_program->pivot->programMode)){{$institution_program->pivot->programMode->name}} @else N/A @endif</div>
+								<div class="fw-semibold">Programme Mode</div>
+								<div itemprop="educationalProgramMode" class="">@if(!empty($institution_program->pivot->programMode)){{$institution_program->pivot->programMode->name}} @else N/A @endif</div>
 							</li>
 							<li itemprop="educationalCredentialAwarded" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="mb-1">
 								<span class="fa-li text-primary">
 									<i class="fa fa-calendar"></i>
 								</span>
 								<div class="fw-semibold">Credential Awarded</div>
-								<div itemprop="credentialCategory" class="text-muted">{{$level->name}}</div>
+								<div itemprop="credentialCategory" class="">{{$level->name}}</div>
 							</li>
 							
 							
@@ -150,10 +150,10 @@ use Illuminate\Support\Number;
         <div  class="col-md-8 order-md-0">
              
 			@if(!empty($institution_program->pivot->description))
-            <!-- Program Description -->
+            <!-- Programme Description -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
-                    <h3 class="block-title">Program Overview</h3>
+                    <h3 class="block-title">Programme Overview</h3>
                 </div>
                 <div class="block-content">
 
@@ -164,7 +164,7 @@ use Illuminate\Support\Number;
 
                 </div>
             </div>
-            <!-- END Program Description -->
+            <!-- END Programme Description -->
            @endif
 		   
 		   
@@ -282,7 +282,7 @@ use Illuminate\Support\Number;
             <!-- END Tuition Fee -->
 			
 			
-			<!-- All Instititions Offering Program -->
+			<!-- All Instititions Offering Programme -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                     <h3 class="block-title">All Institutions Offering {{$level->name}} in {{$program->name}}</h3>
@@ -294,7 +294,7 @@ use Illuminate\Support\Number;
 
                 </div>
             </div>
-            <!-- END Other Instititions Offering Program -->
+            <!-- END Other Instititions Offering Programme -->
 
         </div>
     </div>

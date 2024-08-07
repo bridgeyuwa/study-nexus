@@ -119,7 +119,7 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
 
         <div class="col-md-8 order-md-0">
 
-            <!-- Program Description -->
+            <!-- Programme Description -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
                     <h3 class="block-title">Programme Overview</h3>
@@ -128,7 +128,7 @@ $max_tuition = $level->programs->max('pivot.tuition_fee');
                     <p itemprop="description">{!!$program->pivot->description!!}</p>
                 </div>
             </div>
-            <!-- END Program Description -->
+            <!-- END Programme Description -->
 
             <!-- General Admission Requirements -->
             <div class="block block-rounded">

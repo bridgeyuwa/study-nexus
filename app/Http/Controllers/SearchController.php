@@ -22,7 +22,7 @@ class SearchController extends Controller
         $categoryClassId = $request->input('category');
         $religionId = $request->input('religion');
         $sortBy = $request->input('sort');
-
+//dd($stateId,$levelId,$programId,$typeSlug,$categoryClassId,$religionId,$sortBy);
         $query = Institution::query();
 
         // Institution Type filter
@@ -31,15 +31,14 @@ class SearchController extends Controller
                 $query->whereHas('institutionType.institutionTypeCategory', function ($q) use ($typeSlug) {
                     $q->where('slug', $typeSlug);
                 });
-            } else {
+            } elseif($typeSlug == "federal" || $typeSlug == "state" || $typeSlug == "private") {
                 $query->whereHas('institutionType', function ($q) use ($typeSlug) {
                     $q->where('slug', $typeSlug);
                 });
             }
+			
         }
 
-		
-       
 		
 		// Categories Filter
         $categoryClass = $categoryClassId ? CategoryClass::find($categoryClassId) : null;
@@ -107,20 +106,37 @@ class SearchController extends Controller
         if ($sortBy) {
             if ($sortBy == "rank") {
                 $query->orderByRaw('rank IS NULL, rank');
+				$sortOrder = "Rank";
+				
             } elseif ($sortBy == "za") {
                 $query->orderBy('name', 'desc');
+				$sortOrder = "Z - A";
             }
         } else {
             $query->orderBy('name', 'asc');
+			$sortOrder = "A - Z";
         }
 
         $institutions = $query->paginate(30);
+		
+		/*
+		$filters = [
+		'state' => $state->name,
+        'level' => $level->name,
+        'program' => $program->name,
+		'type' => $typeSlug),
+		'categoryClass' => $categoryClass->name,
+        'religiousAffiliationCategory' => $religiousAffiliationCategory->name,
+        'sortOrder' => $sortOrder,
+    ];
+	*/
+		
 
         $SEOData = new SEOData(
             title: "Search Nigerian Academic Institutions and Programs",
             description: "Use our advanced search to find universities, polytechnics, monotechnics, colleges of education, etc., and course programs in Nigeria that match your criteria. Filter by location, study level, programme, institution category and more.",
         );
 
-        return view('search', compact('institutions', 'program', 'state', 'level', 'SEOData'));
+        return view('search', compact('institutions', 'program', 'state', 'level','typeSlug','categoryClass','religiousAffiliationCategory','sortOrder', 'SEOData'));
     }
 }

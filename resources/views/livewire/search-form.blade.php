@@ -109,7 +109,7 @@
             <div class="mb-1 fw-semibold">Religious Affiliation</div>
             <div class="fs-sm">
                 <div class="radio d-inline">
-                    <input type="radio" id="religion_all" name="religion" value=""  @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
+                    <input type="radio" id="religion_all" name="religion" value="" wire:model="selectedReligion" @if($this->shouldDisableReligiousAffiliation()) disabled @endif>
                     <label class="me-1" for="religion_all">All</label>
                 </div>
                 <div class="radio d-inline">

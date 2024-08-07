@@ -47,7 +47,7 @@ use Illuminate\Support\Number;
 						@if(!empty($institution->slogan)) ( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endif
 						</div>
 						
-						<h2 class="h3 fw-light text-white">{{$level->name}} Programs</h2>
+						<h2 class="h3 fw-light text-white">{{$level->name}} Programmes</h2>
 					 </div>
                 </div>
               </div>
@@ -104,7 +104,7 @@ use Illuminate\Support\Number;
             <h2  class="content-heading text-center">Accredited Courses Offered at {{$institution->name}}</h2>
             <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="row items-push">
                 <div class="col-lg-4">
-                    <p class="text-muted sticky-top" style="top: 100px;">
+                    <p class=" sticky-top" style="top: 100px;">
                         Explore the official list of accredited <span itemprop="name" class="text-black-75">{{$level->name}} programmes </span> grouped by their various disciplines offered at <span class="text-black-75">{{$institution->name}}</span>.
                     </p>
                 </div>
@@ -126,7 +126,7 @@ use Illuminate\Support\Number;
                                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
                                         <a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal" href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}}">
 											<div class="block-header block-header-default fs-6">
-											 <span itemprop="name"> {{$program->name}} </span>
+											 <span itemprop="name"> {{$program->name}} </span>  @if(!empty($program->pivot->is_distinguished))<i class="fa fa-star text-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Center of Excellence"></i> @endif
 											</div>
                                           </a>
                                     </div>

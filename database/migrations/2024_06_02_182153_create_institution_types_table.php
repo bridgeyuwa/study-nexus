@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('institution_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+			$table->string('slug');
 			
 			$table->unsignedBigInteger('institution_type_category_id');
             $table->timestamps();

@@ -106,6 +106,15 @@ use Illuminate\Support\Number;
 								<div class=""> {{$institution->religiousAffiliation->name}}  </div>
 							</li>
 							
+							@if(!empty($institution->head))
+							<li class="mb-1">
+								<span class="fa-li text-primary">
+									<i class="fa fa-map-marker-alt"></i>
+								</span>
+								<div class="fw-semibold">{{$institution->head->title}}</div>
+								<div class=""> {{$institution->head->name}}  </div>
+							</li>
+							@endif
 							
 						</ul>
 					</div>

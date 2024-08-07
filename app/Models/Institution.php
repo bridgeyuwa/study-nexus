@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
+
 use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 
 class Institution extends Model {
@@ -17,6 +19,25 @@ class Institution extends Model {
     protected  $keyType = 'string';
     
     protected  $slug = 'name';
+	
+	
+	 protected $casts = [
+	
+	'head' => SchemalessAttributes::class,
+	
+	];
+	
+	
+	public function scopeWithHead(): Builder
+	
+	{
+		
+		return $this->head->modelScope();
+		
+	}
+	
+	
+	
 
     public function programs() {
         return $this->belongsToMany(Program::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished');
