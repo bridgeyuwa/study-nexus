@@ -62,7 +62,7 @@ class InstitutionProgram extends Resource
 			Text::make('Requirements')->sortable(),
 			BelongsTo::make('AccreditationBody')->sortable(),
 			BelongsTo::make('AccreditationStatus')->sortable()->nullable(),
-			Boolean::make('is_distinguished')->sortable(),
+			Boolean::make('Is Distinguished')->sortable(),
 			Date::make('Accreditation Grant date')->sortable(),
 			Date::make('Accreditation Expiry Date')->sortable(),
 			

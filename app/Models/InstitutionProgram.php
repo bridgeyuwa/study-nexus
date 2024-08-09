@@ -41,4 +41,17 @@ class InstitutionProgram extends Pivot
         return $this->belongsTo(ProgramMode::class);
     }
 	
+	/* Added because of Nova */
+	public function program() {
+        return $this->belongsTo(Program::class);
+    }
+	
+	public function institution() {
+        return $this->belongsTo(Institution::class);
+    }
+	
+	public function level() {
+        return $this->belongsTo(Level::class);
+    }
+	
 }
