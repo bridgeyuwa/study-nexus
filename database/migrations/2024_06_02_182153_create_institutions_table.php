@@ -32,7 +32,6 @@ return new class extends Migration
 			$table->json('head')->nullable();  //head of the institution eg: VC, Provost, Rector, Commandant.  
             $table->json('coordinates')->nullable();
 			$table->string('url')->nullable();
-			$table->string('alt_url')->nullable();
 			$table->string('logo')->nullable();
 			$table->integer('postal_code')->nullable();
 			

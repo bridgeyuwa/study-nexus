@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('institution_program', function (Blueprint $table) {
+			$table->id();
             $table->string('institution_id');
             $table->string('program_id');
             $table->unsignedBigInteger('level_id');
@@ -29,7 +30,7 @@ return new class extends Migration
 			
             $table->timestamps();
 
-            $table->primary(['institution_id', 'program_id', 'level_id']); 
+            $table->unique(['institution_id', 'program_id', 'level_id']); 
         });
     }
 

@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('institution_institution', function (Blueprint $table) {
+			$table->id();
             $table->string('primary_institution_id');
 			$table->string('related_institution_id');
             $table->timestamps();
 			
-			 $table->primary(['primary_institution_id', 'related_institution_id']);
+			 $table->unique(['primary_institution_id', 'related_institution_id'], 'self_reference_institution_unique_index');
 			
         });
     }

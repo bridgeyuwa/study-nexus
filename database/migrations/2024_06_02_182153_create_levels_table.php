@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('abbr')->nullable();
             $table->string('utme_cutoff')->nullable();
+			$table->timestamps();
         });
     }
 

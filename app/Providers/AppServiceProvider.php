@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
        Paginator::defaultView('vendor.pagination.study-nexus');
         
-	   Model::preventLazyLoading( !$this->app->isProduction());
+	  // Model::preventLazyLoading( !$this->app->isProduction());
 
     }
 }

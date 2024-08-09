@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('category_classes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('name_plural');
             $table->timestamps();
         });
     }

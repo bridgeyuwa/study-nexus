@@ -125,7 +125,7 @@ use Illuminate\Support\Str;
                     {{ $institutions->onEachSide(1)->links() }} 
 
                     @foreach ($institutions as $institution)
-					<!-- institution/program item -->
+					<!-- institution/programme item -->
                     <a href="
                        @if(!empty($program) && !empty($level))  
                        {{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}} 
@@ -228,7 +228,7 @@ use Illuminate\Support\Str;
                         </div>
                         <!-- End card footer -->
                     </a>
-					<!-- END institution/program item -->
+					<!-- END institution/programme item -->
                     @endforeach {{ $institutions->links() }} @endif
 
                 </div>
