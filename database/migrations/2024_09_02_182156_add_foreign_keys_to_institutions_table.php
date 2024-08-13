@@ -20,7 +20,9 @@ return new class extends Migration
 			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->onUpdate('cascade');
 			$table->foreign(['religious_affiliation_id'])->references(['id'])->on('religious_affiliations')->onUpdate('cascade');
 			$table->foreign(['parent_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
+			$table->foreign(['institution_head_id'])->references(['id'])->on('institution_heads')->onUpdate('cascade');
 			
+			institution_head_id
         });
     }  
 
@@ -36,8 +38,10 @@ return new class extends Migration
             $table->dropForeign('institutions_term_id_foreign');
 			$table->dropForeign('institutions_accreditation_body_id_foreign');
 			$table->dropForeign('institutions_accreditation_status_id_foreign');
-			$table->dropForeign('institutions_accreditation_religious_affiliation_id_foreign');
+			$table->dropForeign('institutions_religious_affiliation_id_foreign');
 			$table->dropForeign('institutions_parent_id_foreign');
+			$table->dropForeign('institutions_institution_head_id_foreign');
+			
         });
     }
 };

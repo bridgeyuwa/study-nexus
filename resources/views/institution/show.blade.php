@@ -109,10 +109,10 @@ use Illuminate\Support\Number;
 							@if(!empty($institution->head))
 							<li class="mb-1">
 								<span class="fa-li text-primary">
-									<i class="fa fa-map-marker-alt"></i>
+									<i class="fa fa-map-marker-alt"></i> 
 								</span>
-								<div class="fw-semibold">{{$institution->head->title}}</div>
-								<div class=""> {{$institution->head->name}}  </div>
+								<div class="fw-semibold"> {{$institution->institutionHead->name}}</div>
+								<div class="">{{$institution->head}}  </div>
 							</li>
 							@endif
 							

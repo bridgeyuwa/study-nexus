@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\TextArea;
 
 
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -59,12 +60,29 @@ class InstitutionProgram extends Resource
 			Number::make('Duration')->sortable(),
 			Number::make('Tuition Fee')->sortable(),
 			Number::make('UTME Cutoff')->sortable(),
-			Text::make('Requirements')->sortable(),
 			BelongsTo::make('AccreditationBody')->sortable(),
 			BelongsTo::make('AccreditationStatus')->sortable()->nullable(),
 			Boolean::make('Is Distinguished')->sortable(),
 			Date::make('Accreditation Grant date')->sortable(),
 			Date::make('Accreditation Expiry Date')->sortable(),
+			
+			TextArea::make('Direct Entry')
+            ->resolveUsing(fn () => $this->requirements->get('direct_entry'))
+            ->fillUsing(fn ($request, $model, $attribute, $requestAttribute) => 
+                $model->requirements->set('direct_entry', $request->get($requestAttribute))
+            ),
+
+			Textarea::make('O Level')
+				->resolveUsing(fn () => $this->requirements->get('o_level'))
+				->fillUsing(fn ($request, $model, $attribute, $requestAttribute) => 
+					$model->requirements->set('o_level', $request->get($requestAttribute))
+				),
+
+			Textarea::make('Subjects')
+				->resolveUsing(fn () => $this->requirements->get('utme_subjects'))
+				->fillUsing(fn ($request, $model, $attribute, $requestAttribute) => 
+					$model->requirements->set('utme_subjects', $request->get($requestAttribute))
+				),
 			
         ];
     }

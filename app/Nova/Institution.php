@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\URL;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Panel;
 
 use Laravel\Nova\Fields\BelongsTo;
@@ -56,16 +57,17 @@ class Institution extends Resource
 			Text::make('Former Name')->sortable(),
 			Text::make('Abbr')->sortable(),
 			Text::make('Slogan'),
-			Number::make('Established')->sortable(),
+			Select::make('Established')->options($this->yearRange())->sortable(),
+			BelongsTo::make('Institution Head'),
 			Text::make('Head'),
 			Trix::make('Description'),
 			BelongsTo::make('Parent Institution','parentInstitution','App\Nova\Institution')->nullable(),
-			BelongsTo::make('InstitutionType')->sortable(),
+			BelongsTo::make('Institution Type')->sortable(),
 			BelongsTo::make('Category')->sortable(),
 			BelongsTo::make('Term')->sortable(),
-			BelongsTo::make('AccreditationBody')->sortable(),
-			BelongsTo::make('AccreditationStatus')->sortable()->nullable(),
-			BelongsTo::make('ReligiousAffiliation')->sortable(),
+			BelongsTo::make('Accreditation Body')->sortable(),
+			BelongsTo::make('Accreditation Status')->sortable()->nullable(),
+			BelongsTo::make('Religious Affiliation')->sortable(),
 			BelongsTo::make('State')->sortable(),
 			Text::make('locality'),
 			Text::make('Address'),
@@ -76,18 +78,28 @@ class Institution extends Resource
 			Number::make('Rank')->sortable(),
 			Text::make('Coordinates'),
 			 
+			HasMany::make('Phone Numbers'),
 			 
 			 
 			//BelongsToMany::make('InstitutionProgram'),
-			//BelongsToMany::make('Levels'),
-			
 			HasMany::make('Child Institutions','childInstitutions','App\Nova\Institution'),
 		
+			BelongsToMany::make('Programs'),
+			
 			
 			
         ];
     }
 	
+	
+	
+	private function yearRange()
+	{
+		$years = range(1932, date('Y'));	
+		
+		return array_combine($years, $years);
+		
+	}
 	
 	
 

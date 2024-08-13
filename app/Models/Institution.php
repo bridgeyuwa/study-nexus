@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 
@@ -19,23 +18,6 @@ class Institution extends Model {
     protected  $keyType = 'string';
     
     protected  $slug = 'name';
-	
-	
-	 protected $casts = [
-	
-	'head' => SchemalessAttributes::class,
-	
-	];
-	
-	
-	public function scopeWithHead(): Builder
-	
-	{
-		
-		return $this->head->modelScope();
-		
-	}
-	
 	
 	
 
@@ -119,7 +101,9 @@ class Institution extends Model {
 	}
 	
 	
-	
+	public function institutionHead() {
+        return $this->belongsTo(InstitutionHead::class);
+    }
 	
 	
 }

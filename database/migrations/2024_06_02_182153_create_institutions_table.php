@@ -29,8 +29,9 @@ return new class extends Migration
 			$table->unsignedBigInteger('religious_affiliation_id');
 			$table->string('slogan')->nullable();
             $table->string('address')->nullable();
-			$table->json('head')->nullable();  //head of the institution eg: VC, Provost, Rector, Commandant.  
-            $table->json('coordinates')->nullable();
+			$table->string('institution_head_id');   
+            $table->string('head')->nullable()
+			$table->json('coordinates')->nullable();
 			$table->string('url')->nullable();
 			$table->string('logo')->nullable();
 			$table->integer('postal_code')->nullable();

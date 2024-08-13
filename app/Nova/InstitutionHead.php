@@ -5,18 +5,16 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Program extends Resource
+class InstitutionHead extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Program>
+     * @var class-string<\App\Models\InstitutionHead>
      */
-    public static $model = \App\Models\Program::class;
+    public static $model = \App\Models\InstitutionHead::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -31,7 +29,7 @@ class Program extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','name',
     ];
 
     /**
@@ -43,11 +41,8 @@ class Program extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            Text::make('ID')->sortable(),
+            ID::make()->sortable(),
 			Text::make('name')->sortable(),
-			BelongsTo::make('College')->sortable(),
-			
-			BelongsToMany::make('Institutions'),
         ];
     }
 
