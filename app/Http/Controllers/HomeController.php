@@ -26,7 +26,35 @@ class HomeController extends Controller {
 
 
 
-/*
+
+
+
+
+       return view('home', compact('institutions','programs','categoryClasses','levels','SEOData'));
+    }
+
+}
+
+
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Institution;
+use App\Models\Program;
+use App\Models\CategoryClass;
+use App\Models\Level;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Facades\Cache;
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+		
+		/*
 $filePath = public_path('files.json');
 
 $fileContent = file_get_contents($filePath);
@@ -71,10 +99,29 @@ $newFilePath = public_path('decodedFile.json');
 $newFileContent = file_put_contents($newFilePath, $allSql);
 
 */
+			
+		
+        // Cache the results of the queries
+        $institutions = Cache::remember('all_institutions', 60, function () {
+            return Institution::all();
+        });
 
+        $programs = Cache::remember('all_programs', 60, function () {
+            return Program::all();
+        });
 
+        $categoryClasses = Cache::rememberForever('all_category_classes', function () {
+            return CategoryClass::all();
+        });
 
-       return view('home', compact('institutions','programs','categoryClasses','levels','SEOData'));
+        $levels = Cache::remember('all_levels', 60, function () {
+            return Level::all();
+        });
+
+        $SEOData = new SEOData(
+            description: "Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus."
+        );
+
+        return view('home', compact('institutions', 'programs', 'categoryClasses', 'levels', 'SEOData'));
     }
-
 }

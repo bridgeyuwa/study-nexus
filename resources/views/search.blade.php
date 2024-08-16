@@ -118,7 +118,7 @@ use Illuminate\Support\Str;
 						
 					@if(!empty($sortOrder))
 						<div class="d-flex justify-content-end mb-2">
-                      <div class=" me-5"> <span class="fw-semibold"> Sort Order: </span> {{ ucfirst($sortOrder) }}  </div>
+							<div class=" me-5"> <span class="fw-semibold"> Sort Order: </span> {{ ucfirst($sortOrder) }}  </div>
 					  </div>
                    @endif
 
@@ -136,6 +136,11 @@ use Illuminate\Support\Str;
                        @endif 
                        " 
                        class="block block-rounded bg-dark">
+					   
+					   
+					   
+					   
+					   
                         <div class="block block-header-default bg-image mb-0 fw-light"
                              style="background-image: url('media/photos/photo11.jpg');">
                             <div class="bg-black-75 text-center pt-3 pb-1">
@@ -181,19 +186,19 @@ use Illuminate\Support\Str;
 
 
 
-                        @php
-                        $min_tuition = $institution->programs->min(function ($program){ return $program->pivot->tuition_fee;});
-                        $max_tuition = $institution->programs->max(function ($program){ return $program->pivot->tuition_fee;});
-                        @endphp
+                        
 
-
+						@unless( !empty($level) && !empty($program) )
                         <!-- card footer -->
                         <div class="block block-header-default  pt-1 border-bottom ">
                             <div class="row justify-content-center">
-
+								@php
+								$min_tuition = $institution->programs->min(function ($program){ return $program->pivot->tuition_fee;});
+								$max_tuition = $institution->programs->max(function ($program){ return $program->pivot->tuition_fee;});
+								@endphp
 
                                 <div class=" text-center mb-1 fs-sm">
-
+									
 
                                     <span>
                                         @if(!empty($min_tuition)) 
@@ -227,6 +232,9 @@ use Illuminate\Support\Str;
                             </div>
                         </div>
                         <!-- End card footer -->
+						
+						@endunless
+						
                     </a>
 					<!-- END institution/programme item -->
                     @endforeach {{ $institutions->links() }} @endif

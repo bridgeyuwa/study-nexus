@@ -121,7 +121,12 @@
 
                    
 						<div class="d-flex flex-row justify-content-between">
-							<a href="{{route('search', $parameters)}}" ><button  type="button" class="btn btn-sm btn-outline-primary fw-light"><i class="fa fa-sliders-h me-1"></i> Filter </button> </a> <a href="" > <button  type="button" class="btn btn-sm btn-outline-dark fw-light"><i class="fa fa-trophy me-1"></i> Ranking </button> </a>
+							<a href="{{route('search', $parameters)}}" ><button  type="button" class="btn btn-sm btn-outline-primary fw-light"><i class="fa fa-sliders-h me-1"></i> Filter </button> </a>     
+
+							@if(!empty($categoryClass))
+								<a href="{{ route('institutions.categories.ranking',['categoryClass' => $categoryClass]) }}" > <button  type="button" class="btn btn-sm btn-outline-dark fw-light"><i class="fa fa-trophy me-1"></i> Ranking </button> </a>
+							@endif
+						
 						</div>
 						
 

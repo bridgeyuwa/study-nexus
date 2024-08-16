@@ -313,7 +313,7 @@ use Illuminate\Support\Number;
 				
 				
 				@if($institution->affiliatedInstitutions->isNotEmpty())
-					
+					              
 					
 				<!-- Affiliated Institutions -->
 				<div class="block block-rounded">
@@ -366,11 +366,11 @@ use Illuminate\Support\Number;
 							</div>
 							@endif
 
-							@if($institution->phonenumbers->isNotEmpty())
+							@if($institution->phoneNumbers->isNotEmpty())
 							<div  class="row bg-stripped">
 								<div  class="col-3 fw-light text-black"><i class="fa fa-phone text-dark me-1"></i>Phone </div>
 								<div itemprop="contactPoint" itemscope itemtype="https://schema.org/ContactPoint" class="col"> 
-								   @foreach($institution->phonenumbers as $phone)
+								   @foreach($institution->phoneNumbers as $phone)
 								   <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}"> <span itemprop="telephone">+234 {{substr($phone->number, 1)}}</span> </a> @if(!empty($phone->holder)) <span itemprop="contactType" class="ms-2 fw-light fs-sm">({{$phone->holder}}) </span> @endif <br>
 								   @endforeach
 								</div>

@@ -36,7 +36,7 @@
         <div class="content-side">
             <ul class="nav-main">
 
-
+            
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('home')}}">
                         <i class="nav-main-link-icon fa fa-home"></i>
@@ -87,119 +87,31 @@
                         </li>
 
 
+						@foreach($categoryClasses as $categoryClass)
+						
                         <li class="nav-main-item">
                             <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
                                 
-                                <span class="nav-main-link-name">Universities</span>
+                                <span class="nav-main-link-name">{{$categoryClass->name_plural}}</span>
                             </a>
                             <ul class="nav-main-submenu">
                                 <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.index',['categoryClass'=> 'university'])}}">
+                                    <a class="nav-main-link" href="{{route('institutions.categories.index',['categoryClass'=> $categoryClass ])}}">
                                         
-                                        <span class="nav-main-link-name">View Universities</span>
+                                        <span class="nav-main-link-name">View {{$categoryClass->name_plural}}</span>
                                     </a>
                                 </li>
                                 <li class="nav-main-item">
-                                    <a  class="nav-main-link" href="{{route('institutions.categories.location',['categoryClass'=> 'university'])}}">
+                                    <a  class="nav-main-link" href="{{route('institutions.categories.location',['categoryClass'=> $categoryClass ])}}">
                                         
-                                        <span class="nav-main-link-name"> Universities by Location</span>
+                                        <span class="nav-main-link-name"> {{$categoryClass->name_plural}} by Location</span>
                                     </a>
                                 </li>
 
                             </ul>
                         </li>
-
-
-                        <li class="nav-main-item">
-                            <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
-                               
-                                <span class="nav-main-link-name">Polytechnics</span>
-                            </a>
-                            <ul class="nav-main-submenu">
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.index',['categoryClass'=> 'polytechnic'])}}">
-                                        
-                                        <span class="nav-main-link-name">View Polytechnics</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.location',['categoryClass'=> 'polytechnic'])}}">
-                                        
-                                        <span class="nav-main-link-name"> Polytechnics by Location</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-main-item">
-                            <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
-                               
-                                <span class="nav-main-link-name">Monotechnics</span>
-                            </a>
-                            <ul class="nav-main-submenu">
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.index',['categoryClass'=> 'monotechnic'])}}">
-                                        
-                                        <span class="nav-main-link-name">View Monotechnics</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.location',['categoryClass'=> 'monotechnic'])}}">
-                                        
-                                        <span class="nav-main-link-name"> Monotechnics by Location</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-main-item">
-                            <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
-                               
-                                <span class="nav-main-link-name">Colleges of Education</span>
-                            </a>
-                            <ul class="nav-main-submenu">
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.index',['categoryClass'=> 'college-of-education'])}}">
-                                        
-                                        <span class="nav-main-link-name">View Colleges of Education</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.location',['categoryClass'=> 'college-of-education'])}}">
-                                        
-                                        <span class="nav-main-link-name"> Colleges of Education by Location</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-main-item">
-                            <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
-                               
-                                <span class="nav-main-link-name">Innovation Enterprise Institutions</span>
-                            </a>
-                            <ul class="nav-main-submenu">
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.index',['categoryClass'=> 'innovation-enterprise-institution'])}}">
-                                        
-                                        <span class="nav-main-link-name">View Innovation Enterprise Institutions</span>
-                                    </a>
-                                </li>
-                                <li class="nav-main-item">
-                                    <a class="nav-main-link" href="{{route('institutions.categories.location',['categoryClass'=> 'innovation-enterprise-institution'])}}">
-                                        
-                                        <span class="nav-main-link-name"> Innovation Enterprise Institutions by Location</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
+						
+						@endforeach
 
                     </ul>
                 </li>
@@ -217,33 +129,42 @@
                         <span class="nav-main-link-name">Programs</span>
                     </a>
                     <ul class="nav-main-submenu">
+					
+					@foreach($levels as $level)
                         <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('programs.index', ['level'=>'bachelors'])}}">
+                            <a class="nav-main-link" href="{{route('programs.index', ['level' => $level])}}">
                                 
-                                <span class="nav-main-link-name">Bachelor's Degree Courses</span>
+                                <span class="nav-main-link-name">{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}})  @endif</span>
                             </a>
                         </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('programs.index', ['level'=>'diploma'])}}">
-                                
-                                <span class="nav-main-link-name">National Diploma (N.D) Courses</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('programs.index', ['level'=>'nce'])}}">
-                                
-                                <span class="nav-main-link-name">Nigeria Certificate in Education (N.C.E) Courses</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('programs.index', ['level'=>'nid'])}}">
-                                
-                                <span class="nav-main-link-name">National Innovation Diploma (N.I.D) Courses</span>
-                            </a>
-                        </li>
+                     @endforeach
 
                     </ul>
                 </li>
+
+
+
+
+				
+
+                <li class="nav-main-item">
+                    <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
+                        <i class="nav-main-link-icon fa fa-trophy"></i>
+                        <span class="nav-main-link-name">Institution Rankings</span>
+                    </a>
+                    <ul class="nav-main-submenu">
+					
+					@foreach($categoryClasses as $categoryClass)
+                        <li class="nav-main-item">
+                            <a class="nav-main-link" href="{{route('institutions.categories.ranking',['categoryClass'=> $categoryClass])}}">
+                                <span class="nav-main-link-name">{{$categoryClass->name}} Rankings</span>
+                            </a>
+                        </li>
+                    @endforeach
+
+                    </ul>
+                </li>
+
 
 
 
@@ -273,36 +194,6 @@
 
 
 
-
-                <li class="nav-main-item">
-                    <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
-                        <i class="nav-main-link-icon fa fa-trophy"></i>
-                        <span class="nav-main-link-name">Institution Rankings</span>
-                    </a>
-                    <ul class="nav-main-submenu">
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('institutions.categories.ranking',['categoryClass'=>'university'])}}">
-                                <span class="nav-main-link-name">University Rankings</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('institutions.categories.ranking',['categoryClass'=>'polytechnic'])}}">
-                                <span class="nav-main-link-name">Polytechnic Rankings</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('institutions.categories.ranking',['categoryClass'=>'monotechnic'])}}">
-                                <span class="nav-main-link-name">Monotechnic Rankings</span>
-                            </a>
-                        </li>
-                        <li class="nav-main-item">
-                            <a class="nav-main-link" href="{{route('institutions.categories.ranking',['categoryClass'=>'college-of-education'])}}">
-                                <span class="nav-main-link-name">College of Education Rankings</span>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
 
                 <li class="nav-main-heading">Extend</li>
 

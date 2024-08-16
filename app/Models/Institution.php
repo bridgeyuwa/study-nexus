@@ -64,7 +64,11 @@ class Institution extends Model {
 
 
 
-    public function socials() {
+   /* public function socials() {
+        return $this->hasMany(Social::class);
+    }
+	*/
+	public function socials() {
         return $this->hasMany(Social::class);
     }
 	

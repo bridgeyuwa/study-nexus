@@ -12,7 +12,11 @@ class Social extends Model {
         return $this->belongsTo(SocialType::class);
     }
 
-   public function institution() {
+  /* public function institution() {
+        return $this->belongsTo(Institution::class);
+    }
+	*/
+	public function institution() {
         return $this->belongsTo(Institution::class);
     }
 

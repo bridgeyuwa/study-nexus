@@ -6,8 +6,8 @@
 use Illuminate\Support\Str;
 use Illuminate\Support\Number;
 
-$min_tuition = $level->programs->min('pivot.tuition_fee');
-$max_tuition = $level->programs->max('pivot.tuition_fee');
+$min_tuition = $level_programs->min('pivot.tuition_fee');
+$max_tuition = $level_programs->max('pivot.tuition_fee');
 
 @endphp
 
