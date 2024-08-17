@@ -2,28 +2,23 @@
 
 
 @section('content')
-@php  use Illuminate\Support\Str;  @endphp
 
 <!-- Hero -->
         <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
-                <h1 class="fw-light text-white mb-1">
-                                    @if(!empty($categoryClass))
-                                        {{$categoryClass->name_plural}}
-									@else
-										Tertiary Institutions
-                                    @endif in Nigeria
-               </h1>
+				@php
+					$categoryName = $categoryClass->name_plural ?? 'Tertiary Institutions';
+				@endphp
 
-                  <h2 class="h4 fs-md  fw-light text-white-75 ">
-                     ( Locate @if(!empty($categoryClass))
-										{{$categoryClass->name_plural}}
-									@else
-										Academic Institutions
-                                    @endif by Regions/State )
-                    </h2>
+				<h1 class="fw-light text-white mb-1">
+					{{ $categoryName }} in Nigeria
+				</h1>
+				
+				<h2 class="h4 fs-md  fw-light text-white-75 ">
+					( Locate {{ $categoryName }} by Regions/State )
+				</h2>
 
            
             <h2 class="h3 fw-light text-white">Regions/States</h2>
@@ -64,22 +59,22 @@
 					
 					
 					
+					@php
+						$isCurrent = function($route) {
+							return $route == url()->current();
+						};
+					@endphp
+
 					@foreach($categoryClasses as $institution_category)
-					
-					<li class="nav-item">
-                    <a href="{{route('institutions.categories.location', ['categoryClass' => $institution_category])}}"><button
-					@if(
-					route('institutions.categories.location', $institution_category) == url()->current()
-					) 
-					class="btn-sm nav-link active" disabled
-					@else
-						class="btn-sm nav-link"
-					@endif
-					> {{$institution_category->name}} Locations
-					</button>
-					</a>
-                  </li>
-				  @endforeach
+						<li class="nav-item">
+							<a href="{{ route('institutions.categories.location', ['categoryClass' => $institution_category]) }}">
+								<button class="btn-sm nav-link {{ $isCurrent(route('institutions.categories.location', $institution_category)) ? 'active' : '' }}" {{ $isCurrent(route('institutions.categories.location', $institution_category)) ? 'disabled' : '' }}>
+									{{ $institution_category->name }} Locations
+								</button>
+							</a>
+						</li>
+					@endforeach
+
                   
                 </ul>
             </div>
@@ -106,61 +101,37 @@
         </div>
 
         <div class="col-md-8 order-md-0">
+		<!-- Region Block -->
+           @foreach($regions as $region)
+				@php
+					$stateRoute = function($state) use ($categoryClass) {
+						return $categoryClass 
+							? route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state])
+							: route('institutions.location.show', ['state' => $state]);
+					};
+				@endphp
 
-            @foreach($regions as $region)
-
-            <!-- Region Block -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
-
-                    <h3 class="block-title d-flex justify-content-between align-items-center">{{$region->name}}
-                        <span> 
-                      {{$region->institutions->count() }} Schools 
-                        </span>
-                    </h3>
-
-
-                </div>
-                <div class="block-content">
-
-                    <ul class="list-group list-group-flush">
-
-                        @foreach( $region->states as $state )
-                        <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
-                            <a href="
-                              @if(!empty($categoryClass))
-                              {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state])}}
-                              @else 
-                              {{route('institutions.location.show', ['state' => $state])}}
-                              @endif
-
-                               " class="fw-normal fs-normal">{{$state->name}} @if(!empty($state->is_state)) State @endif
-                            </a>
-
-
-                            <a href="
-                               @if(!empty($categoryClass))
-                               {{route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state])}}
-                               @else 
-                               {{route('institutions.location.show', ['state' => $state])}}
-                               @endif
-                               " class="btn btn-light w-25 text-secondary"> 
-
-                               <span class="badge rounded-pill bg-info">
-                                  
-                                {{$state->institutions->count()}} 
-                                
-                                </span> 
-                                Schools
-                              </a>
-                        </li>
-                        @endforeach
-                    </ul>
-
-                </div>
-            </div>
-            <!-- END Region Block -->
-            @endforeach
+				<div class="block block-rounded">
+					<div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
+						<h3 class="block-title d-flex justify-content-between align-items-center">
+							{{ $region->name }} <span>{{ $region->institutions->count() }} Schools</span>
+						</h3>
+					</div>
+					<div class="block-content">
+						<ul class="list-group list-group-flush">
+							@foreach($region->states as $state)
+								<li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
+									<a href="{{ $stateRoute($state) }}" class="fw-normal fs-normal">{{ $state->name }} @if($state->is_state) State @endif</a>
+									<a href="{{ $stateRoute($state) }}" class="btn btn-light w-25 text-secondary">
+										<span class="badge rounded-pill bg-info">{{ $state->institutions->count() }}</span> Schools
+									</a>
+								</li>
+							@endforeach
+						</ul>
+					</div>
+				</div>
+			@endforeach
+		<!-- End Region Block -->
 
 
         </div>

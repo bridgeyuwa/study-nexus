@@ -3,7 +3,6 @@
 
 @section('content')
 
-@php use Illuminate\Support\Str; @endphp
 
 <!-- Hero -->
         <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
@@ -67,10 +66,12 @@
                     <ul class="list-group list-group-flush pb-2">
 
                         @foreach( $region->catchments as $catchment )
+						@php $catchmentUrl = route('institutions.catchments.show', ['catchment' => $catchment]); @endphp
+						
                         <li class="list-group-item d-flex justify-content-between align-items-center p-1 mt-0">
-                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}" class="fw-normal fs-normal">{{$catchment->name}}</a>
+                            <a href="{{$catchmentUrl}}" class="fw-normal fs-normal">{{$catchment->name}}</a>
 
-                            <a href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}" class="btn btn-light w-25 text-secondary"> 
+                            <a href="{{$catchmentUrl}}" class="btn btn-light w-25 text-secondary"> 
                                 <span class="badge rounded-pill bg-info"> {{ $catchment->institutions->count()}}</span> Schools
                                </a>
                         </li>

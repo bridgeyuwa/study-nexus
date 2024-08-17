@@ -3,7 +3,6 @@
 @section('content')
 @php 
 use Illuminate\Support\Number; 
-use Illuminate\Support\Str;
 @endphp
 
 <!-- Hero -->

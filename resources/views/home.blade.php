@@ -63,7 +63,7 @@
 
 
 <!-- Facts -->
-      <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" style="background-image: url(/media/patterns/grid-me.pngx)">
+      <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" >
               
               <div class="px-2 px-sm-5">
                 <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($institutions->count())}}</p>

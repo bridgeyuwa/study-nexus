@@ -3,7 +3,6 @@
 
 @section('content')
 @php 
-use Illuminate\Support\Str;
 use Illuminate\Support\Number;
 
 $min_tuition = $level_programs->min('pivot.tuition_fee');

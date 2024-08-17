@@ -7,7 +7,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\SitemapController;
-
+use App\Livewire\ContactForm;
 
 /* Home */
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -35,8 +35,9 @@ Route::get('/privacy-policy', function () {
 })->name('policy');
 
 Route::get('/contact', function () {
-    return view('welcome');
+    return view('contact');
 })->name('contact');
+
 
 /* Programs by Level */
 Route::prefix('{level}/programs')->name('programs.')->group(function () {

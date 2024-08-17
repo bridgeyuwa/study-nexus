@@ -20,7 +20,7 @@ Welcome to StudyNexus. We take your privacy seriously and are committed to prote
 
 #### Information Sharing and Disclosure
 
-1. **Third-Party Service Providers**: We may share your Personal Information with trusted partners who assist us in operating our website, conducting our business, or providing services to you, as long as they agree to keep your information confidential.
+1. **Third-Party Service Providers**: We may share your Personal Information with trusted partners, such as Google tools (Search Console, Google Analytics, Google AdSense), who assist us in operating our website, conducting our business, or providing services to you, as long as they agree to keep your information confidential.
 
 2. **Legal Requirements**: We may disclose your Personal Information in response to subpoenas, court orders, or other legal processes, or to establish or exercise our legal rights or defend against legal claims.
 
@@ -34,9 +34,11 @@ Welcome to StudyNexus. We take your privacy seriously and are committed to prote
 
 2. **Managing Cookies**: You can manage your cookie preferences through your browser settings. However, disabling cookies may affect the functionality of our website and your ability to use certain features.
 
+3. **Cookie Consent**: We have implemented a cookie consent mechanism to comply with data protection regulations and give you control over your cookie preferences.
+
 #### Data Security
 
-1. **Security Measures**: We implement a variety of security measures to protect your Personal Information from unauthorized access, use, or disclosure. These measures include physical, electronic, and procedural safeguards.
+1. **Security Measures**: We implement a variety of security measures, including HTTPS, to protect your Personal Information from unauthorized access, use, or disclosure. These measures include physical, electronic, and procedural safeguards.
 
 2. **No Absolute Guarantee**: While we strive to protect your Personal Information, we cannot guarantee its absolute security. Inadvertent disclosures may occur despite our best efforts.
 
@@ -55,10 +57,7 @@ We may update this privacy policy from time to time to reflect changes in our pr
 #### Contact Us
 
 If you have any questions or concerns about this privacy policy, please contact us at:
-- **Email**: privacy@studynexus.ng
+- **Email**: [privacy@studynexus.ng](mailto:privacy@studynexus.ng)
 - **Address**: StudyNexus, 65, 1st Ave, Efab City Estate, Life Camp, Abuja. 900108, Federal Capital Territory, Nigeria.
 
 Thank you for using StudyNexus. Your privacy is important to us.
-
----
-

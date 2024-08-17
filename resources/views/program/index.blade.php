@@ -2,11 +2,6 @@
 
 @section('content')
 
-@php use Illuminate\Support\Str;  @endphp
-
-
-
-
 <!-- Hero -->
 <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
     <div class="bg-black-75">

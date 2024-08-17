@@ -65,7 +65,7 @@ class InstitutionController extends Controller {
     public function location() {
 		
 		
-		$regions = Cache::rememberForever('regions_with_institutions', 60 * 60 * 24, function() {
+		$regions = Cache::rememberForever('regions_with_institutions',  function() {
 			return Region::with(['institutions', 'states.institutions'])->get();
 		});
 		
@@ -78,7 +78,9 @@ class InstitutionController extends Controller {
             description: "Discover academic institutions in your preferred location. Find the best educational institutions near you.",
         );
 
-        return view('institution.location', compact('regions','categoryClasses','SEOData'));
+		$categoryClass = null;
+
+        return view('institution.location', compact('regions','categoryClass','categoryClasses','SEOData'));
     }
 
 

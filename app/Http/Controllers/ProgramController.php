@@ -28,14 +28,14 @@ class ProgramController extends Controller
         });
 
         $SEOData = new SEOData(
-            title: "{$level->name} Course Programs in Nigeria",
-            description: "Discover {$level->name} programs across academic institutions in Nigeria. Compare and choose the best course program for your academic journey.",
+            title: "{$level->name} Programmes in Nigeria",
+            description: "Discover {$level->name} programmes across academic institutions in Nigeria. Compare and choose the best programme for your academic journey.",
         );
 
         return view('program.index', compact('programs','level','program_levels','SEOData'));
     }
     
-    /* show a program of a level of study */
+    /* show a programme of a level of study */
     public function show(Level $level, Program $program) {
         $cacheKey = "level_{$level->id}_program_{$program->id}";
         

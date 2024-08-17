@@ -8,45 +8,6 @@ use App\Models\Program;
 use App\Models\CategoryClass;
 use App\Models\Level;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
-
-class HomeController extends Controller {
-
-    public function index() {
-
-        $institutions = Institution::all();
-        $programs = Program::all();
-		$categoryClasses = CategoryClass::all();
-		
-		$levels = Level::all(); 
-      
-        $SEOData = new SEOData( 
-            description: "Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus.",
-        );
-							   
-
-
-
-
-
-
-
-       return view('home', compact('institutions','programs','categoryClasses','levels','SEOData'));
-    }
-
-}
-
-
-
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\Institution;
-use App\Models\Program;
-use App\Models\CategoryClass;
-use App\Models\Level;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller

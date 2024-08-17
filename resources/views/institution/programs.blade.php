@@ -2,7 +2,6 @@
 
 @section('content')
 @php 
-use Illuminate\Support\Str; 
 use Illuminate\Support\Number;  
 @endphp
 
@@ -22,7 +21,7 @@ use Illuminate\Support\Number;
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
                     <div class="block-content block-content-full px-2 py-2">
 					
-                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;"></img>
+                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
                       <link itemprop="logo" href="{{$institution->logo}}">
                     </div>
                   </div>

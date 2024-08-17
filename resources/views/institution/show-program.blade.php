@@ -2,7 +2,6 @@
 
 @section('content') 
 @php 
-use Illuminate\Support\Str; 
 use Illuminate\Support\Number;
 @endphp
 
@@ -21,7 +20,7 @@ use Illuminate\Support\Number;
 							  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
 								<div class="block-content block-content-full px-2 py-2">
 								
-								  <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;"></img>
+								  <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
 								  <link itemprop="logo" href="{{$institution->logo}}">
 								</div>
 							  </div>
@@ -170,7 +169,7 @@ use Illuminate\Support\Number;
     <div class="block-header block-header-default justify-content-center" style="background-image: url(/media/patterns/cubes.png)">
         <div>
             <h3 class="block-title row justify-content-center">Admission Requirement</h3>
-            <div class="fs-sm row text-center">{{Str::title($institution->name)}} Admission Requirement for {{Str::title($level->name)}} in {{$program->name}}</div>
+            <div class="fs-sm row text-center">{{$institution->name}} Admission Requirement for {{$level->name}} in {{$program->name}}</div>
         </div>
     </div>
     <div class="block-content">

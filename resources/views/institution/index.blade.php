@@ -2,7 +2,6 @@
 
 
 @section('content')
-@php use Illuminate\Support\Str; @endphp
 
 
 <!-- Hero -->
@@ -12,13 +11,7 @@
               <div class="pt-4 pb-3">
                 <h1 class="fw-light text-white mb-1">
 
-                 @if(!empty($categoryClass))
-                   
-                        {{$categoryClass->name_plural}}
-                      
-                 @else
-                    Tertiary Institutions
-                 @endif in Nigeria
+                 {{ $categoryClass->name_plural ?? 'Tertiary Institutions' }} in Nigeria
 
               </h1>
               
