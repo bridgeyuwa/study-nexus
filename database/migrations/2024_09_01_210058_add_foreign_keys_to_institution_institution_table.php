@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('institution_institution', function (Blueprint $table) {
             
-			$table->foreign(['primary_institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
-			$table->foreign(['related_institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
+			$table->foreign(['primary_institution_id'])->references(['id'])->on('institutions')->cascadeOnUpdate();
+			$table->foreign(['related_institution_id'])->references(['id'])->on('institutions')->cascadeOnUpdate();
         
 			
         });
@@ -28,7 +28,9 @@ return new class extends Migration
         Schema::table('institution_institution', function (Blueprint $table) {
             
 			$table->dropForeign('institution_institution_primary_institution_id_foreign');
-			$table->dropForeign('related_institution_primary_institution_id_foreign');
+			$table->dropForeign('institution_institution_related_institution_id_foreign');
+			
+			
 			
         });
     }

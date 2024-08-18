@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('level_program', function (Blueprint $table) {
-            $table->foreign(['level_id'])->references(['id'])->on('levels')->onUpdate('cascade');
-            $table->foreign(['program_id'])->references(['id'])->on('programs')->onUpdate('cascade');
+            $table->foreign(['level_id'])->references(['id'])->on('levels')->cascadeOnUpdate();
+            $table->foreign(['program_id'])->references(['id'])->on('programs')->cascadeOnUpdate();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('catchment_institution', function (Blueprint $table) {
+        Schema::table('level_program', function (Blueprint $table) {
             $table->dropForeign('level_program_level_id_foreign');
             $table->dropForeign('level_program_program_id_foreign');
         });

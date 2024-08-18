@@ -29,8 +29,8 @@ return new class extends Migration
 			$table->unsignedBigInteger('religious_affiliation_id');
 			$table->string('slogan')->nullable();
             $table->string('address')->nullable();
-			$table->string('institution_head_id');   
-            $table->string('head')->nullable()
+			$table->unsignedBigInteger('institution_head_id');   
+            $table->string('head')->nullable();
 			$table->json('coordinates')->nullable();
 			$table->string('url')->nullable();
 			$table->string('logo')->nullable();

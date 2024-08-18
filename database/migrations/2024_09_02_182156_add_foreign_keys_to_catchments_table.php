@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('catchments', function (Blueprint $table) {
-            $table->foreign(['region_id'])->references(['id'])->on('regions')->onUpdate('cascade');
+            $table->foreign(['region_id'])->references(['id'])->on('regions')->cascadeOnUpdate();
         });
     }
 

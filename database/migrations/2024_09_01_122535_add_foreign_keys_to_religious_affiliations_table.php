@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('religious_affiliations', function (Blueprint $table) {
             
-			$table->foreign(['religious_affiliation_category_id'])->references(['id'])->on('religious_affiliation_categories')->onUpdate('cascade');
+			$table->foreign(['religious_affiliation_category_id'])->references(['id'])->on('religious_affiliation_categories')->cascadeOnUpdate();
             
 			
         });

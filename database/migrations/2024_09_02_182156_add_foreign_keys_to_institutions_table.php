@@ -12,17 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('institutions', function (Blueprint $table) {
-            $table->foreign(['category_id'])->references(['id'])->on('categories')->onUpdate('cascade');
-            $table->foreign(['institution_type_id'])->references(['id'])->on('institution_types')->onUpdate('cascade');
-            $table->foreign(['state_id'])->references(['id'])->on('states')->onUpdate('cascade');
-            $table->foreign(['term_id'])->references(['id'])->on('terms')->onUpdate('cascade');
-			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->onUpdate('cascade');
-			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->onUpdate('cascade');
-			$table->foreign(['religious_affiliation_id'])->references(['id'])->on('religious_affiliations')->onUpdate('cascade');
-			$table->foreign(['parent_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
-			$table->foreign(['institution_head_id'])->references(['id'])->on('institution_heads')->onUpdate('cascade');
+            $table->foreign(['category_id'])->references(['id'])->on('categories')->cascadeOnUpdate();
+            $table->foreign(['institution_type_id'])->references(['id'])->on('institution_types')->cascadeOnUpdate();
+            $table->foreign(['state_id'])->references(['id'])->on('states')->cascadeOnUpdate();
+            $table->foreign(['term_id'])->references(['id'])->on('terms')->cascadeOnUpdate();
+			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->cascadeOnUpdate();
+			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->cascadeOnUpdate();
+			$table->foreign(['religious_affiliation_id'])->references(['id'])->on('religious_affiliations')->cascadeOnUpdate();
+			$table->foreign(['institution_head_id'])->references(['id'])->on('institution_heads')->cascadeOnUpdate();
+			$table->foreign(['parent_id'])->references(['id'])->on('institutions')->cascadeOnUpdate();
 			
-			institution_head_id
         });
     }  
 
@@ -39,8 +38,8 @@ return new class extends Migration
 			$table->dropForeign('institutions_accreditation_body_id_foreign');
 			$table->dropForeign('institutions_accreditation_status_id_foreign');
 			$table->dropForeign('institutions_religious_affiliation_id_foreign');
-			$table->dropForeign('institutions_parent_id_foreign');
 			$table->dropForeign('institutions_institution_head_id_foreign');
+			$table->dropForeign('institutions_parent_id_foreign');
 			
         });
     }

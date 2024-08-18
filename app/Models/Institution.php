@@ -29,8 +29,6 @@ class Institution extends Model {
         return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('program_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished');
     }
 
-   
-
     public function state() {
         return $this->belongsTo(State::class);
     }
@@ -62,12 +60,6 @@ class Institution extends Model {
         return $this->hasMany(PhoneNumber::class);
     }
 
-
-
-   /* public function socials() {
-        return $this->hasMany(Social::class);
-    }
-	*/
 	public function socials() {
         return $this->hasMany(Social::class);
     }
@@ -97,7 +89,8 @@ class Institution extends Model {
 	{
 		return $this->hasMany(Institution::class,'parent_id');
 	}
-	
+		
+
 	
 	public function affiliatedInstitutions()
 	{

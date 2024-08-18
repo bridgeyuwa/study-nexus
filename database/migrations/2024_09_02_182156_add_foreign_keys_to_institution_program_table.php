@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('institution_program', function (Blueprint $table) {
-            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->onUpdate('cascade');
-            $table->foreign(['program_id'])->references(['id'])->on('programs')->onUpdate('cascade');
-            $table->foreign(['level_id'])->references(['id'])->on('levels')->onUpdate('cascade');
+            $table->foreign(['institution_id'])->references(['id'])->on('institutions')->cascadeOnUpdate();
+            $table->foreign(['program_id'])->references(['id'])->on('programs')->cascadeOnUpdate();
+            $table->foreign(['level_id'])->references(['id'])->on('levels')->cascadeOnUpdate();
 			
-			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->onUpdate('cascade');
-			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->onUpdate('cascade');
-            $table->foreign(['program_mode_id'])->references(['id'])->on('program_modes')->onUpdate('cascade');
+			$table->foreign(['accreditation_body_id'])->references(['id'])->on('accreditation_bodies')->cascadeOnUpdate();
+			$table->foreign(['accreditation_status_id'])->references(['id'])->on('accreditation_statuses')->cascadeOnUpdate();
+            $table->foreign(['program_mode_id'])->references(['id'])->on('program_modes')->cascadeOnUpdate();
        
 	   });
     }
@@ -35,6 +35,8 @@ return new class extends Migration
 			
 			$table->dropForeign('institution_program_accreditation_body_id_foreign');
 			$table->dropForeign('institution_program_accreditation_status_id_foreign');
+			$table->dropForeign('institution_program_program_mode_id_foreign');
+				
         });
     }
 };
