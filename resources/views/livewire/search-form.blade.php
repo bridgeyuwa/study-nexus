@@ -200,8 +200,8 @@
                          <label class="me-1" class="form-label" for="program"> Study Programme</label>
 						 
 						 <div  wire:key="a4569oh-kjhf-{{$count}}" >
-                        <div class="mt-1" wire:ignore>
-                        <select id="program-m" name="program" class="form-select"> 
+                        <div class="mt-1" >
+                        <select wire:model.live="selectedProgram" id="program-m" name="program" class="form-select"> 
                          <option value="">Any Programme </option>
                                     @foreach($programs as $program)
                                     <option value="{{$program->id}}" @if( $program->id ==
@@ -272,10 +272,7 @@ $('#level').on('change', function(event){
 
 });
 
-$(document).on('change', '#program', function(event){
-    console.log(event.target.value);
-    $wire.set('selectedProgram', event.target.value);
-});
+
 
 
 
@@ -295,6 +292,10 @@ $('#program').select2({
 
 });
 
+$(document).on('change', '#program', function(event){
+    console.log(event.target.value);
+    $wire.set('selectedProgram', event.target.value);
+});
 
 
 Livewire.on('refreshPrograms', () => {
@@ -319,6 +320,11 @@ $('#program').select2({
 });
 
  });
+
+
+
+
+
 
 
 
@@ -392,7 +398,10 @@ $('#program-m').select2({
 
 });
 
-
+$(document).on('change', '#program-m', function(event){
+    console.log(event.target.value);
+    $wire.set('selectedProgram', event.target.value);
+});
 
 Livewire.on('refreshPrograms', () => {
   console.log("Event triggered successfully");    
