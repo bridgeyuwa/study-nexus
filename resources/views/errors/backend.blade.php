@@ -172,7 +172,7 @@
     <main id="main-container">
 
      <!-- Page Content -->
-        <div class="bg-image" style="background-image: url('/media/photos/photo18@2x.jpg');">
+        <div class="bg-image bg-studynexus-error-image" >
           <div class="row g-0 justify-content-end bg-black-50">
             <!-- Main Section -->
             <div class=" col-md-5 d-flex flex-column bg-body-extra-light pt-4">
@@ -200,7 +200,7 @@
                     @yield('message')
                   </p>
 					@if($exception->getStatusCode() != 503) 	
-					<a class="btn btn-lg btn-alt-danger" href="{{route('home')}}">
+					<a class="btn btn-lg btn-alt-primary" href="{{route('home')}}">
                         <i class="fa fa-arrow-left opacity-50 me-1"></i> @if($exception->getStatusCode() == 500)  Try Returning to Home Page @else  Return to Home Page  @endif
 					</a>
 					@endif

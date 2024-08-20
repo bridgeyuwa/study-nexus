@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('program_id');
             $table->unsignedBigInteger('level_id');
             $table->text('description')->nullable();
+			$table->text('remarks')->nullable();
 			$table->unsignedBigInteger('program_mode_id')->nullable();
             $table->string('duration')->nullable();
             $table->integer('tuition_fee')->nullable();

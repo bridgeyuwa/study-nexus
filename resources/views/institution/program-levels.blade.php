@@ -10,7 +10,7 @@ use Illuminate\Support\Number;
 
 		
 		<!-- Hero  -->
-        <div class="bg-image" style="background-image: url('/media/photos/photo13@2x.jpg');">
+        <div class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
             <div class="content content-boxed content-full py-5 pt-7">
               <div class="row">
@@ -20,7 +20,7 @@ use Illuminate\Support\Number;
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
                     <div class="block-content block-content-full px-2 py-2">
 					
-                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;"></img>
+                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
                       <link itemprop="logo" href="{{$institution->logo}}">
                     </div>
                   </div>
@@ -69,7 +69,7 @@ use Illuminate\Support\Number;
 
             <!-- Ads -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default bg-studynexus-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">
@@ -83,7 +83,7 @@ use Illuminate\Support\Number;
 
             <!-- Programme Levels -->
             <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 itemprop="name" class="block-title">{{$program->name}} Programme Levels</h3>
                 </div>
                 <div class="block-content">

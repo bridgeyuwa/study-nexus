@@ -34,15 +34,15 @@
             <label class="form-label fw-light text-white" for="course" >Study Programme</label>
 				
 			<div wire:key="a4569oh-kjhf-{{$count}}" > 
-				<div class="mt-1" wire:ignore>
-						   <select id="program" name="program" class="form-select">
-								<option value="">Any Programme </option>
-								@foreach($programs as $program)
-								<option value="{{$program->id}}" @if( $program->id ==
-									request()->get('program') ) {{'selected = "true"'}} @endif >{{$program->name}} 
-								</option>
-								@endforeach
-							</select>    
+				<div class="mt-1" >
+				   <select wire:model.live="selectedProgram" id="program" name="program" class="form-select">
+						<option value="">Any Programme </option>
+						@foreach($programs as $program)
+						<option value="{{$program->id}}" @if( $program->id ==
+							request()->get('program') ) {{'selected = "true"'}} @endif >{{$program->name}} 
+						</option>
+						@endforeach
+					</select>    
 			    </div> 
 			   
 			</div>
@@ -272,6 +272,11 @@ $('#level').on('change', function(event){
 
 });
 
+$(document).on('change', '#program', function(event){
+    console.log(event.target.value);
+    $wire.set('selectedProgram', event.target.value);
+});
+
 
 
 
@@ -292,7 +297,7 @@ $('#program').select2({
 
 
 
-Livewire.on('programSelected', () => {
+Livewire.on('refreshPrograms', () => {
   console.log("Event triggered successfully");    
 
 jQuery(document).ready(function() {
@@ -389,7 +394,7 @@ $('#program-m').select2({
 
 
 
-Livewire.on('programSelected', () => {
+Livewire.on('refreshPrograms', () => {
   console.log("Event triggered successfully");    
 
 jQuery(document).ready(function() {

@@ -4,7 +4,7 @@
 @section('content')
 
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+        <div class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
@@ -88,7 +88,7 @@
 
             <!-- Ads  -->
             <div class="block block-rounded d-none d-lg-block sticky-top" style="top: 100px;">
-                <div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default bg-studynexus-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">
@@ -112,7 +112,7 @@
 				@endphp
 
 				<div class="block block-rounded">
-					<div class="block-header block-header-default" style="background-image: url(/media/patterns/cubes.png)">
+					<div class="block-header block-header-default bg-studynexus-cubes" >
 						<h3 class="block-title d-flex justify-content-between align-items-center">
 							{{ $region->name }} <span>{{ $region->institutions->count() }} Schools</span>
 						</h3>

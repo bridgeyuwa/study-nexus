@@ -17,7 +17,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 
 
 <!-- Hero -->
-<div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+<div class="bg-image bg-studynexus-hero" >
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="row">
@@ -80,7 +80,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 
             <!-- highlights -->
             <div class="block block-rounded ">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">
@@ -120,18 +120,18 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 
             <!-- Programme Description -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 class="block-title">Programme Overview</h3>
                 </div>
                 <div class="block-content">
-                    <p itemprop="description">{!!$program->pivot->description!!}</p>
+                    <p itemprop="description">{{$program->pivot->description}}</p>
                 </div>
             </div>
             <!-- END Programme Description -->
 
             <!-- General Admission Requirements -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 class="block-title">General Admission Requirements</h3>
                 </div>
                 <div class="block-content">
@@ -139,7 +139,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 
                     <!-- UTME Admission Requirements -->
                     <div itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded">
-                        <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                        <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                          <h3 class="block-title"> JAMB Unified Tertiary Matriculation Examination (UTME) Requirements </h3>
 						    
 						</div>
@@ -178,7 +178,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
                     <!-- DE Admission Requirements -->
                     @if($level->id == 1)      <!-- use this -->
                     <div class="block block-rounded">
-                        <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                        <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                             <h3 class="block-title">JAMB Direct Entry Requirements</h3>
                         </div>
                         <div itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block-content text-center pb-2">
@@ -192,17 +192,13 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
                     <!-- END DE Admission Requirements -->
 
                 </div>
-				<div class="d-flex justify-content-center fs-sm"> <span class="text-black"> Source: <a class="text-gray-dark" href="https://jamb.gov.ng/ibass">Jamb Integrated Brochure and Syllabus System</a> </span> </div>
-           
+				
 				 </div>
             <!-- END General Admission Requirements -->
 
-
-
-            
-            <!-- Tuition Range -->
+			<!-- Tuition Range -->
             <div itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 class="block-title"> <span itemprop="name"> Tuition Fee </span> <span class="fw-light">(Range)</span></h3>
                 </div>
                 <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center">
@@ -215,7 +211,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
              
             <!-- Instititions Offering Program -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center" style="background-image: url(/media/patterns/cubes.png)">
+                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 class="block-title">Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">

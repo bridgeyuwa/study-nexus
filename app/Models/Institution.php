@@ -22,11 +22,11 @@ class Institution extends Model {
 	
 
     public function programs() {
-        return $this->belongsToMany(Program::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished');
+        return $this->belongsToMany(Program::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished','remarks');
     }
 
-   public function levels() {
-        return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('program_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished');
+    public function levels() {
+        return $this->belongsToMany(Level::class,'institution_program')->using(InstitutionProgram::class)->withPivot('program_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished','remarks');
     }
 
     public function state() {

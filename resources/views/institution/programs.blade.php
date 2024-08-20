@@ -11,7 +11,7 @@ use Illuminate\Support\Number;
 
 		
 		<!-- Hero  -->
-        <div class="bg-image" style="background-image: url('/media/photos/photo13@2x.jpg');">
+        <div class="bg-image bg-studynexus-hero">
           <div class="bg-black-75">
             <div class="content content-boxed content-full py-5 pt-7">
               <div class="row">

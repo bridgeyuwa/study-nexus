@@ -25,6 +25,7 @@ class SearchForm extends Component
   
 
    public $selectedLevel = null;
+   public $selectedProgram = null;
    
     public $selectedType = '';
     public $selectedCategory = '';
@@ -47,6 +48,7 @@ class SearchForm extends Component
 		    $this->states = State::all();
 		   
 			$this->selectedLevel = $request->query('level', $this->selectedLevel); 
+			$this->selectedProgram = $request->query('program', $this->selectedProgram); 
 		
 		
 			$this->selectedType = $request->query('type', $this->selectedType);
@@ -59,24 +61,40 @@ class SearchForm extends Component
 
 
         public function updatedSelectedLevel($value)
-   {
-               if($value){
+		   {
+					   if($value){
 
-                    $levels = $this->allLevels->where('slug',$value)->first();
-					
-						if ($levels) {
-							 $levels->load('__programs'); // Explicitly load the relationship remove in production
-							$this->programs = $levels->__programs;
-						} else {
-							$this->programs = $this->allPrograms;
-						}
-					} 
-                   else {
-                       $this->programs = $this->allPrograms;
-                    }
-          $this->count = $this->count + 1 ;
-		  $this->dispatch('programSelected');  
-   }
+							$levels = $this->allLevels->where('id',$value)->first();
+							
+								if ($levels) {
+									 $levels->load('__programs'); // Explicitly load the relationship remove in production
+									$this->programs = $levels->__programs;
+									
+									if($this->selectedProgram && $this->programs->contains('id', $this->selectedProgram)){
+										
+										//do nothing if it contains the id
+									}else{
+										
+										$this->selectedProgram = null;
+									}
+									
+								} else {
+									$this->programs = $this->allPrograms;
+								}
+							} 
+						   else {
+							   $this->programs = $this->allPrograms;
+							}
+				  $this->count = $this->count + 1 ;
+				  $this->dispatch('refreshPrograms');  
+		   }
+		   
+		   
+		   public function updatedSelectedProgram($value)
+		   {
+					  $this->selectedProgram = $value ;
+					  $this->dispatch('refreshPrograms');
+		   }
    
    
 	

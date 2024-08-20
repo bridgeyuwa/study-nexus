@@ -54,7 +54,8 @@ class ProgramController extends Controller
         $program_levels = Cache::remember("program_{$program->id}_levels", 60 * 60, function () use ($program) {
             return $program->__levels()->get();
         });
-
+		
+		
         $SEOData = new SEOData(
             title: "{$level->name} in {$program->name} in Nigeria",
             description: "Detailed information about {$level->name} in {$program->name}",

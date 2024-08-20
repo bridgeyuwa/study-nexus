@@ -4,7 +4,7 @@
 @section('content')
 
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+        <div class="bg-image bg-studynexus-hero">
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-7">
               <div class="pt-4 pb-3">
@@ -48,8 +48,7 @@
 					<div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
                     <a itemprop="url" href="{{route('institutions.show', ['institution' => $institution])}}" class="block block-rounded mb-3">
                     @if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
-					  <div class="block block-header-default bg-image mb-0 fw-light"
-                          style="background-image: url('/media/photos/photo11.jpg');">
+					  <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
                           <div class="bg-black-75 text-center p-3">
                               <div class="fs-5 text-white mb-1"> <span itemprop="name">{{$institution->name}}</span>
                                @if(!empty($institution->abbr))<span class="text-white-75 ">({{$institution->abbr}})</span> @endif 

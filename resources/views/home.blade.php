@@ -6,13 +6,13 @@
 
  <!-- Study Nexus Hero -->
      
-        <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6" style="background-image: url(/media/patterns/cubes.png)">
+        <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 bg-studynexus-cubes" >
 
          
          <div class="col-md-6  d-none d-md-block">
                <br>
             <div class="d-flex justify-content-center align-content-center">  
-                <img class="center-block " src="/media/patterns/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
+                <img class="center-block " src="/media/photos/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
              </div>
           </div>
           
@@ -45,7 +45,7 @@
 <!-- Search -->
 
   <!-- Hero -->
-        <div id="search" class="bg-image" style="background-image: url('{{asset('media/photos/photo13@2x.jpg')}}');">
+        <div id="search" class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-5 pb-0">
               <div class="pt-4 pb-3">
@@ -105,7 +105,7 @@
 
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-dark" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                <a class="block block-link-pop text-center bg-gray-dark bg-studynexus-concrete" href="#" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -118,7 +118,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-light" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                <a class="block block-link-pop text-center bg-gray-light bg-studynexus-concrete" href="#" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -131,7 +131,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                <a class="block block-link-pop text-center bg-gray bg-studynexus-concrete" href="#" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -144,7 +144,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-darker" href="#" style="background-image: url(/media/patterns/concrete.png);">
+                <a class="block block-link-pop text-center bg-gray-darker bg-studynexus-concrete" href="#" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -171,7 +171,7 @@
         <div class="row">
             <div class="col-md-6 d-flex">
                 <div class="block block-rounded flex-fill d-flex flex-column">
-                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes" >
                         <h3 class="fw-light mb-1">Academic Programmes Library</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
@@ -186,7 +186,7 @@
 
             <div class="col-md-6 d-flex">
                 <div class="block block-rounded flex-fill d-flex flex-column">
-                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class=" fw-light mb-1">Academic Institutions Library</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
@@ -205,7 +205,7 @@
 
             <div class="col-md-6 d-flex">
                 <div class="block block-rounded flex-fill d-flex flex-column">
-                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class="fw-light mb-1">Academic Institutions by Location</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
@@ -221,7 +221,7 @@
 
             <div class="col-md-6 d-flex">
                 <div class="block block-rounded flex-fill d-flex flex-column">
-                    <div class="block-header block-header-default text-white bg-gray-dark" style="background-image: url(/media/patterns/cubes.png)">
+                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class="fw-light mb-1">Academic Institution Rankings</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
