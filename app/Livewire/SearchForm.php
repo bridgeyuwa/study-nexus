@@ -39,13 +39,25 @@ class SearchForm extends Component
 
      public function mount(Request $request)
         {
-		    $this->allLevels = Level::with('__programs')->get(); //remove eagerloading in production from this Livewire
-		    $this->levels = $this->allLevels;
 		   
-		    $this->allPrograms = Program::all();
-		    $this->programs = $this->allPrograms;
+			$this->allLevels = Cache::remember('all_levels', 60, function() {
+				return Level::with('__programs')->get(); // remove eager loading in production
+			});
+			
+			$this->levels = $this->allLevels;
 
-		    $this->states = State::all();
+			$this->allPrograms = Cache::remember('all_programs', 60, function() {
+				return Program::all();
+			});
+			
+			$this->programs = $this->allPrograms;
+
+			$this->states = Cache::remember('states', 60, function() {
+				return State::all();
+			});
+			
+			
+			
 		   
 			$this->selectedLevel = $request->query('level', $this->selectedLevel); 
 			$this->selectedProgram = $request->query('program', $this->selectedProgram); 
