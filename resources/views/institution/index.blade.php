@@ -2,7 +2,18 @@
 
 
 @section('content')
-
+<!-- Hero -->
+        <div class="bg-image bg-studynexus-hero">
+          <div class="bg-black-50">
+            <div class="content content-top content-full text-center">
+              <h1 class="fw-light text-white mt-5 mb-2">
+                 {{ $categoryClass->name_plural ?? 'Tertiary Institutions' }} in Nigeria
+              </h1>
+              <h3 class="fw-light text-white-75 mb-5">List of academic intitution of higher learning in Nigeria.</h3>
+            </div>
+          </div>
+        </div>
+        <!-- END Hero -->
 
 <!-- Hero -->
         <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">

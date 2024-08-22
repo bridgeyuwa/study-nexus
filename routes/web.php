@@ -7,6 +7,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\NewsController;
 use App\Livewire\ContactForm;
 
 /* Home */
@@ -51,6 +52,8 @@ Route::prefix('{level}/programs')->name('programs.')->group(function () {
     Route::get('{program}/institutions', [ProgramController::class, 'institutions'])->name('institutions');
 });
 
+
+
 /* Institutions */
 Route::prefix('institutions')->name('institutions.')->group(function () {
     /* list all institutions */
@@ -90,4 +93,30 @@ Route::prefix('institutions')->name('institutions.')->group(function () {
 
     /* show available Levels of an institution program */
     Route::get('{institution}/programs/{program}', [InstitutionController::class, 'programLevels'])->name('program.levels');
+
+	/* list of news of an institution*/
+	Route::get('{institution}/news', [NewsController::class, 'indexByInstitution'])->name('indexNewsByInstitution');
+    
+	/* show a news of an institution*/
+	Route::get('{institution}/news/{news}', [NewsController::class, 'showByInstitution'])->name('showNewsByInstitution');
+    
+
+});
+
+Route::prefix('news')->name('news.')->group(function () {
+    /* list of all news */
+    Route::get('/', [NewsController::class, 'index'])->name('index');
+	
+	/* show news */
+    Route::get('/{news}', [NewsController::class, 'show'])->name('show');
+	
+	
+    
+    /* list of news of a news category */
+    Route::get('/newscategory/{newsCategory}', [NewsController::class, 'indexByNewsCategory'])->name('newsCategory');
+    
+	/* show news of a news category */
+    Route::get('/newscategory/{newsCategory}/{news}', [NewsController::class, 'showByNewsCategory'])->name('newsCategory.show');
+    
+   
 });
