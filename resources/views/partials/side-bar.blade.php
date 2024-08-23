@@ -192,17 +192,32 @@
                     </ul>
                 </li>
 
+				
+				<li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('news.index')}}">
+                        <i class="nav-main-link-icon fa fa-rss"></i>
+                        <span class="nav-main-link-name">News</span></a>
+                </li>
+				
 
 
-
-                <li class="nav-main-heading">Extend</li>
+                <li class="nav-main-heading">Company</li>
 
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('about')}}">
                         <i class="nav-main-link-icon fa fa-info-circle"></i>
                         <span class="nav-main-link-name">About Us</span></a>
                 </li>
+				
+				<li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('contact')}}">
+                        <i class="nav-main-link-icon fa fa-envelope"></i>
+                        <span class="nav-main-link-name">Contact Us</span></a>
+                </li>
                
+			   
+			   <li class="nav-main-heading">Legal</li>
+			   
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('tos')}}">
                         <i class="nav-main-link-icon fa fa-balance-scale"></i>
@@ -213,11 +228,7 @@
                         <i class="nav-main-link-icon fa fa-lock"></i>
                         <span class="nav-main-link-name">Privacy Policy</span></a>
                 </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link" href="{{route('contact')}}">
-                        <i class="nav-main-link-icon fa fa-envelope"></i>
-                        <span class="nav-main-link-name">Contact Us</span></a>
-                </li>
+                
 
             </ul>
 

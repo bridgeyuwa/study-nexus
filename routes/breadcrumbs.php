@@ -142,3 +142,43 @@ Breadcrumbs::for('institutions.program.levels', function (BreadcrumbTrail $trail
     $trail->parent('institutions.show', $institution);
     $trail->push($program->name, route('institutions.program.levels', ['institution' => $institution, 'program' => $program]));
 });
+
+
+//News
+
+//List News
+Breadcrumbs::for('news.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('News', route('news.index'));
+});
+
+//Show news
+Breadcrumbs::for('news.show', function (BreadcrumbTrail $trail, $news) {
+    $trail->parent('news.index');
+    $trail->push($news->title, route('news.show', ['news' => $news]));
+});
+
+// List News by Category
+Breadcrumbs::for('news.newsCategory', function (BreadcrumbTrail $trail, $newsCategory) {
+    $trail->parent('news.index');
+    $trail->push($newsCategory->name, route('news.newsCategory', ['newsCategory' => $newsCategory]));
+});
+
+// Show News by Category
+Breadcrumbs::for('news.newsCategory.show', function (BreadcrumbTrail $trail, $newsCategory, $news) {
+    $trail->parent('news.newsCategory', $newsCategory);
+    $trail->push($news->title, route('news.newsCategory.show', ['newsCategory' => $newsCategory, 'news' => $news]));
+});
+
+// List News by Institution
+Breadcrumbs::for('institutions.news', function (BreadcrumbTrail $trail, $institution) {
+    $trail->parent('institutions.show', $institution );
+    $trail->push(strtoupper($institution->abbr) .' News', route('institutions.news', ['institution' => $institution]));
+});
+
+
+// Show News by Institution
+Breadcrumbs::for('institutions.news.show', function (BreadcrumbTrail $trail, $institution, $news) {
+    $trail->parent('institutions.news', $institution);
+    $trail->push($news->title, route('institutions.news.show', ['institution' => $institution, 'news' => $news]));
+});

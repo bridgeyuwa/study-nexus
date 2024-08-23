@@ -44,8 +44,10 @@ class ProgramController extends Controller
         });
         
         $program = Cache::remember("program_{$program->id}_at_level_{$level->id}", 60 * 60, function () use ($level, $program) {
-            return $level->__programs()->where('program_id', $program->id)->first();
+            return $level->__programs()->where('program_id', $program->id)->withCount('institutions')->first();
         });
+		
+		//dd($program->institutions_count);
 
         if (!$program) {
             abort(404);

@@ -105,12 +105,12 @@
 
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-dark bg-studynexus-concrete" href="#" >
+                <a class="block block-link-pop text-center bg-gray-dark bg-studynexus-concrete" href="{{route('news.index')}}" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class="text-white fa fa-3x fa-graduation-cap"></i>
-                                <div class="fw-semibold mt-2 text-uppercase text-white">Scholarships</div>
+                                <i class="text-white fa fa-3x fa-rss "></i>
+                                <div class="fw-semibold mt-2 text-uppercase text-white">News</div>
                             </div>
                         </div>
                     </div>
@@ -122,8 +122,8 @@
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class="fa fa-3x fa-pen-clip"></i>
-                                <div class="fw-semibold mt-2 text-uppercase">News</div>
+                                <i class="fa fa-3x  fa-folder"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Resources</div>
                             </div>
                         </div>
                     </div>
@@ -135,8 +135,8 @@
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class=" fa fa-3x fa-plane-departure"></i>
-                                <div class="fw-semibold mt-2 text-uppercase">Study Abroad</div>
+                                <i class=" fa fa-3x fa-graduation-cap"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Scholarships</div>
                             </div>
                         </div>
                     </div>
@@ -148,8 +148,8 @@
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class="fa fa-3x fa-folder text-white"></i>
-                                <div class="fw-semibold mt-2 text-uppercase text-white">Resources</div>
+                                <i class="fa fa-3x fa-plane-departure text-white"></i>
+                                <div class="fw-semibold mt-2 text-uppercase text-white">Study Abroad</div>
                             </div>
                         </div>
                     </div>

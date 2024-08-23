@@ -216,8 +216,8 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
                 </div>
                 <div class="block-content">
                     <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level, 'program'=> $program])}}">
-               View Institutions
-            </a>
+						View Institutions  <span class="fw-light">({{$program->institutions_count}}) <span>
+					</a>
 
                 </div>
             </div>

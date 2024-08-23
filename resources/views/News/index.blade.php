@@ -8,13 +8,31 @@
           <div class="bg-black-50">
             <div class="content content-top content-full text-center">
               <h1 class="fw-bold text-white mt-5 mb-2">
-                Check out our latest stories
+               StudyNexus News
               </h1>
-              <h3 class="fw-normal text-white-75 mb-5">Be inspired and create something amazing today.</h3>
+				<div class="d-flex justify-content-center mt-3 bg-success"> 
+					@if(!empty($institution))
+					 <i class="fa fa-tag text-white display-6 me-2"></i> 
+					 <h3 class="fw-normal text-white-75 bg-danger my-auto">
+							{{$institution->name}} News
+					 </h3>
+					@elseif(!empty($newsCategory))
+					
+					<i class="fa fa-tag text-white display-6 me-2"></i> 
+					 <h3 class="fw-normal text-white-75 bg-danger my-auto">
+							{{$newsCategory->name}} News
+					 </h3>
+					  @endif
+					 
+				</div>
             </div>
           </div>
         </div>
         <!-- END Hero -->
+
+<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
         <!-- Page Content -->
         <div class="content">
@@ -23,11 +41,11 @@
 			@foreach($news as $story)
 			
 			
-              <!-- Story -->
+              <!-- News Highlight -->
               <div class="block block-rounded">
                 <div class="block-content p-0 overflow-hidden">
                    
-                    <div class="  d-flex align-items-center">
+                   
                       <div class="px-4 py-3">
                         <h4 class="mb-1">
                          
@@ -37,15 +55,15 @@
 						$routeParameters = ['news' => $story];
 
 						if (!empty($institution)) {
-							$routeName = 'institutions.showNewsByInstitution';
+							$routeName = 'institutions.news.show';
 							$routeParameters = ['institution' => $institution, 'news' => $story];
 						} elseif (!empty($newsCategory)) {
 							$routeName = 'news.newsCategory.show';
-							$routeParameters = ['newsCategory' => $newsCategory, 'news' => $story->id];
+							$routeParameters = ['newsCategory' => $newsCategory, 'news' => $story];
 						}
 						@endphp
 
-						<a class="text-dark" href="{{ route($routeName, $routeParameters) }}">
+						<a class="text-info" href="{{ route($routeName, $routeParameters) }}">
 							{{ $story->title }}
 						</a>
 						  
@@ -53,18 +71,36 @@
 
                         </h4>
                         <div class="fs-sm mb-2">
-                          <a href="be_pages_generic_profile.html">Megan Fuller</a> on {{$story->created_at->format('F d, Y')}} · <em class="text-muted">{{$story->readTime}} min</em>
+                          Published: {{$story->created_at->format('F d, Y')}} · <em class="text-muted">{{$story->readTime}} min</em>
                         </div>
-                        <p class="mb-0">
+                        <p class="mb-1">
 						
 						{{$story->excerpt}}
+						
                         </p>
+						
+						<div>
+						@if($story->institution)
+						<button class="btn btn-sm btn-outline-dark rounded-0 mb-1 fw-light" disabled >
+						 <i class="si si-tag text-black"></i> {{$story->institution->name}}
+						  </button>
+						  @endif
+						
+						@foreach($story->newsCategories as $storyCategory)
+						  <button class="btn btn-sm btn-outline-dark rounded-0 mb-1 fw-light" disabled >
+						 <i class="si si-tag text-black"></i> {{$storyCategory->name}}
+						  </button>
+						@endforeach
+						
+						</div>
+						
                       </div>
-                    </div>
+					  
+					 
                 
                 </div>
               </div>
-              <!-- END Story -->
+              <!-- END News Highlight -->
 			  @endforeach
 
 
@@ -92,28 +128,22 @@
               </div>
               <!-- END Search -->
 
-              <!-- Social -->
+
+			<!-- News Categories -->
               <div class="block block-rounded">
                 <div class="block-header block-header-default">
-                  <h3 class="block-title">Social</h3>
+                  <h3 class="block-title">All News Categories</h3>
                 </div>
                 <div class="block-content block-content-full">
-                  <a class="btn btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip" title="Follow us on Twitter">
-                    <i class="fab fa-fw fa-twitter"></i>
+				@foreach($newsCategories as $newsCategory)
+                  <a class="btn btn-sm btn-info rounded-0 mb-1" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
+				  <i class="fa fa-tag text-white me-2"></i>{{$newsCategory->name}} <span class="fw-light">{{$newsCategory->news_count}}</span>
                   </a>
-                  <a class="btn btn-alt-secondary" href="javascript:void(0)" dat-bs-toggle="tooltip" title="Like our Facebook page">
-                    <i class="fab fa-fw fa-facebook"></i>
-                  </a>
-                  <a class="btn btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip" title="Follow us on Dribbble">
-                    <i class="fab fa-fw fa-dribbble"></i>
-                  </a>
-                  <a class="btn btn-alt-secondary" href="javascript:void(0)" data-bs-toggle="tooltip" title="Subscribe on Youtube">
-                    <i class="fab fa-fw fa-youtube"></i>
-                  </a>
+                 @endforeach
                 </div>
               </div>
-              <!-- END Social -->
-
+              <!-- END News Categories -->
+             
               <!-- About -->
               <a class="block block-rounded block-link-shadow" href="be_pages_generic_profile.html">
                 <div class="block-header block-header-default">
@@ -145,47 +175,7 @@
               </a>
               <!-- END About -->
 
-              <!-- Recent Comments -->
-              <div class="block block-rounded">
-                <div class="block-header block-header-default">
-                  <h3 class="block-title">Recent Comments</h3>
-                  <div class="block-options">
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle" data-action-mode="demo">
-                      <i class="si si-refresh"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="block-content">
-                  <div class="push">
-                    <a class="fw-semibold" href="be_pages_generic_profile.html">Henry Harrison</a> on <a href="be_pages_blog_story.html">Exploring the world</a>
-                    <p class="mt-1">
-                      Awesome trip! Looking forward going there, I'm sure it will be a great experience!
-                    </p>
-                  </div>
-                  <div class="push">
-                    <a class="fw-semibold" href="be_pages_generic_profile.html">Helen Jacobs</a> on <a href="be_pages_blog_story.html">Travel &amp; Work</a>
-                    <p class="mt-1">
-                      Thank you for sharing your story with us! I really appreciate the info, it will come in handy for sure!
-                    </p>
-                  </div>
-                  <div class="push">
-                    <a class="fw-semibold" href="be_pages_generic_profile.html">Henry Harrison</a> on <a href="be_pages_blog_story.html">Black &amp; White</a>
-                    <p class="mt-1">
-                      Really touching story.. I'm so happy everything went well at the end!
-                    </p>
-                  </div>
-                  <div class="push">
-                    <a class="fw-semibold" href="be_pages_generic_profile.html">Marie Duncan</a> on <a href="be_pages_blog_story.html">Sleep Better</a>
-                    <p class="mt-1">
-                      Great advice! Thanks for sharing, I'm sure it will help many people sleep better and improve their lifes.
-                    </p>
-                  </div>
-                  <div class="text-center push">
-                    <a class="btn btn-sm btn-alt-secondary" href="javascript:void(0)">Read More..</a>
-                  </div>
-                </div>
-              </div>
-              <!-- END Recent Comments -->
+              
             </div>
           </div>
         </div>

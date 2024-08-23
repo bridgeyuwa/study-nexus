@@ -12,7 +12,7 @@ class NewsController extends Controller
     public function index()
 	{
 		// Paginate the query results
-		$news = News::paginate(10);
+		$news = News::with(['newsCategories','institution'])->orderBy('created_at','desc')->paginate(10);
 
 		// Add reading time to each paginated news item
 		$news->getCollection()->transform(function ($newsItem) {
@@ -20,9 +20,11 @@ class NewsController extends Controller
 			return $newsItem;
 		});
 		
-		//dd($news);
+		$newsCategories = NewsCategory::withCount('news')->orderBy('news_count','desc')->get();
 
-		return view('news.index', compact('news'));
+       // dd($newsCategories);
+
+		return view('news.index', compact('news','newsCategories'));
 	}
 
 
@@ -31,9 +33,19 @@ class NewsController extends Controller
 	public function indexByInstitution(Institution $institution)
 	{
 		// Paginate the news items associated with the institution
-		$news = $institution->news()->paginate(10);
+		$news = $institution->news()->with('newsCategories')->orderBy('created_at','desc')->paginate(10);
+		
+		$news->getCollection()->transform(function ($newsItem) {
+			$newsItem->readTime = $this->readTime($newsItem->content);
+			return $newsItem;
+		});
+		
+		$news->load(['institution']);
+		
+		$newsCategories = NewsCategory::withCount('news')->orderBy('news_count','desc')->get();
 
-		return view('news.index', compact('institution', 'news'));
+
+		return view('news.index', compact('institution','news','newsCategories'));
 	}
 
 	
@@ -43,9 +55,19 @@ class NewsController extends Controller
 	public function indexByNewsCategory(NewsCategory $newsCategory)
 	{
 		// Paginate the news items associated with the news category
-		$news = $newsCategory->news()->paginate(10);
+		$news = $newsCategory->news()->with('newsCategories')->orderBy('created_at','desc')->paginate(10);
+		
+		$news->getCollection()->transform(function ($newsItem) {
+			$newsItem->readTime = $this->readTime($newsItem->content);
+			return $newsItem;
+		});
+		
+		
+		$news->load(['institution']);
+		
+		$newsCategories = NewsCategory::withCount('news')->orderBy('news_count','desc')->get();
 
-		return view('news.index', compact('newsCategory', 'news'));
+		return view('news.index', compact('newsCategory','news','newsCategories'));
 	}
 
 	
@@ -53,21 +75,35 @@ class NewsController extends Controller
 	
 	public function show(News $news) {
 		 	 		 
-		 return view('news.show', compact('news'));
+			$news->readTime = $this->readTime($news->content);
+		    
+		return view('news.show', compact('news'));
 	}
 	
 	
 	public function showByInstitution(Institution $institution, News $news) {
 		
-				$institution->news()->where('institution_id', $institution->id);
-				
+			
+			if($news->institution_id !== $institution->id){
+				abort(404);
+			}
+
+			
+			$news->readTime = $this->readTime($news->content);
+
+			
 		 return view('news.show', compact('institution','news'));
 	}	
 	
 	
 	public function showByNewsCategory(NewsCategory $newsCategory, News $news) {
 		 	 		 
-				$news =	$newsCategory->news()->where('news_id', $news->id)->get();
+				if(!$newsCategory->news->contains($news->id)){
+					abort(404);
+				}
+				
+				$news->readTime = $this->readTime($news->content);
+		
 				
 		 return view('news.show', compact('newsCategory','news'));
 	}

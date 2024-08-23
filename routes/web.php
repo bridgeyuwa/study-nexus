@@ -95,10 +95,10 @@ Route::prefix('institutions')->name('institutions.')->group(function () {
     Route::get('{institution}/programs/{program}', [InstitutionController::class, 'programLevels'])->name('program.levels');
 
 	/* list of news of an institution*/
-	Route::get('{institution}/news', [NewsController::class, 'indexByInstitution'])->name('indexNewsByInstitution');
+	Route::get('{institution}/news', [NewsController::class, 'indexByInstitution'])->name('news');
     
 	/* show a news of an institution*/
-	Route::get('{institution}/news/{news}', [NewsController::class, 'showByInstitution'])->name('showNewsByInstitution');
+	Route::get('{institution}/news/{news}', [NewsController::class, 'showByInstitution'])->name('news.show');
     
 
 });
