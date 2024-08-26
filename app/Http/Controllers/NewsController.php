@@ -92,7 +92,7 @@ class NewsController extends Controller
 			$news->readTime = $this->readTime($news->content);
 
 			
-		 return view('news.show', compact('institution','news'));
+		 return view('news.show', compact('news'));
 	}	
 	
 	

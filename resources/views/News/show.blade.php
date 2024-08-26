@@ -2,16 +2,22 @@
 
 
 @section('content')
-
+<span itemscope itemtype="https://schema.org/NewsArticle">
 <!-- Hero -->
         <div class="bg-image" style="background-image: url('assets/media/photos/photo22@2x.jpg');">
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
               <h1 class="fw-bold text-white mt-5 mb-3">
-			  {{$news->title}}
+			 <span itemprop="headline"> {{$news->title}} </span>
               </h1>
+			  <link itemprop="url" content="{{ url()->current() }}" >
+
                <p>
-                
+				<span itemprop="author" itemscope itemtype="https://schema.org/Person" class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+                  <i class="fa fa-user-circle me-1"></i> by  <span itemprop="name"> StudyNexus </span>
+				  <link itemprop="url" href="{{route('about')}}"> 
+                </span>
+			   
                 <span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
                   <i class="fa fa-clock me-1"></i> {{$news->readTime}} min read
                 </span>
@@ -32,12 +38,32 @@
 			
               <!-- News Content -->
               <div class="block block-rounded">
+			  
+				<div class="block-header block-header-default fs-sm py-3  bg-studynexus-cubes">
+                    <span>  
+						Published: 
+						<span itemprop="datePublished" content="{{$news->created_at->format('Y-m-d\TH:i:sO');}}">
+							{{$news->created_at->format('F d, Y')}}  
+						</span> 
+					</span>
+					
+                    @if($news->updated_at->gt($news->created_at)) 
+					<span>  
+						Updated: 	
+						<span itemprop="dateModified" content="{{$news->updated_at->format('Y-m-d\TH:i:sO');}}" > 
+							{{$news->updated_at->format('F d, Y')}}
+						</span> 
+					</span> 
+					@endif
+                	  
+				</div>
+			  
+			  
                 <div class="block-content p-0 overflow-hidden">
                    
                     <div class="  d-flex align-items-center">
-                      <div class="px-4 py-3">
-                        
-                        
+                      <div  itemprop="description" class="px-4 py-3">
+					  
                         <p class="lead mb-2">
 						{{$news->excerpt}}
                         </p>
@@ -63,10 +89,10 @@
                   </button>
                 </div>
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-blog-story" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-share-alt opacity-50 me-1"></i> Share
                   </button>
-                  <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-story">
+                  <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
                     <a class="dropdown-item" href="javascript:void(0)">
                       <i class="fab fa-fw fa-facebook me-1"></i> Facebook
                     </a>
@@ -88,20 +114,20 @@
 
               <!-- News Categories -->
               <div class="block block-rounded">
-                <div class="block-header block-header-default">
-                  <h3 class="block-title">News Tags</h3>
+                <div class="block-header block-header-default bg-studynexus-cubes">
+                  <h3 class="block-title text-center">News Tags</h3>
                 </div>
                 <div class="block-content block-content-full">
-				@if(!empty($institution))
-					<a class="btn btn-sm btn-outline-info rounded-0 mb-1 fw-light" href="{{route('institutions.news', ['institution' => $institution ])}}" >
-				  {{$institution->name}}
-                  </a>
+				@if(!empty($news->institution))
+					<a class="btn btn-sm btn-info rounded-0 mb-1" href="{{route('institutions.news', ['institution' => $news->institution ])}}" >
+							<span itemprop="keywords"> {{$news->institution->name}} </span>
+					</a>
 				@endif
 				
 				
 				@foreach($news->newsCategories as $newsCategory)
-                  <a class="btn btn-sm btn-outline-info rounded-0 mb-1 fw-light" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
-				  {{$newsCategory->name}}
+                  <a class="btn btn-sm btn-info rounded-0 mb-1" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
+					 <i class="fa fa-tag text-white me-2"></i>	<span itemprop="keywords">  {{$newsCategory->name}} </span>
                   </a>
                  @endforeach
                 </div>
@@ -114,9 +140,6 @@
 
 
 
-
-
-
-
+</span>
 
 @endsection

@@ -126,7 +126,7 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link nav-main-link-submenu"data-toggle="submenu"aria-haspopup="true"aria-expanded="false"href="#">
                         <i class="nav-main-link-icon fa fa-book"></i>
-                        <span class="nav-main-link-name">Programs</span>
+                        <span class="nav-main-link-name">Programmes</span>
                     </a>
                     <ul class="nav-main-submenu">
 					
@@ -192,11 +192,19 @@
                     </ul>
                 </li>
 
+
+				<li class="nav-main-heading">Company</li>
 				
 				<li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('news.index')}}">
                         <i class="nav-main-link-icon fa fa-rss"></i>
                         <span class="nav-main-link-name">News</span></a>
+                </li>
+				
+				<li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('forum')}}">
+                        <i class="nav-main-link-icon fa fa-comments"></i>
+                        <span class="nav-main-link-name">Forum</span></a>
                 </li>
 				
 

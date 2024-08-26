@@ -118,12 +118,12 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-light bg-studynexus-concrete" href="#" >
+                <a class="block block-link-pop text-center bg-gray-light bg-studynexus-concrete" href="{{route('forum')}}" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class="fa fa-3x  fa-folder"></i>
-                                <div class="fw-semibold mt-2 text-uppercase">Resources</div>
+                                <i class="fa fa-3x  fa-comments"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Forum</div>
                             </div>
                         </div>
                     </div>

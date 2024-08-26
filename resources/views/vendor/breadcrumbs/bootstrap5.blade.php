@@ -12,9 +12,8 @@
 					</li>
                 @else
                     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item active" aria-current="page">
-						<span itemprop="item">
-							<span itemprop="name">{{ $breadcrumb->title }}</span>
-						</span>
+						<span itemprop="name">{{ $breadcrumb->title }}</span>
+						
 						<meta itemprop="position" content="{{$loop->iteration}}" />
 					</li>
                 @endif

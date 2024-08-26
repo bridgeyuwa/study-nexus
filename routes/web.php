@@ -120,3 +120,8 @@ Route::prefix('news')->name('news.')->group(function () {
     
    
 });
+
+
+Route::get('/forum', function () {
+    return redirect('/forum/index.php');
+})->name('forum');
