@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
        Paginator::defaultView('vendor.pagination.study-nexus');
         
 	   Model::preventLazyLoading( !$this->app->isProduction());
-	   
+	   Model::preventAccessingMissingAttributes();
 	   
 	   View::composer('partials.side-bar', function ($view) {
             $categoryClasses = Cache::rememberForever('category_classes', function () {

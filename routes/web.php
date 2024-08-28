@@ -8,6 +8,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\TimetableController;
 use App\Livewire\ContactForm;
 
 /* Home */
@@ -125,3 +126,16 @@ Route::prefix('news')->name('news.')->group(function () {
 Route::get('/forum', function () {
     return redirect('/forum/index.php');
 })->name('forum');
+
+
+
+/* Timetable */
+
+   Route::prefix('timetables')->name('timetable.')->group(function () {
+    /* list of all timetables */
+    Route::get('/', [TimetableController::class, 'index'])->name('index');
+	
+	/* show news */
+    Route::get('/{exam}', [TimetableController::class, 'show'])->name('show');
+	
+});
