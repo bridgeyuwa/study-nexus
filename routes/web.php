@@ -9,6 +9,7 @@ use App\Http\Controllers\CatchmentController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TimetableController;
+use App\Http\Controllers\SyllabusController;
 use App\Livewire\ContactForm;
 
 /* Home */
@@ -136,6 +137,19 @@ Route::get('/forum', function () {
     Route::get('/', [TimetableController::class, 'index'])->name('index');
 	
 	/* show news */
-    Route::get('/{exam}', [TimetableController::class, 'show'])->name('show');
+    Route::get('{exam}', [TimetableController::class, 'show'])->name('show');
 	
 });
+
+
+/* Syllabus */
+	Route::prefix('syllabus')->name('syllabus.')->group(function () {
+		/* list of all Exam Bodies */
+		Route::get('/', [SyllabusController::class, 'index'])->name('index');
+		
+		Route::get('{examBody}', [SyllabusController::class, 'subjects'])->name('subjects');
+		
+		/* show subject syllabus of an Exam body */
+		Route::get('{examBody}/{syllabus}', [SyllabusController::class, 'show'])->name('show');
+		
+	});

@@ -12,4 +12,8 @@ class Syllabus extends Model
 	public function examBody() {
         return $this->belongsTo(ExamBody::class);
     }
+	
+	public function subject() {
+        return $this->belongsTo(Subject::class);
+    }
 }

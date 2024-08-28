@@ -17,4 +17,5 @@ class ExamBody extends Model
         return $this->hasMany(Syllabus::class);
     }
 	
+	
 }

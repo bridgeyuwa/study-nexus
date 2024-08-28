@@ -13,4 +13,8 @@ class Subject extends Model
         return $this->hasMany(Timetable::class);
     }
 	
+	public function syllabi() {
+        return $this->hasMany(Syllabus::class);
+    }
+	
 }
