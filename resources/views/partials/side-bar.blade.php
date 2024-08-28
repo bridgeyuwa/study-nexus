@@ -4,7 +4,7 @@
     <div class="bg-header-dark">
         <div class="content-header bg-white-5">
             <!-- Logo -->
-            <a class="fw-semibold text-white tracking-wide"href="{{url("/")}}">
+            <a class="fw-semibold text-white tracking-wide"href="{{route('home')}}">
                 <span class="smini-visible">
                     S<span class="opacity-75">N</span>
                 </span>
@@ -193,7 +193,7 @@
                 </li>
 
 
-				<li class="nav-main-heading">Company</li>
+				<li class="nav-main-heading">NEWS/DISCUSS</li>
 				
 				<li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('news.index')}}">
@@ -207,6 +207,22 @@
                         <span class="nav-main-link-name">Forum</span></a>
                 </li>
 				
+
+				<li class="nav-main-heading">Resources</li>
+				
+				<li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('syllabus.index')}}">
+                        <i class="nav-main-link-icon fa fa-rss"></i>
+                        <span class="nav-main-link-name">Syllabuses</span></a>
+                </li>
+				
+				<li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('timetable.index')}}">
+                        <i class="nav-main-link-icon fa fa-comments"></i>
+                        <span class="nav-main-link-name">Timetables</span></a>
+                </li>
+				
+
 
 
                 <li class="nav-main-heading">Company</li>

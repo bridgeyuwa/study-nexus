@@ -42,7 +42,7 @@
 <body>
   <!-- Page Container -->
 
-  <div id="page-container" class="sidebar-o sidebar-dark side-scroll page-header-fixed main-content-narrow page-header-dark page-header-glass">
+  <div id="page-container" class="sidebar-o sidebar-dark  page-header-fixed main-content-narrow page-header-dark page-header-glass">
     
 
     <!-- Sidebar -->
@@ -96,12 +96,12 @@
             <!-- Notifications Dropdown -->
             <div class="dropdown d-inline-block">
               <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="far fa-fw fa-flag"></i>
+                <i class="fa fa-fw fa-rss"></i>
                 <span class="badge bg-success rounded-pill">3</span>
               </button>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
                 <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                  Notifications
+                  Latest News
                 </div>
                 <ul class="nav-items my-2">
                   <li>
@@ -150,8 +150,8 @@
             <!-- User Dropdown -->
             <div class="dropdown d-inline-block">
               <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="far fa-fw fa-user-circle"></i>
-                <i class="fa fa-fw fa-angle-down d-none opacity-50 d-sm-inline-block"></i>
+                <i class="far  fa-comments"></i>
+                <span class="fw-light fs-sm">Forum</span>
               </button>
               <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
                 <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">

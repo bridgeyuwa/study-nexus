@@ -133,7 +133,7 @@ Route::get('/forum', function () {
 /* Timetable */
 
    Route::prefix('timetables')->name('timetable.')->group(function () {
-    /* list of all timetables */
+    /* list of all timetable */
     Route::get('/', [TimetableController::class, 'index'])->name('index');
 	
 	/* show news */
@@ -143,7 +143,7 @@ Route::get('/forum', function () {
 
 
 /* Syllabus */
-	Route::prefix('syllabus')->name('syllabus.')->group(function () {
+	Route::prefix('syllabuses')->name('syllabus.')->group(function () {
 		/* list of all Exam Bodies */
 		Route::get('/', [SyllabusController::class, 'index'])->name('index');
 		
