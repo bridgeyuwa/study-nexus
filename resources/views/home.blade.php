@@ -131,12 +131,12 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray bg-studynexus-concrete" href="#" >
+                <a class="block block-link-pop text-center bg-gray bg-studynexus-concrete" href="#resources" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class=" fa fa-3x fa-graduation-cap"></i>
-                                <div class="fw-semibold mt-2 text-uppercase">Scholarships</div>
+                                <i class=" fa fa-3x fa-file-alt"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Exam Resources</div>
                             </div>
                         </div>
                     </div>
@@ -228,6 +228,21 @@
 						@foreach($categoryClasses as $categoryClass)
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Rankings</a></p>
                         @endforeach
+                    </div>
+
+                </div>
+            </div>
+			
+			
+			<div id="resources" class="col-md-6 d-flex">
+                <div class="block block-rounded flex-fill d-flex flex-column">
+                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
+                        <h3 class="fw-light mb-1">Exam Resources</h3>
+                    </div>
+                    <div class="block-content mb-auto pb-2">
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('syllabus.index')}}">Syllabuses</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('timetable.index')}}">Timetables</a></p>
+                        
                     </div>
 
                 </div>

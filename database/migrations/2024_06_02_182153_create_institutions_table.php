@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('former_name')->nullable();
             $table->string('abbr')->nullable();
             $table->text('description')->nullable();
+			$table->text('remarks')->nullable();
             $table->year('established')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->string('locality')->nullable();

@@ -18,7 +18,10 @@
           </div>
         </div>
         <!-- END Hero -->
-
+		
+		<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
        	
 		 <!-- Page Content -->

@@ -31,7 +31,7 @@ return [
      * from Google and Yoast say that this is the best strategy.
      * See https://yoast.com/rel-canonical/.
      */
-    'canonical_link' => true,
+    'canonical_link' => false,
 
     'robots' => [
         /**
@@ -109,7 +109,7 @@ return [
          * Use this setting to specify a fallback author, which will be used on places where you
          * don't have an author set via an associated ->seo model or via the ->getDynamicSEOData() method.
          */
-        'fallback' => 'StudyNexus.ng',
+        'fallback' => 'StudyNexus',
     ],
 
     'twitter' => [

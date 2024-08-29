@@ -182,3 +182,38 @@ Breadcrumbs::for('institutions.news.show', function (BreadcrumbTrail $trail, $in
     $trail->parent('institutions.news', $institution);
     $trail->push($news->title, route('institutions.news.show', ['institution' => $institution, 'news' => $news]));
 });
+
+
+
+
+// List Exam bodies for Syllabus
+Breadcrumbs::for('syllabus.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Syllabuses', route('syllabus.index'));
+});
+
+// List Exam Syllabi for Exam body
+Breadcrumbs::for('syllabus.subjects', function (BreadcrumbTrail $trail, $examBody) {
+    $trail->parent('syllabus.index');
+    $trail->push($examBody->abbr, route('syllabus.subjects', ['examBody' => $examBody]));
+});
+
+// Show syllabus for a subject of an exam body
+Breadcrumbs::for('syllabus.show', function (BreadcrumbTrail $trail, $examBody, $syllabus) {
+    $trail->parent('syllabus.subjects', $examBody);
+    $trail->push($syllabus->name, route('syllabus.show', ['examBody' => $examBody, 'syllabus' => $syllabus]));
+});
+
+
+//Timetable List
+Breadcrumbs::for('timetable.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Timetables', route('timetable.index'));
+});
+
+// Show Timetable
+Breadcrumbs::for('timetable.show', function (BreadcrumbTrail $trail, $exam) {
+    $trail->parent('timetable.index');
+    $trail->push($exam->name, route('timetable.show',['exam'=> $exam]));
+});
+

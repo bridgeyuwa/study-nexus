@@ -19,6 +19,9 @@
         </div>
         <!-- END Hero -->
 		
+		<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 		
 		  <!-- Page Content -->
 <div class="content content-boxed">

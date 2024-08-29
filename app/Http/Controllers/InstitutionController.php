@@ -33,6 +33,7 @@ class InstitutionController extends Controller {
             description: "Browse a comprehensive list of universities, polytechnics, monotechnics, and colleges of education. Find the best institution for your needs.",
         );
 		
+		
 		$parameters = ['location' => '', 'level' => '', 'program' => '', 'category' => '' ];
 		
         return view('institution.index', compact('institutions','categoryClasses','SEOData','parameters'));
@@ -400,46 +401,26 @@ class InstitutionController extends Controller {
         return view('institution.show-program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData'));
     }
 	
+	
 	public function programLevels(Institution $institution, Program $program) {
 		// Eager load 'levels' with 'programs' and 'state' for the institution
 		
-		/*
-		$institution->load([
-			'state',
-			'levels' => function ($query) use ($program, $institution) {
-				$query->wherePivot('program_id', $program->id)
-					->with(['programs' => function ($query) use ($institution) {
-						$query->wherePivot('institution_id', $institution->id);
-					}]);
-			}
-		]);
+		
+		$levels = Cache::remember("list_institution_{$institution->id}_program_{$program->id}_programLevels", 60 * 60, function () use ($institution, $program) {
+			$institution->load([
+				'state',
+				'levels' => function ($query) use ($program, $institution) {
+					$query->wherePivot('program_id', $program->id)
+						->with(['programs' => function ($query) use ($institution) {
+							$query->wherePivot('institution_id', $institution->id);
+						}]);
+				}
+			]);
 
-		// Extract levels with associated programs
-		$levels = $institution->levels;
+			return $institution->levels;
+		});	
 		
-		*/
-		
-		
-	$levels = Cache::remember($programLevelsCacheKey, 60 * 60, function () use ($institution, $program) {
-        $institution->load([
-            'state',
-            'levels' => function ($query) use ($program, $institution) {
-                $query->wherePivot('program_id', $program->id)
-                    ->with(['programs' => function ($query) use ($institution) {
-                        $query->wherePivot('institution_id', $institution->id);
-                    }]);
-            }
-        ]);
-
-        return $institution->levels;
-    });	
-		
-		
-		
-		
-		
-		
-
+	
 		// Prepare SEO data
 		$SEOData = new SEOData(
 			title: "Available Levels for {$program->name} offered at {$institution->name}",

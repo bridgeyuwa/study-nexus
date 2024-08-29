@@ -11,10 +11,10 @@
               <h1 class="fw-bold text-white mt-5 mb-2">
                StudyNexus News
               </h1>
-				<div class="d-flex justify-content-center mt-3 bg-success"> 
+				<div class="d-flex justify-content-center mt-3"> 
 					@if(!empty($institution))
 					 <i class="fa fa-tag text-white display-6 me-2"></i> 
-					 <h3 itemprop="alternativeHeadline" itemprop="headline" class="fw-normal text-white-75 bg-danger my-auto">
+					 <h3 itemprop="alternativeHeadline" itemprop="headline" class="fw-normal text-white-75 my-auto">
 							{{$institution->name}} News
 					 </h3>
 					@elseif(!empty($newsCategory))
@@ -150,39 +150,7 @@
                 </div>
               </div>
               <!-- END News Categories -->
-             
-              <!-- About -->
-              <a class="block block-rounded block-link-shadow" href="be_pages_generic_profile.html">
-                <div class="block-header block-header-default">
-                  <h3 class="block-title">About</h3>
-                </div>
-                <div class="block-content block-content-full text-center">
-                  <div class="mb-3">
-                    <img class="img-avatar" src="assets/media/avatars/avatar3.jpg" alt="">
-                  </div>
-                  <div class="fs-lg fw-semibold">Lori Grant</div>
-                  <div class="fs-sm text-muted">Web Developer</div>
-                </div>
-                <div class="block-content bg-body-light">
-                  <div class="row text-center">
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <i class="fa fa-users fa-2x"></i>
-                      </div>
-                      <p class="fw-semibold text-muted">54k Followers</p>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <i class="fa fa-pencil-alt fa-2x"></i>
-                      </div>
-                      <p class="fw-semibold text-muted">56 Stories</p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <!-- END About -->
-
-              
+           
             </div>
           </div>
         </div>

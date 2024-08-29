@@ -202,7 +202,7 @@
                 </li>
 				
 				<li class="nav-main-item">
-                    <a class="nav-main-link" href="{{route('forum')}}">
+                    <a class="nav-main-link" href="{{route('forum')}}" target="_blank">
                         <i class="nav-main-link-icon fa fa-comments"></i>
                         <span class="nav-main-link-name">Forum</span></a>
                 </li>

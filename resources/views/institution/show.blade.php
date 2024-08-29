@@ -47,13 +47,18 @@ use Illuminate\Support\Number;
 						
 						</h2>
 						<div class="text-white">
-						@if(!empty($institution->slogan))( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endif
+						@if(!empty($institution->slogan))( <em itemprop="slogan">{{$institution->slogan}}</em> ) @endif
 						</div>
 					 </div>
                 </div>
               </div>
             </div>
           </div>
+		  @if($institution->news->isNotEmpty())
+		  <div class="d-flex justify-content-end py-1">
+			<a class="btn btn-sm btn-info me-5 fw-light" href="{{route('institutions.news', ['institution' => $institution ] )}}"><i class="fa fa-rss "></i> {{$institution->abbr}} News </a>
+		  </div>
+		  @endif
         </div>
         <!-- END Hero -->
 <!-- Breadcrumbs -->
@@ -153,6 +158,15 @@ use Illuminate\Support\Number;
 					
 				</div>
 				<!-- END Institution Description -->
+				
+				@if(!empty($institution->remarks))
+				<div class="block block-rounded">
+					
+					<div class="block-content fs-sm">
+						<p> {{$institution->remarks}} </p>
+					</div>
+				</div>
+				@endif
 
                 @if($institution->catchments->isNotEmpty())
 				<!-- Catchment Areas -->
@@ -259,7 +273,7 @@ use Illuminate\Support\Number;
 						<table class="table">
 							<tr>
 								<td class="fw-semibold">Institution Accreditation Body</td>
-								<td><a class="link-fx link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a> </td>
+								<td><a class="link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a> </td>
 							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
 							</tr>
 							<tr>
@@ -354,7 +368,7 @@ use Illuminate\Support\Number;
 						    @if(!empty($institution->url))
 							<div class="row bg-stripped">
 								<div class="col-3  fw-light text-black"><i class="fa fa-link text-dark me-1"></i>Website </div>
-								<div class="col"> <a class="link-fx link-info" href="{{$institution->url}}">{{$institution->url}}</a></div>
+								<div class="col"> <a class="link-fx link-info" href="{{$institution->url}}" target="_blank">{{$institution->url}}</a></div>
 							</div>
 							@endif
 							
@@ -380,7 +394,7 @@ use Illuminate\Support\Number;
 							@foreach($institution->socials as $social) 
 							<div class="row bg-stripped">
 								<div class="col-3 fw-light text-black"> <i class="{{$social->socialType->icon}} text-dark me-1"></i> {{$social->socialType->name}} </div>
-								<div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}">{{$social->url}}</a>  </div>
+								<div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}" target="_blank">{{$social->url}}</a>  </div>
 							</div>
 							@endforeach 
 						</div>

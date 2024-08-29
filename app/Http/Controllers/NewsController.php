@@ -6,122 +6,136 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Institution;
 use App\Models\NewsCategory;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
     public function index()
-	{
-		// Paginate the query results
-		$news = News::with(['newsCategories','institution'])->orderBy('created_at','desc')->paginate(10);
+    {
+        // Cache the paginated news items
+        $news = Cache::remember('news_index', 60, function () {
+            $newsItems = News::with(['newsCategories', 'institution'])->orderBy('created_at', 'desc')->paginate(10);
+            $newsItems->getCollection()->transform(function ($newsItem) {
+                $newsItem->readTime = $this->readTime($newsItem->content);
+                return $newsItem;
+            });
+            return $newsItems;
+        });
 
-		// Add reading time to each paginated news item
-		$news->getCollection()->transform(function ($newsItem) {
-			$newsItem->readTime = $this->readTime($newsItem->content);
-			return $newsItem;
-		});
+        // Cache the news categories with count
+        $newsCategories = Cache::remember('news_categories_index', 60, function () {
+            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->get();
+        });
 		
-		$newsCategories = NewsCategory::withCount('news')->orderBy('news_count','desc')->get();
+		
+		$SEOData = new SEOData(
+            title: "Latest Education News",
+            description: "Stay updated with the latest education news in Nigeria.",
+        );
+		
+		
+        return view('news.index', compact('news', 'newsCategories','SEOData'));
+    }
 
-       // dd($newsCategories);
+    public function indexByInstitution(Institution $institution)
+    {
+        $news = Cache::remember("news_index_institution_{$institution->id}", 60, function () use ($institution) {
+            $newsItems = $institution->news()->with('newsCategories')->orderBy('created_at', 'desc')->paginate(10);
+            $newsItems->getCollection()->transform(function ($newsItem) {
+                $newsItem->readTime = $this->readTime($newsItem->content);
+                return $newsItem;
+            });
+            $newsItems->load(['institution']);
+            return $newsItems;
+        });
 
-		return view('news.index', compact('news','newsCategories'));
-	}
+        $newsCategories = Cache::remember('news_categories_index_institution', 60, function () {
+            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->get();
+        });
+		
+		
+		$SEOData = new SEOData(
+            title: "News from {$institution->name}",
+            description: "Latest news updates from {$institution->name}.",
+        );
 
+        return view('news.index', compact('institution', 'news', 'newsCategories','SEOData'));
+    }
 
-	
-	
-	public function indexByInstitution(Institution $institution)
-	{
-		// Paginate the news items associated with the institution
-		$news = $institution->news()->with('newsCategories')->orderBy('created_at','desc')->paginate(10);
-		
-		$news->getCollection()->transform(function ($newsItem) {
-			$newsItem->readTime = $this->readTime($newsItem->content);
-			return $newsItem;
-		});
-		
-		$news->load(['institution']);
-		
-		$newsCategories = NewsCategory::withCount('news')->orderBy('news_count','desc')->get();
+    public function indexByNewsCategory(NewsCategory $newsCategory)
+    {
+        $news = Cache::remember("news_index_category_{$newsCategory->id}", 60, function () use ($newsCategory) {
+            $newsItems = $newsCategory->news()->with('newsCategories')->orderBy('created_at', 'desc')->paginate(10);
+            $newsItems->getCollection()->transform(function ($newsItem) {
+                $newsItem->readTime = $this->readTime($newsItem->content);
+                return $newsItem;
+            });
+            $newsItems->load(['institution']);
+            return $newsItems;
+        });
 
+        $newsCategories = Cache::remember('news_categories_index_category', 60, function () {
+            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->get();
+        });
+		
+		
+		$SEOData = new SEOData(
+            title: "News in {$newsCategory->name} Category",
+            description: "Browse news articles in the {$newsCategory->name} category.",
+        );
 
-		return view('news.index', compact('institution','news','newsCategories'));
-	}
+        return view('news.index', compact('newsCategory', 'news', 'newsCategories','SEOData'));
+    }
 
-	
-	
-	
-	
-	public function indexByNewsCategory(NewsCategory $newsCategory)
-	{
-		// Paginate the news items associated with the news category
-		$news = $newsCategory->news()->with('newsCategories')->orderBy('created_at','desc')->paginate(10);
+    public function show(News $news)
+    {
+        $news->readTime = $this->readTime($news->content);
 		
-		$news->getCollection()->transform(function ($newsItem) {
-			$newsItem->readTime = $this->readTime($newsItem->content);
-			return $newsItem;
-		});
+		$SEOData = new SEOData(
+            title: $news->title,
+            description: $news->excerpt,
+        );
 		
-		
-		$news->load(['institution']);
-		
-		$newsCategories = NewsCategory::withCount('news')->orderBy('news_count','desc')->get();
+        return view('news.show', compact('news','SEOData'));
+    }
 
-		return view('news.index', compact('newsCategory','news','newsCategories'));
-	}
+    public function showByInstitution(Institution $institution, News $news) 
+    {
+        if ($news->institution_id !== $institution->id) {
+            abort(404);
+        }
 
-	
-	
-	
-	public function show(News $news) {
-		 	 		 
-			$news->readTime = $this->readTime($news->content);
-		    
-		return view('news.show', compact('news'));
-	}
-	
-	
-	public function showByInstitution(Institution $institution, News $news) {
+        $news->readTime = $this->readTime($news->content);
 		
-			
-			if($news->institution_id !== $institution->id){
-				abort(404);
-			}
+		$SEOData = new SEOData(
+            title: $news->title,
+            description: $news->excerpt,
+        );
+		
+        return view('news.show', compact('news','SEOData'));
+    }
 
-			
-			$news->readTime = $this->readTime($news->content);
+    public function showByNewsCategory(NewsCategory $newsCategory, News $news)
+    {
+        if (!$newsCategory->news->contains($news->id)) {
+            abort(404);
+        }
 
-			
-		 return view('news.show', compact('news'));
-	}	
-	
-	
-	public function showByNewsCategory(NewsCategory $newsCategory, News $news) {
-		 	 		 
-				if(!$newsCategory->news->contains($news->id)){
-					abort(404);
-				}
-				
-				$news->readTime = $this->readTime($news->content);
+        $news->readTime = $this->readTime($news->content);
 		
-				
-		 return view('news.show', compact('newsCategory','news'));
-	}
-	
-	
-	
-	protected function readTime($content){
+		$SEOData = new SEOData(
+            title: $news->title,
+            description: $news->excerpt,
+        );
 		
-		
-		$content = str_word_count(strip_tags($content));
-		
-		$minutes = ceil($content / 200);
-		
-		return $minutes;
-		
-	}
-	
-	
-	
-	
+        return view('news.show', compact('newsCategory', 'news','SEOData'));
+    }
+
+    protected function readTime($content)
+    {
+        $content = str_word_count(strip_tags($content));
+        $minutes = ceil($content / 200);
+        return $minutes;
+    }
 }

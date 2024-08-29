@@ -7,21 +7,22 @@
         <div class="bg-image" style="background-image: url('assets/media/photos/photo22@2x.jpg');">
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
-              <h1 class="fw-bold text-white mt-5 mb-3">
-			 <span itemprop="headline"> {{$news->title}} </span>
-              </h1>
-			  <link itemprop="url" content="{{ url()->current() }}" >
-
-               <p>
-				<span itemprop="author" itemscope itemtype="https://schema.org/Person" class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
-                  <i class="fa fa-user-circle me-1"></i> by  <span itemprop="name"> StudyNexus </span>
-				  <link itemprop="url" href="{{route('about')}}"> 
-                </span>
-			   
-                <span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
-                  <i class="fa fa-clock me-1"></i> {{$news->readTime}} min read
-                </span>
-              </p>
+				<h1 class="fw-bold text-white mt-5 mb-3">
+					<span itemprop="headline"> {{$news->title}} </span>
+				</h1>
+				 <link itemprop="url" content="{{ url()->current() }}" >
+				 @if( url()->current() !== route('news.show',['news' => $news])  )	<link itemprop="sameAs" content="{{route('news.show',['news'=> $news])}}">   @endif
+				
+				<p>
+					<span itemprop="author" itemscope itemtype="https://schema.org/Person" class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+					  <i class="fa fa-user-circle me-1"></i> by  <span itemprop="name"> StudyNexus </span>
+					  <link itemprop="url" href="{{route('about')}}"> 
+					</span>
+				   
+					<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+					  <i class="fa fa-clock me-1"></i> {{$news->readTime}} min read
+					</span>
+                </p>
             </div>
           </div>
         </div>

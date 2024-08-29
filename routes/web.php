@@ -18,6 +18,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 /* Search institutions / Programs and filter */
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
+ Route::get('/forum', function () {
+    return redirect('/forum');
+})->name('forum');
+ 
 
 Route::get('/about', function () {
 
@@ -123,16 +127,12 @@ Route::prefix('news')->name('news.')->group(function () {
    
 });
 
-
-Route::get('/forum', function () {
-    return redirect('/forum/index.php');
-})->name('forum');
-
+ 
 
 
 /* Timetable */
 
-   Route::prefix('timetables')->name('timetable.')->group(function () {
+   Route::prefix('timetable')->name('timetable.')->group(function () {
     /* list of all timetable */
     Route::get('/', [TimetableController::class, 'index'])->name('index');
 	
@@ -143,11 +143,11 @@ Route::get('/forum', function () {
 
 
 /* Syllabus */
-	Route::prefix('syllabuses')->name('syllabus.')->group(function () {
+	Route::prefix('syllabus')->name('syllabus.')->group(function () {
 		/* list of all Exam Bodies */
 		Route::get('/', [SyllabusController::class, 'index'])->name('index');
 		
-		Route::get('{examBody}', [SyllabusController::class, 'subjects'])->name('subjects');
+		Route::get('{examBody}', [SyllabusController::class, 'syllabi'])->name('subjects');
 		
 		/* show subject syllabus of an Exam body */
 		Route::get('{examBody}/{syllabus}', [SyllabusController::class, 'show'])->name('show');

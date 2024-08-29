@@ -46,7 +46,9 @@ use Carbon\Carbon;
         <!-- END Hero -->
 
 
-
+		<!-- Breadcrumbs -->
+		  {{Breadcrumbs::render()}}
+		 <!-- End Breadcrumbs -->
 
 
 

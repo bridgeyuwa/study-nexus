@@ -17,7 +17,7 @@
 </div>
 <!-- END Hero -->
 
-<!-- Breadcrumbs -->
+		<!-- Breadcrumbs -->
 		  {{Breadcrumbs::render()}}
 		 <!-- End Breadcrumbs -->
 

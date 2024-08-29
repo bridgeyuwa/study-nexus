@@ -119,7 +119,7 @@ use Illuminate\Support\Number;
 								</span>
 								<div class="fw-semibold">Duration</div>
 								<div class="">@if(!empty($institution_program->pivot->duration)){{$institution_program->pivot->duration}} Years @else N/A @endif</div>
-								<meta itemprop="timeToComplete" content="P{{$institution_program->duration}}Y" />
+								<meta itemprop="timeToComplete" content="P{{$institution_program->pivot->duration}}Y" />
 							</li>
 							<li class="mb-1">
 								<span class="fa-li text-primary">
@@ -232,7 +232,7 @@ use Illuminate\Support\Number;
                 <div class="block-header block-header-default text-center bg-studynexus-cubes" >
                     <h3 class="block-title">Special Remarks</h3>
                 </div>
-                <div class="block-content">
+                <div class="block-content fs-sm">
                     <p> {{$institution_program->pivot->remarks}} </p>
 				</div>
             </div>
