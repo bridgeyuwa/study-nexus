@@ -21,5 +21,10 @@ class ExamBody extends Model
         return $this->hasMany(Syllabus::class);
     }
 	
+	 public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+	
 	
 }

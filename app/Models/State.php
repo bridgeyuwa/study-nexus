@@ -22,5 +22,10 @@ class State extends Model
     {
         return $this->belongsTo(Region::class);
     }
+	
+	public function exambodies()
+    {
+        return $this->hasMany(ExamBody::class);
+    }
     
 }

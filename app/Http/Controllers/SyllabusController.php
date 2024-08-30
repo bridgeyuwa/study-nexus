@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Syllabus;
 use App\Models\ExamBody;
 use App\Models\Subject;
+use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Cache;
 
 class SyllabusController extends Controller
@@ -15,8 +16,13 @@ class SyllabusController extends Controller
         $examBodies = Cache::remember('exam_bodies_index', 60, function () {
             return ExamBody::all();
         });
+		
+		$SEOData = new SEOData(
+            title: "Exam Syllabi",
+            description: "Explore syllabi for various exams like WAEC, NECO, and more.",
+        );
         
-        return view('syllabus.index', compact('examBodies'));  
+        return view('syllabus.index', compact('examBodies','SEOData'));  
     }
     
     public function syllabi(ExamBody $examBody)
@@ -25,8 +31,13 @@ class SyllabusController extends Controller
         $syllabi = Cache::remember("syllabi_exam_body_{$examBody->id}", 60, function () use ($examBody) {
             return $examBody->syllabi()->with(['subject'])->get();
         });
+		
+		$SEOData = new SEOData(
+            title: "{$examBody->abbr} Syllabi",
+            description: "Browse the latest syllabi for {$examBody->abbr} exams.",
+        );
 
-        return view('syllabus.syllabus', compact('examBody', 'syllabi'));  
+        return view('syllabus.syllabus', compact('examBody', 'syllabi','SEOData'));  
     }
     
     public function show(ExamBody $examBody, Syllabus $syllabus)
@@ -34,7 +45,12 @@ class SyllabusController extends Controller
         if ($syllabus->exam_body_id !== $examBody->id) {
             abort(404);
         }
+		
+		$SEOData = new SEOData(
+            title: "{$syllabus->subject->name} Syllabus - {$examBody->abbr}",
+            description: "Detailed syllabus for {$syllabus->subject->name} - {$examBody->abbr}.",
+        );
 
-        return view('syllabus.show', compact('examBody', 'syllabus'));     
+        return view('syllabus.show', compact('examBody', 'syllabus','SEOData'));     
     }
 }

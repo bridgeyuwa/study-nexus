@@ -16,6 +16,15 @@ return new class extends Migration
 			$table->string('name');
 			$table->string('abbr');
 			$table->text('description')->nullable();
+			
+			$table->unsignedBiginteger('state_id');
+			$table->string('address');
+			$table->string('locality');
+			$table->integer('postal_code');
+			
+			
+			$table->string('url')->nullable();
+			$table->string('logo')->nullable();
             $table->timestamps();
         });
     }
