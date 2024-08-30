@@ -53,13 +53,16 @@ use Carbon\Carbon;
 
 
 <!-- Page Content -->
-        <div class="content">
+        <div itemscope itemtype="https://schema.org/ItemList" class="content">
+		
           <!-- Frequently Asked Questions -->
           <div class="block block-rounded">
             <div class="block-header block-header-default">
-              <h3 class="block-title"> {{$exam->name}} {{$exam->year}} Timetable For {{$exam->type}} 
-</h3>
-            </div>
+              <h3 itemprop="name" class="block-title"> {{$exam->name}} {{$exam->year}} Timetable For {{$exam->type}} </h3>
+			  <link itemprop="url" href="{{url()->current()}}" >
+			  <link itemprop="sameAs" href="{{$exam->timetable_url}}" />
+			</div>
+			
             <div class="block-content">
 			
 			@foreach($groupedTimetables as $examDate => $timetables)
@@ -75,7 +78,7 @@ use Carbon\Carbon;
               <div class="row items-push">
                 <div class="col-lg-4">
 				 
-                 
+                 -
                 </div>
                 <div class="col-lg-8">
                   
@@ -94,18 +97,51 @@ use Carbon\Carbon;
 				  $diffInHours =  intdiv($diffInMinutes, 60);
 				  $remainingMinutes =  $diffInMinutes % 60;
 				  
+				  
+				  $duration = "";
+					$metaDuration ="PT";
+					if($diffInHours > 0){
+						$metaDuration .= $diffInHours ."H";
+						$duration .=  $diffInHours ."h ";
+					}
+					  
+					if($remainingMinutes > 0){  
+						$metaDuration .= $remainingMinutes ."M";
+						$duration .= $remainingMinutes ."m";
+				    }
+				  
 				  @endphp
 				  
-                  <tr>
+				  
+				  
+				  
+                  <tr itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationEvent">
                     
                     <td>
 					  <p class=" mb-0">
-                        <em class="fs-sm ">{{$timetable->paper_code}}</em>
+                        <em itemprop="identifier" class="fs-sm ">{{$timetable->paper_code}}</em>
                       </p>
-                      <p class="fw-semibold mb-1">
+                      <p itemprop="name"  class="fw-semibold mb-1">
                         {{$timetable->name}}
                       </p>
 					  
+					<link itemprop="url" href="{{url()->current()}}" >
+					<link itemprop="sameAs" href="{{$exam->timetable_url}}" />
+					<link itemprop="image" href="{{$exam->examBody->logo}}" />
+					<meta itemprop="educationalLevel" content="{{$exam->type}}" />
+					<meta itemprop="location" content="Candidate's Examination Center" />
+					<meta itemprop="startDate" content="{{$timetable->start_time->toIso8601String()}}" />
+					<meta itemprop="endDate" content="{{$timetable->end_time->toIso8601String()}}" />
+					<meta itemprop="duration" content="{{$metaDuration}}" />
+					<meta itemprop="doorTime" content="{{$timetable->start_time->subMinutes(30)->toIso8601String()}}" />
+					
+					<div itemprop="organizer" itemscope itemtype="https://schema.org/EducationalOrganization">
+						<meta itemprop="name" content="{{$exam->examBody->name}}" />
+						<meta itemprop="alternateName" content="{{$exam->examBody->abbr}}" />
+						<link itemprop="url" href="{{$exam->examBody->url}}" />
+						<link itemprop="sameAs" href="{{$exam->examBody->url}}" />
+					</div>
+					
 					  @if(!empty($timetable->remarks))
 					  <p class="mb-1">
                         {{$timetable->remarks}}
@@ -114,19 +150,17 @@ use Carbon\Carbon;
                       <p class=" mb-0">
 					  {{$timetable->start_time->format('g:i A')}} - {{$timetable->end_time->format('g:i A')}} 
 					  
-					  (
-					  @if($diffInHours > 0)
-					  {{$diffInHours}}h 
-					  @endif
+					  ({{$duration}})
 					  
-					  @if($remainingMinutes > 0)
-					  {{$remainingMinutes}}m 
-				      @endif
-					  )
+					  
                       </p>
 					  <p class="text-muted mb-0">
                         <em class="fs-sm text-muted">{{$examDate->format('M d, Y')}} </em>
                       </p>
+					  
+					  
+					
+					  
 					  
 				  
                     </td>
