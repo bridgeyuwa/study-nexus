@@ -27,7 +27,7 @@
             </div>
 
             <p class="lead">Explore the premium source for higher education information in Nigeria.</p>
-<p>Delve into our extensive database containing over 20,000 courses across 900+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and Innovation Enterprise Institutions. Uncover Institution Rankings and insights into popular Institution Courses in Nigeria. Streamline your search by utilizing our multi-teir filtering system based on Location, Study Level, and Course.</p>
+<p>Delve into our extensive database containing over 600 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings and insights into Institution programmes in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
             
 
           <div class="d-flex justify-content-center pb-4">
@@ -191,8 +191,8 @@
                     </div>
                     <div class="block-content mb-auto pb-2">
 							
-							@foreach($categoryClasses as $categoryClass)
-                        <p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name_plural}}</a></p>
+						@foreach($categoryClasses as $categoryClass)
+							<p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name_plural}}</a></p>
                         @endforeach
 						
 				
@@ -240,20 +240,17 @@
                         <h3 class="fw-light mb-1">Exam Resources</h3>
                     </div>
                     <div class="block-content mb-auto pb-2">
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('syllabus.index')}}">Syllabuses</a></p>
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('timetable.index')}}">Timetables</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="#">#Post-UTME updates</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('syllabus.index')}}">Syllabuses <span class="text-dark fs-sm">(JAMB, WAEC, NECO, NABTEB etc...)</span></a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('timetable.index')}}">Timetables <span class="text-dark fs-sm">(WAEC, NECO, NABTEB etc...)</span></a></p>
                         
                     </div>
 
                 </div>
             </div>
 
-
-            
-
-
-
         </div>
+			
     </div>
     <!-- END md Grid -->
 

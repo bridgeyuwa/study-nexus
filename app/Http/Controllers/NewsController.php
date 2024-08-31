@@ -25,7 +25,7 @@ class NewsController extends Controller
 
         // Cache the news categories with count
         $newsCategories = Cache::remember('news_categories_index', 60, function () {
-            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->get();
+            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->take(25)->get();
         });
 		
 		
@@ -51,7 +51,7 @@ class NewsController extends Controller
         });
 
         $newsCategories = Cache::remember('news_categories_index_institution', 60, function () {
-            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->get();
+            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->take(25)->get();
         });
 		
 		
@@ -62,6 +62,7 @@ class NewsController extends Controller
 
         return view('news.index', compact('institution', 'news', 'newsCategories','SEOData'));
     }
+	
 
     public function indexByNewsCategory(NewsCategory $newsCategory)
     {
@@ -76,7 +77,7 @@ class NewsController extends Controller
         });
 
         $newsCategories = Cache::remember('news_categories_index_category', 60, function () {
-            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->get();
+            return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->take(25)->get();
         });
 		
 		
@@ -87,6 +88,32 @@ class NewsController extends Controller
 
         return view('news.index', compact('newsCategory', 'news', 'newsCategories','SEOData'));
     }
+	
+	
+					
+	public function indexOfNewsCategories()
+    {
+		
+		//to add cache
+		
+		$newsCategories = NewsCategory::all()->groupBy(function($newsCategory){
+			return strtoupper(substr($newsCategory->name, 0, 1));
+			
+		})->sortKeys()
+		->map(function($group){
+			return $group->sortBy('name');
+			
+		});
+		
+		
+		
+		$SEOData = new SEOData(
+            title: "All News Categories",
+            description: "Comprehensive list of all news categories in alphabetical order",
+        );
+		
+		return view('news.news-categories', compact( 'newsCategories','SEOData'));
+	}
 
     public function show(News $news)
     {

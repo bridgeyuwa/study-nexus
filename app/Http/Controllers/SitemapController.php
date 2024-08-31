@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Institution;
-use App\Models\Program;
 use App\Models\Catchment;
 use App\Models\CategoryClass;
 use App\Models\Level;
 use App\Models\State;
 use App\Models\Region;
+use App\Models\News;
+use App\Models\Exambody;
+use App\Models\Exam;
+use App\Models\Syllabus;
+
 use Carbon\Carbon;
 class SitemapController extends Controller
 {
@@ -23,73 +27,127 @@ class SitemapController extends Controller
         $regions = Region::all();
         $levels = Level::with('__programs')->get();
 		$catchments = Catchment::all();
+		$news = News::all();
+		$examBodies = ExamBody::all();
+		$exams = Exam::all();
+		$syllabi = Syllabus::all();
 
-        $sitemap = Sitemap::create()
-
+        
 		
+		
+		$sitemap = Sitemap::create()
             // Static URLs
-            ->add(Url::create(route('home'))->setLastModificationDate(Carbon::yesterday()))
-            ->add(Url::create(route('search'))->setLastModificationDate(Carbon::yesterday()))
-            ->add(Url::create(route('about'))->setLastModificationDate(Carbon::yesterday()))
-            ->add(Url::create(route('tos'))->setLastModificationDate(Carbon::yesterday()))
-            ->add(Url::create(route('policy'))->setLastModificationDate(Carbon::yesterday()))
-            ->add(Url::create(route('contact'))->setLastModificationDate(Carbon::yesterday()));
+            ->add(Url::create(route('home')))
+            ->add(Url::create(route('search')))
+            ->add(Url::create(route('about')))
+            ->add(Url::create(route('tos')))
+            ->add(Url::create(route('policy')))
+            ->add(Url::create(route('contact')));
+			
+			//Forum
+			$sitemap->add(Url::create(route('forum')));
 
         // Programs by Level
         foreach ($levels as $level) {
-            $sitemap->add(Url::create(route('programs.index', ['level' => $level]))->setLastModificationDate(Carbon::yesterday()));
+            $sitemap->add(Url::create(route('programs.index', ['level' => $level])));
 
             foreach ($level->__programs()->get() as $program) {
-                $sitemap->add(Url::create(route('programs.show', ['level' => $level, 'program' => $program]))->setLastModificationDate(Carbon::yesterday()));
-                $sitemap->add(Url::create(route('programs.institutions', ['level' => $level, 'program' => $program]))->setLastModificationDate(Carbon::yesterday()));
+                $sitemap->add(Url::create(route('programs.show', ['level' => $level, 'program' => $program])));
+                $sitemap->add(Url::create(route('programs.institutions', ['level' => $level, 'program' => $program])));
             }
         }
 
         // Institutions
-        $sitemap->add(Url::create(route('institutions.index'))->setLastModificationDate(Carbon::yesterday()));
+        $sitemap->add(Url::create(route('institutions.index')));
 
         // Institutions by category
         foreach ($categoryClasses as $categoryClass) {
-            $sitemap->add(Url::create(route('institutions.categories.index', ['categoryClass' => $categoryClass]))->setLastModificationDate(Carbon::yesterday()));
-            $sitemap->add(Url::create(route('institutions.categories.location', ['categoryClass' => $categoryClass]))->setLastModificationDate(Carbon::yesterday()));
-            $sitemap->add(Url::create(route('institutions.categories.ranking', ['categoryClass' => $categoryClass]))->setLastModificationDate(Carbon::yesterday()));
+            $sitemap->add(Url::create(route('institutions.categories.index', ['categoryClass' => $categoryClass])));
+            $sitemap->add(Url::create(route('institutions.categories.location', ['categoryClass' => $categoryClass])));
+            $sitemap->add(Url::create(route('institutions.categories.ranking', ['categoryClass' => $categoryClass])));
 
             foreach ($regions as $region) {
-                $sitemap->add(Url::create(route('institutions.categories.ranking.region', ['categoryClass' => $categoryClass, 'region' => $region]))->setLastModificationDate(Carbon::yesterday()));
+                $sitemap->add(Url::create(route('institutions.categories.ranking.region', ['categoryClass' => $categoryClass, 'region' => $region])));
             }
 
             foreach ($states as $state) {
-                $sitemap->add(Url::create(route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state]))->setLastModificationDate(Carbon::yesterday()));
-                $sitemap->add(Url::create(route('institutions.categories.ranking.state', ['categoryClass' => $categoryClass, 'state' => $state]))->setLastModificationDate(Carbon::yesterday()));
+                $sitemap->add(Url::create(route('institutions.categories.location.show', ['categoryClass' => $categoryClass, 'state' => $state])));
+                $sitemap->add(Url::create(route('institutions.categories.ranking.state', ['categoryClass' => $categoryClass, 'state' => $state])));
             }
         }
 
-        $sitemap->add(Url::create(route('institutions.location'))->setLastModificationDate(Carbon::yesterday()));
+        $sitemap->add(Url::create(route('institutions.location')));
 
         foreach ($states as $state) {
-            $sitemap->add(Url::create(route('institutions.location.show', ['state' => $state]))->setLastModificationDate(Carbon::yesterday()));
+            $sitemap->add(Url::create(route('institutions.location.show', ['state' => $state])));
         }
 
-        $sitemap->add(Url::create(route('institutions.catchments.policy'))->setLastModificationDate(Carbon::yesterday()));
+        $sitemap->add(Url::create(route('institutions.catchments.policy')));
 
         foreach ($institutions as $institution) {
-            $sitemap->add(Url::create(route('institutions.show', ['institution' => $institution]))->setLastModificationDate(Carbon::yesterday()));
-
+           
+		    $sitemap->add(Url::create(route('institutions.show', ['institution' => $institution]))->setLastModificationDate(Carbon::yesterday()));
+             
+			 if($institution->news()->exists()){
+				$sitemap->add(Url::create(route('institutions.news', ['institution' => $institution])));
+             }
             foreach ($levels as $level) {
                 foreach ($institution->programs()->wherePivot('level_id', $level->id)->with('college')->get() as $program) {
-                    $sitemap->add(Url::create(route('institutions.programs', ['institution' => $institution, 'level' => $level]))->setLastModificationDate(Carbon::yesterday()));
+                    $sitemap->add(Url::create(route('institutions.programs', ['institution' => $institution, 'level' => $level])));
                     $sitemap->add(Url::create(route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program]))->setLastModificationDate(Carbon::yesterday()));
-                    $sitemap->add(Url::create(route('institutions.program.levels', ['institution' => $institution, 'program' => $program]))->setLastModificationDate(Carbon::yesterday()));
+                    $sitemap->add(Url::create(route('institutions.program.levels', ['institution' => $institution, 'program' => $program])));
                 }
             }
         }
 
         // Institutions catchments
-        $sitemap->add(Url::create(route('institutions.catchments.index'))->setLastModificationDate(Carbon::yesterday()));
+        $sitemap->add(Url::create(route('institutions.catchments.index')));
 
         foreach ($catchments as $catchment) {
-            $sitemap->add(Url::create(route('institutions.catchments.show', ['catchment' => $catchment]))->setLastModificationDate(Carbon::yesterday()));
+            $sitemap->add(Url::create(route('institutions.catchments.show', ['catchment' => $catchment])));
         }
+		
+		
+		
+		
+		
+		//News
+		$sitemap->add(Url::create(route('news.index')));
+		$sitemap->add(Url::create(route('news.newsCategories')));
+		
+		// news/{news}
+		foreach ($news as $story) {
+            $sitemap->add(Url::create(route('news.show', ['news' => $story]))->setLastModificationDate(Carbon::yesterday()));
+        }
+		
+		/* Only canonical news is featured in sitemap (Other news duplicates are exempted) , newsCategories is also exempted */
+		
+		
+		$sitemap->add(Url::create(route('timetable.index')));
+		
+		foreach ($exams as $exam) {
+            $sitemap->add(Url::create(route('timetable.show', ['exam' => $exam]))->setLastModificationDate(Carbon::yesterday()));
+        }
+		
+		
+		
+        $sitemap->add(Url::create(route('syllabus.index')));
+		
+		foreach ($examBodies as $examBody) {
+            $sitemap->add(Url::create(route('syllabus.subjects', ['examBody' => $examBody])));
+       
+			foreach ($syllabi as $syllabus){
+				
+				$sitemap->add(Url::create(route('syllabus.show', ['examBody' => $examBody, 'syllabus' => $syllabus])));
+       
+			}
+
+	   }
+		
+		
+		
+		
+		
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
 

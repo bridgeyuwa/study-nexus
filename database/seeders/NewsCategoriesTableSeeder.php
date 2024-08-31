@@ -16,7 +16,7 @@ class NewsCategoriesTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 500; $i++) {
             NewsCategory::create([
                 'name' => $faker->word,
             ]);

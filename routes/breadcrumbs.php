@@ -158,9 +158,16 @@ Breadcrumbs::for('news.show', function (BreadcrumbTrail $trail, $news) {
     $trail->push($news->title, route('news.show', ['news' => $news]));
 });
 
-// List News by Category
-Breadcrumbs::for('news.newsCategory', function (BreadcrumbTrail $trail, $newsCategory) {
+//List all News Categories
+Breadcrumbs::for('news.newsCategories', function (BreadcrumbTrail $trail) {
     $trail->parent('news.index');
+    $trail->push('Categories', route('news.newsCategories'));
+});
+
+
+// List News of a Category
+Breadcrumbs::for('news.newsCategory', function (BreadcrumbTrail $trail, $newsCategory) {
+    $trail->parent('news.newsCategories');
     $trail->push($newsCategory->name, route('news.newsCategory', ['newsCategory' => $newsCategory]));
 });
 

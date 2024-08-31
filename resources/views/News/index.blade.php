@@ -98,7 +98,6 @@
 						 <i class="si si-tag text-black"></i> <span itemprop="keywords">{{$storyCategory->name}}</span>
 						  </button>
 						@endforeach
-						
 						</div>
 						
                       </div>
@@ -139,15 +138,24 @@
 			<!-- News Categories -->
               <div class="block block-rounded">
                 <div class="block-header block-header-default bg-studynexus-cubes">
-                  <h3 class="block-title text-center">All News Categories</h3>
+                  <h3 class="block-title text-center">News Categories</h3>
                 </div>
                 <div class="block-content block-content-full">
 				@foreach($newsCategories as $newsCategory)
-                  <a class="btn btn-sm btn-info rounded-0 mb-1" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
-				  <i class="fa fa-tag text-white me-2"></i> <span itemprop="keywords">{{$newsCategory->name}}</span> <span class="fw-light">{{$newsCategory->news_count}}</span>
-                  </a>
-                 @endforeach
+				    <a class="btn btn-sm btn-outline-dark rounded-0 mb-1" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
+						<i class="fa fa-tag text-dark me-2"></i> <span itemprop="keywords">{{$newsCategory->name}}</span> <span class="fw-light">{{$newsCategory->news_count}}</span>
+				    </a>
+                @endforeach
+				 
+					<span class="fw-bold">...</span>
                 </div>
+				
+				<div class="block-header block-header-default bg-light">
+                  <a class="btn btn-sm btn-primary rounded-0 mb-1 w-100" href="{{route('news.newsCategories')}}" >
+						<i class="fa fa-eye text-white me-2"></i> View All News Categories
+				    </a>
+                </div>
+				
               </div>
               <!-- END News Categories -->
            

@@ -24,21 +24,15 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
  
 
 Route::get('/about', function () {
-
-$aboutFile = resource_path('markdown/about.md');
-    return view('about',['about' => Str::markdown(file_get_contents($aboutFile)),]);
+    return view('about');
 })->name('about');
 
 Route::get('/terms-of-service', function () {
-
-    $termsFile = resource_path('markdown/terms.md');
-    return view('terms',['terms' => Str::markdown(file_get_contents($termsFile)),]);
+    return view('terms');
 })->name('tos');
 
 Route::get('/privacy-policy', function () {
-
-     $policyFile = resource_path('markdown/policy.md');
-    return view('policy', ['policy' => Str::markdown(file_get_contents($policyFile)),]);
+    return view('policy');
 })->name('policy');
 
 Route::get('/contact', function () {
@@ -113,12 +107,13 @@ Route::prefix('news')->name('news.')->group(function () {
     /* list of all news */
     Route::get('/', [NewsController::class, 'index'])->name('index');
 	
+	/* List of all News Categories */
+	Route::get('/newscategory', [NewsController::class, 'indexOfNewsCategories'])->name('newsCategories');
+    	
 	/* show news */
     Route::get('/{news}', [NewsController::class, 'show'])->name('show');
-	
-	
-    
-    /* list of news of a news category */
+		  
+    /* show list of news in a news category */
     Route::get('/newscategory/{newsCategory}', [NewsController::class, 'indexByNewsCategory'])->name('newsCategory');
     
 	/* show news of a news category */

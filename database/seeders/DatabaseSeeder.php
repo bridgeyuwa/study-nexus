@@ -22,11 +22,11 @@ class DatabaseSeeder extends Seeder
 		
 		
 		 $this->call([
-           /*  NewsTableSeeder::class,
+           //  NewsTableSeeder::class,
             NewsCategoriesTableSeeder::class,
-            NewsNewsCategoryTableSeeder::class, */
+           // NewsNewsCategoryTableSeeder::class, 
 			
-			SyllabiTableSeeder::class,
+			//SyllabiTableSeeder::class,
         ]);
 		
 		

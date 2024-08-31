@@ -29,7 +29,7 @@ class InstitutionController extends Controller {
 		});
 		
 		$SEOData = new SEOData(
-            title: "Academic Institutions in Nigeria",
+            title: "Higher Institutions in Nigeria",
             description: "Browse a comprehensive list of universities, polytechnics, monotechnics, and colleges of education. Find the best institution for your needs.",
         );
 		
@@ -75,7 +75,7 @@ class InstitutionController extends Controller {
 		});
 		
         $SEOData = new SEOData(
-            title: "Academic Institutions in Nigeria by Location",
+            title: "Higher Institutions in Nigeria by Location",
             description: "Discover academic institutions in your preferred location. Find the best educational institutions near you.",
         );
 
@@ -130,7 +130,7 @@ class InstitutionController extends Controller {
 		});
 		
         $SEOData = new SEOData(
-            title: "All Institutions in {$state->name}",
+            title: "Higher Institutions in {$state->name}",
 			description: "Explore top institutions in {$state->name} Compare programmes and find the best fit for your education needs.",
         );
            
@@ -394,7 +394,7 @@ class InstitutionController extends Controller {
 		});
 		
 		$SEOData = new SEOData(
-			title: "{$level->name} in {$program->name} offered at {$institution->name}",
+			title: "{$program->name} - {$institution->name}",
 			description: "Detailed information about {$level->name} in {$program->name} offered at {$institution->name}. Program highlights and overview",
 		);
 
@@ -423,7 +423,7 @@ class InstitutionController extends Controller {
 	
 		// Prepare SEO data
 		$SEOData = new SEOData(
-			title: "Available Levels for {$program->name} offered at {$institution->name}",
+			title: "{$program->name} Study Levels - {$institution->name}",
 			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.",
 		);
 
