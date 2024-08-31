@@ -44,19 +44,19 @@
         <div class="col-md-8 order-md-0">
 
             <!-- Programme Levels -->
-            <div  class="block block-rounded">
+            <div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
                 <div class="block-header block-header-default text-center bg-studynexus-cubes" >
-                    <h3  class="block-title">list of syllabi</h3>
+                    <h3 itemprop="name"  class="block-title">list of Syllabi (Syllabuses)</h3>
                 </div>
                 <div class="block-content">
 
                     @foreach($examBodies as $examBody)
-					<div >
+					<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ItemList" >
                     <a  class="block block-rounded block-bordered block-link-shadow" href="{{route('syllabus.subjects',['examBody' => $examBody])}}">
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">
-                       <span > {{$examBody->abbr}} Syllabus #2024</span>
+                       <span itemprop="name"> {{$examBody->abbr}} Syllabus #2024</span>
                       </div>                      
                       
                     </div>

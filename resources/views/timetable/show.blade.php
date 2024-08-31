@@ -8,43 +8,77 @@ use Carbon\Carbon;
 @endphp
 
 
-<!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+<!-- Hero  -->
+        <div itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
-            <div class="content content-full content-top text-center pt-7">
-              <div class="pt-4 pb-3">
-                <h1 class="fw-light text-white mb-1">
-
-				{{$exam->examBody->name}} ({{$exam->examBody->abbr}}) {{$exam->name}} Timetable {{$exam->year}}
-
-              </h1>
-              
-			  <h3  class="fw-light text-white-75  mt-3">
-					For {{$exam->type}} 
-			 </h3>
-			 
-			 
-               <div class="mt-3">
-					<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
-						 <span itemprop="name"> 2nd May </span>
+            <div class="content content-boxed content-full py-5 pt-7">
+              <div class="row">
+			    @if(!empty($exam->examBody->logo))
+				
+			    <div class="col-md-4 d-flex align-items-center">
+                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+                    <div class="block-content block-content-full px-2 py-2">
+					
+                      <img  src="{{$exam->examBody->logo}}" alt="{{$exam->examBody->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
+                      <link itemprop="logo" href="{{$exam->examBody->logo}}">
+                    </div>
+                  </div>
+                </div>
+				@endif
+				
+                <div class=" @if(!empty($exam->examBody->logo)) col-md-8 @endif d-flex align-items-center py-3">
+					<div class="w-100 text-center @if(!empty($exam->examBody->logo)) text-md-start @endif">
+						<div class="h3 fw-light text-white mb-1 "> 
+						<span itemprop="name">{{$exam->examBody->name}}</span> 
+						@if(!empty($exam->examBody->abbr))
+							(<span itemprop="alternateName" class="text-white-75">{{$exam->examBody->abbr}}</span>)
+						@endif 
+						</div>
+                          
+						  <link itemprop="url" href="{{url()->current()}}">
+						  <link itemprop="sameAs" href="{{$exam->examBody->url}}">
+						  
+						<div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-sm  fw-light text-white-75 mb-1">
+							<div itemprop="streetAddress"> {{$exam->examBody->address}} </div>
+							@if(!empty($exam->examBody->locality)) <span itemprop="addressLocality">{{$exam->examBody->locality}} </span>- @endif  <span itemprop="addressRegion">{{$exam->examBody->state->name}} @if(!empty($exam->examBody->state->is_state)) State @endif </span> 
+						  @if(!empty($exam->examBody->postal_code)) <meta itemprop="postalCode" content="{{$exam->examBody->postal_code}}"> @endif
+							<meta itemprop="addressCountry" content="NG">
+							<div> Nigeria </div>
 						
-					</span>
-					
-					<span class="text-white">to</span>
-				   
-					<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
-						 25th June
-					</span>
-					
-					<span class="text-white">{{$exam->year}}</span>
-					
-              </div>
+						</div>
+						
+						<h1  class=" fw-light text-white mt-3">
+						Timetable For {{$exam->type}} {{$exam->year}}
+						</h1>
+						
+						<div class="mt-3">
+							<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+								 <span itemprop="name"> 2nd May </span>
+							</span>
+							
+							<span class="text-white">to</span>
+						   
+							<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+								 25th June
+							</span>
+							
+							<span class="text-white">{{$exam->year}}</span>
+						</div>
+						
+					</div>
+					 
+					 
+					 
+						
+							
+						
+                </div>
               </div>
             </div>
           </div>
+		  
         </div>
         <!-- END Hero -->
-
 
 		<!-- Breadcrumbs -->
 		  {{Breadcrumbs::render()}}
@@ -58,7 +92,7 @@ use Carbon\Carbon;
           <!-- Frequently Asked Questions -->
           <div class="block block-rounded">
             <div class="block-header block-header-default">
-              <h3 itemprop="name" class="block-title"> {{$exam->name}} {{$exam->year}} Timetable For {{$exam->type}} </h3>
+              <h3 itemprop="name" class="block-title"> {{$exam->name}} </h3>
 			  <link itemprop="url" href="{{url()->current()}}" >
 			  <link itemprop="sameAs" href="{{$exam->timetable_url}}" />
 			</div>
@@ -111,10 +145,7 @@ use Carbon\Carbon;
 				    }
 				  
 				  @endphp
-				  
-				  
-				  
-				  
+				 
                   <tr itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationEvent">
                     
                     <td>
@@ -142,32 +173,25 @@ use Carbon\Carbon;
 						<link itemprop="sameAs" href="{{$exam->examBody->url}}" />
 					</div>
 					
-					  @if(!empty($timetable->remarks))
-					  <p class="mb-1">
-                        {{$timetable->remarks}}
-                      </p>
-					  @endif
-                      <p class=" mb-0">
-					  {{$timetable->start_time->format('g:i A')}} - {{$timetable->end_time->format('g:i A')}} 
-					  
-					  ({{$duration}})
-					  
-					  
-                      </p>
-					  <p class="text-muted mb-0">
-                        <em class="fs-sm text-muted">{{$examDate->format('M d, Y')}} </em>
-                      </p>
-					  
-					  
+						@if(!empty($timetable->remarks))
+						<p class="mb-1">
+							{{$timetable->remarks}}
+						</p>
+						@endif
+						
+						<p class=" mb-0">
+							{{$timetable->start_time->format('g:i A')}} - {{$timetable->end_time->format('g:i A')}} 
+							({{$duration}})
+						</p>
+						<p class="text-muted mb-0">
+							<em class="fs-sm text-muted">{{$examDate->format('M d, Y')}} </em>
+						</p>
 					
-					  
-					  
-				  
-                    </td>
+                    </td>	
 					
                    
-                  </tr>
-                 @endforeach
+					</tr>
+                @endforeach
                 
                 </tbody>
               </table>

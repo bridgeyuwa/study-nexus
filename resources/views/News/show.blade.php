@@ -43,7 +43,7 @@
 				<div class="block-header block-header-default fs-sm py-3  bg-studynexus-cubes">
                     <span>  
 						Published: 
-						<span itemprop="datePublished" content="{{$news->created_at->format('Y-m-d\TH:i:sO');}}">
+						<span itemprop="datePublished" content="{{$news->created_at->format('Y-m-d\TH:i:sO')}}">
 							{{$news->created_at->format('F d, Y')}}  
 						</span> 
 					</span>
@@ -51,7 +51,7 @@
                     @if($news->updated_at->gt($news->created_at)) 
 					<span>  
 						Updated: 	
-						<span itemprop="dateModified" content="{{$news->updated_at->format('Y-m-d\TH:i:sO');}}" > 
+						<span itemprop="dateModified" content="{{$news->updated_at->format('Y-m-d\TH:i:sO')}}" > 
 							{{$news->updated_at->format('F d, Y')}}
 						</span> 
 					</span> 

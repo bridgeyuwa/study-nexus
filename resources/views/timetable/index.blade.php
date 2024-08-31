@@ -24,53 +24,61 @@
 
 
 		<!-- Page Content -->
-        <div class="content">
-          <!-- Frequently Asked Questions -->
+        <div  itemscope itemtype="https://schema.org/ItemList" class="content">
+          
           <div class="block block-rounded">
             <div class="block-header block-header-default">
-              <h3 class="block-title">Timetables</h3>
+              <h3 itemprop="name" class="block-title">Timetables</h3>
             </div>
-            <div class="block-content">
+			<meta itemprop="description" content="Find the latest timetables for all major exams like WAEC, NECO, NABTEB, etc...." />
+			<link itemprop="url" href="{{url()->current()}}" />
+  
+			
+            <div class="block-content ">
 			
 			@foreach($examBodies as $examBody)
               <!-- Timetable -->
-              <h2 class="content-heading">{{$examBody->name}} ({{$examBody->abbr}})</h2>
+			  <div itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationalOrganization">
+              <h2 class="content-heading"> <span itemprop="name">{{$examBody->name}}</span>  <span itemprop="alternateName"> ({{$examBody->abbr}})</span></h2>
               <div class="row items-push">
                 <div class="col-lg-4">
-                  <p class="text-muted">
-				  
-				  {{$examBody->description}}
-                   </p>
+                    <p itemprop="description" class="text-muted">
+						{{$examBody->description}}
+                    </p>
                 </div>
-                <div class="col-lg-8">
-                  <div id="{{$examBody->abbr}}" role="tablist" aria-multiselectable="true">
+				<link itemprop="sameAs" href="{{$examBody->url}}" />
+				
+                <div hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="col-lg-8">
+					<meta itemprop="name" content="{{$examBody->name}} Examination Timetables">
+							
+                    <div id="{{$examBody->abbr}}" role="tablist" aria-multiselectable="true">
 				  
-				  @foreach($examBody->exams as $exam)
-                    <div class="block block-rounded mb-1">
-						 <a class="fw-semibold" data-bs-toggle="collapse" data-bs-parent="#{{$examBody->abbr}}" href="#{{$examBody->abbr}}_q{{$loop->iteration}}" aria-expanded="true" aria-controls="{{$examBody->abbr}}_q{{$loop->iteration}}">
-							  <div class="block-header block-header-default" role="tab" id="{{$examBody->abbr}}_h{{$loop->iteration}}">
-							   {{$exam->name}} - {{$exam->type}} {{$exam->year}}
-							  </div>
-						  </a>
-                      <div id="{{$examBody->abbr}}_q{{$loop->iteration}}" class="collapse" role="tabpanel" aria-labelledby="{{$examBody->abbr}}_h{{$loop->iteration}}" data-bs-parent="#{{$examBody->abbr}}">
-                        <div class="block-content">
-                          <p> {{$exam->description}}</p>
-						  
-                        <a class="btn btn-info rounded-0 " href="{{route('timetable.show', ['exam' => $exam] )}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View Timetable</a>
-                    
-						  
-                        </div>
-                      </div>
-                    </div>
-                    
-					
-					@endforeach
-					
-					
-					
-                  </div>
+					    @foreach($examBody->exams as $exam)
+						<div itemprop="itemListElement"  class="block block-rounded mb-1">
+							<a class="fw-semibold" data-bs-toggle="collapse" data-bs-parent="#{{$examBody->abbr}}" href="#{{$examBody->abbr}}_q{{$loop->iteration}}" aria-expanded="true" aria-controls="{{$examBody->abbr}}_q{{$loop->iteration}}">
+								  <div class="block-header block-header-default" role="tab" id="{{$examBody->abbr}}_h{{$loop->iteration}}">
+								 <span itemprop="name">  {{$exam->name}} -  Timetable </span>
+								 <link itemprop="url" href="{{route('timetable.show', ['exam' => $exam] )}}" />
+								
+								  </div>
+							</a>
+							
+							<div id="{{$examBody->abbr}}_q{{$loop->iteration}}" class="collapse" role="tabpanel" aria-labelledby="{{$examBody->abbr}}_h{{$loop->iteration}}" data-bs-parent="#{{$examBody->abbr}}">
+								<div class="block-content">
+									<p itemprop="description"> {{$exam->description}}</p>
+								  
+									<a class="btn btn-info rounded-0 " href="{{route('timetable.show', ['exam' => $exam] )}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View Timetable</a>
+								
+								</div>
+							</div>
+						</div>
+						
+						@endforeach
+				
+					</div>
                 </div>
               </div>
+			  </div>
               <!-- END Timetable -->
 
               @endforeach
@@ -78,7 +86,7 @@
               
             </div>
           </div>
-          <!-- END Frequently Asked Questions -->
+         
         </div>
         <!-- END Page Content -->
 
