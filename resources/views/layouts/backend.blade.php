@@ -104,42 +104,25 @@
                   Latest News
                 </div>
                 <ul class="nav-items my-2">
+				
+				@foreach($news as $story)
                   <li>
-                    <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                      <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-danger"></i>
-                      </div>
-                      <div class="flex-grow-1 fs-sm pe-2">
-                        <div class="fw-semibold">You’ve made a payment of $49 to Adobe Inc.</div>
-                        <div class="text-muted">5 min ago</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                      <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-danger"></i>
-                      </div>
-                      <div class="flex-grow-1 fs-sm pe-2">
-                        <div class="fw-semibold">Recurring payment of $29 to Dropbox was successful.</div>
-                        <div class="text-muted">30 min ago</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="d-flex text-dark py-2" href="javascript:void(0)">
+                    <a class="d-flex text-dark py-2" href="{{route('news.show',['news' => $story])}}">
                       <div class="flex-shrink-0 mx-3">
                         <i class="fa fa-fw fa-coins text-success"></i>
                       </div>
                       <div class="flex-grow-1 fs-sm pe-2">
-                        <div class="fw-semibold">Incoming payment of <strong>$499</strong> from John Taylor!</div>
-                        <div class="text-muted">2 hrs ago</div>
+                        <div class="fw-semibold">{{$story->title}}</div>
+                        <div class="text-muted">{{$story->created_at->diffForHumans()}}</div>
                       </div>
                     </a>
                   </li>
+				  @endforeach
+				  
+                  
                 </ul>
                 <div class="p-2 border-top text-center">
-                  <a class="btn btn-alt-primary w-100" href="javascript:void(0)">
+                  <a class="btn btn-alt-primary w-100" href="{{route('news.index')}}">
                     <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View All
                   </a>
                 </div>

@@ -52,7 +52,7 @@ class SitemapController extends Controller
             $sitemap->add(Url::create(route('programs.index', ['level' => $level])));
 
             foreach ($level->__programs()->get() as $program) {
-                $sitemap->add(Url::create(route('programs.show', ['level' => $level, 'program' => $program])));
+                $sitemap->add(Url::create(route('programs.show', ['level' => $level, 'program' => $program]))->setLastModificationDate($program->pivot->updated_at));
                 $sitemap->add(Url::create(route('programs.institutions', ['level' => $level, 'program' => $program])));
             }
         }
@@ -86,16 +86,16 @@ class SitemapController extends Controller
 
         foreach ($institutions as $institution) {
            
-		    $sitemap->add(Url::create(route('institutions.show', ['institution' => $institution]))->setLastModificationDate(Carbon::yesterday()));
+		    $sitemap->add(Url::create(route('institutions.show', ['institution' => $institution]))->setLastModificationDate($institution->updated_at));
              
 			 if($institution->news()->exists()){
 				$sitemap->add(Url::create(route('institutions.news', ['institution' => $institution])));
              }
             foreach ($levels as $level) {
-                foreach ($institution->programs()->wherePivot('level_id', $level->id)->with('college')->get() as $program) {
+                foreach ($institution->programs()->wherePivot('level_id', $level->id)->get() as $institution_program) {
                     $sitemap->add(Url::create(route('institutions.programs', ['institution' => $institution, 'level' => $level])));
-                    $sitemap->add(Url::create(route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program]))->setLastModificationDate(Carbon::yesterday()));
-                    $sitemap->add(Url::create(route('institutions.program.levels', ['institution' => $institution, 'program' => $program])));
+                    $sitemap->add(Url::create(route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $institution_program]))->setLastModificationDate($institution_program->pivot->updated_at));
+                    $sitemap->add(Url::create(route('institutions.program.levels', ['institution' => $institution, 'program' => $institution_program])));
                 }
             }
         }
@@ -117,7 +117,7 @@ class SitemapController extends Controller
 		
 		// news/{news}
 		foreach ($news as $story) {
-            $sitemap->add(Url::create(route('news.show', ['news' => $story]))->setLastModificationDate(Carbon::yesterday()));
+            $sitemap->add(Url::create(route('news.show', ['news' => $story]))->setLastModificationDate($story->updated_at));
         }
 		
 		/* Only canonical news is featured in sitemap (Other news duplicates are exempted) , newsCategories is also exempted */
@@ -126,7 +126,7 @@ class SitemapController extends Controller
 		$sitemap->add(Url::create(route('timetable.index')));
 		
 		foreach ($exams as $exam) {
-            $sitemap->add(Url::create(route('timetable.show', ['exam' => $exam]))->setLastModificationDate(Carbon::yesterday()));
+            $sitemap->add(Url::create(route('timetable.show', ['exam' => $exam]))->setLastModificationDate($exam->updated_at));
         }
 		
 		

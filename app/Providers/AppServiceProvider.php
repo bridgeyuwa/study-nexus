@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
 use App\Models\CategoryClass;
 use App\Models\Level;
+use App\Models\News;
 use Illuminate\Support\Facades\Cache;
 
 class AppServiceProvider extends ServiceProvider
@@ -43,6 +44,18 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
 			'categoryClasses' => $categoryClasses,
 			'levels' => $levels
+			]);
+        });
+		
+		
+		View::composer('layouts.backend', function ($view) {
+            
+            $news = Cache::rememberForever('latest_news', function () {
+                return News::select('id','title','created_at')->orderBy('created_at','desc')->take(5)->get();
+            });
+			
+            $view->with([
+			'news' => $news
 			]);
         });
 	   

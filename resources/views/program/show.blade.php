@@ -92,7 +92,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 								</span>
 								<div class="fw-semibold">Average Duration</div>
 								<div class=""> @if(!empty($program->pivot->duration)){{$program->pivot->duration}} Years @else N/A @endif</div>
-								<meta itemprop="timeToComplete" content="P{{$program->duration}}Y" />
+								<meta itemprop="timeToComplete" content="P{{$program->pivot->duration}}Y" />
 							</li>
 							<li class="mb-1">
 								<span class="fa-li text-primary">

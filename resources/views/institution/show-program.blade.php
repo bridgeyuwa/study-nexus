@@ -156,6 +156,7 @@ use Illuminate\Support\Number;
                 
                     <span itemprop="description">
                          {!! $institution_program->pivot->description !!}  
+						 
                     </span>
 
                 </div>

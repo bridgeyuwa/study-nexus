@@ -10,7 +10,9 @@ class Timetable extends Model
     use HasFactory;
 	
 	protected $casts = [ 
-	'exam_date' => 'date'
+	'exam_date' => 'datetime:Y-m-d',
+	'start_time' => 'datetime',
+	'end_time' => 'datetime'
 
 	];
 	

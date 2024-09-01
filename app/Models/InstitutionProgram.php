@@ -12,10 +12,10 @@ class InstitutionProgram extends Pivot
     protected $table = 'institution_program';
 	
     protected $casts = [
-	
+	'updated_at' => 'datetime',
 	'requirements' => SchemalessAttributes::class,
-	'accreditation_grant_date' => 'date',
-	'accreditation_expiry_date' => 'date',
+	'accreditation_grant_date' => 'datetime:Y-m-d',
+	'accreditation_expiry_date' => 'datetime:Y-m-d',
 	];
 	
 	

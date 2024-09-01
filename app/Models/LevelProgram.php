@@ -14,6 +14,7 @@ class LevelProgram extends Pivot
 	
     protected $casts = [
 	
+	'updated_at' => 'datetime',
 	'requirements' => SchemalessAttributes::class,
 	
 	];
