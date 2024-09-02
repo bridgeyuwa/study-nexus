@@ -14,7 +14,7 @@ class SyllabusController extends Controller
     {
         // Cache the exam bodies for 60 minutes
         $examBodies = Cache::remember('exam_bodies_index', 60, function () {
-            return ExamBody::all();
+            return ExamBody::whereHas('syllabi')->get();
         });
 		
 		$SEOData = new SEOData(

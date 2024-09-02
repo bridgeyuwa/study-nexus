@@ -97,7 +97,7 @@
             <div class="dropdown d-inline-block">
               <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-fw fa-rss"></i>
-                <span class="badge bg-success rounded-pill">3</span>
+                <span class="badge bg-info rounded-pill">News</span>
               </button>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
                 <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
@@ -130,31 +130,7 @@
             </div>
             <!-- END Notifications Dropdown -->
 
-            <!-- User Dropdown -->
-            <div class="dropdown d-inline-block">
-              <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="far  fa-comments"></i>
-                <span class="fw-light fs-sm">Forum</span>
-              </button>
-              <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
-                <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="">
-                  <div class="pt-2">
-                    <a class="text-white fw-semibold" href="be_pages_generic_profile.html">Henry Harrison</a>
-                  </div>
-                </div>
-                <div class="p-2">
-                  <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-cog me-1"></i> Settings
-                  </a>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="op_auth_signin.html">
-                    <i class="fa fa-fw fa-arrow-alt-circle-left me-1"></i> Log Out
-                  </a>
-                </div>
-              </div>
-            </div>
-            <!-- END User Dropdown -->
+            
           </div>
           <!-- END Right Section -->
         </div>

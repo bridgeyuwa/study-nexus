@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->unsignedBiginteger('state_id');
 			$table->string('address');
 			$table->string('locality');
-			$table->integer('postal_code');
+			$table->integer('postal_code')->nullable();
 			
 			
 			$table->string('url')->nullable();

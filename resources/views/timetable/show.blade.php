@@ -48,19 +48,19 @@ use Carbon\Carbon;
 						
 						</div>
 						
-						<h1  class=" fw-light text-white mt-3">
-						Timetable For {{$exam->type}} {{$exam->year}}
+						<h1  class="h3 fw-light text-white mt-3">
+					       {{$exam->name}} TIMETABLE
 						</h1>
 						
 						<div class="mt-3">
 							<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
-								 <span itemprop="name"> 2nd May </span>
+								 <span itemprop="name"> {{$exam->timetables->min('exam_date')->format('jS M')}} </span>
 							</span>
 							
 							<span class="text-white">to</span>
 						   
 							<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
-								 25th June
+								{{$exam->timetables->max('exam_date')->format('jS M')}}
 							</span>
 							
 							<span class="text-white">{{$exam->year}}</span>
@@ -84,13 +84,14 @@ use Carbon\Carbon;
 
 <!-- Page Content -->
         <div itemscope itemtype="https://schema.org/ItemList" class="content">
-		
+			<meta itemprop="name" content="{{$exam->name}}">  
+			<link itemprop="url" href="{{url()->current()}}" >
+			<link itemprop="sameAs" href="{{$exam->timetable_url}}" />  
           <!-- Frequently Asked Questions -->
           <div class="block block-rounded">
             <div class="block-header block-header-default">
-              <h3 itemprop="name" class="block-title"> {{$exam->name}} </h3>
-			  <link itemprop="url" href="{{url()->current()}}" >
-			  <link itemprop="sameAs" href="{{$exam->timetable_url}}" />
+              <h3 class="block-title"> Timetable </h3>
+			  
 			</div>
 			
             <div class="block-content">
@@ -133,8 +134,8 @@ use Carbon\Carbon;
               <h2 class="content-heading {{$dateClass}}"> <i class="fas fa-calendar-day"></i> {{$examDate->format('l, jS F, Y')}} {{$day}}</h2>
               <div class="row items-push">
                 <div class="col-lg-4">
-				 
-                 -
+				(<em>{{$exam->remarks}}</em>)
+                 
                 </div>
                 <div class="col-lg-8">
                   
@@ -193,17 +194,15 @@ use Carbon\Carbon;
 					
 					
 						@if( Carbon::now()->isBefore($timetable->start_time))
-							<span class="text-primary"> <i class="fas fa-calendar"></i> Upcoming </span> ({{$timetable->start_time->diffForHumans()}})
+							<span class="text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="This exam is upcoming"> <i class="fas fa-calendar"></i> Upcoming </span> ({{$timetable->start_time->diffForHumans()}})
 						
 						@elseif( Carbon::now()->isBetween($timetable->start_time, $timetable->end_time ))
-							<span class="text-success"> <i class="fas fa-circle-play"></i> Ongoing </span> 
+							<span class="text-success" data-bs-toggle="tooltip" data-bs-placement="top" title="This exam in currently ongoing"> <i class="fas fa-circle-play"></i> Ongoing </span> 
 						
 						@else
-							<span class="text-danger"> <i class="fas fa-calendar-xmark "></i> Past </span> ({{$timetable->end_time->diffForHumans()}})
+							<span class="text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="This exam has already passed"> <i class="fas fa-calendar-xmark "></i> Past </span> ({{$timetable->end_time->diffForHumans()}})
 						
 					     @endif
-					
-					
 						  
 						<link itemprop="url" href="{{url()->current()}}" >
 						<link itemprop="sameAs" href="{{$exam->timetable_url}}" />

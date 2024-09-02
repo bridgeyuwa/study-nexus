@@ -17,8 +17,15 @@ class TimetableController extends Controller
     {
         // Cache the exam bodies with their exams for 60 minutes
         $examBodies = Cache::remember('exam_bodies_with_exams', 60, function () {
-            return ExamBody::with(['exams'])->get();
+			//load on ExamBodies with Exam
+            return ExamBody::whereHas('exams.timetables')->with(['exams' => function($query){
+				//load only Exams with timetable
+				$query->whereHas('timetables');
+			}])->get();
+			
         });
+		
+		//dd($examBodies->toArray());
 		
 		$SEOData = new SEOData(
             title: "Exams Timetables",
@@ -43,7 +50,7 @@ class TimetableController extends Controller
 		});
 		
 		$SEOData = new SEOData(
-            title: "{$exam->name} Timetable",
+            title: "Timetable | {$exam->name}",
             description: "View the full timetable for {$exam->name}, including exam dates and subjects.",
         );
 

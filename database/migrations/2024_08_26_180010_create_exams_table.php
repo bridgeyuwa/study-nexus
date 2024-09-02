@@ -20,6 +20,7 @@ return new class extends Migration
 			$table->year('year');
 			$table->string('type');
 			$table->text('description')->nullable();
+			$table->string('remarks')->nullable();
 			$table->string('timetable_url');
 			
             $table->timestamps();
