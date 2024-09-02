@@ -39,9 +39,14 @@
 			@foreach($examBodies as $examBody)
               <!-- Timetable -->
 			  <div itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationalOrganization">
-              <h2 class="content-heading"> <span itemprop="name">{{$examBody->name}}</span>  <span itemprop="alternateName"> ({{$examBody->abbr}})</span></h2>
+				<h2 class="content-heading"> 
+				@if(!empty($examBody->logo)) <img  src="{{$examBody->logo}}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
+					<span itemprop="name">{{$examBody->name}}</span>  <span itemprop="alternateName"> ({{$examBody->abbr}})</span>
+				</h2>
               <div class="row items-push">
                 <div class="col-lg-4">
+				     
+				
                     <p itemprop="description" class="text-muted">
 						{{$examBody->description}}
                     </p>
@@ -66,9 +71,7 @@
 							<div id="{{$examBody->abbr}}_q{{$loop->iteration}}" class="collapse" role="tabpanel" aria-labelledby="{{$examBody->abbr}}_h{{$loop->iteration}}" data-bs-parent="#{{$examBody->abbr}}">
 								<div class="block-content">
 									<p itemprop="description"> {{$exam->description}}</p>
-								  
-									<a class="btn btn-info rounded-0 " href="{{route('timetable.show', ['exam' => $exam] )}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View Timetable</a>
-								
+									<a class="btn btn-primary" href="{{route('timetable.show', ['exam' => $exam] )}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View Timetable</a>
 								</div>
 							</div>
 						</div>

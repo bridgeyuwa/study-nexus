@@ -56,7 +56,8 @@
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">
-                       <span itemprop="name"> {{$examBody->abbr}} Syllabus #2024</span>
+						@if(!empty($examBody->logo))<img  src="{{$examBody->logo}}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
+						<span itemprop="name"> {{$examBody->abbr}} Syllabus</span>
                       </div>                      
                       
                     </div>

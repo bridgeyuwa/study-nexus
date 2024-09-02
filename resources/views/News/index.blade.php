@@ -5,24 +5,24 @@
 <span itemscope itemtype="https://schema.org/CollectionPage">
 <link itemprop="url" content="{{ url()->current() }}" >
  <!-- Hero -->
-        <div class="bg-image" style="background-image: url('assets/media/photos/photo21@2x.jpg');">
-          <div class="bg-black-50">
+        <div class="bg-image bg-studynexus-hero" >
+          <div class="bg-black-75">
             <div class="content content-top content-full text-center">
-              <h1 class="fw-bold text-white mt-5 mb-2">
-               StudyNexus News
-              </h1>
+			
+			<div class="display-6 text-white">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
+            
 				<div class="d-flex justify-content-center mt-3"> 
 					@if(!empty($institution))
 					 <i class="fa fa-tag text-white display-6 me-2"></i> 
-					 <h3 itemprop="alternativeHeadline" itemprop="headline" class="fw-normal text-white-75 my-auto">
+					 <h1 itemprop="alternativeHeadline" itemprop="headline" class="h3 fw-normal text-white-75 my-auto">
 							{{$institution->name}} News
-					 </h3>
+					 </h1>
 					@elseif(!empty($newsCategory))
 					
 					<i class="fa fa-tag text-white display-6 me-2"></i> 
-					 <h3 itemprop="alternativeHeadline" class="fw-normal text-white-75 bg-danger my-auto">
+					 <h1 itemprop="alternativeHeadline" class="h3 fw-light text-white my-auto">
 							{{$newsCategory->name}} News
-					 </h3>
+					 </h1>
 					  @endif
 					 
 				</div>

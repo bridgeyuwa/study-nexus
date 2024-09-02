@@ -16,20 +16,20 @@ use Illuminate\Support\Number;
               <div class="row">
 			    @if(!empty($institution->logo))
 				
-			    <div class="col-md-4 d-flex align-items-center">
-                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
-                    <div class="block-content block-content-full px-2 py-2">
+			    <div class="col-md-2 d-flex align-items-center">
+                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto"  style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+                    <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
+                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" style="width: 100px; height: 100px; object-fit: cover;">
                       <link itemprop="logo" href="{{$institution->logo}}">
                     </div>
                   </div>
                 </div>
 				@endif
 				
-                <div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
+                <div class=" @if(!empty($institution->logo)) col-md-10 @endif d-flex align-items-center pt-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
-						<h1 class="fw-light text-white mb-1 "> 
+						<h1 class="h2 fw-light text-white mb-1 "> 
 						<span itemprop="name">{{$institution->name}}</span> 
 						@if(!empty($institution->abbr))
 							<span class="text-white-75">({{$institution->abbr}})</span>
@@ -39,7 +39,7 @@ use Illuminate\Support\Number;
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
 						  
-						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md  fw-light text-white-75 mb-1">
+						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md fw-light text-white-75 mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
 							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}} </span>- @endif  <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">
@@ -53,7 +53,7 @@ use Illuminate\Support\Number;
                 </div>
               </div>
             </div>
-          </div>
+        </div>
 		  @if($institution->news->isNotEmpty())
 		  <div class="d-flex justify-content-end py-1">
 			

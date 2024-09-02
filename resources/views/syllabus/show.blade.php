@@ -8,22 +8,22 @@
 <!-- Hero  -->
         <div itemprop="provider"  itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
-            <div class="content content-boxed content-full py-5 pt-7">
+            <div class="content content-boxed content-full pt-7">
               <div class="row">
 			    @if(!empty($examBody->logo))
 				
-			    <div class="col-md-4 d-flex align-items-center">
-                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
-                    <div class="block-content block-content-full px-2 py-2">
+			    <div class="col-md-2 d-flex align-items-center">
+                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+                    <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{$examBody->logo}}" alt="{{$examBody->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
+                      <img  src="{{$examBody->logo}}" alt="{{$examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
                       <link itemprop="logo" href="{{$examBody->logo}}">
                     </div>
                   </div>
                 </div>
 				@endif
 				
-                <div class=" @if(!empty($examBody->logo)) col-md-8 @endif d-flex align-items-center py-3">
+                <div class=" @if(!empty($examBody->logo)) col-md-10 @endif d-flex align-items-center pt-3">
 					 <div class="w-100 text-center @if(!empty($examBody->logo)) text-md-start @endif">
 						<div class="h3 fw-light text-white mb-1 "> 
 						<span itemprop="name">{{$examBody->name}}</span> 
@@ -43,7 +43,7 @@
 						
 						</div>
 						
-						<h1 class="fw-light text-white mt-5 mb-1">
+						<h1 class="h3 fw-light text-white mt-3 mb-1">
 							 {{$syllabus->name}}
 						</h1>
 						

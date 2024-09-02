@@ -4,11 +4,15 @@
 @section('content')
 <span itemscope itemtype="https://schema.org/NewsArticle">
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('assets/media/photos/photo22@2x.jpg');">
+        <div class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
-				<h1 class="fw-bold text-white mt-5 mb-2">
-					<span itemprop="headline"> {{$news->title}} </span>
+			
+			<div class="display-6 text-white">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
+            
+			
+				<h1 class="h2 fw-light text-white mt-3 mb-2">
+					<span itemprop="name"> {{$news->title}} </span>
 				</h1>
 				 
 				<link itemprop="url" content="{{ url()->current() }}" >

@@ -7,10 +7,14 @@
 @section('content')
 
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('assets/media/photos/photo21@2x.jpg');">
-          <div class="bg-black-50">
+        <div class="bg-image bg-studynexus-hero">
+          <div class="bg-black-75">
             <div class="content content-top content-full text-center">
-              <h1 class="fw-bold text-white mt-5 mb-2">
+			
+			<div class="display-6 text-white">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
+            
+			
+              <h1 class="h2 fw-light text-white mt-3 mb-2">
               All StudyNexus News Categories
               </h1>
 				
@@ -32,7 +36,7 @@
 		  @foreach( $newsCategories as $alphabet => $newsCategories )
             <div class="col-md-6">
               <div class="block block-rounded">
-                <div class="block-header block-header-default">
+                <div class="block-header block-header-default bg-studynexus-cubes">
                   <h3 class="block-title">{{$alphabet}} <small>Subtitle</small></h3>
                 </div>
                 <div class="block-content">

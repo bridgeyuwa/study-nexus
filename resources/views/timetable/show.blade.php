@@ -12,22 +12,22 @@ use Carbon\Carbon;
 <!-- Hero  -->
         <div itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
-            <div class="content content-boxed content-full py-5 pt-7">
+            <div class="content content-boxed content-full pt-7">
               <div class="row">
 			    @if(!empty($exam->examBody->logo))
 				
-			    <div class="col-md-4 d-flex align-items-center">
-                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
-                    <div class="block-content block-content-full px-2 py-2">
+			    <div class="col-md-2 d-flex align-items-center">
+                  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+                    <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{$exam->examBody->logo}}" alt="{{$exam->examBody->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
+                      <img  src="{{$exam->examBody->logo}}" alt="{{$exam->examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
                       <link itemprop="logo" href="{{$exam->examBody->logo}}">
                     </div>
                   </div>
                 </div>
 				@endif
 				
-                <div class=" @if(!empty($exam->examBody->logo)) col-md-8 @endif d-flex align-items-center py-3">
+                <div class=" @if(!empty($exam->examBody->logo)) col-md-10 @endif d-flex align-items-center pt-3">
 					<div class="w-100 text-center @if(!empty($exam->examBody->logo)) text-md-start @endif">
 						<div class="h3 fw-light text-white mb-1 "> 
 						<span itemprop="name">{{$exam->examBody->name}}</span> 
@@ -53,13 +53,13 @@ use Carbon\Carbon;
 						</h1>
 						
 						<div class="mt-3">
-							<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+							<span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
 								 <span itemprop="name"> {{$exam->timetables->min('exam_date')->format('jS M')}} </span>
 							</span>
 							
 							<span class="text-white">to</span>
 						   
-							<span class="badge rounded-pill bg-primary fs-base px-3 py-2 m-1">
+							<span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
 								{{$exam->timetables->max('exam_date')->format('jS M')}}
 							</span>
 							

@@ -12,24 +12,24 @@ use Illuminate\Support\Number;
 		<!-- Hero  -->
         <div itemprop="provider" itemscope itemtype="https://schema.org/CollegeOrUniversity" class="bg-image bg-studynexus-hero" >
 			<div  class="bg-black-75">
-				<div class="content content-boxed content-full py-5 pt-7">
+				<div class="content content-boxed content-full pt-7">
 				    <div class="row">
 							@if(!empty($institution->logo))
 							
-							<div class="col-md-4 d-flex align-items-center">
-							  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" href="be_pages_jobs_apply.html" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
-								<div class="block-content block-content-full px-2 py-2">
+							<div class="col-md-2 d-flex align-items-center">
+							  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto"  style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
+								<div class="block-content block-content-full px-1 py-1">
 								
-								  <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" class="" style="width: 150px; height: 150px; object-fit: cover;">
+								  <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" style="width: 100px; height: 100px; object-fit: cover;">
 								  <link itemprop="logo" href="{{$institution->logo}}">
 								</div>
 							  </div>
 							</div>
 							@endif
 							
-						<div class=" @if(!empty($institution->logo)) col-md-8 @endif d-flex align-items-center py-3">
+						<div class=" @if(!empty($institution->logo)) col-md-10 @endif d-flex align-items-center pt-3">
 							<div class="w-100 text-center @if(!empty($institution->logo))text-md-start @endif">
-									<h1 class="fw-light text-white mb-1">  <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </h1>
+									<h1 class="h2 fw-light text-white mb-1">  <span itemprop="name">{{$institution->name}} </span> @if(!empty($institution->abbr))<span class="text-white-75">({{$institution->abbr}})</span>@endif </h1>
 									  
 									<link itemprop="url" href="{{url()->current()}}">
 									<link itemprop="sameAs" href="{{$institution->url}}">
@@ -46,7 +46,7 @@ use Illuminate\Support\Number;
 									@if(!empty($institution->slogan))( <i itemprop="slogan">{{$institution->slogan}}</i> ) @endif
 									</div>
 									
-									<h2 class="h3 fw-light text-white"> 
+									<h2 class="h3 fw-light text-white mb-0"> 
 											{{$program->name}} <span class="h4 fw-light text-white-75" >({{$level->name}}@if(!empty($level->abbr))({{$level->abbr}})@endif)</span> 
 									</h2>
 							</div>
