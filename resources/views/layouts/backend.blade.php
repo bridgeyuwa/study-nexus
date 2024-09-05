@@ -7,7 +7,7 @@
 
      <!-- laravel-seo here -->
      @isset($SEOData) {!! seo($SEOData) !!} @endisset
-	 
+	@isset($canonical) <link rel="canonical" href="{{$canonical}}" > @endisset
 	 <!-- Schema -->
     
   <!-- CSRF Token -->

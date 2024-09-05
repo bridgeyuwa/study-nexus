@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('former_name')->nullable();
             $table->string('abbr')->nullable();
             $table->text('description')->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
 			$table->integer('postal_code')->nullable();
 			
             $table->string('email')->nullable();
-            $table->integer('rank')->nullable();
+            $table->integer('rank')->nullable()->index();
             $table->timestamps();
         });
     }

@@ -9,18 +9,18 @@
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
 			
-			<div class="display-6 text-white">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
+			<div class="display-6 text-white mt-5">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
             
 				<div class="d-flex justify-content-center mt-3"> 
 					@if(!empty($institution))
 					 <i class="fa fa-tag text-white display-6 me-2"></i> 
-					 <h1 itemprop="alternativeHeadline" itemprop="headline" class="h3 fw-normal text-white-75 my-auto">
+					 <h1 itemprop="alternativeHeadline" itemprop="headline" class="h3 text-white my-auto">
 							{{$institution->name}} News
 					 </h1>
 					@elseif(!empty($newsCategory))
 					
 					<i class="fa fa-tag text-white display-6 me-2"></i> 
-					 <h1 itemprop="alternativeHeadline" class="h3 fw-light text-white my-auto">
+					 <h1 itemprop="alternativeHeadline" class="h3 text-white my-auto">
 							{{$newsCategory->name}} News
 					 </h1>
 					  @endif
@@ -73,7 +73,7 @@
                         </h4>
                         <div class="fs-sm mb-2">
                           <span itemprop="author" itemscope itemtype="https://schema.org/Person" class="text-muted">
-								<span itemprop="name"> StudyNexus </span>
+								<span itemprop="name"> Study Nexus </span>
 								<link itemprop="url" href="{{route('about')}}"> 
 						  </span> 
 						  
@@ -88,13 +88,13 @@
 						
 						<div>
 						@if($story->institution)
-						<button class="btn btn-sm btn-outline-dark rounded-0 mb-1 fw-light" disabled >
+						<button class="btn btn-sm btn-outline-dark rounded-0 mb-1" disabled >
 						 <span itemprop="keywords"> {{$story->institution->name}}</span>
 						  </button>
 						  @endif
 						
 						@foreach($story->newsCategories as $storyCategory)
-						  <button class="btn btn-sm btn-outline-dark rounded-0 mb-1 fw-light" disabled >
+						  <button class="btn btn-sm btn-outline-dark rounded-0 mb-1" disabled >
 						 <i class="si si-tag text-black"></i> <span itemprop="keywords">{{$storyCategory->name}}</span>
 						  </button>
 						@endforeach

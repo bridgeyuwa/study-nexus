@@ -29,17 +29,17 @@ use Illuminate\Support\Number;
 				
                 <div class=" @if(!empty($institution->logo)) col-md-10 @endif d-flex align-items-center pt-3">
 					 <div class="w-100 text-center @if(!empty($institution->logo)) text-md-start @endif">
-						<h1 class="h2 fw-light text-white mb-1 "> 
+						<h1 class="h2 text-white mb-1 "> 
 						<span itemprop="name">{{$institution->name}}</span> 
 						@if(!empty($institution->abbr))
-							<span class="text-white-75">({{$institution->abbr}})</span>
+							<span class="fw-light">({{$institution->abbr}})</span>
 						@endif 
 						</h1>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$institution->url}}">
 						  
-						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-md fw-light text-white-75 mb-1">
+						<h2 itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fw-light text-white mb-1">
 							<meta itemprop="streetAddress" content="{{$institution->address}}">
 							@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}} </span>- @endif  <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif </span> 
 						     <meta itemprop="postalCode" content="{{$institution->postal_code}}">

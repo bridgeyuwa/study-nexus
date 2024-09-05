@@ -24,18 +24,18 @@
    <div class="block block-rounded">
                           
         <div class=" p-4 rounded-3 shadow-sm">
-            <h1 class="fw-bold text-primary-dark mb-4">StudyNexus - Privacy Policy</h1>
+            <h1 class="fw-bold text-primary-dark mb-4">Study Nexus - Privacy Policy</h1>
 
             <section class="mb-4">
                 <h2 class="h3 text-primary-dark border-bottom pb-2 mb-3">Introduction</h2>
-                <p>Welcome to StudyNexus. We take your privacy seriously and are committed to protecting your personal information. This privacy policy explains how we collect, use, and share information when you visit our website or use our services.</p>
+                <p>Welcome to Study Nexus. We take your privacy seriously and are committed to protecting your personal information. This privacy policy explains how we collect, use, and share information when you visit our website or use our services.</p>
             </section>
 
             <section class="mb-4">
                 <h2 class="h3 text-primary-dark border-bottom pb-2 mb-3">Information Collection and Use</h2>
 
                 <h3 class="h4">Personal Information</h3>
-                <p>Personal Information refers to data that can identify you personally, such as your name, email address, phone number, and educational interests. You may be required to provide Personal Information when you register on StudyNexus, subscribe to our newsletter, fill out a contact form, or request information about educational institutions.</p>
+                <p>Personal Information refers to data that can identify you personally, such as your name, email address, phone number, and educational interests. You may be required to provide Personal Information when you register on Study Nexus, subscribe to our newsletter, fill out a contact form, or request information about educational institutions.</p>
 
                 <h3 class="h4">Non-Personal Information</h3>
                 <p>We automatically collect certain non-personally identifiable information when you visit our website, such as your IP address, browser type, operating system, referring URLs, and browsing behavior. This information helps us understand how users interact with our website and improve our services.</p>
@@ -61,7 +61,7 @@
                 <p>We may disclose your Personal Information in response to subpoenas, court orders, or other legal processes, or to establish or exercise our legal rights or defend against legal claims.</p>
 
                 <h3 class="h4">Business Transfers</h3>
-                <p>In the event that StudyNexus is acquired by or merged with another company, your information may be transferred to the new owners as part of the business transaction. You will be notified via email or a prominent notice on our website of any such change in ownership or control of your Personal Information.</p>
+                <p>In the event that Study Nexus is acquired by or merged with another company, your information may be transferred to the new owners as part of the business transaction. You will be notified via email or a prominent notice on our website of any such change in ownership or control of your Personal Information.</p>
 
                 <h3 class="h4">Advertising Partners</h3>
                 <p>We use third-party advertising companies, such as Google AdSense, to serve ads on our website. These companies may use cookies and other tracking technologies to collect information about your visits to our website and other sites to provide personalized advertisements. For more information on how Google AdSense collects and uses data, please refer to their privacy policy.</p>
@@ -71,7 +71,7 @@
                 <h2 class="h3 text-primary-dark border-bottom pb-2 mb-3">Cookies and Tracking Technologies</h2>
 
                 <h3 class="h4">Cookies</h3>
-                <p>StudyNexus uses cookies to enhance your experience on our website. Cookies are small text files that are stored on your device when you visit a website. They help us remember your preferences, understand how you use our site, and improve our services.</p>
+                <p>Study Nexus uses cookies to enhance your experience on our website. Cookies are small text files that are stored on your device when you visit a website. They help us remember your preferences, understand how you use our site, and improve our services.</p>
 
                 <h3 class="h4">Managing Cookies</h3>
                 <p>You can manage your cookie preferences through your browser settings. However, disabling cookies may affect the functionality of our website and your ability to use certain features.</p>
@@ -112,8 +112,7 @@
                 <h2 class="h3 text-primary-dark">Contact Us</h2>
                 <p>If you have any questions or concerns about this privacy policy, please contact us at:</p>
                 <p><strong>Email:</strong> <a href="mailto:privacy@studynexus.ng">privacy@studynexus.ng</a></p>
-                <p><strong>Address:</strong> StudyNexus, 65, 1st Ave, Efab City Estate, Life Camp, Abuja. 900108, Federal Capital Territory, Nigeria.</p>
-            </section>
+                </section>
         </div>
  
    </div>

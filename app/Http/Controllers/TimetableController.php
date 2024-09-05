@@ -20,7 +20,9 @@ class TimetableController extends Controller
 			//load on ExamBodies with Exam
             return ExamBody::whereHas('exams.timetables')->with(['exams' => function($query){
 				//load only Exams with timetable
-				$query->whereHas('timetables');
+				$query->whereHas('timetables')
+				->orderBy('year', 'desc')
+                ->orderBy('month', 'desc');
 			}])->get();
 			
         });

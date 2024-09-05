@@ -22,8 +22,8 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
         <div class="content content-full content-top text-center pt-7">
             <div class="row">
                 <div class="pt-4 pb-3">
-                    <h1 class="fw-light text-white mb-1 ">{{$program->name}}</h1>
-                    <h2 class="h4 fs-md  fw-light text-white-75 ">
+                    <h1 class="h2 text-white mb-1 ">{{$program->name}}</h1>
+                    <h2 class="h3 fw-light text-white mt-3">
                      {{$level->name}}
                     </h2>
                     

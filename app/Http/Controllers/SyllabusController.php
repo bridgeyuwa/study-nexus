@@ -29,7 +29,7 @@ class SyllabusController extends Controller
     {
         // Cache the syllabi and related subjects for the specific exam body
         $syllabi = Cache::remember("syllabi_exam_body_{$examBody->id}", 60, function () use ($examBody) {
-            return $examBody->syllabi()->with(['subject'])->get();
+            return $examBody->syllabi()->orderBy('name')->with(['subject'])->get();
         });
 		
 		$SEOData = new SEOData(

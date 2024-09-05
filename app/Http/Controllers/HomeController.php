@@ -80,7 +80,7 @@ $newFileContent = file_put_contents($newFilePath, $allSql);
         });
 
         $SEOData = new SEOData(
-            description: "Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic course programs, rankings, and more on Study Nexus."
+            description: "Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic programmes, rankings, News Updates and more on Study Nexus."
         );
 
         return view('home', compact('institutions', 'programs', 'categoryClasses', 'levels', 'SEOData'));

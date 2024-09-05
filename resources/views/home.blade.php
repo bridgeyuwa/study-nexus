@@ -1,5 +1,8 @@
 @extends('layouts.backend')
 
+@section('js_after')
+<script src="{{ asset('js/plugins/masonry.pkgd.min.js') }}"></script>
+@endsection
 
 @section('content')
 
@@ -8,15 +11,14 @@
      
         <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 bg-studynexus-cubes" >
 
-         
-         <div class="col-md-6  d-none d-md-block">
-               <br>
-            <div class="d-flex justify-content-center align-content-center">  
-                <img class="center-block " src="/media/photos/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
-             </div>
-          </div>
+			<div class="col-md-6  d-none d-md-block">
+				<br>
+				<div class="d-flex justify-content-center align-content-center">  
+					<img class="center-block " src="/media/photos/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
+				</div>
+			</div>
           
-
+			
 
           <div class="col-12 col-md-6">
             <div class="text-center d-block d-lg-none ">
@@ -27,7 +29,7 @@
             </div>
 
             <p class="lead">Explore the premium source for higher education information in Nigeria.</p>
-<p>Delve into our extensive database containing over 600 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings and insights into Institution programmes in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
+			<p>Delve into our extensive database containing over 600 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings and insights into Institution programmes in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
             
 
           <div class="d-flex justify-content-center pb-4">
@@ -168,28 +170,29 @@
 <!-- Explore -->
 <div class="container">
     <div class="p-3">
-        <div class="row">
-            <div class="col-md-6 d-flex">
-                <div class="block block-rounded flex-fill d-flex flex-column">
+        <div class="row" data-masonry='{"percentPosition": true }'>
+            <div class="col-md-6">
+                <div class="block block-rounded">
                     <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes" >
                         <h3 class="fw-light mb-1">Academic Programmes Library</h3>
                     </div>
-                    <div class="block-content mb-auto pb-2">
+                    <div class="block-content pb-2">
 					  @foreach($levels as $level)
                         <p class="mb-2"><i class="fa fa-graduation-cap me-2"></i><a href="{{route('programs.index', ['level' => $level])}}">{{$level->name}} @if(!empty($level->abbr)) ({{$level->abbr}}) @endif</a></p>
 						@endforeach
-					  </div>
+					 
+					</div>
 
                 </div>
             </div>
 
 
-            <div class="col-md-6 d-flex">
-                <div class="block block-rounded flex-fill d-flex flex-column">
+            <div class="col-md-6">
+                <div class="block block-rounded">
                     <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class=" fw-light mb-1">Academic Institutions Library</h3>
                     </div>
-                    <div class="block-content mb-auto pb-2">
+                    <div class="block-content pb-2">
 							
 						@foreach($categoryClasses as $categoryClass)
 							<p class="mb-2"><i class="fa fa-university me-2"></i><a href="{{route('institutions.categories.index', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name_plural}}</a></p>
@@ -203,12 +206,12 @@
                 </div>
             </div>
 
-            <div class="col-md-6 d-flex">
-                <div class="block block-rounded flex-fill d-flex flex-column">
+            <div class="col-md-6">
+                <div class="block block-rounded">
                     <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class="fw-light mb-1">Academic Institutions by Location</h3>
                     </div>
-                    <div class="block-content mb-auto pb-2">
+                    <div class="block-content pb-2">
 						@foreach($categoryClasses as $categoryClass)
                         <p class="mb-2"><i class="fa fa-map-location-dot me-2"></i><a href="{{route('institutions.categories.location', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Locations</a></p>
                         @endforeach
@@ -219,12 +222,12 @@
                 </div>
             </div>
 
-            <div class="col-md-6 d-flex">
-                <div class="block block-rounded flex-fill d-flex flex-column">
+            <div class="col-md-6">
+                <div class="block block-rounded">
                     <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class="fw-light mb-1">Academic Institution Rankings</h3>
                     </div>
-                    <div class="block-content mb-auto pb-2">
+                    <div class="block-content pb-2">
 						@foreach($categoryClasses as $categoryClass)
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Rankings</a></p>
                         @endforeach
@@ -234,12 +237,12 @@
             </div>
 			
 			
-			<div id="resources" class="col-md-6 d-flex">
-                <div class="block block-rounded flex-fill d-flex flex-column">
+			<div id="resources" class="col-md-6">
+                <div class="block block-rounded">
                     <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
                         <h3 class="fw-light mb-1">Exam Resources</h3>
                     </div>
-                    <div class="block-content mb-auto pb-2">
+                    <div class="block-content pb-2">
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="#">#Post-UTME updates</a></p>
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('syllabus.index')}}">Syllabuses <span class="text-dark fs-sm">(JAMB, WAEC, NECO, NABTEB etc...)</span></a></p>
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('timetable.index')}}">Timetables <span class="text-dark fs-sm">(WAEC, NECO, NABTEB etc...)</span></a></p>

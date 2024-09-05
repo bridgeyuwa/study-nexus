@@ -14,11 +14,11 @@ use Illuminate\Support\Number;
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="pt-4 pb-3">
-                <h1  itemprop="name"  ><a class="fw-light text-white mb-1" href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Rankings</a></h1>
+                <h1 itemprop="name"><a class="h2 text-white mb-1" href="{{route('institutions.categories.ranking', ['categoryClass' => $categoryClass])}}">{{$categoryClass->name}} Rankings</a></h1>
                 <meta itemprop="sameAs" content="https://webometrics.info/en/Africa/Nigeria">
 				<meta itemprop="url" content="{{url()->current()}}">
 
-                <h2 class="h4 fs-md  fw-light text-white-75 mb-1">
+                <h2 class="h3 text-white mb-1">
                     @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif - Nigeria @elseif(!empty($region)) {{$region->name}} - Nigeria @else Nigeria @endif
                 </h2>
 

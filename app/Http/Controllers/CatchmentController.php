@@ -9,7 +9,7 @@ use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Cache;
 
 class CatchmentController extends Controller
-{
+{ 
     public function index()
     {
         // Cache the regions and their catchments with institutions

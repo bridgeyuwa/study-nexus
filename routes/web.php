@@ -10,6 +10,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TimetableController;
 use App\Http\Controllers\SyllabusController;
+use App\Http\Controllers\StaticPageController;
 use App\Livewire\ContactForm;
 
 /* Home */
@@ -23,21 +24,13 @@ Route::get('/search', [SearchController::class, 'index'])->name('search');
 })->name('forum');
  
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::get('/about', [StaticPageController::class, 'about'])->name('about');
 
-Route::get('/terms-of-service', function () {
-    return view('terms');
-})->name('tos');
+Route::get('/terms-of-service', [StaticPageController::class, 'terms'])->name('tos');
 
-Route::get('/privacy-policy', function () {
-    return view('policy');
-})->name('policy');
+Route::get('/privacy-policy', [StaticPageController::class, 'policy'])->name('policy');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::get('/contact', [StaticPageController::class, 'contact'])->name('contact');
 
 
 /* Programs by Level */

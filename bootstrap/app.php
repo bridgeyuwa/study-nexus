@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
 		]);
 		
 		$middleware->redirectGuestsTo( fn()  => route('nova.login'));
+		
+		
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

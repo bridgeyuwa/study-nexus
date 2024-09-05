@@ -11,7 +11,7 @@
 			<div class="display-6 text-white">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
             
 			
-				<h1 class="h2 fw-light text-white mt-3 mb-2">
+				<h1 class="h2 text-white mt-3 mb-2">
 					<span itemprop="name"> {{$news->title}} </span>
 				</h1>
 				 

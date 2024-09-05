@@ -144,15 +144,15 @@ use Illuminate\Support\Number;
                         <div class="block block-header-default bg-image mb-0 fw-light"
                              style="background-image: url('media/photos/photo11.jpg');">
                             <div class="bg-black-75 text-center pt-3 pb-1">
-                                <div class="fs-5 fw-light text-white mb-0">{{$institution->name}}
-                                    @if(!empty($institution->abbr))({{$institution->abbr}}) @endif 
+                                <div class="h6 text-white mb-0">{{$institution->name}}
+                                    @if(!empty($institution->abbr)) <span class="fw-light">({{$institution->abbr}})</span> @endif 
                                 </div>
 
-                                @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span class="text-white-75 fw-light">{{$institution->former_name}}</span> </div> @endif 
+                                @if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span class="fw-light">{{$institution->former_name}}</span> </div> @endif 
 
-                                <div class=" text-white-75 mb-2 fs-sm">{{$institution->institutionType->name}}
-                                    {{$institution->category->name}}. <i
-                                        class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
+                                <div class=" text-white mb-2 fs-sm">{{$institution->institutionType->name}}
+                                    {{$institution->category->name}} 
+                                       <i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
 
                                     @if(!empty($institution->locality)) {{$institution->locality}} - @endif   {{$institution->state->name}}  @if(!empty($institution->state->is_state)) State @endif
 

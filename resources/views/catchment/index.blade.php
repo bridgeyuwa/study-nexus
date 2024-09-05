@@ -9,14 +9,14 @@
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
-                <h1 class="fw-light text-white mb-1">Federal Universities Catchments</h1>
+                <h1 class="h2 text-white mb-1">Federal Universities Catchments</h1>
 
-                  <h2 class="h4 fs-md  fw-light text-white-75 ">
-                     ( Locate Federal Universities by Catchment Area )
-                    </h2>
+                  <h2 class="h4 fw-light text-white ">
+                      Locate Federal Universities by Catchment Area
+                   </h2>
 
            
-            <h2 class="h3 fw-light text-white">Catchment Areas</h2>
+            <h2 class="h3 text-white">Catchment Areas</h2>
               </div>
             </div>
           </div>

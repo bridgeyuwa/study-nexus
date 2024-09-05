@@ -7,7 +7,7 @@
 			<div class="bg-black-75">
 				<div class="content content-full content-top text-center pt-7">
 					<div class="pt-4 pb-3">
-						<h1 class="fw-light text-white mb-1">
+						<h1 class="h2 text-white mb-1">
 							{{ !empty($categoryClass) ? $categoryClass->name_plural : 'Tertiary Institutions' }}
 							in {{ $state->name }}
 							{{ !empty($state->is_state) ? 'State' : '' }} - Nigeria
@@ -107,18 +107,18 @@
                             @endif
                             <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list" >
                                 <div class="bg-black-75 text-center p-3">
-                                    <div class="fs-5 text-white mb-1"> 
+                                    <div class="h6 text-white mb-1"> 
                                         <span itemprop="name">{{ $institution->name }}</span>
                                         @if(!empty($institution->abbr))
-                                        <span class="text-white-75">({{ $institution->abbr }})</span> 
+                                        <span class="fw-light">({{ $institution->abbr }})</span> 
                                         @endif 
                                     </div>
                                     @if(!empty($institution->former_name))
                                     <div class="text-white mb-2 fs-sm">
-                                        Formerly: <span itemprop="alternateName" class="text-white-75">{{ $institution->former_name }}</span>
+                                        Formerly: <span itemprop="alternateName"> {{ $institution->former_name }}</span>
                                     </div> 
                                     @endif  
-                                    <div class="fs-sm text-white-75 mb-0">
+                                    <div class="fs-sm text-white mb-0">
                                         {{ $institution->institutionType->name }} {{ $institution->category->name }}.
                                         <i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
                                         <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">  

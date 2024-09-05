@@ -140,7 +140,9 @@ class NewsController extends Controller
             description: $news->excerpt,
         );
 		
-        return view('news.show', compact('news','SEOData'));
+		$canonical = route('news.show', ['news' => $news]);
+		
+        return view('news.show', compact('news','SEOData','canonical'));
     }
 
     public function showByNewsCategory(NewsCategory $newsCategory, News $news)
@@ -156,7 +158,9 @@ class NewsController extends Controller
             description: $news->excerpt,
         );
 		
-        return view('news.show', compact('newsCategory', 'news','SEOData'));
+		$canonical = route('news.show', ['news' => $news]);
+		
+        return view('news.show', compact('newsCategory', 'news','SEOData','canonical'));
     }
 
     protected function readTime($content)

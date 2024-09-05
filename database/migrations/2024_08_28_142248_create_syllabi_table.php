@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('syllabi', function (Blueprint $table) {
             $table->id();
-			$table->string('name');
+			$table->string('name')->index();
 			$table->unsignedBigInteger('exam_body_id');
 			$table->unsignedBigInteger('subject_id');
 			$table->string('url');

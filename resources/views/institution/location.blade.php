@@ -9,19 +9,17 @@
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
 				@php
-					$categoryName = $categoryClass->name_plural ?? 'Tertiary Institutions';
+					$categoryName = $categoryClass->name_plural ?? 'Higher Institutions';
 				@endphp
 
-				<h1 class="fw-light text-white mb-1">
+				<h1 class="h2 text-white mb-1">
 					{{ $categoryName }} in Nigeria
 				</h1>
 				
-				<h2 class="h4 fs-md  fw-light text-white-75 ">
-					( Locate {{ $categoryName }} by Regions/State )
-				</h2>
+				
 
            
-            <h2 class="h3 fw-light text-white">Regions/States</h2>
+            <h2 class="h3 text-white fw-light mt-3"> by Regions/States</h2>
               </div>
             </div>
           </div>
@@ -114,7 +112,7 @@
 				<div class="block block-rounded">
 					<div class="block-header block-header-default bg-studynexus-cubes" >
 						<h3 class="block-title d-flex justify-content-between align-items-center">
-							{{ $region->name }} <span>{{ $region->institutions->count() }} Schools</span>
+							{{ $region->name }} <span >{{ $region->institutions->count() }} Schools</span>
 						</h3>
 					</div>
 					<div class="block-content">

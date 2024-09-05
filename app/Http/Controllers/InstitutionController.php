@@ -172,12 +172,24 @@ class InstitutionController extends Controller {
     public function institutionRanking(CategoryClass $categoryClass) {
 		
 			
-		$institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", now()->addHours(6), function() use ($categoryClass) {
+		/* $institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", now()->addHours(6), function() use ($categoryClass) {
 			return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
 				->with(['state.region', 'category.categoryClass', 'state.institutions', 'state.region.institutions'])
 				->orderByRaw('rank IS NULL, rank')
 				->paginate(100);
+		}); */
+		
+		
+		$institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", now()->addHours(6), function() use ($categoryClass) {
+			return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
+				->whereNotNull('rank') // Only include institutions with a rank
+				->with(['state.region', 'category.categoryClass', 'state.institutions', 'state.region.institutions'])
+				->orderBy('rank') // This sorts by rank in ascending order
+				->paginate(100);
 		});
+
+		
+		
 
 		$categoryClasses = Cache::rememberForever('categoryClasses', function() {
 			return CategoryClass::all();
@@ -199,8 +211,9 @@ class InstitutionController extends Controller {
 		$institutions = Cache::remember("state_ranking_for_category_{$categoryClass->id}_state_{$state->id}", now()->addHours(6), function() use ($categoryClass, $state) {
 			return Institution::where('state_id', $state->id)
 				->whereIn('category_id', $categoryClass->categories->pluck('id'))
+				->whereNotNull('rank') // Only include institutions with a rank
 				->with(['state.region', 'category.categoryClass', 'state.institutions', 'state.region.institutions'])
-				->orderByRaw('rank IS NULL, rank')
+				->orderBy('rank')
 				->paginate(100);
 		});
 
@@ -229,8 +242,9 @@ class InstitutionController extends Controller {
 			->whereHas('state.region', function($query) use ($region) {
 				$query->where('region_id', $region->id);
 			})
+			->whereNotNull('rank') // Only include institutions with a rank
 			->with(['state.region', 'state.institutions', 'category.categoryClass'])
-			->orderByRaw('rank IS NULL, rank')
+			->orderByRaw('rank')
 			->paginate(100);
 			
       });

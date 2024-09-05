@@ -7,8 +7,8 @@
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
            
-                <div class=" pt-4 pb-3">
-                    <h1 class="fw-light text-white mb-1">{{$level->name}} Programmes</h1>
+                <div class="pt-4 pb-3">
+                    <h1 class="h2 text-white mb-1">{{$level->name}} Programmes</h1>
                 </div>
 
                 
