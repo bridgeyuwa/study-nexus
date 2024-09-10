@@ -180,7 +180,7 @@ Breadcrumbs::for('news.newsCategory.show', function (BreadcrumbTrail $trail, $ne
 // List News by Institution
 Breadcrumbs::for('institutions.news', function (BreadcrumbTrail $trail, $institution) {
     $trail->parent('institutions.show', $institution );
-    $trail->push(strtoupper($institution->abbr) .' News', route('institutions.news', ['institution' => $institution]));
+    $trail->push('News', route('institutions.news', ['institution' => $institution]));
 });
 
 

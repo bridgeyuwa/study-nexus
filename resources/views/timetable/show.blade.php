@@ -29,17 +29,17 @@ use Carbon\Carbon;
 				
                 <div class=" @if(!empty($exam->examBody->logo)) col-md-10 @endif d-flex align-items-center pt-3">
 					<div class="w-100 text-center @if(!empty($exam->examBody->logo)) text-md-start @endif">
-						<div class="h3 fw-light text-white mb-1 "> 
+						<div class="h3 text-white mb-1 "> 
 						<span itemprop="name">{{$exam->examBody->name}}</span> 
 						@if(!empty($exam->examBody->abbr))
-							(<span itemprop="alternateName" class="text-white-75">{{$exam->examBody->abbr}}</span>)
+							(<span itemprop="alternateName" class="fw-light">{{$exam->examBody->abbr}}</span>)
 						@endif 
 						</div>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$exam->examBody->url}}">
 						  
-						<div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-sm  fw-light text-white-75 mb-1">
+						<div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-sm fw-light text-white mb-1">
 							<div itemprop="streetAddress"> {{$exam->examBody->address}} </div>
 							@if(!empty($exam->examBody->locality)) <span itemprop="addressLocality">{{$exam->examBody->locality}} </span>- @endif  <span itemprop="addressRegion">{{$exam->examBody->state->name}} @if(!empty($exam->examBody->state->is_state)) State @endif </span> 
 						  @if(!empty($exam->examBody->postal_code)) <meta itemprop="postalCode" content="{{$exam->examBody->postal_code}}"> @endif
@@ -48,7 +48,7 @@ use Carbon\Carbon;
 						
 						</div>
 						
-						<h1  class="h3 fw-light text-white mt-3">
+						<h1  class="h3 text-white mt-3">
 					       {{$exam->name}} TIMETABLE
 						</h1>
 						

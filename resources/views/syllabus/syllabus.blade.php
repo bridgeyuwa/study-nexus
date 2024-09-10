@@ -26,17 +26,17 @@
 				
                 <div class=" @if(!empty($examBody->logo)) col-md-10 @endif d-flex align-items-center py-3">
 					 <div class="w-100 text-center @if(!empty($examBody->logo)) text-md-start @endif">
-						<div class="h3 fw-light text-white mb-1 "> 
+						<div class="h3  text-white mb-1 "> 
 						<span itemprop="name">{{$examBody->name}}</span> 
 						@if(!empty($examBody->abbr))
-							(<span itemprop="alternateName" class="text-white-75">{{$examBody->abbr}}</span>)
+							(<span itemprop="alternateName" class="fw-light">{{$examBody->abbr}}</span>)
 						@endif 
 						</div>
                           
 						  <link itemprop="url" href="{{url()->current()}}">
 						  <link itemprop="sameAs" href="{{$examBody->url}}">
 						  
-						<div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-sm  fw-light text-white-75 mb-1">
+						<div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" class="h4 fs-sm  fw-light text-white mb-1">
 							<div itemprop="streetAddress"> {{$examBody->address}} </div>
 							@if(!empty($examBody->locality)) <span itemprop="addressLocality">{{$examBody->locality}} </span>- @endif  <span itemprop="addressRegion">{{$examBody->state->name}} @if(!empty($examBody->state->is_state)) State @endif </span> 
 						  @if(!empty($examBody->postal_code)) <meta itemprop="postalCode" content="{{$examBody->postal_code}}"> @endif
@@ -45,8 +45,8 @@
 						
 						</div>
 						
-						<h1 class="h3 fw-light text-white mt-3 mb-0">
-								List of Syllabi for {{$examBody->abbr}} Examination
+						<h1 class="h3 text-white mt-3 mb-0">
+								Syllabus for {{$examBody->abbr}} Examination
 						</h1>
 						
 					 </div>
@@ -97,7 +97,7 @@
             <!-- Programme Levels -->
             <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog"  class="block block-rounded">
 			
-			<meta itemprop="name" content="List of Syllabi for {{$examBody->abbr}} Exam">
+			<meta itemprop="name" content="Syllabus for {{$examBody->abbr}} Exam">
 
 			
                 <div class="block-content">

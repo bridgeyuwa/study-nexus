@@ -7,7 +7,7 @@
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-7">
               <div class="pt-4 pb-3">
-                <h1 class="fw-light text-white mb-1">
+                <h1 class="text-white mb-1">
 
                  Syllabi
 

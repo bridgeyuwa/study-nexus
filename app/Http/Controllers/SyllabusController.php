@@ -33,8 +33,8 @@ class SyllabusController extends Controller
         });
 		
 		$SEOData = new SEOData(
-            title: "{$examBody->abbr} Syllabi",
-            description: "Browse the latest syllabi for {$examBody->abbr} exams.",
+            title: "{$examBody->abbr} Syllabus",
+            description: "Browse the latest syllabus for {$examBody->abbr} exams.",
         );
 
         return view('syllabus.syllabus', compact('examBody', 'syllabi','SEOData'));  
@@ -48,7 +48,7 @@ class SyllabusController extends Controller
 		
 		$SEOData = new SEOData(
             title: "{$syllabus->subject->name} Syllabus - {$examBody->abbr}",
-            description: "Detailed syllabus for {$syllabus->subject->name} - {$examBody->abbr}.",
+            description: "Official syllabus for {$syllabus->subject->name} - {$examBody->abbr}.",
         );
 
         return view('syllabus.show', compact('examBody', 'syllabus','SEOData'));     
