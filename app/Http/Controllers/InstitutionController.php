@@ -201,8 +201,17 @@ class InstitutionController extends Controller {
 				title: "{$categoryClass->name_plural} Rankings in Nigeria",
 				description: "Discover the top-ranked {$categoryClass->name_plural} in Nigeria. Compare rankings and find the best schools in the country.",
 			);
+			
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();	
 		
-		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'SEOData'));
+		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'SEOData', 'shareLinks'));
 	}
 
 
@@ -229,8 +238,16 @@ class InstitutionController extends Controller {
 			description: "Discover the top-ranked {$categoryClass->name_plural} in {$state->name}, Nigeria. Compare rankings and find the best schools in the state.",
 		);
 		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'state', 'SEOData'));
+		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'state', 'SEOData', 'shareLinks'));
 }
 
 
@@ -262,8 +279,17 @@ class InstitutionController extends Controller {
 				description: "Discover the top-ranked {$categoryClass->name_plural} in {$region->name}, Nigeria. Compare rankings and find the best {$categoryClass->name_plural} in the region.",
 		);
 		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
+		
 
-		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'region', 'SEOData'));
+		return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'region', 'SEOData', 'shareLinks'));
 	}
 
 
@@ -354,7 +380,19 @@ class InstitutionController extends Controller {
 		$institution['description_alt']= "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.";
             // to be fixed
 	     //   dd($institution->head);
-        return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData'));
+		 
+		 
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks(); 
+		 
+		 
+        return view('institution.show', compact('institution', 'rank', 'levels', 'SEOData','shareLinks'));
     }
 
     public function programs(Institution $institution, Level $level) {
@@ -379,9 +417,18 @@ class InstitutionController extends Controller {
 		$SEOData = new SEOData(
 			title: "{$institution->name} {$level->name} Programmes",
 			description: "Explore {$level->name} programs offered at {$institution->name}. Compare and choose the best program for your academic journey.",
-		);				   
+		);	
+
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks(); 
 									    
-        return view('institution.programs', compact('institution', 'level', 'programs','program_levels','SEOData'));
+        return view('institution.programs', compact('institution', 'level', 'programs','program_levels','SEOData','shareLinks'));
     }
 
     public function showProgram(Institution $institution, Level $level, Program $program) {
@@ -411,8 +458,17 @@ class InstitutionController extends Controller {
 			title: "{$program->name} - {$institution->name}",
 			description: "Detailed information about {$level->name} in {$program->name} offered at {$institution->name}. Program highlights and overview",
 		);
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks(); 
 
-        return view('institution.show-program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData'));
+        return view('institution.show-program', compact('institution', 'program', 'institution_program', 'level','program_levels','SEOData','shareLinks'));
     }
 	
 	
@@ -430,6 +486,8 @@ class InstitutionController extends Controller {
 						}]);
 				}
 			]);
+			
+			
 
 			return $institution->levels;
 		});	
@@ -440,8 +498,18 @@ class InstitutionController extends Controller {
 			title: "{$program->name} Study Levels - {$institution->name}",
 			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.",
 		);
+		
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks(); 
 
-		return view('institution.program-levels', compact('institution', 'program', 'levels', 'SEOData'));
+		return view('institution.program-levels', compact('institution', 'program', 'levels', 'SEOData','shareLinks'));
 	}
 	
 	

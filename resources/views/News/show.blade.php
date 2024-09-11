@@ -85,34 +85,31 @@
               </div>
               <!-- END News Content -->
 
-              <!-- Social Actions -->
-              <div class="mt-0 d-flex justify-content-between push">
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-alt-secondary" data-bs-toggle="tooltip" title="Like Story">
-                    <i class="fa fa-thumbs-up text-primary"></i>
-                  </button>
-                  <button type="button" class="btn btn-alt-secondary" data-bs-toggle="tooltip" title="Recommend">
-                    <i class="fa fa-heart text-danger"></i>
-                  </button>
-                </div>
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-share-alt opacity-50 me-1"></i> Share
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
-                    <a class="dropdown-item" href="javascript:void(0)">
-                      <i class="fab fa-fw fa-facebook me-1"></i> Facebook
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                      <i class="fab fa-fw fa-twitter me-1"></i> Twitter
-                    </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                      <i class="fab fa-fw fa-linkedin me-1"></i> LinkedIn
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <!-- END Social Actions -->
+			  
+			  
+			  <!-- Social Actions -->
+			<div class="mt-0 d-flex justify-content-end push">
+				
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share News
+					</button>
+					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
+						@foreach ($shareLinks as $platform => $link)
+							<a class="dropdown-item" href="{{ $link }}" onclick="window.open(this.href, '_blank', 'width=700, height=525, left=250, top=200'); return false;">
+								<i class="fab fa-fw fa-{{ $platform }} text-{{ $platform }}  me-1"></i> {{ ucfirst($platform) }}
+							</a>
+						@endforeach
+					</div>
+				</div>
+			</div>
+			<!-- END Social Actions -->
+			
+			
+			
+
+
+
 
             
             </div>

@@ -54,12 +54,18 @@ use Illuminate\Support\Number;
               </div>
             </div>
         </div>
-		  @if($institution->news->isNotEmpty())
+		
+		
+		
 		  <div class="d-flex justify-content-end py-1">
 			
+			
+			
+			@if($institution->news->isNotEmpty())
+		  
 		  <!-- Notifications Dropdown -->
-            <div class="dropdown d-inline-block me-5">
-              <button type="button" class="btn btn-primary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown d-inline-block me-1">
+              <button type="button" class="btn btn-sm btn-primary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <i class="fa fa-fw fa-building-columns"></i> <i class="fa fa-fw fa-rss"></i>
                 <span class="badge rounded-pill">Latest {{$institution->abbr}} News</span>
               </button>
@@ -95,9 +101,28 @@ use Illuminate\Support\Number;
             <!-- END Notifications Dropdown -->
 		  
 		  
-		  
-		  </div>
 		  @endif
+		  
+		  
+		   <!-- Social Actions -->
+				
+				<div class="btn-group me-1" role="group">
+					<button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share
+					</button>
+					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
+						@foreach ($shareLinks as $platform => $link)
+							<a class="dropdown-item" href="{{ $link }}" onclick="window.open(this.href, '_blank', 'width=700, height=525, left=250, top=200'); return false;">
+								<i class="fab fa-fw fa-{{ $platform }} text-{{ $platform }}  me-1"></i> {{ ucfirst($platform) }}
+							</a>
+						@endforeach
+					</div>
+				</div>
+			
+			<!-- END Social Actions -->
+		  
+		 
+		  </div>
 		  
 		  
 		  

@@ -21,8 +21,17 @@ class CatchmentController extends Controller
             title: "Universities in Nigeria by Catchment Area",
             description: "Discover universities in Nigeria based on catchment areas",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('catchment.index', compact('regions', 'SEOData'));
+        return view('catchment.index', compact('regions', 'SEOData','shareLinks'));
     }
 
     public function show(Catchment $catchment)
@@ -36,8 +45,17 @@ class CatchmentController extends Controller
             title: "Universities with {$catchment->name} as Catchment Area",
             description: "Explore institutions within the {$catchment->name} catchment area of Nigeria. Find programs and compare institutions.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('catchment.show', compact('catchment', 'institutions', 'SEOData'));
+        return view('catchment.show', compact('catchment', 'institutions', 'SEOData','shareLinks'));
     }
 
     public function policy()
@@ -46,7 +64,16 @@ class CatchmentController extends Controller
             title: "Catchment Area Policy",
             description: "Understand the policies for catchment areas for Federal Universities in Nigeria.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('catchment.policy', compact('SEOData'));
+        return view('catchment.policy', compact('SEOData','shareLinks'));
     }
 }

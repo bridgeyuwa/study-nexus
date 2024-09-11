@@ -55,7 +55,16 @@ class TimetableController extends Controller
             title: "Timetable | {$exam->name}",
             description: "View the full timetable for {$exam->name}, including exam dates and subjects.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('timetable.show', compact('exam', 'groupedTimetables','SEOData'));     
+        return view('timetable.show', compact('exam', 'groupedTimetables','SEOData', 'shareLinks'));     
     }
 }

@@ -55,6 +55,78 @@ use Illuminate\Support\Number;
               </div>
             </div>
           </div>
+		  
+		   <div class="d-flex justify-content-end py-1">
+			
+			
+			
+			@if($institution->news->isNotEmpty())
+		  
+		  <!-- Notifications Dropdown -->
+            <div class="dropdown d-inline-block me-1">
+              <button type="button" class="btn btn-sm btn-primary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <i class="fa fa-fw fa-building-columns"></i> <i class="fa fa-fw fa-rss"></i>
+                <span class="badge rounded-pill">Latest {{$institution->abbr}} News</span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
+                <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
+                  Latest News from {{$institution->abbr}}
+                </div>
+                <ul class="nav-items my-2">
+				
+				@foreach($institution->news->take(3) as $news)
+                  <li>
+                    <a class="d-flex text-dark py-2" href="{{route('institutions.news.show',['institution' => $institution, 'news' => $news])}}">
+                      <div class="flex-shrink-0 mx-3">
+                        <i class="fa fa-fw fa-coins text-success"></i>
+                      </div>
+                      <div class="flex-grow-1 fs-sm pe-2">
+                        <div class="fw-semibold">{{$news->title}}</div>
+                        <div class="text-muted">{{$news->created_at->diffForHumans()}}</div>
+                      </div>
+                    </a>
+                  </li>
+				  @endforeach
+				  
+                  
+                </ul>
+                <div class="p-2 border-top text-center">
+                  <a class="btn btn-alt-primary w-100" href="{{route('institutions.news',['institution' => $institution])}}">
+                    <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View All
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- END Notifications Dropdown -->
+		  
+		  
+		  @endif
+		  
+		  
+		   <!-- Social Actions -->
+				
+				<div class="btn-group me-1" role="group">
+					<button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share
+					</button>
+					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
+						@foreach ($shareLinks as $platform => $link)
+							<a class="dropdown-item" href="{{ $link }}" onclick="window.open(this.href, '_blank', 'width=700, height=525, left=250, top=200'); return false;">
+								<i class="fab fa-fw fa-{{ $platform }} text-{{ $platform }}  me-1"></i> {{ ucfirst($platform) }}
+							</a>
+						@endforeach
+					</div>
+				</div>
+			
+			<!-- END Social Actions -->
+		  
+		  
+		  
+		  
+		  
+		  </div>
+		  
+		  
         </div>
         <!-- END Hero -->
 

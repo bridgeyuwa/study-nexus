@@ -115,7 +115,7 @@ class NewsController extends Controller
 		return view('news.news-categories', compact( 'newsCategories','SEOData'));
 	}
 
-    public function show(News $news)
+    public function show(News $news) 
     {
         $news->readTime = $this->readTime($news->content);
 		
@@ -124,7 +124,17 @@ class NewsController extends Controller
             description: $news->excerpt,
         );
 		
-        return view('news.show', compact('news','SEOData'));
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
+		
+        return view('news.show', compact('news','SEOData','shareLinks'));
     }
 
     public function showByInstitution(Institution $institution, News $news) 
@@ -142,7 +152,16 @@ class NewsController extends Controller
 		
 		$canonical = route('news.show', ['news' => $news]);
 		
-        return view('news.show', compact('news','SEOData','canonical'));
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->reddit()
+				->twitter()
+				->linkedin()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
+		
+        return view('news.show', compact('news','SEOData','canonical','shareLinks'));
     }
 
     public function showByNewsCategory(NewsCategory $newsCategory, News $news)
@@ -160,7 +179,16 @@ class NewsController extends Controller
 		
 		$canonical = route('news.show', ['news' => $news]);
 		
-        return view('news.show', compact('newsCategory', 'news','SEOData','canonical'));
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
+		
+        return view('news.show', compact('newsCategory', 'news','SEOData','canonical','shareLinks'));
     }
 
     protected function readTime($content)

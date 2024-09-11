@@ -31,3 +31,29 @@
 .bg-studynexus-list {
     background-image: url(/media/photos/photo11.jpg);
 }
+
+
+.text-facebook {
+    color: #1877F2 !important; /* Facebook Blue */
+}
+
+.text-linkedin {
+    color: #0077B5 !important; /* LinkedIn Blue */
+}
+
+.text-whatsapp {
+    color: #25D366 !important; /* WhatsApp Green */
+}
+
+.text-twitter {
+    color: #1DA1F2 !important; /* Twitter Blue */
+}
+
+.text-telegram {
+    color: #0088CC !important; /* Telegram Blue */
+}
+
+.text-reddit {
+    color: #FF4500 !important; /* Reddit Orange */
+}
+

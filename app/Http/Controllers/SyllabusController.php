@@ -36,8 +36,17 @@ class SyllabusController extends Controller
             title: "{$examBody->abbr} Syllabus",
             description: "Browse the latest syllabus for {$examBody->abbr} exams.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('syllabus.syllabus', compact('examBody', 'syllabi','SEOData'));  
+        return view('syllabus.syllabus', compact('examBody', 'syllabi','SEOData', 'shareLinks'));  
     }
     
     public function show(ExamBody $examBody, Syllabus $syllabus)
@@ -50,7 +59,16 @@ class SyllabusController extends Controller
             title: "{$syllabus->subject->name} Syllabus - {$examBody->abbr}",
             description: "Official syllabus for {$syllabus->subject->name} - {$examBody->abbr}.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('syllabus.show', compact('examBody', 'syllabus','SEOData'));     
+        return view('syllabus.show', compact('examBody', 'syllabus','SEOData', 'shareLinks'));     
     }
 }

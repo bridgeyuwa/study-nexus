@@ -31,8 +31,17 @@ class ProgramController extends Controller
             title: "{$level->name} Programmes in Nigeria",
             description: "Discover {$level->name} programmes across academic institutions in Nigeria. Compare and choose the best programme for your academic journey.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('program.index', compact('programs','level','program_levels','SEOData'));
+        return view('program.index', compact('programs','level','program_levels','SEOData','shareLinks'));
     }
     
     /* show a programme of a level of study */
@@ -62,8 +71,17 @@ class ProgramController extends Controller
             title: "{$level->name} in {$program->name} in Nigeria",
             description: "Detailed information about {$level->name} in {$program->name}",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('program.show', compact('level','program', 'level_programs', 'program_levels','SEOData'));
+        return view('program.show', compact('level','program', 'level_programs', 'program_levels','SEOData','shareLinks'));
     }
     
     /* list institutions which have a program */
@@ -86,7 +104,16 @@ class ProgramController extends Controller
             title: "Academic Institutions Offering {$level->name} in {$program->name} in Nigeria",
             description: "Academic institutions offering {$level->name} in {$program->name} Explore the collection of institutions to make informed decisions.",
         );
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('program.institutions', compact('level','program','institutions','program_levels','SEOData'));
+        return view('program.institutions', compact('level','program','institutions','program_levels','SEOData','shareLinks'));
     }
 }

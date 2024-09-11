@@ -73,6 +73,27 @@ use Carbon\Carbon;
             </div>
           </div>
 		  
+		  <div class="d-flex justify-content-end py-1">		
+		   <!-- Social Actions -->
+				
+				<div class="btn-group me-1" role="group">
+					<button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share
+					</button>
+					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
+						@foreach ($shareLinks as $platform => $link)
+							<a class="dropdown-item" href="{{ $link }}" onclick="window.open(this.href, '_blank', 'width=700, height=525, left=250, top=200'); return false;">
+								<i class="fab fa-fw fa-{{ $platform }} text-{{ $platform }}  me-1"></i> {{ ucfirst($platform) }}
+							</a>
+						@endforeach
+					</div>
+				</div>
+			
+			<!-- END Social Actions -->	 
+			</div>
+		  
+		  
+		  
         </div>
         <!-- END Hero -->
 
@@ -90,7 +111,7 @@ use Carbon\Carbon;
           <!-- Frequently Asked Questions -->
           <div class="block block-rounded">
             <div class="block-header block-header-default">
-              <h3 class="block-title"> Timetable </h3>
+              <h3 class="block-title"> Timetable  </h3>
 			  
 			</div>
 			

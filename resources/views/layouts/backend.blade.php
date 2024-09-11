@@ -183,7 +183,8 @@
   <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
   <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
   <script src="{{ asset('js/plugins/select2/js/select2-searchInputPlaceholder.js') }}"></script>
-
+  <script src="{{ asset('js/share.js') }}"></script>
+  
   
   @yield('js_after')
 </body>
