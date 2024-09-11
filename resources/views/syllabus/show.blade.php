@@ -59,7 +59,7 @@
 				
 				<div class="btn-group me-1" role="group">
 					<button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fa fa-share-alt opacity-50 me-1"></i> Share
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share Syllabus
 					</button>
 					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
 						@foreach ($shareLinks as $platform => $link)
