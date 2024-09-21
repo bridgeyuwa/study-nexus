@@ -363,10 +363,10 @@ use Illuminate\Support\Number;
             <!-- END Tuition Fee -->
 			
 			
-			<!-- All Instititions Offering Programme -->
+			<!-- Instititions Offering Programme -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center bg-studynexus-cubes" >
-                    <h3 class="block-title">All Institutions Offering {{$level->name}} in {{$program->name}}</h3>
+                    <h3 class="block-title">Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">
                     <a class="bg-info  block block-bordered block-link-shadow py-2 px-4 mb-3 text-center text-white fw-semibold" href="{{route('programs.institutions', ['level' => $level, 'program' => $program])}}">

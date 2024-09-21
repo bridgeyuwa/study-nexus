@@ -14,10 +14,11 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   
   <!-- Icons -->
-  <link rel="shortcut icon" href="{{ asset('media/favicons/favicon.png') }}">
-  <link rel="icon" sizes="192x192" type="image/png" href="{{ asset('media/favicons/favicon-192x192.png') }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('media/favicons/apple-touch-icon-180x180.png') }}">
-
+  <link rel="icon" type="image/svg+xml" href="/media/favicons/favicon-192x192.svg">
+  <link rel="shortcut icon" type="image/svg+xml" href="/media/favicons/favicon.svg">
+  <link rel="apple-touch-icon" type="image/svg+xml" href="/media/favicons/favicon-180x180.svg">
+  
+  
   <!-- Fonts and Styles -->
   @yield('css_before')
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
@@ -168,7 +169,7 @@
             Developed by <a class="fw-semibold" href="https://github.com/bridgeyuwa" rel="nofollow" target="_blank">Bridges Yuwa</a>
           </div>
           <div class="col-sm-6 order-sm-1 text-center text-sm-start">       
-            <a class="fw-semibold" href="{{route('about')}}" target="_blank">StudyNexus</a> &copy;
+            <a class="fw-semibold" href="{{route('about')}}" target="_blank">Study Nexus</a> &copy;
             <span data-toggle="year-copy"></span>
           </div>
         </div>

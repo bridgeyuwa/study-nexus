@@ -225,7 +225,7 @@
             Developed by <a class="fw-semibold" href="https://github.com/bridgeyuwa" rel="nofollow" target="_blank">Bridges Yuwa</a>
           </div>
           <div class="col-sm-6 order-sm-1 text-center text-sm-start">       
-            <a class="fw-semibold" href="{{route('about')}}" target="_blank">StudyNexus</a> &copy;
+            <a class="fw-semibold" href="{{route('about')}}" target="_blank">Study Nexus</a> &copy;
             <span data-toggle="year-copy"></span>
           </div>
         </div>

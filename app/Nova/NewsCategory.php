@@ -4,27 +4,23 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\BelongsTo;
-
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class PhoneNumber extends Resource
+class NewsCategory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\PhoneNumber>
+     * @var class-string<\App\Models\NewsCategory>
      */
-    public static $model = \App\Models\PhoneNumber::class;
+    public static $model = \App\Models\NewsCategory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'number';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +28,7 @@ class PhoneNumber extends Resource
      * @var array
      */
     public static $search = [
-        'number','institution.name','holder',
+        'id',
     ];
 
     /**
@@ -44,10 +40,7 @@ class PhoneNumber extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-			Text::make('ID')->sortable(),
-			Number::make('Number'),
-			BelongsTo::make('Institution')->searchable()->sortable(),
-			Text::make('holder')->sortable(),
+            ID::make()->sortable(),
         ];
     }
 

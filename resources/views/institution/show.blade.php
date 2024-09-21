@@ -20,7 +20,7 @@ use Illuminate\Support\Number;
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto"  style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
                     <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" style="width: 100px; height: 100px; object-fit: cover;">
+                      <img src="{{ asset('storage/' . $institution->logo) }}" alt="{{$institution->name}} logo" style="width: 100px; height: 100px; object-fit: cover;">
                       <link itemprop="logo" href="{{$institution->logo}}">
                     </div>
                   </div>
@@ -208,7 +208,7 @@ use Illuminate\Support\Number;
 							
 					
 						@if(!empty($institution->description))
-						<span itemprop="description">{{$institution->description}}</span>
+						<span itemprop="description">{!! $institution->description !!}</span>
 						@else
                         <span itemprop="description">{{$institution->description_alt}}</span>
 					    @endif

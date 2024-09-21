@@ -5,28 +5,22 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\URL;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Image;
-
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
+
 
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Institution extends Resource
+class ExamBody extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Institution>
+     * @var class-string<\App\Models\ExamBody>
      */
-    public static $model = \App\Models\Institution::class;
+    public static $model = \App\Models\ExamBody::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -55,60 +49,24 @@ class Institution extends Resource
         return [
             Text::make('ID')->sortable(),
 			Text::make('Name')->sortable(),
-			Text::make('Former Name')->sortable(),
 			Text::make('Abbr')->sortable(),
-			Text::make('Slogan'),
-			Select::make('Established')->options($this->yearRange())->sortable(),
-			BelongsTo::make('Institution Head'),
-			Text::make('Head'),
-			Trix::make('Description')->alwaysShow()->withFiles('public'),
-			BelongsTo::make('Parent Institution','parentInstitution','App\Nova\Institution')->nullable(),
-			BelongsTo::make('Institution Type')->sortable(),
-			BelongsTo::make('Category')->sortable(),
-			BelongsTo::make('Term')->sortable(),
-			BelongsTo::make('Accreditation Body')->sortable(),
-			BelongsTo::make('Accreditation Status')->sortable()->nullable(),
-			BelongsTo::make('Religious Affiliation')->sortable(),
+			Text::make('Description')->nullable(),
 			BelongsTo::make('State')->sortable(),
-			Text::make('locality'),
-			Text::make('Address'),
-			Number::make('Postal Code'),
+			Text::make('Address')->sortable(),
+			Text::make('Locality')->nullable(),
+			Number::make('Postal Code')->sortable(),
 			URL::make('Url'),
-			Email::make('Email'),
 			Image::make('Logo')	
 					->disk('public')
 					->disableDownload()
 					->prunable()
-					->path('images/institutions')
+					->path('images/exam_bodies')
 					->storeAs(function (Request $request){
-						return $request->id .'-logo.'. $request->file('logo')->extension();
+						return $request->abbr .'-logo.'. $request->file('logo')->extension();
 					}),
-			Number::make('Rank')->sortable(),
-			Text::make('Coordinates'),
-			 
-			HasMany::make('Phone Numbers'),
-			 
-			 
-			//BelongsToMany::make('InstitutionProgram'),
-			HasMany::make('Child Institutions','childInstitutions','App\Nova\Institution'),
-		
-			BelongsToMany::make('Programs'),
-			
 			
         ];
     }
-	
-	
-	
-	private function yearRange()
-	{
-		$years = range(1932, date('Y'));	
-		
-		return array_combine($years, $years);
-		
-	}
-	
-	
 
     /**
      * Get the cards available for the request.

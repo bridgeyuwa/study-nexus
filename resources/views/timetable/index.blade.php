@@ -40,7 +40,7 @@
               <!-- Timetable -->
 			  <div itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationalOrganization">
 				<h2 class="content-heading"> 
-				@if(!empty($examBody->logo)) <img  src="{{$examBody->logo}}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
+				@if(!empty($examBody->logo)) <img  src="{{ asset('storage/' . $examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
 					<span itemprop="name">{{$examBody->name}}</span>  <span itemprop="alternateName"> ({{$examBody->abbr}})</span>
 				</h2>
               <div class="row items-push">

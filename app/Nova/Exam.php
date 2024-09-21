@@ -7,24 +7,23 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\BelongsTo;
-
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class PhoneNumber extends Resource
+class Exam extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\PhoneNumber>
+     * @var class-string<\App\Models\Exam>
      */
-    public static $model = \App\Models\PhoneNumber::class;
+    public static $model = \App\Models\Exam::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'number';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -32,7 +31,7 @@ class PhoneNumber extends Resource
      * @var array
      */
     public static $search = [
-        'number','institution.name','holder',
+         'id','name','year','examBody.name',
     ];
 
     /**
@@ -44,10 +43,16 @@ class PhoneNumber extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-			Text::make('ID')->sortable(),
-			Number::make('Number'),
-			BelongsTo::make('Institution')->searchable()->sortable(),
-			Text::make('holder')->sortable(),
+            Text::make('ID')->sortable(),
+			Text::make('Name')->sortable(),
+			Text::make('Abbr')->sortable(),
+			BelongsTo::make('Exam Body')->sortable(),
+			Number::make('Month')->min(1)->max(12)->sortable(),
+			Number::make('Year')->min(2024)->max(2064)->sortable(),
+			Text::make('Type')->sortable(),
+			Text::make('Description')->nullable(),
+			Text::make('Remarks')->nullable(),
+			
         ];
     }
 
