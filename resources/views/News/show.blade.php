@@ -131,7 +131,7 @@
 				
 				@foreach($news->newsCategories as $newsCategory)
                   <a class="btn btn-sm btn-info rounded-0 mb-1" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
-					 <i class="fa fa-tag text-white me-2"></i>	<span itemprop="keywords">  {{$newsCategory->name}} </span>
+					 <i class="fa fa-tag me-2"></i>	<span itemprop="keywords">  {{$newsCategory->name}} </span>
                   </a>
                  @endforeach
                 </div>

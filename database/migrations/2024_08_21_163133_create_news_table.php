@@ -16,8 +16,8 @@ return new class extends Migration
 			$table->string('title');
 			$table->text('excerpt');
 			$table->text('content');
-			$table->string('source_url')->nullable();
 			$table->string('institution_id')->nullable();
+			$table->string('cover_image')->nullable();
             $table->timestamps();
         });
     }

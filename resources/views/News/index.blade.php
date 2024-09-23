@@ -2,6 +2,11 @@
 
 
 @section('content')
+@php 
+use Illuminate\Support\Str;
+@endphp
+
+
 <span itemscope itemtype="https://schema.org/CollectionPage">
 <link itemprop="url" content="{{ url()->current() }}" >
  <!-- Hero -->
@@ -42,33 +47,45 @@
 			@foreach($news as $story)
 			
 			
-              <!-- News Highlight -->
+			  
+			 `` @php
+					$routeName = 'news.show';
+					$routeParameters = ['news' => $story];
+
+					if (!empty($institution)) {
+						$routeName = 'institutions.news.show';
+						$routeParameters = ['institution' => $institution, 'news' => $story];
+					} elseif (!empty($newsCategory)) {
+						$routeName = 'news.newsCategory.show';
+						$routeParameters = ['newsCategory' => $newsCategory, 'news' => $story];
+					}
+				@endphp
+			  
+			  
+			  <!-- News Highlight -->
               <div class="block block-rounded" itemprop="itemListElement" itemscope itemtype="https://schema.org/NewsArticle">
                 <div class="block-content p-0 overflow-hidden">
                    
-                   
+				  <div class="row g-0">
+				  
+				   <div class="col-md-4 col-lg-5 overflow-hidden d-flex align-items-center">
+                      <a href="{{ route($routeName, $routeParameters) }}">
+                        <img class="img-fluid img-link" src="{{Storage::url('test.jpg')}}" alt="$story->title">
+                      </a>
+                    </div>
+				   
+				   
+                   <div class="col-md-8 col-lg-7 d-flex align-items-center">
+				   
                       <div class="px-4 py-3">
                         <h4 class="mb-1">
-                         
-							  
-						@php
-						$routeName = 'news.show';
-						$routeParameters = ['news' => $story];
-
-						if (!empty($institution)) {
-							$routeName = 'institutions.news.show';
-							$routeParameters = ['institution' => $institution, 'news' => $story];
-						} elseif (!empty($newsCategory)) {
-							$routeName = 'news.newsCategory.show';
-							$routeParameters = ['newsCategory' => $newsCategory, 'news' => $story];
-						}
-						@endphp
-
-						<a  class="text-info" href="{{ route($routeName, $routeParameters) }}">
+                        
+						<a  class="text-primary-dark" href="{{ route($routeName, $routeParameters) }}">
 							<span itemprop="headline"> {{ $story->title }} </span>
 						</a>
 						  
-						  <link itemprop="url" content="{{ route($routeName, $routeParameters) }}" >
+						    <link itemprop="url" content="{{ route($routeName, $routeParameters) }}" >
+							<link itemprop="image" content="{{Storage::url($story->cover_image)}}" > 
 
                         </h4>
                         <div class="fs-sm mb-2">
@@ -80,33 +97,45 @@
 							on <span itemprop="datePublished" content="{{$story->created_at->format('Y-m-d\TH:i:sO');}}">{{$story->created_at->format('F d, Y')}}  </span> · <em class="text-muted">{{$story->readTime}} min</em>
 							@if($story->updated_at->gt($story->created_at))  <meta itemprop="dateModified" content="{{$story->updated_at->format('Y-m-d\TH:i:sO');}}" > @endif
 						</div>
-                        <p itemprop="description" class="mb-1">
+                       
+                           <p itemprop="description" class="mb-1">
+							
+							{{Str::limit($story->excerpt, 150, ' . . .')}}
+							
+								<a href="{{ route($routeName, $routeParameters) }}" class="">Read more</a>
+							</p>
+							
+					    <div class="mt-0" >
 						
-						{{$story->excerpt}}
-						
-                        </p>
-						
-						<div>
+				
 						@if($story->institution)
-						<button class="btn btn-sm btn-outline-dark rounded-0 mb-1" disabled >
-						 <span itemprop="keywords"> {{$story->institution->name}}</span>
-						  </button>
-						  @endif
+						 <span itemprop="keywords" class="badge bg-black rounded-0"> <i class="fa fa-building-columns me-1"></i> {{$story->institution->abbr}}</span>
+						@endif
 						
 						@foreach($story->newsCategories as $storyCategory)
-						  <button class="btn btn-sm btn-outline-dark rounded-0 mb-1" disabled >
-						 <i class="si si-tag text-black"></i> <span itemprop="keywords">{{$storyCategory->name}}</span>
-						  </button>
+						  <span itemprop="keywords" class="badge bg-black rounded-0"><i class="fa fa-tag me-1"></i>{{$storyCategory->name}}</span>
+						  
 						@endforeach
-						</div>
-						
+				       </div>
+					
                       </div>
 					  
-					 
+					</div> 
                 
+				 </div> 
+				 
+				
+				
+				
                 </div>
               </div>
               <!-- END News Highlight -->
+			  
+			  
+			  
+			  
+			  
+			  
 			  @endforeach
 
 
@@ -143,11 +172,11 @@
                 <div class="block-content block-content-full">
 				@foreach($newsCategories as $newsCategory)
 				    <a class="btn btn-sm btn-outline-dark rounded-0 mb-1" href="{{route('news.newsCategory', ['newsCategory' => $newsCategory ])}}" >
-						<i class="fa fa-tag text-dark me-2"></i> <span itemprop="keywords">{{$newsCategory->name}}</span> <span class="fw-light">{{$newsCategory->news_count}}</span>
+						<i class="fa fa-tag  me-1"></i> <span itemprop="keywords">{{$newsCategory->name}}</span> 
 				    </a>
                 @endforeach
 				 
-					<span class="fw-bold">...</span>
+					<span class="fw-bold">. . .</span>
                 </div>
 				
 				<div class="block-header block-header-default bg-light">

@@ -144,7 +144,7 @@ use Illuminate\Support\Number;
                         <div class="block block-header-default bg-image mb-0 fw-light"
                              style="background-image: url('media/photos/photo11.jpg');">
                             <div class="bg-black-75 text-center pt-3 pb-1">
-                                <div class="h6 text-white mb-0">{{$institution->name}}
+                                <div class="h5 text-white mb-0">{{$institution->name}}
                                     @if(!empty($institution->abbr)) <span class="fw-light">({{$institution->abbr}})</span> @endif 
                                 </div>
 

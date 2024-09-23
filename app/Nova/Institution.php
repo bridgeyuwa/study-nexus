@@ -12,12 +12,13 @@ use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Image;
-
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
-
 use Laravel\Nova\Http\Requests\NovaRequest;
+
+use Intervention\Image\Laravel\Facades\Image as Cropper;
+use Illuminate\Support\Facades\Storage;
 
 class Institution extends Resource
 {
@@ -75,14 +76,55 @@ class Institution extends Resource
 			Number::make('Postal Code'),
 			URL::make('Url'),
 			Email::make('Email'),
-			Image::make('Logo')	
-					->disk('public')
-					->disableDownload()
-					->prunable()
-					->path('images/institutions')
-					->storeAs(function (Request $request){
-						return $request->id .'-logo.'. $request->file('logo')->extension();
-					}),
+			/* Image::make('Logo')
+				->store(function (Request $request, $model) {
+					// Get the uploaded image
+					$image = $request->file('logo');
+
+					// Resize the image (optional)
+					$resizedImage = Cropper::read($image)
+						->resize(300, 300); // Adjust quality (0-100)
+
+                    $filePath = "images/institutions/{$request->id}-logo.{$request->file('logo')->extension()}";
+
+					// Store the resized image
+					Storage::disk('public')->put($filePath,$resizedImage->encodeByMediaType());
+    
+					return [
+						'logo' => "images/institutions/{$request->id}-logo.{$request->file('logo')->extension()}",
+					];
+				}), */
+					
+					
+			Image::make('Logo')
+				->nullable()
+				->prunable()
+				->thumbnail(function () {
+					return $this->logo ? Storage::url($this->logo) : null;
+				})
+				->preview(function () {
+					return $this->logo ? Storage::url($this->logo) : null;
+				})
+				->help('Upload the institution Logo.') // Add help text
+				->deletable() // Allow users to delete the image
+				->store(function (Request $request, $model) {
+					// Get the uploaded image
+					$image = $request->file('logo');
+
+					// Resize the image (optional)
+					$resizedImage = Cropper::read($image)
+						->resize(300, 300); // Adjust quality (0-100)
+
+                    $filePath = "images/institutions/{$request->id}-logo.{$request->file('logo')->extension()}";
+
+					// Store the resized image
+					Storage::disk('public')->put($filePath,$resizedImage->encodeByMediaType());
+    
+					return [
+						'logo' => "images/institutions/{$request->id}-logo.{$request->file('logo')->extension()}",
+					];
+				}),		
+					
 			Number::make('Rank')->sortable(),
 			Text::make('Coordinates'),
 			 
