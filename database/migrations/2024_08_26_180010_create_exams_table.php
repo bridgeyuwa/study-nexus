@@ -15,13 +15,11 @@ return new class extends Migration
             $table->id();
 			$table->unsignedBigInteger('exam_body_id');
 			$table->string('name');
-			$table->string('abbr');
 			$table->unsignedTinyInteger('month')->index();
 			$table->year('year')->index();
 			$table->string('type');
 			$table->text('description')->nullable();
 			$table->string('remarks')->nullable();
-			$table->string('timetable_url');
 			
             $table->timestamps();
         });

@@ -48,7 +48,7 @@ use Illuminate\Support\Str;
 			
 			
 			  
-			 `` @php
+			  @php
 					$routeName = 'news.show';
 					$routeParameters = ['news' => $story];
 
@@ -68,12 +68,13 @@ use Illuminate\Support\Str;
                    
 				  <div class="row g-0">
 				  
+				   
 				   <div class="col-md-4 col-lg-5 overflow-hidden d-flex align-items-center">
                       <a href="{{ route($routeName, $routeParameters) }}">
-                        <img class="img-fluid img-link" src="{{Storage::url('test.jpg')}}" alt="$story->title">
+                        <img class="img-fluid img-link" src="{{Storage::url($story->cover_image)}}" alt="{{$story->title}}">
                       </a>
                     </div>
-				   
+				  
 				   
                    <div class="col-md-8 col-lg-7 d-flex align-items-center">
 				   
@@ -123,9 +124,7 @@ use Illuminate\Support\Str;
 					</div> 
                 
 				 </div> 
-				 
-				
-				
+				 			
 				
                 </div>
               </div>
