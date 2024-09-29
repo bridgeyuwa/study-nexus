@@ -98,7 +98,7 @@
             <div class="dropdown d-inline-block">
               <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-fw fa-rss"></i>
-                <span class="badge bg-info rounded-pill">News</span>
+                <span class="badge bg-info rounded-pill">News</span> <i class="fa fw-sm fa-caret-down"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
                 <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">

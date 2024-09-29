@@ -9,7 +9,7 @@
                     S<span class="opacity-75">N</span>
                 </span>
                 <span class="smini-hidden">
-                    Study<span class="opacity-75">Nexus</span>
+                    Study<span class="opacity-75"> Nexus</span>
                 </span>
             </a>
             <!-- END Logo -->

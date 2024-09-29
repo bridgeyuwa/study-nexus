@@ -107,7 +107,6 @@ use Carbon\Carbon;
         <div itemscope itemtype="https://schema.org/ItemList" class="content">
 			<meta itemprop="name" content="{{$exam->name}}">  
 			<link itemprop="url" href="{{url()->current()}}" >
-			<link itemprop="sameAs" href="{{$exam->timetable_url}}" />  
           <!-- Frequently Asked Questions -->
           <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -226,7 +225,6 @@ use Carbon\Carbon;
 					     @endif
 						  
 						<link itemprop="url" href="{{url()->current()}}" >
-						<link itemprop="sameAs" href="{{$exam->timetable_url}}" />
 						<link itemprop="image" href="{{$exam->examBody->logo}}" />
 						<meta itemprop="educationalLevel" content="{{$exam->type}}" />
 						<meta itemprop="location" content="Candidate's Examination Center" />

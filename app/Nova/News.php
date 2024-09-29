@@ -4,6 +4,9 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class News extends Resource
@@ -20,7 +23,7 @@ class News extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -28,7 +31,7 @@ class News extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','name',
     ];
 
     /**
@@ -41,6 +44,12 @@ class News extends Resource
     {
         return [
             ID::make()->sortable(),
+			Text::make('title'),
+			Trix::make('excerpt'),
+			Trix::make('content'),
+			Text::make('institution_id'),
+			Image::make('cover_image'),
+			
         ];
     }
 
