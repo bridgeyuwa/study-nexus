@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -30,7 +31,7 @@ class Social extends Resource
      * @var array
      */
     public static $search = [
-        'id','institution','social'
+        'institution.name','socialtype.name'
     ];
 
     /**

@@ -37,7 +37,7 @@ class InstitutionProgram extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','institution.name','program.name','level.name',
     ];
 
     /**
@@ -56,6 +56,8 @@ class InstitutionProgram extends Resource
 			BelongsTo::make('Program')->sortable()->searchable(),
 			BelongsTo::make('Level','level')->sortable(),
 			Trix::make('Description')->nullable(),
+			Trix::make('Remarks')->nullable(),
+			
 			BelongsTo::make('ProgramMode')->sortable(),
 			Number::make('Duration')->sortable(),
 			Number::make('Tuition Fee')->sortable(),

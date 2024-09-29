@@ -4,6 +4,11 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\TextArea;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class LevelProgram extends Resource
@@ -28,7 +33,7 @@ class LevelProgram extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','level.name','program.name',
     ];
 
     /**
@@ -41,6 +46,33 @@ class LevelProgram extends Resource
     {
         return [
             ID::make()->sortable(),
+			BelongsTo::make('program')->sortable(),
+			BelongsTo::make('level'),
+			Trix::make('decription'),
+			Number::make('duration'),
+			
+			
+			
+			TextArea::make('Direct Entry')
+            ->resolveUsing(fn () => $this->requirements->get('direct_entry'))
+            ->fillUsing(fn ($request, $model, $attribute, $requestAttribute) => 
+                $model->requirements->set('direct_entry', $request->get($requestAttribute))
+            ),
+
+			Textarea::make('O Level')
+				->resolveUsing(fn () => $this->requirements->get('o_level'))
+				->fillUsing(fn ($request, $model, $attribute, $requestAttribute) => 
+					$model->requirements->set('o_level', $request->get($requestAttribute))
+				),
+
+			Textarea::make('Subjects')
+				->resolveUsing(fn () => $this->requirements->get('utme_subjects'))
+				->fillUsing(fn ($request, $model, $attribute, $requestAttribute) => 
+					$model->requirements->set('utme_subjects', $request->get($requestAttribute))
+				),
+			
+			
+			
         ];
     }
 

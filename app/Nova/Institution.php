@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\BelongsTo;
@@ -76,26 +77,7 @@ class Institution extends Resource
 			Number::make('Postal Code'),
 			URL::make('Url'),
 			Email::make('Email'),
-			/* Image::make('Logo')
-				->store(function (Request $request, $model) {
-					// Get the uploaded image
-					$image = $request->file('logo');
-
-					// Resize the image (optional)
-					$resizedImage = Cropper::read($image)
-						->resize(300, 300); // Adjust quality (0-100)
-
-                    $filePath = "images/institutions/{$request->id}-logo.{$request->file('logo')->extension()}";
-
-					// Store the resized image
-					Storage::disk('public')->put($filePath,$resizedImage->encodeByMediaType());
-    
-					return [
-						'logo' => "images/institutions/{$request->id}-logo.{$request->file('logo')->extension()}",
-					];
-				}), */
-					
-					
+										
 			Image::make('Logo')
 				->nullable()
 				->prunable()
@@ -131,15 +113,15 @@ class Institution extends Resource
 			HasMany::make('Phone Numbers'),
 			 
 			 
-			//BelongsToMany::make('InstitutionProgram'),
-			HasMany::make('Child Institutions','childInstitutions','App\Nova\Institution'),
-		
 			BelongsToMany::make('Programs'),
+			 
+			HasMany::make('Child Institutions', 'childInstitutions', 'App\Nova\Institution'),		
+			BelongsToMany::make('Affiliated Institutions','affiliatedInstitutions','App\Nova\Institution'),
 			
 			
         ];
     }
-	
+		
 	
 	
 	private function yearRange()
@@ -149,8 +131,7 @@ class Institution extends Resource
 		return array_combine($years, $years);
 		
 	}
-	
-	
+		
 
     /**
      * Get the cards available for the request.

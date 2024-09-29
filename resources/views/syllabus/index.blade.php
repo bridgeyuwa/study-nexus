@@ -3,7 +3,7 @@
 
 @section('content')
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+        <div class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-7">
               <div class="pt-4 pb-3">
@@ -56,7 +56,7 @@
                   <div class="block-content block-content-full d-flex align-items-center justify-content-between">
                     <div class="me-3">
                       <div class=" col fs-lg  mb-0 text-primary">
-						@if(!empty($examBody->logo)) <img src="{{ asset('storage/' . $examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
+						@if(!empty($examBody->logo)) <img src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
 						<span itemprop="name"> {{$examBody->abbr}} Syllabus</span>
                       </div>                      
                       

@@ -29,8 +29,15 @@ class LevelProgram extends Pivot
 	}
 
 
-
-
+/* Added because of Nova */
+	public function program() {
+        return $this->belongsTo(Program::class);
+    }
+	
+	
+	public function level() {
+        return $this->belongsTo(Level::class);
+    }
 	
    
    

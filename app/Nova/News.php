@@ -8,6 +8,8 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class News extends Resource
 {
@@ -48,7 +50,23 @@ class News extends Resource
 			Trix::make('excerpt'),
 			Trix::make('content'),
 			Text::make('institution_id'),
-			Image::make('cover_image'),
+			Image::make('cover_image')
+				->disk('public')
+				->path('images/news')
+				->storeAs(function (Request $request) {
+					return $request->file('cover_image')->getClientOriginalName();
+				})
+				->thumbnail(function () {
+					return $this->cover_image ? Storage::url($this->cover_image) : null;
+				})
+				->preview(function () {
+					return $this->cover_image ? Storage::url($this->cover_image) : null;
+				})
+			     ->prunable()
+				 ->nullable()
+				 ->deletable()
+				 ->help('Upload news cover image.') // Add help text
+				,
 			
         ];
     }

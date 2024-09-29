@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
+use Laravel\Nova\Fields\Image;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class AccreditationBody extends Resource
 {
@@ -47,6 +50,21 @@ class AccreditationBody extends Resource
 			Text::make('Name')->sortable(),
 			Text::make('Abbr')->sortable(),
 			URL::make('Url'),
+			Image::make('Logo')	
+					->disk('public')
+					->disableDownload()
+					->prunable()
+					->nullable()
+					->thumbnail(function () {
+					return $this->logo ? Storage::url($this->logo) : null;
+					})
+					->preview(function () {
+						return $this->logo ? Storage::url($this->logo) : null;
+					})
+					->path('images/accreditation_bodies')
+					->storeAs(function (Request $request){
+						return $request->abbr .'-logo.'. $request->file('logo')->extension();
+					}),
         ];
     }
 

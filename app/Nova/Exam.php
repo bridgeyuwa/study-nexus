@@ -45,7 +45,6 @@ class Exam extends Resource
         return [
             Text::make('ID')->sortable(),
 			Text::make('Name')->sortable(),
-			Text::make('Abbr')->sortable(),
 			BelongsTo::make('Exam Body')->sortable(),
 			Number::make('Month')->min(1)->max(12)->sortable(),
 			Number::make('Year')->min(2024)->max(2064)->sortable(),

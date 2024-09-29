@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Hero -->
-        <div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+        <div class="bg-image bg-studynexus-hero" >
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-7">
               <div class="pt-4 pb-3">
@@ -40,7 +40,7 @@
               <!-- Timetable -->
 			  <div itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationalOrganization">
 				<h2 class="content-heading"> 
-				@if(!empty($examBody->logo)) <img  src="{{ asset('storage/' . $examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
+				@if(!empty($examBody->logo)) <img  src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
 					<span itemprop="name">{{$examBody->name}}</span>  <span itemprop="alternateName"> ({{$examBody->abbr}})</span>
 				</h2>
               <div class="row items-push">

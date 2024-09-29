@@ -47,7 +47,6 @@ class Program extends Resource
 			Text::make('name')->sortable(),
 			BelongsTo::make('College')->sortable(),
 			
-			BelongsToMany::make('Institutions'),
         ];
     }
 

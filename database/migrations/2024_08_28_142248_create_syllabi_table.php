@@ -16,7 +16,7 @@ return new class extends Migration
 			$table->string('name')->index();
 			$table->unsignedBigInteger('exam_body_id');
 			$table->unsignedBigInteger('subject_id');
-			$table->string('url');
+			$table->string('attachment');
 			$table->text('description')->nullable();
 			
             $table->timestamps();

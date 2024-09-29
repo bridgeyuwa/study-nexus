@@ -343,16 +343,18 @@ use Illuminate\Support\Number;
 						<table class="table">
 							<tr>
 								<td class="fw-semibold">Institution Accreditation Body</td>
-								<td><a class="link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a> </td>
+								<td><a class="link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a>    <img src="{{ Storage::url($institution->accreditationBody->logo) }}" alt="{{$institution->accreditationBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;">
+						   </td>
 							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
+								<link itemprop="image" href="{{$institution->accreditationBody->logo}}">
 							</tr>
 							<tr>
 								<td class="fw-semibold">Accreditation Status</td>
 								<td>  
 								@if(!empty($institution->accreditationStatus))
-								<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
+								<span class="fs-6 badge bg-{{$institution->accreditationStatus->class}} rounded-0" disabled>
 								{{$institution->accreditationStatus->name}}
-								</button>
+								</span>
 								@else
 									Not Available
 								@endif

@@ -4,6 +4,10 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Syllabus extends Resource
@@ -20,7 +24,7 @@ class Syllabus extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -28,7 +32,7 @@ class Syllabus extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','name','examBody.name'
     ];
 
     /**
@@ -41,6 +45,16 @@ class Syllabus extends Resource
     {
         return [
             ID::make()->sortable(),
+			Text::make('name'),
+			BelongsTo::make('Exam Body'),
+			BelongsTo::make('Subject'),
+			File::make('attachment')
+				->disk('public')
+				->path('files/syllabi')
+				->storeAs(function (Request $request){
+						return $request->attachment->getClientOriginalName();
+					}),
+			Trix::make('description'),
         ];
     }
 

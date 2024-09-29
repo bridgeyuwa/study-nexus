@@ -10,8 +10,8 @@ use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\BelongsTo;
 
-
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ExamBody extends Resource
 {
@@ -60,6 +60,13 @@ class ExamBody extends Resource
 					->disk('public')
 					->disableDownload()
 					->prunable()
+					->nullable()
+					->thumbnail(function () {
+					return $this->logo ? Storage::url($this->logo) : null;
+					})
+					->preview(function () {
+						return $this->logo ? Storage::url($this->logo) : null;
+					})
 					->path('images/exam_bodies')
 					->storeAs(function (Request $request){
 						return $request->abbr .'-logo.'. $request->file('logo')->extension();
