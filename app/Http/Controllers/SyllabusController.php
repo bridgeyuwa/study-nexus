@@ -13,7 +13,7 @@ class SyllabusController extends Controller
     public function index()
     {
         // Cache the exam bodies for 60 minutes
-        $examBodies = Cache::remember('exam_bodies_index', 60, function () {
+        $examBodies = Cache::remember('exam_bodies_index', 60 * 60, function () {
             return ExamBody::whereHas('syllabi')->get();
         });
 		
@@ -28,7 +28,7 @@ class SyllabusController extends Controller
     public function syllabi(ExamBody $examBody)
     {
         // Cache the syllabi and related subjects for the specific exam body
-        $syllabi = Cache::remember("syllabi_exam_body_{$examBody->id}", 60, function () use ($examBody) {
+        $syllabi = Cache::remember("syllabi_exam_body_{$examBody->id}", 60 * 60, function () use ($examBody) {
             return $examBody->syllabi()->orderBy('name')->with(['subject'])->get();
         });
 		
