@@ -17,7 +17,7 @@
                     <div class="block-content block-content-full px-1 py-1">
 					
                       <img  src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
-                      <link itemprop="logo" href="{{$examBody->logo}}">
+                      <link itemprop="logo" href="{{Storage::url($examBody->logo)}}">
                     </div>
                   </div>
                 </div>

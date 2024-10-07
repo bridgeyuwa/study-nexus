@@ -281,7 +281,7 @@ class InstitutionController extends Controller {
 		});
 
 		
-		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60 function() {
+		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -321,7 +321,7 @@ class InstitutionController extends Controller {
       });
 	  
 		
-		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60 function() {
+		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		

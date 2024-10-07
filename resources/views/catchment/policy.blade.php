@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Hero -->
-<div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+<div class="bg-image bg-studynexus-hero">
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="pt-4 pb-3">
