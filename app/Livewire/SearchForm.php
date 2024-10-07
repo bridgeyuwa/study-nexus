@@ -41,19 +41,19 @@ class SearchForm extends Component
      public function mount(Request $request)
         {
 		   
-			$this->allLevels = Cache::remember('all_levels', 60, function() {
+			$this->allLevels = Cache::remember('all_levels', 60 * 60, function() {
 				return Level::with('__programs')->get(); // remove eager loading in production
 			});
 			
 			$this->levels = $this->allLevels;
 
-			$this->allPrograms = Cache::remember('all_programs', 60, function() {
+			$this->allPrograms = Cache::remember('all_programs', 60 * 60 , function() {
 				return Program::all();
 			});
 			
 			$this->programs = $this->allPrograms;
 
-			$this->states = Cache::remember('states', 60, function() {
+			$this->states = Cache::remember('states', 24 * 60 * 60 , function() {
 				return State::all();
 			});
 			

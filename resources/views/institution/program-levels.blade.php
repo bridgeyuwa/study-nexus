@@ -137,7 +137,7 @@ use Illuminate\Support\Number;
          <!-- Page Content -->
 <div class="content content-boxed">
     <div class="row">
-        <div class="col-md-4 order-md-1">
+        <div class="col-md-4 order-md-1 order-2">
 
             <!-- Ads -->
             <div class="block block-rounded">

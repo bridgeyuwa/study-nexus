@@ -13,7 +13,7 @@ class CatchmentController extends Controller
     public function index()
     {
         // Cache the regions and their catchments with institutions
-        $regions = Cache::rememberForever('regions_with_catchments', function () {
+        $regions = Cache::remember('regions_with_catchments', 60 * 60, function () {
             return Region::with('catchments.institutions')->get();
         });
 
@@ -37,7 +37,7 @@ class CatchmentController extends Controller
     public function show(Catchment $catchment)
     {
        
-        $institutions = Cache::remember("institutions_for_catchment_{$catchment->id}", 60, function () use ($catchment) {
+        $institutions = Cache::remember("institutions_for_catchment_{$catchment->id}", 60 * 60, function () use ($catchment) {
             return $catchment->institutions()->with(['state', 'institutionType', 'category'])->orderBy('name')->get();
         });
 

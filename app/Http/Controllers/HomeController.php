@@ -63,11 +63,11 @@ $newFileContent = file_put_contents($newFilePath, $allSql);
 			
 		
         // Cache the results of the queries
-        $institutions = Cache::remember('all_institutions', 60, function () {
+        $institutions = Cache::remember('all_institutions', 60 * 60, function () {
             return Institution::all();
         });
 
-        $programs = Cache::remember('all_programs', 60, function () {
+        $programs = Cache::remember('all_programs', 60 * 60, function () {
             return Program::all();
         });
 
@@ -75,7 +75,7 @@ $newFileContent = file_put_contents($newFilePath, $allSql);
             return CategoryClass::all();
         });
 
-        $levels = Cache::remember('all_levels', 60, function () {
+        $levels = Cache::remember('all_levels', 60 * 60, function () {
             return Level::all();
         });
 

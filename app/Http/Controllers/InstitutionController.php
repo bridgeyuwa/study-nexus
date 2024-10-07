@@ -24,7 +24,7 @@ class InstitutionController extends Controller {
 					->paginate(60);
 		});	
 			
-		$categoryClasses = Cache::rememberForever('categoryClasses', function() {
+		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -36,7 +36,16 @@ class InstitutionController extends Controller {
 		
 		$parameters = ['location' => '', 'level' => '', 'program' => '', 'category' => '' ];
 		
-        return view('institution.index', compact('institutions','categoryClasses','SEOData','parameters'));
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
+		
+        return view('institution.index', compact('institutions','categoryClasses','SEOData','parameters', 'shareLinks'));
     }
 
     public function category(CategoryClass $categoryClass) {
@@ -48,7 +57,7 @@ class InstitutionController extends Controller {
 				->paginate(60);
 		});
 			
-        $categoryClasses = Cache::rememberForever('categoryClasses', function() {
+        $categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -59,18 +68,27 @@ class InstitutionController extends Controller {
         );
 		
 		$parameters = ['location' => '', 'level' => '', 'program' => '', 'category' => $categoryClass->id ];
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
         
-        return view('institution.index', compact('institutions', 'categoryClass','categoryClasses','SEOData','parameters'));
+        return view('institution.index', compact('institutions', 'categoryClass','categoryClasses','SEOData','parameters', 'shareLinks'));
     }
 
     public function location() {
 		
 		
-		$regions = Cache::rememberForever('regions_with_institutions',  function() {
+		$regions = Cache::remember('regions_with_institutions', 60 * 60,  function() {
 			return Region::with(['institutions', 'states.institutions'])->get();
 		});
 		
-        $categoryClasses = Cache::rememberForever('categoryClasses', function() {
+        $categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -80,8 +98,17 @@ class InstitutionController extends Controller {
         );
 
 		$categoryClass = null;
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 
-        return view('institution.location', compact('regions','categoryClass','categoryClasses','SEOData'));
+        return view('institution.location', compact('regions','categoryClass','categoryClasses','SEOData', 'shareLinks'));
     }
 
 
@@ -89,7 +116,7 @@ class InstitutionController extends Controller {
 		// Get the category IDs associated with the CategoryClass
 		$categoryIds = $categoryClass->categories->pluck('id');
 
-		$regions = Cache::remember("regions_with_institutions_for_category_{$categoryClass->id}", now()->addDays(7), function() use ($categoryIds) {
+		$regions = Cache::remember("regions_with_institutions_for_category_{$categoryClass->id}", 60 * 60 , function() use ($categoryIds) {
 			return Region::with([
 				'institutions' => function($query) use ($categoryIds) {
 					$query->whereIn('category_id', $categoryIds);
@@ -100,7 +127,7 @@ class InstitutionController extends Controller {
 			])->get();
 		});
 		
-        $categoryClasses = Cache::rememberForever('categoryClasses', function() {
+        $categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -110,22 +137,31 @@ class InstitutionController extends Controller {
 			description: "Discover {$categoryClass->name_plural} in your preferred location. Find the best educational institutions near you.",
 		);
 		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
 		
 		
-        return view('institution.location', compact('regions', 'categoryClass','categoryClasses','SEOData'));
+		
+        return view('institution.location', compact('regions', 'categoryClass','categoryClasses','SEOData', 'shareLinks'));
     }
 
     public function showLocation(State $state) {
 		
 		
-		$institutions = Cache::remember("institutions_in_{$state->id}", 60 * 60 * 24, function() use ($state) {
+		$institutions = Cache::remember("institutions_in_{$state->id}", 24 * 60 * 60 , function() use ($state) {
 			return $state->institutions()
 				->with('category','institutionType','state')
 				->orderBy('name')
 				->get();
 		});
 		
-        $categoryClasses = Cache::rememberForever('categoryClasses', function() {
+        $categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -135,9 +171,19 @@ class InstitutionController extends Controller {
         );
            
          $parameters = ['location' => $state->id, 'level' => '', 'program' => '', 'category' => '' ];
+		 
+		 
+		 $shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
         
 		   
-        return view('institution.show-location', compact( 'state','institutions','categoryClasses','SEOData','parameters'));
+        return view('institution.show-location', compact( 'state','institutions','categoryClasses','SEOData','parameters', 'shareLinks'));
 	}
 
 	public function showCategoryLocation(CategoryClass $categoryClass, State $state) {
@@ -145,7 +191,7 @@ class InstitutionController extends Controller {
 		$categoryIds = $categoryClass->categories->pluck('id');
 
 		// Get institutions in the state that belong to the categories in the CategoryClass
-		$institutions = Cache::remember("institutions_in_state_{$state->id}_for_category_{$categoryClass->id}", now()->addHours(12), function() use ($state, $categoryIds) {
+		$institutions = Cache::remember("institutions_in_state_{$state->id}_for_category_{$categoryClass->id}", 60 * 60, function() use ($state, $categoryIds) {
 			return $state->institutions()
 				->whereIn('category_id', $categoryIds)
 				->with(['category', 'institutionType', 'state'])
@@ -153,7 +199,7 @@ class InstitutionController extends Controller {
 				->get();
 		});
 
-		 $categoryClasses = Cache::rememberForever('categoryClasses', function() {
+		 $categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
 		
@@ -164,23 +210,31 @@ class InstitutionController extends Controller {
 		
 		
 		$parameters = ['location' => $state->id, 'level' => '', 'program' => '', 'category' => $categoryClass->id ];
+		
+		
+		$shareLinks = \Share::currentPage()
+				->facebook()
+				->twitter()
+				->linkedin()
+				->reddit()
+				->whatsapp()
+				->telegram()
+				->getRawLinks();
         
 		
-		return view('institution.show-location', compact('state', 'institutions', 'categoryClass', 'categoryClasses', 'SEOData','parameters'));
+		return view('institution.show-location', compact('state', 'institutions', 'categoryClass', 'categoryClasses', 'SEOData','parameters', 'shareLinks'));
 	}
+	
+	
+	
+	
+	//sharelink up
 
     public function institutionRanking(CategoryClass $categoryClass) {
 		
-			
-		/* $institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", now()->addHours(6), function() use ($categoryClass) {
-			return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
-				->with(['state.region', 'category.categoryClass', 'state.institutions', 'state.region.institutions'])
-				->orderByRaw('rank IS NULL, rank')
-				->paginate(100);
-		}); */
+				
 		
-		
-		$institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", now()->addHours(6), function() use ($categoryClass) {
+		$institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", 60 * 60, function() use ($categoryClass) {
 			return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
 				->whereNotNull('rank') // Only include institutions with a rank
 				->with(['state.region', 'category.categoryClass', 'state.institutions', 'state.region.institutions'])
@@ -191,7 +245,7 @@ class InstitutionController extends Controller {
 		
 		
 
-		$categoryClasses = Cache::rememberForever('categoryClasses', function() {
+		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60,  function() {
 			return CategoryClass::all();
 		});
 		
@@ -217,7 +271,7 @@ class InstitutionController extends Controller {
 
 	public function stateRanking(CategoryClass $categoryClass, State $state) {
 			
-		$institutions = Cache::remember("state_ranking_for_category_{$categoryClass->id}_state_{$state->id}", now()->addHours(6), function() use ($categoryClass, $state) {
+		$institutions = Cache::remember("state_ranking_for_category_{$categoryClass->id}_state_{$state->id}", 24 * 60 * 60 , function() use ($categoryClass, $state) {
 			return Institution::where('state_id', $state->id)
 				->whereIn('category_id', $categoryClass->categories->pluck('id'))
 				->whereNotNull('rank') // Only include institutions with a rank
@@ -227,7 +281,7 @@ class InstitutionController extends Controller {
 		});
 
 		
-		$categoryClasses = Cache::rememberForever('categoryClasses', function() {
+		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60 function() {
 			return CategoryClass::all();
 		});
 		
@@ -253,7 +307,7 @@ class InstitutionController extends Controller {
 
 	public function regionRanking(CategoryClass $categoryClass, Region $region) {
 		
-		$institutions = Cache::remember("region_ranking_for_category_{$categoryClass->id}_region_{$region->id}", now()->addHours(6), function() use ($categoryClass, $region) {
+		$institutions = Cache::remember("region_ranking_for_category_{$categoryClass->id}_region_{$region->id}", 24 * 60 * 60, function() use ($categoryClass, $region) {
 		
 		return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
 			->whereHas('state.region', function($query) use ($region) {
@@ -267,7 +321,7 @@ class InstitutionController extends Controller {
       });
 	  
 		
-		$categoryClasses = Cache::rememberForever('categoryClasses', function() {
+		$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60 function() {
 			return CategoryClass::all();
 		});
 		

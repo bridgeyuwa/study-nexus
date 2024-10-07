@@ -11,6 +11,26 @@
               </h1>
               </div>
           </div>
+		  
+		  <div class="d-flex justify-content-end py-1">		
+		     <!-- Social Actions -->
+				
+				<div class="btn-group me-1" role="group">
+					<button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share {{ $categoryClass->name_plural ?? 'Institutions' }}
+					</button>
+					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
+						@foreach ($shareLinks as $platform => $link)
+							<a class="dropdown-item" href="{{ $link }}" onclick="window.open(this.href, '_blank', 'width=700, height=525, left=250, top=200'); return false;">
+								<i class="fab fa-fw fa-{{ $platform }} text-{{ $platform }}  me-1"></i> {{ ucfirst($platform) }}
+							</a>
+						@endforeach
+					</div>
+				</div>
+			
+			<!-- END Social Actions -->	 
+		</div>
+		  
         </div>
         <!-- END Hero -->
 
@@ -132,11 +152,14 @@
 						@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
 						  <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
 							  <div class="bg-black-75 text-center p-3">
-								  <div class="h6 text-white mb-1"> <span itemprop="name">{{$institution->name}}</span>
+							  <div class="mb-3">
+								  <div class="h5 text-white mb-1"> <span itemprop="name">{{$institution->name}}</span>
 								   @if(!empty($institution->abbr))<span class="fw-light">({{$institution->abbr}})</span> @endif 
-								</div>
+								   </div>
 
-							@if(!empty($institution->former_name)) <div class="fs-sm text-white mb-2"> Formerly: <span itemprop="alternateName">{{$institution->former_name}}</span> </div> @endif  
+							     @if(!empty($institution->former_name)) <div class="fs-sm text-white"> Formerly: <span itemprop="alternateName">{{$institution->former_name}}</span> </div> @endif  
+							</div>
+							
 								  <div class="fs-sm text-white mb-0">
 								   {{$institution->institutionType->name}} 
 								   {{$institution->category->name}}. 

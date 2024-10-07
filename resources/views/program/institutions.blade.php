@@ -95,32 +95,35 @@
 						
 				  
 						<div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-								<a itemprop="url" href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}}" class="block block-rounded mb-3">
-								@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
-								  <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
-									  <div class="bg-black-75 text-center p-3">
-										  <div class="h6 text-white mb-1"> <span itemprop="name">{{$institution->name}}</span>
-										   @if(!empty($institution->abbr))<span class="fw-light">({{$institution->abbr}})</span> @endif 
-										</div>
+						<a itemprop="url" href="{{route('institutions.show', ['institution' => $institution])}}" class="block block-rounded mb-3">
+						@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
+						  <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
+							  <div class="bg-black-75 text-center p-3">
+							  <div class="mb-3">
+								  <div class="h5 text-white mb-1"> <span itemprop="name">{{$institution->name}}</span>
+								   @if(!empty($institution->abbr))<span class="fw-light">({{$institution->abbr}})</span> @endif 
+								   </div>
 
-									@if(!empty($institution->former_name)) <div class="text-white mb-2 fs-sm"> Formerly: <span itemprop="alternateName" class="text-white">{{$institution->former_name}}</span> </div> @endif  
-										  <div class="fs-sm text-white mb-0">
-										   {{$institution->institutionType->name}} 
-										   {{$institution->category->name}}. 
-												<i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
-										<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" >  
-										@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}}</span> - @endif    <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif</span> 
-										
-										@if(!empty($institution->address)) <meta itemprop="streetAddress" content="{{$institution->address}}" /> @endif
-										@if(!empty($institution->postal_code)) <meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif
-										<meta itemprop="addressCountry" content="NG" />
-										</span>
-										</div>
-										  
-									  </div>
-								  </div>
-								</a> 
-						</div>
+							     @if(!empty($institution->former_name)) <div class="fs-sm text-white"> Formerly: <span itemprop="alternateName">{{$institution->former_name}}</span> </div> @endif  
+							</div>
+							
+								  <div class="fs-sm text-white mb-0">
+								   {{$institution->institutionType->name}} 
+								   {{$institution->category->name}}. 
+										<i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i> 
+								<span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress" >  
+								@if(!empty($institution->locality)) <span itemprop="addressLocality">{{$institution->locality}}</span> - @endif    <span itemprop="addressRegion">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif</span> 
+								
+								@if(!empty($institution->address)) <meta itemprop="streetAddress" content="{{$institution->address}}" /> @endif
+								@if(!empty($institution->postal_code)) <meta itemprop="postalCode" content="{{$institution->postal_code}}" /> @endif
+								<meta itemprop="addressCountry" content="NG" />
+								</span>
+								</div>
+								  
+							  </div>
+						  </div>
+						</a> 
+					</div>
 				
 				         @endforeach
 

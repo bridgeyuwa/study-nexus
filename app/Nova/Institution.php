@@ -20,6 +20,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 use Intervention\Image\Laravel\Facades\Image as Cropper;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Actions\ExportAsCsv;
 
 class Institution extends Resource
 {
@@ -117,7 +118,7 @@ class Institution extends Resource
 			 
 			HasMany::make('Child Institutions', 'childInstitutions', 'App\Nova\Institution'),		
 			BelongsToMany::make('Affiliated Institutions','affiliatedInstitutions','App\Nova\Institution'),
-			
+			BelongsToMany::make('Catchments')->sortable(),
 			
         ];
     }
@@ -174,6 +175,9 @@ class Institution extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+		ExportAsCsv::make()->nameable(),
+		
+		];
     }
 }

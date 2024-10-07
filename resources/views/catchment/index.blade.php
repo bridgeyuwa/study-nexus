@@ -52,10 +52,10 @@
 <div class="content content-boxed">
 
     <div class="row">
-        <div class="col-md-4 order-md-1">
+        <div class="col-md-4 order-md-1 order-2">
 
             <!-- Ad block -->
-            <div class="block block-rounded d-none d-lg-block sticky-top" style="top: 100px;">
+            <div class="block block-rounded ">
                 <div class="block-header block-header-default bg-studynexus-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>

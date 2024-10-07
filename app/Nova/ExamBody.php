@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Image;
@@ -50,7 +51,7 @@ class ExamBody extends Resource
             Text::make('ID')->sortable(),
 			Text::make('Name')->sortable(),
 			Text::make('Abbr')->sortable(),
-			Text::make('Description')->nullable(),
+			Trix::make('Description')->nullable(),
 			BelongsTo::make('State')->sortable(),
 			Text::make('Address')->sortable(),
 			Text::make('Locality')->nullable(),

@@ -125,6 +125,10 @@ use Illuminate\Support\Number;
                     {{ $institutions->onEachSide(1)->links() }} 
 
                     @foreach ($institutions as $institution)
+					
+					
+					
+					
 					<!-- institution/programme item -->
                     <a href="
                        @if(!empty($program) && !empty($level))  
@@ -141,17 +145,17 @@ use Illuminate\Support\Number;
 					   
 					   
 					   
-                        <div class="block block-header-default bg-image mb-0 fw-light"
-                             style="background-image: url('media/photos/photo11.jpg');">
-                            <div class="bg-black-75 text-center pt-3 pb-1">
+                        <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
+                            <div class="bg-black-75 text-center p-3">
 							
-							<div class="mb-3">
-                                <div class="h5 text-white mb-1">{{$institution->name}}
-                                    @if(!empty($institution->abbr)) <span class="fw-light">({{$institution->abbr}})</span> @endif 
-                                </div>
+								<div class="mb-3">
+									<div class="h5 text-white mb-1">{{$institution->name}}
+										@if(!empty($institution->abbr)) <span class="fw-light">({{$institution->abbr}})</span> @endif 
+									</div>
 
-                                @if(!empty($institution->former_name)) <div class="text-white  fs-sm"> Formerly: <span class="fw-light">{{$institution->former_name}}</span> </div> @endif 
-							</div>
+									@if(!empty($institution->former_name)) <div class="text-white  fs-sm"> Formerly: <span class="fw-light">{{$institution->former_name}}</span> </div> @endif 
+								</div>
+							
                                 <div class=" text-white mb-2 fs-sm">{{$institution->institutionType->name}}
                                     {{$institution->category->name}} 
                                        <i class="fa fa-map-marker-alt ms-2 me-1 text-primary"></i>
