@@ -29,8 +29,8 @@
 				</div>
 			
 			<!-- END Social Actions -->	 
-		</div>
-		  
+		  </div>
+		 
         </div>
         <!-- END Hero -->
 
@@ -87,7 +87,7 @@
             </div>
             <!-- END nav -->
         </div>
-
+ <span id="results"></span>
 
     <div class="block block-rounded">
         <div class="block-content">
@@ -191,6 +191,24 @@
 </div>
 
 <!-- END Page Content -->
+
+<script>
+    window.onload = function() {
+        // Check if there is a query string in the URL
+        if (window.location.search) {
+            // Get the position of the results section from the top of the document
+            const resultsSection = document.getElementById('results');
+            const offsetTop = resultsSection.getBoundingClientRect().top + window.scrollY;
+
+            // Scroll to the calculated position
+            window.scrollTo({
+                top: offsetTop - 100,  // Adjust this value to fine-tune the scroll position
+                behavior: 'smooth'
+            });
+        }
+    };
+</script>
+
 
 
 @endsection

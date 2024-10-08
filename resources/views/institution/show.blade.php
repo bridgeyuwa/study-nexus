@@ -68,9 +68,10 @@ use Illuminate\Support\Number;
               <button type="button" class="btn btn-sm btn-primary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <i class="fa fa-fw fa-building-columns"></i> <i class="fa fa-fw fa-rss"></i>
                 <span class="badge rounded-pill">Latest {{$institution->abbr}} News</span>
+				<i class="fa fa-caret-down text-sm"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
-                <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
+                <div class="bg-primary-dark rounded-top fw-semibold fs-sm text-white text-center p-3">
                   Latest News from {{$institution->abbr}}
                 </div>
                 <ul class="nav-items my-2">
@@ -79,7 +80,7 @@ use Illuminate\Support\Number;
                   <li>
                     <a class="d-flex text-dark py-2" href="{{route('institutions.news.show',['institution' => $institution, 'news' => $news])}}">
                       <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-success"></i>
+                        <i class="fa fa-fw fa-rss text-success"></i>
                       </div>
                       <div class="flex-grow-1 fs-sm pe-2">
                         <div class="fw-semibold">{{$news->title}}</div>

@@ -139,7 +139,7 @@ use Illuminate\Support\Number;
                        {{route('institutions.show', ['institution' => $institution])}}    
                        @endif 
                        " 
-                       class="block block-rounded bg-dark" target="_blank">
+                       class="block block-rounded bg-dark">
 					   
 					   
 					   
