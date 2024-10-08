@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Url;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SocialType extends Resource
@@ -43,7 +44,8 @@ class SocialType extends Resource
         return [
             Text::make('ID')->sortable(),
 			Text::make('Name')->sortable(),
-			Text::make('Icon')->sortable(),
+			Url::make('Url'),
+			Text::make('Icon'),
         ];
     }
 

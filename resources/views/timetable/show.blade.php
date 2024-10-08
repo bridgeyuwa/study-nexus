@@ -20,8 +20,8 @@ use Carbon\Carbon;
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
                     <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{ asset('storage/' . $exam->examBody->logo) }}" alt="{{$exam->examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
-                      <link itemprop="logo" href="{{$exam->examBody->logo}}">
+                      <img  src="{{ Storage::url($exam->examBody->logo) }}" alt="{{$exam->examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
+                      <link itemprop="logo" href="{{Storage::url($exam->examBody->logo)}}">
                     </div>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ use Carbon\Carbon;
 					     @endif
 						  
 						<link itemprop="url" href="{{url()->current()}}" >
-						<link itemprop="image" href="{{$exam->examBody->logo}}" />
+						<link itemprop="image" href="{{Storage::url($exam->examBody->logo)}}" />
 						<meta itemprop="educationalLevel" content="{{$exam->type}}" />
 						<meta itemprop="location" content="Candidate's Examination Center" />
 						<meta itemprop="startDate" content="{{$timetable->start_time->toIso8601String()}}" />

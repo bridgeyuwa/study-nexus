@@ -16,8 +16,8 @@
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto" style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
                     <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{ asset('storage/' . $examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
-                      <link itemprop="logo" href="{{$examBody->logo}}">
+                      <img  src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
+                      <link itemprop="logo" href="{{Storage::url($examBody->logo)}}">
                     </div>
                   </div>
                 </div>
@@ -86,8 +86,8 @@
 				
 			
 
-			<object data="{{$syllabus->url}}" type="application/pdf" width="100%" height="500px" >
-				<p class="bg-white p-3 text-center"> It appears you don't have a PDF Plugin for this browser. <a class="btn btn-primary" href="{{$syllabus->url}}" download> Download the {{$examBody->abbr}} Syllabus for {{$syllabus->subject->name}} </a> instead.
+			<object data="{{Storage::url($syllabus->attachment)}}" type="application/pdf" width="100%" height="500px" >
+				<p class="bg-white p-3 text-center"> It appears you don't have a PDF Plugin for this browser. <a class="btn btn-primary" href="{{Storage::url($syllabus->attachment)}}" download> Download the {{$examBody->abbr}} Syllabus for {{$syllabus->subject->name}} </a> instead.
 				
 				
 			</object>

@@ -160,7 +160,7 @@ class Nova
     /**
      * The callback used to resolve Nova's footer.
      *
-     * @var (\Closure(\Illuminate\Http\Request):(string))|null
+     * @var (\Closure(\Illuminate\Http\Request):(string|\Stringable))|null
      */
     public static $footerCallback;
 
@@ -1394,7 +1394,7 @@ class Nova
     /**
      * Set the footer text used for Nova.
      *
-     * @param  \Closure(\Illuminate\Http\Request):string  $footerCallback
+     * @param  \Closure(\Illuminate\Http\Request):(string|\Stringable)  $footerCallback
      * @return static
      */
     public static function footer($footerCallback)
@@ -1413,7 +1413,7 @@ class Nova
     public static function resolveFooter(Request $request)
     {
         if (! is_null(static::$footerCallback)) {
-            return call_user_func(static::$footerCallback, $request);
+            return (string) call_user_func(static::$footerCallback, $request);
         }
 
         return static::defaultFooter($request);

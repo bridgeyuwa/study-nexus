@@ -51,7 +51,7 @@ class SearchController extends Controller
     . '_religion_' . ($religionId ?? 'null') 
     . '_sort_' . ($sortBy ?? 'null');
 		
-	 $institutions = Cache::remember($cacheKey, 60, function () use ($request, $state, $level, $program, $typeSlug, $categoryClass, $religiousAffiliationCategory, $sortBy) {
+	 $institutions = Cache::remember($cacheKey, 60 * 60, function () use ($request, $state, $level, $program, $typeSlug, $categoryClass, $religiousAffiliationCategory, $sortBy) {
        	
         $query = Institution::query();
 

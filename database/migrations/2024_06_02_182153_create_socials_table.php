@@ -15,7 +15,7 @@ return new class extends Migration
 			$table->id();
             $table->unsignedBigInteger('social_type_id');
             $table->string('institution_id');
-            $table->string('url');
+            $table->string('handle');
 			$table->timestamps();
 
             $table->unique(['social_type_id', 'institution_id']);

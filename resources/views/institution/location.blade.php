@@ -14,15 +14,32 @@
 
 				<h1 class="h2 text-white mb-1">
 					{{ $categoryName }} in Nigeria
-				</h1>
-				
-				
-
+				</h1>			
            
             <h2 class="h3 text-white fw-light mt-3"> by Regions/States</h2>
               </div>
             </div>
           </div>
+		  
+		  <div class="d-flex justify-content-end py-1">		
+		     <!-- Social Actions -->
+				
+				<div class="btn-group me-1" role="group">
+					<button type="button" class="btn btn-sm btn-alt-primary dropdown-toggle" id="dropdown-blog-news" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-share-alt opacity-50 me-1"></i> Share {{ $categoryClass->name_plural ?? 'Institutions' }} Locations
+					</button>
+					<div class="dropdown-menu dropdown-menu-end fs-sm" aria-labelledby="dropdown-blog-news">
+						@foreach ($shareLinks as $platform => $link)
+							<a class="dropdown-item" href="{{ $link }}" onclick="window.open(this.href, '_blank', 'width=700, height=525, left=250, top=200'); return false;">
+								<i class="fab fa-fw fa-{{ $platform }} text-{{ $platform }}  me-1"></i> {{ ucfirst($platform) }}
+							</a>
+						@endforeach
+					</div>
+				</div>
+			
+			<!-- END Social Actions -->	 
+		</div>
+		  
         </div>
         <!-- END Hero -->
 
@@ -34,7 +51,7 @@
 <div class="content content-boxed">
 
 
- <div class="col-md-12 order-md-1">
+ <div class="col-md-12">
 
             <!-- nav -->
             <div class="block block-rounded">
@@ -82,10 +99,10 @@
 
 
     <div class="row">
-        <div class="col-md-4 order-md-1"> 
+        <div class="col-md-4 order-md-1 order-2"> 
 
             <!-- Ads  -->
-            <div class="block block-rounded d-none d-lg-block sticky-top" style="top: 100px;">
+            <div class="block block-rounded">
                 <div class="block-header block-header-default bg-studynexus-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>

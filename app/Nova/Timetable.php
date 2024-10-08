@@ -4,6 +4,10 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Timetable extends Resource
@@ -41,6 +45,15 @@ class Timetable extends Resource
     {
         return [
             ID::make()->sortable(),
+			Text::make('name'),
+			Text::make('Paper Code'),
+			BelongsTo::make('exam'),
+			BelongsTo::make('paper type'),
+			BelongsTo::make('subject'),
+			Date::make('Exam Date'),
+			DateTime::make('Start Time'),
+			DateTime::make('End Time'),
+			Text::make('Remarks')->nullable(),
         ];
     }
 

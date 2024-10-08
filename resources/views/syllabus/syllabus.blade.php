@@ -17,8 +17,8 @@
                   <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto"  style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
                     <div class="block-content block-content-full px-1 py-1">
 					
-                      <img  src="{{ asset('storage/' . $examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
-                      <link itemprop="logo" href="{{$examBody->logo}}">
+                      <img  src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 100px; height: 100px; object-fit: cover;">
+                      <link itemprop="logo" href="{{Storage::url($examBody->logo)}}">
                     </div>
                   </div>
                 </div>

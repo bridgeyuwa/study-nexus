@@ -66,21 +66,23 @@
 							</div>
 						  
 						  
-							<div class="block-content p-0 overflow-hidden">
-							   
-								<div class="  d-flex align-items-center">
-								  <div  itemprop="description" class="px-4 py-3">
-								  
-									<p class="lead mb-2">
-									{{$news->excerpt}}
-									</p>
-									
-									{{$news->content}}
-									
-								  </div>
-								</div>
 							
+							<br>
+							
+							<div class="block-content p-0 overflow-hidden">
+								<div class="d-flex align-items-center">
+									<div itemprop="description" class="px-4 py-3" style="max-width: 100%;">
+										<p class="lead mb-2">
+											{{ $news->excerpt }}
+										</p>
+
+										{!! \Illuminate\Support\Str::markdown($news->content) !!}
+									</div>
+								</div>
 							</div>
+
+							
+							
 								
 						</div>
 						  <!-- END News Content -->

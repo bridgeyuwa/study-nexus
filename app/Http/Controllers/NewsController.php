@@ -14,7 +14,7 @@ class NewsController extends Controller
     public function index()
     {
         // Cache the paginated news items
-        $news = Cache::remember('news_index', 60, function () {
+        $news = Cache::remember('news_index', 15 * 60, function () {
             $newsItems = News::with(['newsCategories', 'institution'])->orderBy('created_at', 'desc')->paginate(10);
             $newsItems->getCollection()->transform(function ($newsItem) {
                 $newsItem->readTime = $this->readTime($newsItem->content);
@@ -24,7 +24,7 @@ class NewsController extends Controller
         });
 
         // Cache the news categories with count
-        $newsCategories = Cache::remember('news_categories_index', 60, function () {
+        $newsCategories = Cache::remember('news_categories_index', 60 * 60, function () {
             return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->take(25)->get();
         });
 		
@@ -40,7 +40,7 @@ class NewsController extends Controller
 
     public function indexByInstitution(Institution $institution)
     {
-        $news = Cache::remember("news_index_institution_{$institution->id}", 60, function () use ($institution) {
+        $news = Cache::remember("news_index_institution_{$institution->id}", 15 * 60, function () use ($institution) {
             $newsItems = $institution->news()->with('newsCategories')->orderBy('created_at', 'desc')->paginate(10);
             $newsItems->getCollection()->transform(function ($newsItem) {
                 $newsItem->readTime = $this->readTime($newsItem->content);
@@ -50,7 +50,7 @@ class NewsController extends Controller
             return $newsItems;
         });
 
-        $newsCategories = Cache::remember('news_categories_index_institution', 60, function () {
+        $newsCategories = Cache::remember('news_categories_index_institution', 60 * 60, function () {
             return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->take(25)->get();
         });
 		
@@ -66,7 +66,7 @@ class NewsController extends Controller
 
     public function indexByNewsCategory(NewsCategory $newsCategory)
     {
-        $news = Cache::remember("news_index_category_{$newsCategory->id}", 60, function () use ($newsCategory) {
+        $news = Cache::remember("news_index_category_{$newsCategory->id}", 15 * 60, function () use ($newsCategory) {
             $newsItems = $newsCategory->news()->with('newsCategories')->orderBy('created_at', 'desc')->paginate(10);
             $newsItems->getCollection()->transform(function ($newsItem) {
                 $newsItem->readTime = $this->readTime($newsItem->content);
@@ -76,7 +76,7 @@ class NewsController extends Controller
             return $newsItems;
         });
 
-        $newsCategories = Cache::remember('news_categories_index_category', 60, function () {
+        $newsCategories = Cache::remember('news_categories_index_category', 60 * 60, function () {
             return NewsCategory::withCount('news')->orderBy('news_count', 'desc')->take(25)->get();
         });
 		
@@ -94,18 +94,16 @@ class NewsController extends Controller
 	public function indexOfNewsCategories()
     {
 		
-		//to add cache
 		
-		$newsCategories = NewsCategory::all()->groupBy(function($newsCategory){
-			return strtoupper(substr($newsCategory->name, 0, 1));
-			
-		})->sortKeys()
-		->map(function($group){
-			return $group->sortBy('name');
-			
+		$newsCategories = Cache::remember('news_categories', 60 * 60, function () {
+			return NewsCategory::all()->groupBy(function($newsCategory) {
+				return strtoupper(substr($newsCategory->name, 0, 1));
+			})->sortKeys()
+			->map(function($group) {
+				return $group->sortBy('name');
+			});
 		});
-		
-		
+				
 		
 		$SEOData = new SEOData(
             title: "All News Categories",
@@ -115,46 +113,40 @@ class NewsController extends Controller
 		return view('news.news-categories', compact( 'newsCategories','SEOData'));
 	}
 
-    public function show(News $news) 
-    {
-        $news->readTime = $this->readTime($news->content);
+   
+	
+	
+	public function show(News $news) 
+	{
+		$news->readTime = $this->readTime($news->content);
 		
 		$SEOData = new SEOData(
-            title: $news->title,
-            description: $news->excerpt,
-        );
-		
-		
-		
-		//NOT YET CACHED
-		
+			title: $news->title,
+			description: $news->excerpt,
+		);
+
 		$newsCategoryIds = $news->newsCategories->pluck('id')->toArray();
 
-		$similarNews = News::whereHas('newsCategories', function($query) use ($newsCategoryIds){
-			$query->whereIn('news_categories.id', $newsCategoryIds);
-		})
-		->where('id', '!=', $news->id)
-		->withCount(['newsCategories' => function($query) use($newsCategoryIds) {
-			$query->whereIn('news_categories.id', $newsCategoryIds);
-		}])
-		->with(['institution', 'newsCategories'])
-		->orderBy('news_categories_count', 'desc')
-		->when($news->institution_id, function ($query) use ($news) {
-			$query->orderByRaw('institution_id = ? DESC', [$news->institution_id]);
-		})
-		->orderBy('created_at', 'desc')
-		->take(5)
-		->get();
-		
+		// Cache similar news
+		$cacheKey = 'similar_news_' . $news->id;
+		$similarNews = Cache::remember($cacheKey, 60 * 60, function () use ($news, $newsCategoryIds) {
+			return News::whereHas('newsCategories', function($query) use ($newsCategoryIds) {
+				$query->whereIn('news_categories.id', $newsCategoryIds);
+			})
+			->where('id', '!=', $news->id)
+			->withCount(['newsCategories' => function($query) use ($newsCategoryIds) {
+				$query->whereIn('news_categories.id', $newsCategoryIds);
+			}])
+			->with(['institution', 'newsCategories'])
+			->orderBy('news_categories_count', 'desc')
+			->when($news->institution_id, function ($query) use ($news) {
+				$query->orderByRaw('institution_id = ? DESC', [$news->institution_id]);
+			})
+			->orderBy('created_at', 'desc')
+			->take(5)
+			->get();
+		});
 
-		
-		
-		
-		
-		
-		
-		
-		
 		$shareLinks = \Share::currentPage()
 				->facebook()
 				->twitter()
@@ -164,8 +156,12 @@ class NewsController extends Controller
 				->telegram()
 				->getRawLinks();
 		
-        return view('news.show', compact('news','similarNews','SEOData','shareLinks'));
-    }
+		return view('news.show', compact('news', 'similarNews', 'SEOData', 'shareLinks'));
+	}
+
+	
+	
+	
 
     public function showByInstitution(Institution $institution, News $news) 
     {
@@ -180,6 +176,30 @@ class NewsController extends Controller
             description: $news->excerpt,
         );
 		
+		
+		$newsCategoryIds = $news->newsCategories->pluck('id')->toArray();
+
+		// Cache similar news
+		$cacheKey = 'similar_news_' . $news->id;
+		$similarNews = Cache::remember($cacheKey, 60 * 60, function () use ($news, $newsCategoryIds) {
+			return News::whereHas('newsCategories', function($query) use ($newsCategoryIds) {
+				$query->whereIn('news_categories.id', $newsCategoryIds);
+			})
+			->where('id', '!=', $news->id)
+			->withCount(['newsCategories' => function($query) use ($newsCategoryIds) {
+				$query->whereIn('news_categories.id', $newsCategoryIds);
+			}])
+			->with(['institution', 'newsCategories'])
+			->orderBy('news_categories_count', 'desc')
+			->when($news->institution_id, function ($query) use ($news) {
+				$query->orderByRaw('institution_id = ? DESC', [$news->institution_id]);
+			})
+			->orderBy('created_at', 'desc')
+			->take(5)
+			->get();
+		});		
+		
+		
 		$canonical = route('news.show', ['news' => $news]);
 		
 		$shareLinks = \Share::currentPage()
@@ -191,7 +211,7 @@ class NewsController extends Controller
 				->telegram()
 				->getRawLinks();
 		
-        return view('news.show', compact('news','SEOData','canonical','shareLinks'));
+        return view('news.show', compact('news','SEOData', 'similarNews','canonical','shareLinks'));
     }
 
     public function showByNewsCategory(NewsCategory $newsCategory, News $news)
@@ -207,6 +227,30 @@ class NewsController extends Controller
             description: $news->excerpt,
         );
 		
+		
+		$newsCategoryIds = $news->newsCategories->pluck('id')->toArray();
+
+		// Cache similar news
+		$cacheKey = 'similar_news_' . $news->id;
+		$similarNews = Cache::remember($cacheKey, 60 * 60, function () use ($news, $newsCategoryIds) {
+			return News::whereHas('newsCategories', function($query) use ($newsCategoryIds) {
+				$query->whereIn('news_categories.id', $newsCategoryIds);
+			})
+			->where('id', '!=', $news->id)
+			->withCount(['newsCategories' => function($query) use ($newsCategoryIds) {
+				$query->whereIn('news_categories.id', $newsCategoryIds);
+			}])
+			->with(['institution', 'newsCategories'])
+			->orderBy('news_categories_count', 'desc')
+			->when($news->institution_id, function ($query) use ($news) {
+				$query->orderByRaw('institution_id = ? DESC', [$news->institution_id]);
+			})
+			->orderBy('created_at', 'desc')
+			->take(5)
+			->get();
+		});
+			
+		
 		$canonical = route('news.show', ['news' => $news]);
 		
 		$shareLinks = \Share::currentPage()
@@ -218,7 +262,7 @@ class NewsController extends Controller
 				->telegram()
 				->getRawLinks();
 		
-        return view('news.show', compact('newsCategory', 'news','SEOData','canonical','shareLinks'));
+        return view('news.show', compact('newsCategory', 'news','SEOData', 'similarNews', 'canonical','shareLinks'));
     }
 
     protected function readTime($content)

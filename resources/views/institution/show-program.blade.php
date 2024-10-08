@@ -20,8 +20,8 @@ use Illuminate\Support\Number;
 							  <div class="block block-rounded  block-transparent bg-black-50 text-center mb-0 mx-auto"  style="box-shadow:0 0 2.25rem #d1d8ea;opacity:1">
 								<div class="block-content block-content-full px-1 py-1">
 								
-								  <img  src="{{$institution->logo}}" alt="{{$institution->name}} logo" style="width: 100px; height: 100px; object-fit: cover;">
-								  <link itemprop="logo" href="{{$institution->logo}}">
+								  <img  src="{{Storage::url($institution->logo)}}" alt="{{$institution->name}} logo" style="width: 100px; height: 100px; object-fit: cover;">
+								  <link itemprop="logo" href="{{Storage::url($institution->logo)}}">
 								</div>
 							  </div>
 							</div>
@@ -178,10 +178,10 @@ use Illuminate\Support\Number;
 	
         <div class="col-md-4 order-md-1">
 
-            <!-- Ads -->
+            <!-- Highlights -->
             <div class="block block-rounded">
                 <div class="block-header block-header-default text-center bg-studynexus-cubes" >
-                    <h3 class="block-title">Ads</h3>
+                    <h3 class="block-title">Highlights</h3>
                 </div>
                 <div class="block-content">
                     <ul class="fa-ul list-icons">
@@ -213,7 +213,7 @@ use Illuminate\Support\Number;
 						</ul>
                 </div>
             </div>
-            <!-- END Ads -->
+            <!-- END Highlights -->
         </div>
 
         <div  class="col-md-8 order-md-0">
@@ -331,9 +331,11 @@ use Illuminate\Support\Number;
                                     <td class="fs-sm fw-semibold">Course Accreditation Status</td>
                                     <td>  
 									@if(!empty($institution_program->pivot->accreditationStatus))
-									<button type="button" class="btn btn-{{$institution_program->pivot->accreditationStatus->class}} rounded-0" disabled>
+									
+									<span class="fs-6 badge bg-{{$institution_program->pivot->accreditationStatus->class}} rounded-0">
 									{{$institution_program->pivot->accreditationStatus->name}}
-									</button>
+									</span>
+									
 									@else
 										Not Available
 									@endif

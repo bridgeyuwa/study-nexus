@@ -5,13 +5,14 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\BelongsTo;
 
-
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ExamBody extends Resource
 {
@@ -50,7 +51,7 @@ class ExamBody extends Resource
             Text::make('ID')->sortable(),
 			Text::make('Name')->sortable(),
 			Text::make('Abbr')->sortable(),
-			Text::make('Description')->nullable(),
+			Trix::make('Description')->nullable(),
 			BelongsTo::make('State')->sortable(),
 			Text::make('Address')->sortable(),
 			Text::make('Locality')->nullable(),
@@ -60,6 +61,13 @@ class ExamBody extends Resource
 					->disk('public')
 					->disableDownload()
 					->prunable()
+					->nullable()
+					->thumbnail(function () {
+					return $this->logo ? Storage::url($this->logo) : null;
+					})
+					->preview(function () {
+						return $this->logo ? Storage::url($this->logo) : null;
+					})
 					->path('images/exam_bodies')
 					->storeAs(function (Request $request){
 						return $request->abbr .'-logo.'. $request->file('logo')->extension();

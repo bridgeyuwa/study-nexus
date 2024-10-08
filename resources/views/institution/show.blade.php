@@ -68,9 +68,10 @@ use Illuminate\Support\Number;
               <button type="button" class="btn btn-sm btn-primary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <i class="fa fa-fw fa-building-columns"></i> <i class="fa fa-fw fa-rss"></i>
                 <span class="badge rounded-pill">Latest {{$institution->abbr}} News</span>
+				<i class="fa fa-caret-down text-sm"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
-                <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
+                <div class="bg-primary-dark rounded-top fw-semibold fs-sm text-white text-center p-3">
                   Latest News from {{$institution->abbr}}
                 </div>
                 <ul class="nav-items my-2">
@@ -79,7 +80,7 @@ use Illuminate\Support\Number;
                   <li>
                     <a class="d-flex text-dark py-2" href="{{route('institutions.news.show',['institution' => $institution, 'news' => $news])}}">
                       <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-success"></i>
+                        <i class="fa fa-fw fa-rss text-success"></i>
                       </div>
                       <div class="flex-grow-1 fs-sm pe-2">
                         <div class="fw-semibold">{{$news->title}}</div>
@@ -343,16 +344,18 @@ use Illuminate\Support\Number;
 						<table class="table">
 							<tr>
 								<td class="fw-semibold">Institution Accreditation Body</td>
-								<td><a class="link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a> </td>
+								<td><a class="link-dark"> <span itemprop="name">{{$institution->accreditationBody->name}}</span> @if(!empty($institution->accreditationBody->abbr)) (<span itemprop="alternateName">{{$institution->accreditationBody->abbr}}</span>) @endif </a>    <img src="{{ Storage::url($institution->accreditationBody->logo) }}" alt="{{$institution->accreditationBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;">
+						   </td>
 							    <link itemprop="sameAs" href="{{$institution->accreditationBody->url}}">
+								<link itemprop="image" href="{{$institution->accreditationBody->logo}}">
 							</tr>
 							<tr>
 								<td class="fw-semibold">Accreditation Status</td>
 								<td>  
 								@if(!empty($institution->accreditationStatus))
-								<button type="button" class="btn btn-{{$institution->accreditationStatus->class}} rounded-0" disabled>
+								<span class="fs-6 badge bg-{{$institution->accreditationStatus->class}} rounded-0">
 								{{$institution->accreditationStatus->name}}
-								</button>
+								</span>
 								@else
 									Not Available
 								@endif
@@ -373,11 +376,11 @@ use Illuminate\Support\Number;
 					<meta itemprop="name"  content="Subsidiary Institutions of {{$institution->name}}" >
 					@foreach($institution->childInstitutions as $childInstitution)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-						<a itemprop="url" href="{{route('institutions.show', ['institution' => $childInstitution])}}" class="block block-rounded mb-1">
+						<a itemprop="url" href="{{route('institutions.show', ['institution' => $childInstitution])}}" class="block block-rounded fs-sm mb-1">
 						@if(!empty($childInstitution->url))  <link itemprop="sameAs" content="{{$childInstitution->url}}" /> @endif
 						  <div class="block block-header-default bg-image mb-0">
 							  <div class="bg-body-light text-center p-1">
-								  <div class=" link-primary mb-1"> <span itemprop="name">{{$childInstitution->name}}</span>
+								  <div class=" text-primary-darker mb-1"> <span itemprop="name">{{$childInstitution->name}}</span>
 								   @if(!empty($childInstitution->abbr))<span >({{$childInstitution->abbr}})</span> @endif 
 								</div>
 
@@ -407,11 +410,11 @@ use Illuminate\Support\Number;
 					<meta itemprop="name"  content="Institutions affiliated with {{$institution->name}}" >
 					@foreach($institution->affiliatedInstitutions as $affiliatedInstitution)
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
-						<a itemprop="url" href="{{route('institutions.show', ['institution' => $affiliatedInstitution])}}" class="block block-rounded mb-1">
+						<a itemprop="url" href="{{route('institutions.show', ['institution' => $affiliatedInstitution])}}" class="block block-rounded fs-sm mb-1">
 						@if(!empty($affiliatedInstitution->url))  <link itemprop="sameAs" content="{{$affiliatedInstitution->url}}" /> @endif
 						  <div class="block block-header-default bg-image mb-0">
 							  <div class="bg-body-light text-center p-1">
-								  <div class=" link-primary mb-1"> <span itemprop="name">{{$affiliatedInstitution->name}}</span>
+								  <div class=" text-primary-darker mb-1"> <span itemprop="name">{{$affiliatedInstitution->name}}</span>
 								   @if(!empty($affiliatedInstitution->abbr))<span >({{$affiliatedInstitution->abbr}})</span> @endif 
 								</div>
 
@@ -438,14 +441,14 @@ use Illuminate\Support\Number;
 						    @if(!empty($institution->url))
 							<div class="row bg-stripped">
 								<div class="col-3  fw-light text-black"><i class="fa fa-link text-dark me-1"></i>Website </div>
-								<div class="col"> <a class="link-fx link-info" href="{{$institution->url}}" target="_blank">{{$institution->url}}</a></div>
+								<div class="col"> <a class="text-primary-darker" href="{{$institution->url}}" target="_blank">{{$institution->url}}</a></div>
 							</div>
 							@endif
 							
 							@if(!empty($institution->email))
 							<div class="row bg-stripped">
 								<div class="col-3  fw-light text-black"> <i class="fas fa-envelope text-dark me-1"></i>Email</div>
-								<div class="col"><a class="link-fx link-info" href="mailto:{{$institution->email}}"> <span itemprop="email">{{$institution->email}}</span></a></div>
+								<div class="col"><a class="text-primary-darker" href="mailto:{{$institution->email}}"> <span itemprop="email">{{$institution->email}}</span></a></div>
 							</div>
 							@endif
 
@@ -454,7 +457,7 @@ use Illuminate\Support\Number;
 								<div  class="col-3 fw-light text-black"><i class="fa fa-phone text-dark me-1"></i>Phone </div>
 								<div itemprop="contactPoint" itemscope itemtype="https://schema.org/ContactPoint" class="col"> 
 								   @foreach($institution->phoneNumbers as $phone)
-								   <a class="link-fx link-info" href="tel:+234{{substr($phone->number, 1)}}"> <span itemprop="telephone">+234 {{substr($phone->number, 1)}}</span> </a> @if(!empty($phone->holder)) <span itemprop="contactType" class="ms-2 fw-light fs-sm">({{$phone->holder}}) </span> @endif <br>
+								   <a class="text-primary-darker" href="tel:+234{{substr($phone->number, 1)}}"> <span itemprop="telephone">+234 {{substr($phone->number, 1)}}</span> </a> @if(!empty($phone->holder)) <span itemprop="contactType" class="ms-2 fw-light fs-sm">({{$phone->holder}}) </span> @endif <br>
 								   @endforeach
 								</div>
 							</div>
@@ -464,7 +467,7 @@ use Illuminate\Support\Number;
 							@foreach($institution->socials as $social) 
 							<div class="row bg-stripped">
 								<div class="col-3 fw-light text-black"> <i class="{{$social->socialType->icon}} text-dark me-1"></i> {{$social->socialType->name}} </div>
-								<div class="col "> <a class="link-fx link-info" href="https://{{$social->url}}" target="_blank">{{$social->url}}</a>  </div>
+								<div class="col "> <a class="text-primary-darker" href="{{$social->socialType->url . $social->handle}}" target="_blank">{{'@'.$social->handle}}</a>  </div>
 							</div>
 							@endforeach 
 						</div>

@@ -33,24 +33,26 @@ class AppServiceProvider extends ServiceProvider
 	   Model::preventAccessingMissingAttributes();
 	   
 	   View::composer('partials.side-bar', function ($view) {
-            $categoryClasses = Cache::rememberForever('category_classes', function () {
-                return CategoryClass::all();
-            });
+			// Cache the category classes for 15 minutes
+			$categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function () {
+				return CategoryClass::all();
+			});
 
-            $levels = Cache::rememberForever('levels', function () {
-                return Level::all();
-            });
+			// Cache the levels for 15 minutes
+			$levels = Cache::remember('levels', 24 * 60 * 60, function () {
+				return Level::all();
+			});
 			
-            $view->with([
-			'categoryClasses' => $categoryClasses,
-			'levels' => $levels
+			$view->with([
+				'categoryClasses' => $categoryClasses,
+				'levels' => $levels
 			]);
-        });
-		
+		});
+
 		
 		View::composer('layouts.backend', function ($view) {
             // manually remove this cach when added new News Article
-            $news = Cache::rememberForever('latest_news', function () {
+            $news = Cache::remember('latest_news', 15 * 60, function () {
                 return News::select('id','title','created_at')->orderBy('created_at','desc')->take(5)->get();
             });
 			
