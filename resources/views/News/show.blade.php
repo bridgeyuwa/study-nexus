@@ -4,7 +4,7 @@
 @section('content')
 <span itemscope itemtype="https://schema.org/NewsArticle">
 <!-- Hero -->
-        <div class="bg-image bg-studynexus-hero" >
+        <div class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
 			
@@ -46,7 +46,7 @@
 						  <!-- News Content -->
 						  <div class="block block-rounded">
 						  
-							<div class="block-header block-header-default fs-sm py-3  bg-studynexus-cubes">
+							<div class="block-header block-header-default fs-sm py-3  studynexus-bg-cubes">
 								<span>  
 									Published: 
 									<span itemprop="datePublished" content="{{$news->created_at->format('Y-m-d\TH:i:sO')}}">
@@ -119,7 +119,7 @@
 
 				  <!-- News Categories -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default bg-studynexus-cubes">
+					<div class="block-header block-header-default studynexus-bg-cubes">
 					  <h3 class="block-title text-center">News Tags</h3>
 					</div>
 					<div class="block-content block-content-full">
@@ -143,7 +143,7 @@
 				  
 				<!-- Similar News -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default bg-studynexus-cubes">
+					<div class="block-header block-header-default studynexus-bg-cubes">
 					  <h3 class="block-title text-center">Similar News</h3>
 					</div>
 					<div class="block-content block-content-full bg-info-light">

@@ -14,21 +14,21 @@
 [aria-expanded="true"] .toggle-icon::after { content: '-'; }
 
 
-.bg-studynexus-hero {
+.studynexus-bg-hero {
     background-image: url(/media/photos/photo13@2x.jpg);
 }
 
-.bg-studynexus-cubes {
+.studynexus-bg-cubes {
     background-image: url(/media/patterns/cubes.png);
 }   
-.bg-studynexus-concrete {
+.studynexus-bg-concrete {
     background-image: url(/media/patterns/concrete.png);
 }
-.bg-studynexus-error-image {
+.studynexus-bg-error-image {
     background-image: url(/media/photos/photo18@2x.jpg);
 }
 
-.bg-studynexus-list {
+.studynexus-bg-list {
     background-image: url(/media/photos/photo11.jpg);
 }
 

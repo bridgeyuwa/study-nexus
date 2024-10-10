@@ -1,15 +1,11 @@
 @extends('layouts.backend')
 
-@section('js_after')
-<script src="{{ asset('js/plugins/masonry.pkgd.min.js') }}"></script>
-@endsection
-
 @section('content')
 
 
  <!-- Study Nexus Hero -->
      
-        <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 bg-studynexus-cubes" >
+        <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 studynexus-bg-cubes" >
 
 			<div class="col-md-6  d-none d-md-block">
 				<br>
@@ -47,7 +43,7 @@
 <!-- Search -->
 
   <!-- Hero -->
-        <div id="search" class="bg-image bg-studynexus-hero" >
+        <div id="search" class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-5 pb-0">
               <div class="pt-4 pb-3">
@@ -66,6 +62,8 @@
 
 <!-- Facts -->
       <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" >
+	  
+	  {{config('app.env')}} cccvxx
               
               <div class="px-2 px-sm-5">
                 <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($institutions->count())}}</p>
@@ -107,7 +105,7 @@
 
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-dark bg-studynexus-concrete" href="{{route('news.index')}}" >
+                <a class="block block-link-pop text-center bg-gray-dark studynexus-bg-concrete" href="{{route('news.index')}}" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -120,7 +118,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-light bg-studynexus-concrete" href="{{route('forum')}}" >
+                <a class="block block-link-pop text-center bg-gray-light studynexus-bg-concrete" href="{{route('forum')}}" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -133,7 +131,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray bg-studynexus-concrete" href="#resources" >
+                <a class="block block-link-pop text-center bg-gray studynexus-bg-concrete" href="#resources" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -146,7 +144,7 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-darker bg-studynexus-concrete" href="#" >
+                <a class="block block-link-pop text-center bg-gray-darker studynexus-bg-concrete" href="#" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
@@ -173,7 +171,7 @@
         <div class="row" data-masonry='{"percentPosition": true }'>
             <div class="col-md-6">
                 <div class="block block-rounded">
-                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes" >
+                    <div class="block-header block-header-default text-white bg-gray-dark studynexus-bg-cubes" >
                         <h3 class="fw-light mb-1">Academic Programmes Library</h3>
                     </div>
                     <div class="block-content pb-2">
@@ -189,7 +187,7 @@
 
             <div class="col-md-6">
                 <div class="block block-rounded">
-                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
+                    <div class="block-header block-header-default text-white bg-gray-dark studynexus-bg-cubes">
                         <h3 class=" fw-light mb-1">Academic Institutions Library</h3>
                     </div>
                     <div class="block-content pb-2">
@@ -208,7 +206,7 @@
 
             <div class="col-md-6">
                 <div class="block block-rounded">
-                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
+                    <div class="block-header block-header-default text-white bg-gray-dark studynexus-bg-cubes">
                         <h3 class="fw-light mb-1">Academic Institutions by Location</h3>
                     </div>
                     <div class="block-content pb-2">
@@ -224,7 +222,7 @@
 
             <div class="col-md-6">
                 <div class="block block-rounded">
-                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
+                    <div class="block-header block-header-default text-white bg-gray-dark studynexus-bg-cubes">
                         <h3 class="fw-light mb-1">Academic Institution Rankings</h3>
                     </div>
                     <div class="block-content pb-2">
@@ -239,7 +237,7 @@
 			
 			<div id="resources" class="col-md-6">
                 <div class="block block-rounded">
-                    <div class="block-header block-header-default text-white bg-gray-dark bg-studynexus-cubes">
+                    <div class="block-header block-header-default text-white bg-gray-dark studynexus-bg-cubes">
                         <h3 class="fw-light mb-1">Exam Resources</h3>
                     </div>
                     <div class="block-content pb-2">

@@ -3,7 +3,7 @@
 
 @section('content')
 <!-- Hero -->
-        <div class="bg-image bg-studynexus-hero">
+        <div class="bg-image studynexus-bg-hero">
           <div class="bg-black-50">
             <div class="content content-top content-full text-center">
               <h1 class="h2 text-white mt-5 mb-2">
@@ -150,7 +150,7 @@
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/CollegeOrUniversity">
 						<a itemprop="url" href="{{route('institutions.show', ['institution' => $institution])}}" class="block block-rounded mb-3">
 						@if(!empty($institution->url))  <link itemprop="sameAs" content="{{$institution->url}}" /> @endif
-						  <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
+						  <div class="block block-header-default bg-image mb-0 fw-light studynexus-bg-list">
 							  <div class="bg-black-75 text-center p-3">
 							  <div class="mb-3">
 								  <div class="h5 text-white mb-1"> <span itemprop="name">{{$institution->name}}</span>

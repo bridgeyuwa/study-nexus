@@ -21,18 +21,21 @@
   
   <!-- Fonts and Styles -->
   @yield('css_before')
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" id="css-main" href="{{ asset('css/dashmix.css') }}">
-
   <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
   <!-- <link rel="stylesheet" id="css-theme" href="{{ asset('css/themes/xwork.css') }}"> -->
   @yield('css_after')
 
+  @if (config('app.env') === 'local')
+	<link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
 
-<link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
-<link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2-bootstrap-5-theme.min.css') }}">
+  @else
+	  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
+       
+  @endif
 
-<link rel="stylesheet"  href="{{ asset('css/custom.css') }}">
+	<link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2-bootstrap-5-theme.min.css') }}">
+    <link rel="stylesheet"  href="{{ asset('css/custom.css') }}">
 
   <!-- Scripts -->
   <script>
@@ -78,7 +81,7 @@
 
                     <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-content-hero-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside" ><i class="fa fa-fw fa-search"></i> <span class="ms-1 d-none d-sm-inline-block">Search</span> </button>
 
-                    <div id="search-dropdown" class="dropdown-menu dropdown-menu-xxl dropdown-menu-start mt-0 w-100" aria-labelledby="dropdown-content-hero-primary" style="background-image: url('{{asset('media/photos/photo13@2x.jpg')}}');">
+                    <div id="search-dropdown" class="dropdown-menu dropdown-menu-xxl dropdown-menu-start mt-0 w-100 bg-image studynexus-bg-list" aria-labelledby="dropdown-content-hero-primary" >
                       <div class="bg-black-75">
                      <!-- include Livewire search form here -->
                        <livewire:search-form />
@@ -180,9 +183,24 @@
   <!-- END Page Container -->
 
   <!-- Dashmix Core JS -->
+  
   <script src="{{ asset('js/dashmix.app.js') }}"></script>
-  <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
+  
+  
+  @if (config('app.env') === 'local')
+    <p>You are in the local environment.</p>
+    <script src="{{ asset('js/lib/jquery.min.js') }}"></script> 
+    <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script> 
+    <script src="{{ asset('js/plugins/masonry.pkgd.min.js') }}"></script>
+
+  @else
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
+
+  @endif
+  
+  
   <script src="{{ asset('js/plugins/select2/js/select2-searchInputPlaceholder.js') }}"></script>
   <script src="{{ asset('js/share.js') }}"></script>
   

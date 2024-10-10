@@ -10,7 +10,7 @@ use Illuminate\Support\Number;
 	
 	
 	<!-- Hero  -->
-        <div class="bg-image bg-studynexus-hero" >
+        <div class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-boxed content-full py-5 pt-7">
               <div class="row">
@@ -143,7 +143,7 @@ use Illuminate\Support\Number;
 
 				<!-- Institution Summary -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 							<h3 class="block-title">Highlights</h3>
 					</div>
 					<div class="block-content">
@@ -201,7 +201,7 @@ use Illuminate\Support\Number;
 
 				<!-- Institution Description -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 						<h3 class="block-title">Overview</h3>
 					</div>
 					<div  class="block-content pb-3">
@@ -242,7 +242,7 @@ use Illuminate\Support\Number;
                 @if($institution->catchments->isNotEmpty())
 				<!-- Catchment Areas -->
 				<div class="block block-rounded text-center">
-					<div class="block-header block-header-default bg-studynexus-cubes" >
+					<div class="block-header block-header-default studynexus-bg-cubes" >
 						<h3 class="block-title">Catchment Areas</h3>
 					</div>
 					<div class="block-content">
@@ -265,7 +265,7 @@ use Illuminate\Support\Number;
 
 				<!-- Academic Tiers -->
 				<div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
-					<div class="block-header block-header-default bg-studynexus-cubes" >
+					<div class="block-header block-header-default studynexus-bg-cubes" >
 						<h3 itemprop="name" class="block-title text-center">Academic Tiers</h3>
 					</div>
 					<div class="block-content">
@@ -306,7 +306,7 @@ use Illuminate\Support\Number;
 
 				<!-- Rankings -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 						<h3 class="block-title">Rankings</h3>
 					</div>
 					<div class="block-content">
@@ -337,7 +337,7 @@ use Illuminate\Support\Number;
 
 				<!-- Accreditation -->
 				<div itemprop="hasCredential" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 						<h3 itemprop="credentialCategory" class="block-title">Accreditation</h3>
 					</div>
 					<div itemprop="recognizedBy" itemscope itemtype="https://schema.org/EducationalOrganization" class="block-content">
@@ -369,7 +369,7 @@ use Illuminate\Support\Number;
 				@if($institution->childInstitutions->isNotEmpty())
 				<!-- Subsidiary Institutions -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 						<h3 class="block-title">Subsidiary Institutions</h3>
 					</div>
 					<div itemscope itemtype="https://schema.org/ItemList" class="block-content">
@@ -403,7 +403,7 @@ use Illuminate\Support\Number;
 					
 				<!-- Affiliated Institutions -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 						<h3 class="block-title">Affiliated Institutions</h3>
 					</div>
 					<div itemscope itemtype="https://schema.org/ItemList" class="block-content">
@@ -433,7 +433,7 @@ use Illuminate\Support\Number;
 
 				<!-- Socials & Contact -->
 				<div class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 						<h3 class="block-title">Contact and Social</h3>
 					</div>
 					<div class="block-content">
@@ -478,7 +478,7 @@ use Illuminate\Support\Number;
 														
 				<!-- Address -->
 				<div  class="block block-rounded">
-					<div class="block-header block-header-default text-center bg-studynexus-cubes" >
+					<div class="block-header block-header-default text-center studynexus-bg-cubes" >
 					  <h3 class="block-title">Location</h3>
 					</div>
 					<div class="block-content">

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 <span itemscope itemtype="https://schema.org/CollectionPage">
 <link itemprop="url" content="{{ url()->current() }}" >
  <!-- Hero -->
-        <div class="bg-image bg-studynexus-hero" >
+        <div class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
 			
@@ -146,7 +146,7 @@ use Illuminate\Support\Str;
             <div class="col-xl-4">
               <!-- Search -->
               <div class="block block-rounded">
-                <div class="block-header block-header-default bg-studynexus-cubes">
+                <div class="block-header block-header-default studynexus-bg-cubes">
                   <h3 class="block-title text-center">Search</h3>
                 </div>
                 <div class="block-content block-content-full">
@@ -165,7 +165,7 @@ use Illuminate\Support\Str;
 
 			<!-- News Categories -->
               <div class="block block-rounded">
-                <div class="block-header block-header-default bg-studynexus-cubes">
+                <div class="block-header block-header-default studynexus-bg-cubes">
                   <h3 class="block-title text-center">News Categories</h3>
                 </div>
                 <div class="block-content block-content-full">

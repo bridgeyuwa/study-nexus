@@ -10,7 +10,7 @@ use Illuminate\Support\Number;
 <meta itemprop="name" content="{{$level->name}} in {{$program->name}}" />
 
 		<!-- Hero  -->
-        <div itemprop="provider" itemscope itemtype="https://schema.org/CollegeOrUniversity" class="bg-image bg-studynexus-hero" >
+        <div itemprop="provider" itemscope itemtype="https://schema.org/CollegeOrUniversity" class="bg-image studynexus-bg-hero" >
 			<div  class="bg-black-75">
 				<div class="content content-boxed content-full pt-7">
 				    <div class="row">
@@ -180,7 +180,7 @@ use Illuminate\Support\Number;
 
             <!-- Highlights -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 class="block-title">Highlights</h3>
                 </div>
                 <div class="block-content">
@@ -221,7 +221,7 @@ use Illuminate\Support\Number;
 			@if(!empty($institution_program->pivot->description))
             <!-- Programme Description -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 class="block-title">Programme Overview</h3>
                 </div>
                 <div class="block-content">
@@ -240,7 +240,7 @@ use Illuminate\Support\Number;
 		   
           <!-- Admission Requirements -->
 <div class="block block-rounded">
-    <div class="block-header block-header-default justify-content-center bg-studynexus-cubes" >
+    <div class="block-header block-header-default justify-content-center studynexus-bg-cubes" >
         <div>
             <h3 class="block-title row justify-content-center">Admission Requirement</h3>
             <div class="fs-sm row text-center">{{$institution->name}} Admission Requirement for {{$level->name}} in {{$program->name}}</div>
@@ -250,7 +250,7 @@ use Illuminate\Support\Number;
 
         <!-- UTME Admission Requirements -->
         <div itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="block block-rounded" >
-            <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+            <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                 <h3 class="block-title">
                     JAMB Unified Tertiary Matriculation Examination (UTME) Requirement
 					 </h3>
@@ -283,7 +283,7 @@ use Illuminate\Support\Number;
 		@if($level->id == 1)
         <!-- DE Admission Requirements -->
         <div class="block block-rounded" itemscope itemtype="https://schema.org/EducationalOccupationalProgram">
-            <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+            <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                 <h3 class="block-title">JAMB Direct Entry Requirements</h3>
             </div>
             <div class="block-content text-center">
@@ -303,7 +303,7 @@ use Illuminate\Support\Number;
 
 			@if(!empty($institution_program->pivot->remarks))
 			<div class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 class="block-title">Special Remarks</h3>
                 </div>
                 <div class="block-content fs-sm">
@@ -315,7 +315,7 @@ use Illuminate\Support\Number;
 			
 			<!-- Accreditation -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 class="block-title">Accreditation</h3>
                 </div>
                 <div class="block-content">
@@ -352,7 +352,7 @@ use Illuminate\Support\Number;
 
             <!-- Tuition Fee -->
             <div itemprop="offers" itemscope itemtype="https://schema.org/Offer" class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 class="block-title">Tuition Fee</h3>
                 </div>
                 <div itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification" class="block-content text-center text-center">
@@ -367,7 +367,7 @@ use Illuminate\Support\Number;
 			
 			<!-- Instititions Offering Programme -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 class="block-title">Institutions Offering {{$level->name}} in {{$program->name}}</h3>
                 </div>
                 <div class="block-content">

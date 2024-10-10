@@ -10,7 +10,7 @@ use Illuminate\Support\Number;
 
 		
 		<!-- Hero  -->
-        <div class="bg-image bg-studynexus-hero" >
+        <div class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-boxed content-full pt-7">
               <div class="row">
@@ -141,7 +141,7 @@ use Illuminate\Support\Number;
 
             <!-- Ads -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default bg-studynexus-cubes" >
+                <div class="block-header block-header-default studynexus-bg-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">
@@ -155,7 +155,7 @@ use Illuminate\Support\Number;
 
             <!-- Programme Levels -->
             <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded">
-                <div class="block-header block-header-default text-center bg-studynexus-cubes" >
+                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
                     <h3 itemprop="name" class="block-title">{{$program->name}} Programme Levels</h3>
                 </div>
                 <div class="block-content">

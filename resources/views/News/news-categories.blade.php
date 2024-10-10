@@ -1,13 +1,9 @@
 @extends('layouts.backend')
 
-@section('js_after')
-<script src="{{ asset('js/plugins/masonry.pkgd.min.js') }}"></script>
-@endsection
-
 @section('content')
 
 <!-- Hero -->
-        <div class="bg-image bg-studynexus-hero">
+        <div class="bg-image studynexus-bg-hero">
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
 			
