@@ -6,7 +6,7 @@ use Illuminate\Support\Number;
 @endphp
 
 <!-- Hero -->
-<div class="bg-image" style="background-image: url('{{asset('/media/photos/photo13@2x.jpg')}}');">
+<div class="bg-image studynexus-bg-hero">
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-6 pb-0">
             <div id="search" class="pt-4 pb-3">
@@ -145,7 +145,7 @@ use Illuminate\Support\Number;
 					   
 					   
 					   
-                        <div class="block block-header-default bg-image mb-0 fw-light bg-studynexus-list">
+                        <div class="block block-header-default bg-image mb-0 fw-light studynexus-bg-list">
                             <div class="bg-black-75 text-center p-3">
 							
 								<div class="mb-3">

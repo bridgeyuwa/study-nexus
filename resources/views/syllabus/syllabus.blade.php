@@ -7,7 +7,7 @@
 <span itemscope itemtype="https://schema.org/EducationalOrganization">
 
 <!-- Hero  -->
-        <div class="bg-image bg-studynexus-hero" >
+        <div class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-boxed content-full pt-7">
               <div class="row">
@@ -97,7 +97,7 @@
 
             <!-- Ads -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default bg-studynexus-cubes" >
+                <div class="block-header block-header-default studynexus-bg-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">

@@ -5,7 +5,7 @@
 
 
 <!-- Hero -->
-        <div class="bg-image bg-studynexus-hero" >
+        <div class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-full content-top text-center pt-6">
               <div class="pt-4 pb-3">
@@ -56,7 +56,7 @@
 
             <!-- Ad block -->
             <div class="block block-rounded ">
-                <div class="block-header block-header-default bg-studynexus-cubes" >
+                <div class="block-header block-header-default studynexus-bg-cubes" >
                     <h3 class="block-title">Ads</h3>
                 </div>
                 <div class="block-content">
@@ -74,7 +74,7 @@
 
             <!-- Region Block -->
             <div class="block block-rounded">
-                <div class="block-header block-header-default bg-studynexus-cubes" >
+                <div class="block-header block-header-default studynexus-bg-cubes" >
 
                     <h3 class="block-title d-flex justify-content-between align-items-center">{{$region->name}} Catchment Areas
 

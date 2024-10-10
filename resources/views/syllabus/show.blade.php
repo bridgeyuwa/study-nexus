@@ -6,7 +6,7 @@
 <span itemscope itemtype="https://schema.org/Syllabus" >
   <link itemprop="url" href="{{url()->current()}}" >
 <!-- Hero  -->
-        <div itemprop="provider"  itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image bg-studynexus-hero" >
+        <div itemprop="provider"  itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-boxed content-full pt-7">
               <div class="row">

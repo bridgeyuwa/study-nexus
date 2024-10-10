@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 
 <!-- Hero  -->
-        <div itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image bg-studynexus-hero" >
+        <div itemscope itemtype="https://schema.org/EducationalOrganization" class="bg-image studynexus-bg-hero" >
           <div class="bg-black-75">
             <div class="content content-boxed content-full pt-7">
               <div class="row">
