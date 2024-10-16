@@ -10,7 +10,7 @@
 			<div class="col-md-6  d-none d-md-block">
 				<br>
 				<div class="d-flex justify-content-center align-content-center">  
-					<img class="center-block " src="/media/photos/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
+					<img class="center-block " src="/media/photos/bg-406x612.png" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
 				</div>
 			</div>
           
@@ -63,7 +63,6 @@
 <!-- Facts -->
       <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" >
 	  
-	  {{config('app.env')}} cccvxx
               
               <div class="px-2 px-sm-5">
                 <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($institutions->count())}}</p>
