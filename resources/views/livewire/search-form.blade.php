@@ -47,8 +47,14 @@
 			   
 			</div>
         </div>
-		
-		
+
+		@if (session()->has('programReset'))		
+		<div id="alert"class="alert alert-warning alert-dismissible fade show fs-sm" role="alert">
+		  {!! session('programReset') !!}
+		  <button type="button" class="btn-close btn-sm fs-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>	
+		@endif	
+
 		
 		@if($isSearchPage)
 		<div class="mt-3">
@@ -161,7 +167,7 @@
 
     <div class=" pt-2">
         <div class="d-flex  justify-content-center justify-content-md-end me-md-5 ">
-            <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary"> @if($isSearchPage) Apply Filters @else Search @endif </button>
+            <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary"> <i class="fa fa-circle-notch fa-spin " wire:loading></i> @if($isSearchPage) Apply Filters @else Search @endif </button>
         </div>
     </div>
 
@@ -214,8 +220,17 @@
 						 </div>
 						 
                          </div>
+						 
+						 
+						 @if (session()->has('programReset'))		
+						<div id="alert"class="alert alert-warning alert-dismissible fade show fs-sm" role="alert">
+						  {!! session('programReset') !!}
+						  <button type="button" class="btn-close btn-sm fs-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>	
+						@endif	
+						 
 
-                       <div class="mt-4">  <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary w-100">Search</button> </div>
+                       <div class="mt-4">  <button type="submit" wire:loading.attr="disabled" class="btn btn-hero btn-primary w-100"> <i class="fa fa-circle-notch fa-spin " wire:loading></i> Search</button> </div>
                      </form>
                       <!-- End livewire search form -->
 
@@ -426,7 +441,6 @@ $('#program-m').select2({
 });
 
  });
-
 
 
 </script>
