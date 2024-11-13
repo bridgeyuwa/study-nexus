@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
 		View::composer('layouts.backend', function ($view) {
             // manually remove this cach when added new News Article
             $news = Cache::remember('latest_news', 15 * 60, function () {
-                return News::select('id','title','created_at')->orderBy('created_at','desc')->take(5)->get();
+                return News::select('id','title','created_at')->orderBy('created_at','desc')->take(4)->get();
             });
 			
             $view->with([

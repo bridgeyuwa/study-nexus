@@ -94,7 +94,7 @@ class SearchForm extends Component
 										if(!empty($this->selectedProgram)){
 										$newLevelName = $level->name;
 										$previousProgramName = $this->allPrograms->where('id', $this->selectedProgram)->first()->name ?? 'The selected program'; //previous program name
-										session()->flash('programReset', "<strong>{$previousProgramName}</strong> is unavailable for <strong>{$newLevelName}</strong>. The Study Programme field has been reset to <strong>'Any Programme'</strong>.");
+										session()->flash('programReset', "<strong>{$previousProgramName}</strong> is unavailable for <strong>{$newLevelName}</strong>. The Study Programme field has been reset to the default <strong>'Any Programme'</strong>.");
 										
 										}
 										
