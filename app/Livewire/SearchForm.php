@@ -25,7 +25,7 @@ class SearchForm extends Component
    public $fullSearch;
   
 
-   public $selectedLevel = null;
+   public $selectedLevel = '';
    public $selectedProgram = null;
    
     public $selectedType = '';
@@ -75,20 +75,32 @@ class SearchForm extends Component
 
         public function updatedSelectedLevel($value)
 		   {
+			   
+				$this->selectedLevel = $value === "" ? null : $value; 
+				
 					   if($value){
 
-							$levels = $this->allLevels->where('id',$value)->first();
+							$level = $this->allLevels->where('id',$value)->first();
 							
-								if ($levels) {
-									 $levels->load('__programs'); // Explicitly load the relationship remove in production
-									$this->programs = $levels->__programs;
+								if ($level) {
+									 $level->load('__programs'); // Explicitly load the relationship remove in production
+									$this->programs = $level->__programs;
 									
 									if($this->selectedProgram && $this->programs->contains('id', $this->selectedProgram)){
 										
 										//do nothing if it contains the id
 									}else{
 										
+										if(!empty($this->selectedProgram)){
+										$newLevelName = $level->name;
+										$previousProgramName = $this->allPrograms->where('id', $this->selectedProgram)->first()->name ?? 'The selected program'; //previous program name
+										session()->flash('programReset', "<strong>{$previousProgramName}</strong> is unavailable for <strong>{$newLevelName}</strong>. The Study Programme field has been reset to the default <strong>'Any Programme'</strong>.");
+										
+										}
+										
 										$this->selectedProgram = null;
+										
+									
 									}
 									
 								} else {
@@ -103,9 +115,10 @@ class SearchForm extends Component
 		   }
 		   
 		   
-		   public function updatedSelectedProgram($value)
-		   {
-					  $this->selectedProgram = $value ;
+		   public function updatedSelectedProgram($value){
+					  $this->selectedProgram = $value === "" ? null : $value; 
+					 
+					  
 					  $this->dispatch('refreshPrograms');
 		   }
    
@@ -114,7 +127,9 @@ class SearchForm extends Component
 
     public function shouldDisableReligiousAffiliation()
     {
+		$this->dispatch('refreshPrograms'); // Refresh program to retain select2 functionality
         return in_array($this->selectedType, ['public', 'federal', 'state']);
+		
     }
    
 
@@ -125,6 +140,12 @@ class SearchForm extends Component
 		$this->selectedCategory = '';
 		$this->selectedReligion = '';
 		$this->selectedSort = '';
+		
+		// Retain the current selected  program if they exist
+		$this->selectedProgram = $this->selectedProgram ?? null;
+		$this->dispatch('refreshPrograms'); // Refresh program to retain select2 functionality
+  
+  
 	}
 
 

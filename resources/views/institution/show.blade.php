@@ -467,7 +467,7 @@ use Illuminate\Support\Number;
 							@foreach($institution->socials as $social) 
 							<div class="row bg-stripped">
 								<div class="col-3 fw-light text-black"> <i class="{{$social->socialType->icon}} text-dark me-1"></i> {{$social->socialType->name}} </div>
-								<div class="col "> <a class="text-primary-darker" href="{{$social->socialType->url . $social->handle}}" target="_blank">{{'@'.$social->handle}}</a>  </div>
+								<div class="col "> <a class="text-primary-darker" href="{{$social->socialType->url . $social->handle}}" target="_blank">{{Str::replaceFirst('https://','',$social->socialType->url) . $social->handle}}</a>  </div>
 							</div>
 							@endforeach 
 						</div>

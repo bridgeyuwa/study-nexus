@@ -85,15 +85,25 @@
 			<p class="bg-white p-3" itemprop="description"> {{$syllabus->description}} </p>
 				
 			
-
+ 
 			<object data="{{Storage::url($syllabus->attachment)}}" type="application/pdf" width="100%" height="500px" >
 				<p class="bg-white p-3 text-center"> It appears you don't have a PDF Plugin for this browser. <a class="btn btn-primary" href="{{Storage::url($syllabus->attachment)}}" download> Download the {{$examBody->abbr}} Syllabus for {{$syllabus->subject->name}} </a> instead.
 				
 				
 			</object>
+   
+			
+			
 
 	</div>
 
 </span>
+
+
+
+
+ 
+
+
 
 @endsection

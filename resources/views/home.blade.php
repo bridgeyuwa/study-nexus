@@ -3,41 +3,38 @@
 @section('content')
 
 
- <!-- Study Nexus Hero -->
+<!-- Study Nexus Hero -->
      
         <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 studynexus-bg-cubes" >
 
 			<div class="col-md-6  d-none d-md-block">
 				<br>
 				<div class="d-flex justify-content-center align-content-center">  
-					<img class="center-block " src="/media/photos/bg5.jpg" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
+					<img class="center-block " src="/media/photos/bg-406x612.png" alt="study nexus" style="width: 375px; height: 400px; object-fit: cover;"> 
 				</div>
 			</div>
           
 			
 
-          <div class="col-12 col-md-6">
-            <div class="text-center d-block d-lg-none ">
-              <h1 class="display-1">Study<span class="text-info">Nexus</span>.<span class="text-success display-5">ng</span></h1>
-            </div>
-            <div class="text-left d-none d-lg-block ">
-              <h1 class="display-3">Study<span class="text-info">Nexus</span>.<span class="text-success display-6">ng</span></h1>
-            </div>
+			<div class="col-12 col-md-6">
+				<div class="text-center d-block d-lg-none ">
+				  <h1 class="display-1">Study<span class="text-info">Nexus</span>.<span class="text-success display-5">ng</span></h1>
+				</div>
+				<div class="text-left d-none d-lg-block ">
+				  <h1 class="display-3">Study<span class="text-info">Nexus</span>.<span class="text-success display-6">ng</span></h1>
+				</div>
 
-            <p class="lead">Explore the premium source for higher education information in Nigeria.</p>
-			<p>Delve into our extensive database containing over 600 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings and insights into Institution programmes in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
+				<p class="lead">Explore the premium source for higher education information in Nigeria.</p>
+				<p>Delve into our extensive database containing over 600 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings and insights into Institution programmes in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
             
 
-          <div class="d-flex justify-content-center pb-4">
-            <a class="btn btn-hero btn-secondary rounded-0" href="{{url("#search")}}">Explore</a>     
-           </div> 
+				<div class="d-flex justify-content-center pb-4">
+					<a class="btn btn-hero btn-secondary rounded-0" href="{{url("#search")}}">Explore</a>     
+				</div> 
  
-          </div>
-
-          
-
-        </div>
-      <!-- END Study Nexus Hero -->
+			</div>
+		</div>
+<!-- END Study Nexus Hero -->
 
 
 <!-- Search -->
@@ -63,7 +60,6 @@
 <!-- Facts -->
       <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" >
 	  
-	  {{config('app.env')}} cccvxx
               
               <div class="px-2 px-sm-5">
                 <p class="fs-1 text-dark mb-0">{{\Illuminate\Support\Number::format($institutions->count())}}</p>
@@ -257,6 +253,9 @@
 
 </div>
 <!--  End Explore -->
+
+
+
 
 
 @endsection

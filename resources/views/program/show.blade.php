@@ -72,17 +72,23 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 					@foreach($program_levels as $program_level)
 						
                   <li class="nav-item">
-                    <a href="{{route('programs.show', ['level' => $program_level, 'program' => $program])}}"><button
+				  
+				  
+					 
 					@if(
 					route('programs.show', ['level' => $program_level, 'program' => $program]) == url()->current()
 					) 
-					class="btn-sm nav-link active" disabled
+					<button
+					class="btn-sm nav-link active" disabled > {{$program_level->name}}
+					</button>
+					
 					@else
-						class="btn-sm nav-link"
-					@endif
-					> {{$program_level->name}}
+						<a href="{{route('programs.show', ['level' => $program_level, 'program' => $program])}}"><button
+					class="btn-sm nav-link" > {{$program_level->name}}
 					</button>
 					</a>
+					@endif
+				
                   </li>
 				  @endforeach
                   

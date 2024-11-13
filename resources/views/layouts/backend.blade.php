@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="{{ config('app.locale') }}">
 
@@ -113,7 +114,7 @@
                   <li>
                     <a class="d-flex text-dark py-2" href="{{route('news.show',['news' => $story])}}">
                       <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-success"></i>
+                        <i class="fa fa-fw fa-rss text-success"></i>
                       </div>
                       <div class="flex-grow-1 fs-sm pe-2">
                         <div class="fw-semibold">{{$story->title}}</div>
@@ -169,7 +170,7 @@
       <div class="content py-0">
         <div class="row fs-sm">
           <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
-            Developed by <a class="fw-semibold" href="https://github.com/bridgeyuwa" rel="nofollow" target="_blank">Bridges Yuwa</a>
+            Powered and Managed by <a class="fw-semibold" href="https://github.com/bridgeyuwa" rel="nofollow" target="_blank">Bridges Yuwa</a>
           </div>
           <div class="col-sm-6 order-sm-1 text-center text-sm-start">       
             <a class="fw-semibold" href="{{route('about')}}" target="_blank">Study Nexus</a> &copy;
@@ -188,7 +189,6 @@
   
   
   @if (config('app.env') === 'local')
-    <p>You are in the local environment.</p>
     <script src="{{ asset('js/lib/jquery.min.js') }}"></script> 
     <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script> 
     <script src="{{ asset('js/plugins/masonry.pkgd.min.js') }}"></script>

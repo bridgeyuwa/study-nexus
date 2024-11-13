@@ -396,7 +396,9 @@ class InstitutionController extends Controller {
     }
 
 	public function show(Institution $institution) {
-		 
+     
+   
+
        $institution = Cache::remember("institution_{$institution->id}", 60 * 60 * 24, function() use ($institution) {
 			$institution->load([
 				'institutionType','category.institutions','term','catchments',
@@ -408,6 +410,7 @@ class InstitutionController extends Controller {
 			return $institution;
 		});
 	   
+
 	   
 	   $allInstitutions = Cache::remember("all_institutions_rank_{$institution->category->id}", 60 * 60 * 24, function() use ($institution) {
 			return Institution::whereNotNull('rank')
@@ -423,6 +426,7 @@ class InstitutionController extends Controller {
 		
 		
         $levels = $institution->levels->unique();
+
 		
 		 $SEOData = new SEOData(
 			title: "{$institution->name}",
