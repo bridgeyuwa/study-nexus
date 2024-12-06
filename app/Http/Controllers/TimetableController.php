@@ -43,7 +43,7 @@ class TimetableController extends Controller
     {
         // Cache the timetables grouped by exam date for 60 minutes
         $groupedTimetables = Cache::remember("timetables_grouped_by_exam_date_{$exam->id}", 60 * 60, function () use ($exam) {
-            return $exam->timetables()->get()->groupBy('exam_date');
+            return $exam->timetables()->with('papertype')->get()->groupBy('exam_date');
         })->sortKeys()
 		->map(function($group){
 			return $group->sortBy('start_time');

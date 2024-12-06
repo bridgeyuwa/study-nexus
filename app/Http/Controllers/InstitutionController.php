@@ -455,17 +455,31 @@ class InstitutionController extends Controller {
 
     public function programs(Institution $institution, Level $level) {
        
+		
+		if($level->id == 3){
 			
-		$programs = Cache::remember("institution_{$institution->id}_level_{$level->id}_programs", 60 * 60, function () use ($institution, $level) {
-			return $institution->programs()
-				->wherePivot('level_id', $level->id)
-				->with('college')
-				->get()
-				->groupBy(fn($program) => $program->college->name)
-				->sortKeys()
-				->map(fn($group) => $group->sortBy(fn($program) => $program->name));
-		});	
+			$programs = Cache::remember("institution_{$institution->id}_level_{$level->id}_programs", 60 * 60, function () use ($institution, $level) {
+				return $institution->programs()
+					->wherePivot('level_id', $level->id)
+					->with('college')
+					->get()
+					->sortBy('name');
+			});
 			
+		}else
+		{
+
+		
+			$programs = Cache::remember("institution_{$institution->id}_level_{$level->id}_programs", 60 * 60, function () use ($institution, $level) {
+				return $institution->programs()
+					->wherePivot('level_id', $level->id)
+					->with('college')
+					->get()
+					->groupBy(fn($program) => $program->college->name)
+					->sortKeys()
+					->map(fn($group) => $group->sortBy(fn($program) => $program->name));
+			});	
+		}	
 			
 		
 		$program_levels = Cache::remember("institution_{$institution->id}_unique_program_levels", 60 * 60, function () use ($institution) {

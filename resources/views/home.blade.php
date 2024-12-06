@@ -3,6 +3,8 @@
 @section('content')
 
 
+
+
 <!-- Study Nexus Hero -->
      
         <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 studynexus-bg-cubes" >

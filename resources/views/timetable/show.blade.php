@@ -193,9 +193,14 @@ use Carbon\Carbon;
                        <em itemprop="identifier" class="fs-sm ">{{$timetable->paper_code}}</em>
                       </p>
                       <p itemprop="name"  class="fw-semibold mb-1">
-                        {{$timetable->name}}
+                        {{$timetable->name}} <span class="fw-normal"> ({{$timetable->papertype->name}}) </span>
                       </p>
 					
+						@if(!empty($timetable->remarks))
+						<p class="mb-1">
+							{{$timetable->remarks}}
+						</p>
+						@endif
 						
 						<p class="text-muted mb-0">
 							<em class="fs-sm text-muted">{{$examDate->format('M d, Y')}} </em>
@@ -206,11 +211,7 @@ use Carbon\Carbon;
 							 ({{$timetable->start_time->diff($timetable->end_time)}})
 						</p>
 						
-						@if(!empty($timetable->remarks))
-						<p class="mb-1">
-							{{$timetable->remarks}}
-						</p>
-						@endif
+						
 					
 					
 						@if( Carbon::now()->isBefore($timetable->start_time))

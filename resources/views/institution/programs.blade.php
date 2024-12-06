@@ -184,6 +184,28 @@ use Illuminate\Support\Number;
                 <div  class="col-lg-8">
                     <div id="programs" role="tablist" aria-multiselectable="true">
 
+
+					@if($level->id == 3)
+						
+					
+						<div class="block-content">
+
+                            @foreach($programs as $program)
+								<div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
+									<a  itemscope itemtype="https://schema.org/EducationalOccupationalProgram" class="fw-normal" href="{{route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $program])}}">
+										<div class="block-header block-header-default fs-6">
+										 <span itemprop="name"> {{$program->name}} </span>  @if(!empty($program->pivot->is_distinguished))<i class="fa fa-star text-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Center of Excellence"></i> @endif
+										</div>
+									  </a>
+								</div>
+							@endforeach
+						</div>
+					
+					
+						
+					@else
+						
+
                         @foreach( $programs as $collegeName => $programs)
                         <div itemprop="itemListElement" itemscope itemtype="https://schema.org/OfferCatalog" class="block block-rounded mb-1">
                             <a class="fs-lg link-primary fw-semibold" data-bs-toggle="collapse" data-bs-parent="#programs" href="#programs_q{{$loop->iteration}}" aria-expanded="false" aria-controls="programs_q{{$loop->iteration}}">
@@ -208,6 +230,10 @@ use Illuminate\Support\Number;
                             </div>
                         </div>
                         @endforeach
+						
+						
+					@endif
+					
                     </div>
                 </div>
             </div>

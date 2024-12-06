@@ -250,7 +250,7 @@ use Illuminate\Support\Number;
 							@foreach($institution->catchments as $catchment)
 								<li itemprop="serviceArea" itemscope itemtype="https://schema.org/Place" class="list-inline-item">
 									<a  href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}">
-									<span itemprop="name">	{{$catchment->name}} </span>
+									<span itemprop="name" class="fs-sm text-primary-dark">{{$catchment->name}}</span>
 							        </a> 
 								</li>
 							@endforeach

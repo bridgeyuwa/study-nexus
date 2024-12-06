@@ -17,7 +17,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
 
 
 <!-- Hero -->
-<div class="bg-image bg-studynexus-hero" >
+<div class="bg-image studynexus-bg-hero" >
     <div class="bg-black-75">
         <div class="content content-full content-top text-center pt-7">
             <div class="row">
@@ -178,14 +178,14 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
                                 <tr>
                                     <td class="fs-sm fw-semibold">UTME Subject Combination</td>
                                     <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-								<p itemprop="description" class="m-0">{{$program->pivot->requirements->utme_subjects}} </p>
+								<p itemprop="description" class="m-0">{{$program->pivot->utme_subjects}} </p>
 									</td>
                                 </tr>
 
                                 <tr>
                                     <td class="fs-sm fw-semibold">O'Level Requirement</td>
                                     <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-									<p itemprop="description" class="m-0"> {{$program->pivot->requirements->o_level}} </p>
+									<p itemprop="description" class="m-0"> {{$program->pivot->o_level}} </p>
 									</td>
                                 </tr>
 								<tr>  
@@ -205,7 +205,7 @@ $max_tuition = $level_programs->max('pivot.tuition_fee');
                             <h3 class="block-title">JAMB Direct Entry Requirements</h3>
                         </div>
                         <div itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential" class="block-content text-center pb-2">
-							@if(!empty($program->pivot->requirements->direct_entry))	<span itemprop="description"> {{$program->pivot->requirements->direct_entry}} </span> @else No Direct Entry @endif
+							@if(!empty($program->pivot->direct_entry))	<span itemprop="description"> {{$program->pivot->direct_entry}} </span> @else No Direct Entry @endif
 								
                         </div>
 						<span class="text-danger fw-light d-block px-4 py-2 border-top fs-sm" >Direct Entry Requirements for {{$level->name}} in {{$program->name}} may be different for some institutions, and some may not accept Direct Entry for {{$program->name}}.  Ensure to check the institution of choice for its specific requirements. </span>

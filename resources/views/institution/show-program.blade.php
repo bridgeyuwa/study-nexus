@@ -271,13 +271,13 @@ use Illuminate\Support\Number;
                     <tr>
                         <td class="fs-sm fw-semibold">Subject Combination</td>
                         <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                            <p itemprop="description" class="m-0">{{ $institution_program->pivot->requirements->utme_subjects }}</p>
-                        </td>
+                            <p itemprop="description" class="m-0">{{ $institution_program->pivot->utme_subjects }}</p>
+						</td>
                     </tr>
                     <tr>
                         <td class="fs-sm fw-semibold">O'Level Requirement</td>
                         <td itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                            <p itemprop="description" class="m-0">{{ $institution_program->pivot->requirements->o_level }}</p>
+                            <p itemprop="description" class="m-0">{{ $institution_program->pivot->o_level }}</p>
                         </td>
                     </tr>
                 </table>
@@ -293,8 +293,10 @@ use Illuminate\Support\Number;
             </div>
             <div class="block-content text-center">
                 <div class="ms-2" itemprop="programPrerequisites" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
-                    @if(!empty($institution_program->pivot->requirements->direct_entry))<p itemprop="description" class="m-0">{{ $institution_program->pivot->requirements->direct_entry }}</p> @else <span>No Direct Entry</span>  @endif
-                </div>
+                    @if(!empty($institution_program->pivot->direct_entry))<p itemprop="description" class="m-0">{{$institution_program->pivot->direct_entry}}</p> @else <span>No Direct Entry</span>  @endif
+                
+				
+				</div>
             </div>
         </div>
         <!-- END DE Admission Requirements -->

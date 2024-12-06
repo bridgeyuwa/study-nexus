@@ -18,7 +18,10 @@ return new class extends Migration
             $table->text('description')->nullable();
 			$table->integer('duration')->nullable();
             $table->json('requirements')->nullable();
-            $table->timestamps();
+			$table->text('direct_entry')->nullable();
+			$table->text('o_level')->nullable();
+			$table->text('utme_subjects')->nullable();
+		    $table->timestamps();
 
             $table->unique(['program_id', 'level_id']);
         });

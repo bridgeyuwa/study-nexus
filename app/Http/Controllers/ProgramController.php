@@ -12,16 +12,28 @@ class ProgramController extends Controller
     /* list programs at a particular Level of study */
     public function index(Level $level) {
         
-        $programs = Cache::remember("level_{$level->id}_programs", 60 * 60, function () use ($level) {
-            return $level->__programs()->with('college')->get()
-                ->groupBy(function ($program) {
-                    return $program->college->name;
-                })
-                ->sortKeys()
-                ->map(function ($group) {
-                    return $group->sortBy(fn($program) => $program->name);
-                });
-        });
+        if($level->id == 3){
+		
+			$programs = Cache::remember("level_{$level->id}_programs", 60 * 60, function () use ($level) {
+				return $level->__programs()->with('college')->get()
+				->sortBy('name');
+			});
+		
+		}else
+		{
+			
+			$programs = Cache::remember("level_{$level->id}_programs", 60 * 60, function () use ($level) {
+				return $level->__programs()->with('college')->get()
+					->groupBy(function ($program) {
+						return $program->college->name;
+					})
+					->sortKeys()
+					->map(function ($group) {
+						return $group->sortBy(fn($program) => $program->name);
+					});
+			});
+			
+		}
 
         $program_levels = Cache::remember('all_levels', 60 * 60, function () {
             return Level::all();
@@ -49,11 +61,16 @@ class ProgramController extends Controller
         $cacheKey = "level_{$level->id}_program_{$program->id}";
         
         $level_programs = Cache::remember($cacheKey, 60 * 60, function () use ($level, $program) {
-            return $level->programs()->where('program_id', $program->id)->get();
-        });
+       
+			return $level->programs()->where('program_id', $program->id)->get();
+        }); //for tuition min/max calculation
         
         $program = Cache::remember("program_{$program->id}_at_level_{$level->id}", 60 * 60, function () use ($level, $program) {
-            return $level->__programs()->where('program_id', $program->id)->withCount('institutions')->first();
+			return $level->__programs()
+				->where('program_id', $program->id)
+				->withCount(['institutions' => function ($query) use ($level) {
+					$query->where('level_id', $level->id); 
+				}])->first();
         });
 		
 		//dd($program->institutions_count);

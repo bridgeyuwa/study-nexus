@@ -33,7 +33,7 @@ class SearchForm extends Component
     public $selectedReligion = '';
     public $selectedSort = ''; // Default sort
    
-   public $isSearchPage = false;
+    public $isSearchPage = false;
    
    
    
@@ -51,7 +51,19 @@ class SearchForm extends Component
 				return Program::all();
 			});
 			
-			$this->programs = $this->allPrograms;
+			
+			if(!empty($request->query('level'))){
+				//dd('Level selected ');
+				$level = $this->allLevels->where('id', $request->query('level'))->first();
+				
+				$this->programs = $level->__programs->sortBy('name');
+            }
+			else{
+				// dd('Level NOT Selected');
+				$this->programs = $this->allPrograms;
+				
+			}
+
 
 			$this->states = Cache::remember('states', 24 * 60 * 60 , function() {
 				return State::all();
@@ -84,7 +96,7 @@ class SearchForm extends Component
 							
 								if ($level) {
 									 $level->load('__programs'); // Explicitly load the relationship remove in production
-									$this->programs = $level->__programs;
+									$this->programs = $level->__programs->sortBy('name');
 									
 									if($this->selectedProgram && $this->programs->contains('id', $this->selectedProgram)){
 										

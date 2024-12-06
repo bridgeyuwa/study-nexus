@@ -21,7 +21,7 @@ class Institution extends Model {
 	
 
     public function programs() {
-        return $this->belongsToMany(Program::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished','remarks','updated_at')
+        return $this->belongsToMany(Program::class,'institution_program')->using(InstitutionProgram::class)->withPivot('level_id','description','duration','tuition_fee','requirements','direct_entry','o_level','utme_subjects','utme_cutoff','accreditation_body_id','accreditation_status_id','accreditation_grant_date','accreditation_expiry_date','program_mode_id','is_distinguished','remarks','updated_at')
 ;
     }
 
