@@ -42,13 +42,18 @@ class TimetableController extends Controller
     public function show(Exam $exam)
     {
         // Cache the timetables grouped by exam date for 60 minutes
-        $groupedTimetables = Cache::remember("timetables_grouped_by_exam_date_{$exam->id}", 60 * 60, function () use ($exam) {
-            return $exam->timetables()->with('papertype')->get()->groupBy('exam_date');
-        })->sortKeys()
-		->map(function($group){
-			return $group->sortBy('start_time');
-			
+		$groupedTimetables = Cache::remember("timetables_grouped_by_exam_date_{$exam->id}", 60 * 60, function () use ($exam) {
+			return $exam->timetables()->get()
+			->groupBy(function ($timetable) {
+				// Extract the date part from start_time
+				return \Carbon\Carbon::parse($timetable->start_time)->toDateString();
+			});
+		})
+		->sortKeys()
+		->map(function($group) {
+			  return $group->sortBy('start_time');
 		});
+		
 		
 		$SEOData = new SEOData(
             title: "Timetable | {$exam->name}",

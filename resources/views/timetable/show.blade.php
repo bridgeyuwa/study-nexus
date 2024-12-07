@@ -54,13 +54,13 @@ use Carbon\Carbon;
 						
 						<div class="mt-3">
 							<span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
-								 <span itemprop="name"> {{$exam->timetables->min('exam_date')->format('jS M')}} </span>
+								 <span itemprop="name"> {{$exam->timetables->min('start_time')->format('jS M')}} </span>
 							</span>
 							
 							<span class="text-white">to</span>
 						   
 							<span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
-								{{$exam->timetables->max('exam_date')->format('jS M')}}
+								{{$exam->timetables->max('end_time')->format('jS M')}}
 							</span>
 							
 							<span class="text-white">{{$exam->year}}</span>
@@ -193,7 +193,7 @@ use Carbon\Carbon;
                        <em itemprop="identifier" class="fs-sm ">{{$timetable->paper_code}}</em>
                       </p>
                       <p itemprop="name"  class="fw-semibold mb-1">
-                        {{$timetable->name}} <span class="fw-normal"> ({{$timetable->papertype->name}}) </span>
+                        {{$timetable->name}}
                       </p>
 					
 						@if(!empty($timetable->remarks))
