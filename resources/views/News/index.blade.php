@@ -43,7 +43,10 @@ use Illuminate\Support\Str;
         <!-- Page Content -->
         <div class="content"  itemprop="mainEntity" itemscope itemtype="https://schema.org/ItemList">
           <div class="row">
+		  
+		 <!-- start col-xl-8 -->
             <div class="col-xl-8">
+			
 			@foreach($news as $story)
 			
 			
@@ -101,7 +104,7 @@ use Illuminate\Support\Str;
                        
                            <p itemprop="description" class="mb-1">
 							
-							{{Str::limit($story->excerpt, 150, ' . . .')}}
+							{!! Str::limit($story->excerpt, 150, ' . . .') !!}
 							
 								<a href="{{ route($routeName, $routeParameters) }}" class="">Read more</a>
 							</p>
@@ -123,6 +126,7 @@ use Illuminate\Support\Str;
 					  
 					</div> 
                 
+				</div>
 				 </div> 
 				 			
 				
@@ -142,7 +146,10 @@ use Illuminate\Support\Str;
               <!-- Pagination -->
               {{ $news->links() }} 
               <!-- END Pagination -->
+			
             </div>
+			<!-- end col xl-8 -->
+			
             <div class="col-xl-4">
               <!-- Search -->
               <div class="block block-rounded">

@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -68,6 +69,7 @@ class News extends Resource
 				 ->deletable()
 				 ->help('Upload news cover image.') // Add help text
 				,
+				BelongsToMany::make('NewsCategories'),
 			
         ];
     }

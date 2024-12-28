@@ -17,9 +17,9 @@ class ExamBody extends Model
         return $this->hasMany(Exam::class);
     }
 	
-	public function syllabi() {
+	/* public function syllabi() {
         return $this->hasMany(Syllabus::class);
-    }
+    } */
 	
 	 public function state()
     {

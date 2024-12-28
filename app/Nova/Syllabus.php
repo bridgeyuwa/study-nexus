@@ -46,8 +46,8 @@ class Syllabus extends Resource
         return [
             ID::make()->sortable(),
 			Text::make('name'),
-			BelongsTo::make('Exam Body'),
-			BelongsTo::make('Subject'),
+			BelongsTo::make('Exam'),
+			Text::make('Subject'),
 			File::make('attachment')
 				->disk('public')
 				->path('files/syllabi')

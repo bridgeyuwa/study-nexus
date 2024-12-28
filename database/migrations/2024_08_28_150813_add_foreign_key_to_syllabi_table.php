@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('syllabi', function (Blueprint $table) {
-            $table->foreign(['exam_body_id'])->references(['id'])->on('exam_bodies')->cascadeOnUpdate();
-            $table->foreign(['subject_id'])->references(['id'])->on('subjects')->cascadeOnUpdate();
-            
+            $table->foreign(['exam_id'])->references(['id'])->on('exams')->cascadeOnUpdate();
+           
         });
     }
 
@@ -24,8 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('syllabi', function (Blueprint $table) {
-            $table->dropForeign('syllabi_exam_body_id_foreign');
-            $table->dropForeign('syllabi_subject_id_foreign');
+            $table->dropForeign('syllabi_exam_id_foreign');
             
         });
     }

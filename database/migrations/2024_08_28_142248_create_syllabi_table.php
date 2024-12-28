@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('syllabi', function (Blueprint $table) {
             $table->id();
 			$table->string('name')->index();
-			$table->unsignedBigInteger('exam_body_id');
-			$table->unsignedBigInteger('subject_id');
+			$table->unsignedBigInteger('exam_id');
+			$table->string('subject');
 			$table->string('attachment');
 			$table->text('description')->nullable();
 			

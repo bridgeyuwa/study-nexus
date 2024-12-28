@@ -21,10 +21,6 @@
   @yield('css_after')
    <link rel="stylesheet"  href="{{ asset('css/custom.css') }}">
 
-
-<link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2.min.css') }}">
-<link rel="stylesheet"  href="{{ asset('js/plugins/select2/css/select2-bootstrap-5-theme.min.css') }}">
-
   <!-- Scripts -->
   
 </head>
@@ -32,7 +28,7 @@
 <body>
   <!-- Page Container -->
 
-  <div id="page-container" class=" @if($exception->getStatusCode() != 500 && $exception->getStatusCode() != 503)sidebar-o @endif sidebar-dark side-scroll page-header-fixed main-content-narrow page-header-dark page-header-glass">
+  <div id="page-container" class=" @if($exception->getStatusCode() != 500 && $exception->getStatusCode() != 503)sidebar-o @endif sidebar-dark  page-header-fixed main-content-narrow page-header-dark page-header-glass">
     
 @if($exception->getStatusCode() != 500 && $exception->getStatusCode() != 503)
     <!-- Sidebar -->
@@ -67,88 +63,8 @@
           <!-- END Left Section -->
 
           <!-- Right Section -->
-          <div>
-            <!-- Notifications Dropdown -->
-            <div class="dropdown d-inline-block">
-              <button type="button" class="btn btn-alt-secondary" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="far fa-fw fa-flag"></i>
-                <span class="badge bg-success rounded-pill">3</span>
-              </button>
-              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
-                <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                  Notifications
-                </div>
-                <ul class="nav-items my-2">
-                  <li>
-                    <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                      <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-danger"></i>
-                      </div>
-                      <div class="flex-grow-1 fs-sm pe-2">
-                        <div class="fw-semibold">You’ve made a payment of $49 to Adobe Inc.</div>
-                        <div class="text-muted">5 min ago</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                      <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-danger"></i>
-                      </div>
-                      <div class="flex-grow-1 fs-sm pe-2">
-                        <div class="fw-semibold">Recurring payment of $29 to Dropbox was successful.</div>
-                        <div class="text-muted">30 min ago</div>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="d-flex text-dark py-2" href="javascript:void(0)">
-                      <div class="flex-shrink-0 mx-3">
-                        <i class="fa fa-fw fa-coins text-success"></i>
-                      </div>
-                      <div class="flex-grow-1 fs-sm pe-2">
-                        <div class="fw-semibold">Incoming payment of <strong>$499</strong> from John Taylor!</div>
-                        <div class="text-muted">2 hrs ago</div>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-                <div class="p-2 border-top text-center">
-                  <a class="btn btn-alt-primary w-100" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View All
-                  </a>
-                </div>
-              </div>
-            </div>
-            <!-- END Notifications Dropdown -->
-
-            <!-- User Dropdown -->
-            <div class="dropdown d-inline-block">
-              <button type="button" class="btn btn-alt-secondary" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="far fa-fw fa-user-circle"></i>
-                <i class="fa fa-fw fa-angle-down d-none opacity-50 d-sm-inline-block"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="page-header-user-dropdown">
-                <div class="bg-primary-dark rounded-top fw-semibold text-white text-center p-3">
-                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="">
-                  <div class="pt-2">
-                    <a class="text-white fw-semibold" href="be_pages_generic_profile.html">Henry Harrison</a>
-                  </div>
-                </div>
-                <div class="p-2">
-                  <a class="dropdown-item" href="javascript:void(0)">
-                    <i class="fa fa-fw fa-cog me-1"></i> Settings
-                  </a>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="op_auth_signin.html">
-                    <i class="fa fa-fw fa-arrow-alt-circle-left me-1"></i> Log Out
-                  </a>
-                </div>
-              </div>
-            </div>
-            <!-- END User Dropdown -->
-          </div>
-          <!-- END Right Section -->
+		  <!-- End Right Section -->
+         
         </div>
         <!-- END Header Content -->
        
@@ -172,14 +88,14 @@
     <main id="main-container">
 
      <!-- Page Content -->
-        <div class="bg-image bg-studynexus-error-image" >
+        <div class="bg-image studynexus-bg-error-image" >
           <div class="row g-0 justify-content-end bg-black-50">
             <!-- Main Section -->
             <div class=" col-md-5 d-flex flex-column bg-body-extra-light pt-4">
               <!-- Header -->
               <div class="flex-grow-0 p-5">
                
-				<a href="{{route('home')}}"> <h1 class="display-4 text-dark">Study<span class="text-info">Nexus</span>.<span class="text-success fs-1">ng</span></h1></a>
+				<a href="{{route('home')}}"> <h1 class="display-5 text-dark">Study<span class="text-info">Nexus</span>.<span class="text-success fs-1">ng</span></h1></a>
            
                 
               </div>
@@ -237,10 +153,6 @@
 
   <!-- Dashmix Core JS -->
   <script src="{{ asset('js/dashmix.app.js') }}"></script>
-  <script src="{{ asset('js/lib/jquery.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/select2/js/select2.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/select2/js/select2-searchInputPlaceholder.js') }}"></script>
-
   
   @yield('js_after')
 </body>

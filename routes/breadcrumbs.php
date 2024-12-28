@@ -200,15 +200,15 @@ Breadcrumbs::for('syllabus.index', function (BreadcrumbTrail $trail) {
 });
 
 // List Exam Syllabi for Exam body
-Breadcrumbs::for('syllabus.subjects', function (BreadcrumbTrail $trail, $examBody) {
+Breadcrumbs::for('syllabus.subjects', function (BreadcrumbTrail $trail, $exam) {
     $trail->parent('syllabus.index');
-    $trail->push($examBody->abbr, route('syllabus.subjects', ['examBody' => $examBody]));
+    $trail->push($exam->abbr, route('syllabus.subjects', ['exam' => $exam]));
 });
 
 // Show syllabus for a subject of an exam body
-Breadcrumbs::for('syllabus.show', function (BreadcrumbTrail $trail, $examBody, $syllabus) {
-    $trail->parent('syllabus.subjects', $examBody);
-    $trail->push($syllabus->name, route('syllabus.show', ['examBody' => $examBody, 'syllabus' => $syllabus]));
+Breadcrumbs::for('syllabus.show', function (BreadcrumbTrail $trail, $exam, $syllabus) {
+    $trail->parent('syllabus.subjects', $exam);
+    $trail->push($syllabus->name, route('syllabus.show', ['exam' => $exam, 'syllabus' => $syllabus]));
 });
 
 

@@ -48,12 +48,9 @@ class Timetable extends Resource
 			Text::make('name'),
 			Text::make('Paper Code'),
 			BelongsTo::make('exam'),
-			BelongsTo::make('paper type'),
-			BelongsTo::make('subject'),
-			Date::make('Exam Date'),
+			Text::make('Remarks')->nullable(),
 			DateTime::make('Start Time'),
 			DateTime::make('End Time'),
-			Text::make('Remarks')->nullable(),
         ];
     }
 
