@@ -250,7 +250,7 @@ use Illuminate\Support\Number;
 							@foreach($institution->catchments as $catchment)
 								<li itemprop="serviceArea" itemscope itemtype="https://schema.org/Place" class="list-inline-item">
 									<a  href="{{route('institutions.catchments.show', ['catchment' => $catchment])}}">
-									<span itemprop="name">	{{$catchment->name}} </span>
+									<span itemprop="name" class="fs-sm text-primary-dark">{{$catchment->name}}</span>
 							        </a> 
 								</li>
 							@endforeach
@@ -483,11 +483,11 @@ use Illuminate\Support\Number;
 					</div>
 					<div class="block-content">
 						<div class="mb-3 px-3">
-							   @if(!empty($institution->address)) <span class="me-2 d-block"> {{$institution->address}} </span> @endif
-							   @if(!empty($institution->locality)) <span class="me-2 d-block"> {{$institution->locality}}</span> @endif
-								<span class="me-2 d-block">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State @endif <span class="fs-sm">(NG-{{$institution->state->code}})</span> </span>
-								@if(!empty($institution->postal_code))<span class="me-2 d-block"> {{$institution->postal_code}}</span>@endif
-								<span class="me-2 d-block"> Nigeria (<span class="fs-sm">NG</span>)</span>
+							   @if(!empty($institution->address)) <span class="me-2 d-block"> {{$institution->address}}, </span> @endif
+							   @if(!empty($institution->locality)) <span class="me-2 d-block"> {{$institution->locality}},</span> @endif
+								<span class="me-2 d-block">{{$institution->state->name}} @if(!empty($institution->state->is_state)) State, @endif</span>
+								@if(!empty($institution->postal_code))<span class="me-2 d-block"> {{$institution->postal_code}},</span>@endif
+								<span class="me-2 d-block"> Nigeria.</span>
 							   
 						</div> 
                         @if(!empty($institution->coordinates))						

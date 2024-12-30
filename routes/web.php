@@ -132,12 +132,12 @@ Route::prefix('news')->name('news.')->group(function () {
 
 /* Syllabus */
 	Route::prefix('syllabus')->name('syllabus.')->group(function () {
-		/* list of all Exam Bodies */
+		/* list of all Exam Bodies / Exams */
 		Route::get('/', [SyllabusController::class, 'index'])->name('index');
 		
-		Route::get('{examBody}', [SyllabusController::class, 'syllabi'])->name('subjects');
+		Route::get('{exam}', [SyllabusController::class, 'syllabi'])->name('subjects');
 		
 		/* show subject syllabus of an Exam body */
-		Route::get('{examBody}/{syllabus}', [SyllabusController::class, 'show'])->name('show');
+		Route::get('{exam}/{syllabus}', [SyllabusController::class, 'show'])->name('show');
 		
 	});

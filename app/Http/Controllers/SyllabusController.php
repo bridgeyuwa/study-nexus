@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Syllabus;
 use App\Models\ExamBody;
+use App\Models\Exam;
 use App\Models\Subject;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 use Illuminate\Support\Facades\Cache;
@@ -13,9 +14,27 @@ class SyllabusController extends Controller
     public function index()
     {
         // Cache the exam bodies for 60 minutes
-        $examBodies = Cache::remember('exam_bodies_index', 60 * 60, function () {
+        /* $examBodies = Cache::remember('exam_bodies_index', 60 * 60, function () {
             return ExamBody::whereHas('syllabi')->get();
         });
+		 */
+		
+		
+		$examBodies = Cache::remember('exam_bodies_with_exams', 60 * 60, function () {
+			//load on ExamBodies with Exam
+            return ExamBody::whereHas('exams.syllabi')->with(['exams' => function($query){
+				//load only Exams with Syllabus
+				$query->whereHas('syllabi')
+				->orderBy('year', 'desc')
+                ->orderBy('month', 'desc');
+			}])->get();
+			
+        });
+		
+		//dd($examBodies);
+		
+		
+		
 		
 		$SEOData = new SEOData(
             title: "Exam Syllabi",
@@ -25,17 +44,20 @@ class SyllabusController extends Controller
         return view('syllabus.index', compact('examBodies','SEOData'));  
     }
     
-    public function syllabi(ExamBody $examBody)
+    public function syllabi(Exam $exam)
     {
         // Cache the syllabi and related subjects for the specific exam body
-        $syllabi = Cache::remember("syllabi_exam_body_{$examBody->id}", 60 * 60, function () use ($examBody) {
-            return $examBody->syllabi()->orderBy('name')->with(['subject'])->get();
+        $syllabi = Cache::remember("syllabi_exam_{$exam->id}", 60 * 60, function () use ($exam) {
+            return $exam->syllabi()->orderBy('name')->get();
         });
 		
 		$SEOData = new SEOData(
-            title: "{$examBody->abbr} Syllabus",
-            description: "Browse the latest syllabus for {$examBody->abbr} exams.",
+            title: "{$exam->abbr} Syllabus",
+            description: "Browse the latest syllabus for {$exam->abbr} exams.",
         );
+		
+		//dd($exam);
+		
 		
 		$shareLinks = \Share::currentPage()
 				->facebook()
@@ -46,20 +68,20 @@ class SyllabusController extends Controller
 				->telegram()
 				->getRawLinks();
 
-        return view('syllabus.syllabus', compact('examBody', 'syllabi','SEOData', 'shareLinks'));  
+        return view('syllabus.syllabus', compact('exam', 'syllabi','SEOData', 'shareLinks'));  
     }
     
-    public function show(ExamBody $examBody, Syllabus $syllabus)
+    public function show(Exam $exam, Syllabus $syllabus)
     {
-        if ($syllabus->exam_body_id !== $examBody->id) {
+        if ($syllabus->exam_id !== $exam->id) {
             abort(404);
         }
 		
 		$SEOData = new SEOData(
-            title: "{$syllabus->subject->name} Syllabus - {$examBody->abbr}",
-            description: "Official syllabus for {$syllabus->subject->name} - {$examBody->abbr}.",
+            title: "{$syllabus->subject} Syllabus - {$exam->abbr}",
+            description: "Official syllabus for {$syllabus->subject} - {$exam->abbr}.",
         );
-		
+		//dd($syllabus->name);
 		$shareLinks = \Share::currentPage()
 				->facebook()
 				->twitter()
@@ -69,6 +91,6 @@ class SyllabusController extends Controller
 				->telegram()
 				->getRawLinks();
 
-        return view('syllabus.show', compact('examBody', 'syllabus','SEOData', 'shareLinks'));     
+        return view('syllabus.show', compact('exam', 'syllabus','SEOData', 'shareLinks'));     
     }
 }

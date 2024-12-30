@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::table('timetables', function (Blueprint $table) {
             $table->foreign(['exam_id'])->references(['id'])->on('exams')->cascadeOnUpdate();
-            $table->foreign(['paper_type_id'])->references(['id'])->on('paper_types')->cascadeOnUpdate();
-            $table->foreign(['subject_id'])->references(['id'])->on('subjects')->cascadeOnUpdate();
             
         });
     }
@@ -26,9 +24,7 @@ return new class extends Migration
     {
         Schema::table('timetables', function (Blueprint $table) {
             $table->dropForeign('timetables_exam_id_foreign');
-            $table->dropForeign('timetables_paper_type_id_foreign');
-            $table->dropForeign('timetables_subject_id_foreign');
-           
+            
         });
     }
 };

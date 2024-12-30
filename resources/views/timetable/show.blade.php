@@ -54,13 +54,13 @@ use Carbon\Carbon;
 						
 						<div class="mt-3">
 							<span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
-								 <span itemprop="name"> {{$exam->timetables->min('exam_date')->format('jS M')}} </span>
+								 <span itemprop="name"> {{$exam->timetables->min('start_time')->format('jS M')}} </span>
 							</span>
 							
 							<span class="text-white">to</span>
 						   
 							<span class="badge rounded-pill bg-dark fs-base px-3 py-2 m-1">
-								{{$exam->timetables->max('exam_date')->format('jS M')}}
+								{{$exam->timetables->max('end_time')->format('jS M')}}
 							</span>
 							
 							<span class="text-white">{{$exam->year}}</span>
@@ -196,6 +196,11 @@ use Carbon\Carbon;
                         {{$timetable->name}}
                       </p>
 					
+						@if(!empty($timetable->remarks))
+						<p class="mb-1">
+							{{$timetable->remarks}}
+						</p>
+						@endif
 						
 						<p class="text-muted mb-0">
 							<em class="fs-sm text-muted">{{$examDate->format('M d, Y')}} </em>
@@ -206,11 +211,7 @@ use Carbon\Carbon;
 							 ({{$timetable->start_time->diff($timetable->end_time)}})
 						</p>
 						
-						@if(!empty($timetable->remarks))
-						<p class="mb-1">
-							{{$timetable->remarks}}
-						</p>
-						@endif
+						
 					
 					
 						@if( Carbon::now()->isBefore($timetable->start_time))

@@ -60,20 +60,14 @@
 				  
 					    @foreach($examBody->exams as $exam)
 						<div itemprop="itemListElement"  class="block block-rounded mb-1">
-							<a class="fw-semibold" data-bs-toggle="collapse" data-bs-parent="#{{$examBody->abbr}}" href="#{{$examBody->abbr}}_q{{$loop->iteration}}" aria-expanded="true" aria-controls="{{$examBody->abbr}}_q{{$loop->iteration}}">
+							<a class="fw-semibold"  href="{{route('timetable.show', ['exam' => $exam] )}}" >
 								  <div class="block-header block-header-default" role="tab" id="{{$examBody->abbr}}_h{{$loop->iteration}}">
 								 <span itemprop="name">  {{$exam->name}} -  Timetable </span>
 								 <link itemprop="url" href="{{route('timetable.show', ['exam' => $exam] )}}" />
-								
+								<meta itemprop="description" content="{{$exam->description}}" >
 								  </div>
 							</a>
 							
-							<div id="{{$examBody->abbr}}_q{{$loop->iteration}}" class="collapse" role="tabpanel" aria-labelledby="{{$examBody->abbr}}_h{{$loop->iteration}}" data-bs-parent="#{{$examBody->abbr}}">
-								<div class="block-content">
-									<p itemprop="description"> {{$exam->description}}</p>
-									<a class="btn btn-primary" href="{{route('timetable.show', ['exam' => $exam] )}}"> <i class="fa fa-fw fa-eye opacity-50 me-1"></i> View Timetable</a>
-								</div>
-							</div>
 						</div>
 						
 						@endforeach

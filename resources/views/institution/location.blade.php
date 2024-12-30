@@ -101,18 +101,18 @@
     <div class="row">
         <div class="col-md-4 order-md-1 order-2"> 
 
-            <!-- Ads  -->
-            <div class="block block-rounded">
+            <!-- Ads block -->
+            <div class="block block-rounded ">
                 <div class="block-header block-header-default studynexus-bg-cubes" >
-                    <h3 class="block-title">Ads</h3>
+                    <h3 class="block-title">Ads by Study<span class="text-primary-darker">Nexus</span></h3>
                 </div>
-                <div class="block-content">
+                <div class="block-content fs-sm">
 
-                    Ads
+                    Advertise with Study<span class="text-primary-darker">Nexus</span>, <a href="{{route('contact')}}"> Contact us here </a>
 
                 </div>
             </div>
-            <!-- END Ads -->
+            <!-- END Ads block -->
         </div>
 
         <div class="col-md-8 order-md-0">

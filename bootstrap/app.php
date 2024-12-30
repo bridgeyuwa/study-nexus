@@ -16,7 +16,14 @@ return Application::configure(basePath: dirname(__DIR__))
 		'livewire/update',
 		]);
 		
-		$middleware->redirectGuestsTo( fn()  => route('nova.login'));
+		$middleware->redirectGuestsTo( fn()  => route('nova.login'));  
+		
+		$middleware->web(append: [
+        \Fahlisaputra\Minify\Middleware\MinifyHtml::class,
+        \Fahlisaputra\Minify\Middleware\MinifyCss::class,
+        \Fahlisaputra\Minify\Middleware\MinifyJavascript::class,
+        ]);
+		
 		
 		
     })

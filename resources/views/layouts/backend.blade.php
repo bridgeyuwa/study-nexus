@@ -78,7 +78,7 @@
             
 
              @if(!request()->is('/') && !request()->is('search'))
-              <div class="dropdown push d-inline-block">
+              <div class="dropdown push d-inline-block ms-1">
 
                     <button type="button" class="btn btn-alt-secondary dropdown-toggle" id="dropdown-content-hero-primary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside" ><i class="fa fa-fw fa-search"></i> <span class="ms-1 d-none d-sm-inline-block">Search</span> </button>
 

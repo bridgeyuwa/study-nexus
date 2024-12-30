@@ -3,6 +3,8 @@
 @section('content')
 
 
+
+
 <!-- Study Nexus Hero -->
      
         <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 studynexus-bg-cubes" >
@@ -18,14 +20,14 @@
 
 			<div class="col-12 col-md-6">
 				<div class="text-center d-block d-lg-none ">
-				  <h1 class="display-1">Study<span class="text-info">Nexus</span>.<span class="text-success display-5">ng</span></h1>
+				  <h1 class="display-3">Study<span class="text-info">Nexus</span>.<span class="text-success display-5">ng</span></h1>
 				</div>
 				<div class="text-left d-none d-lg-block ">
 				  <h1 class="display-3">Study<span class="text-info">Nexus</span>.<span class="text-success display-6">ng</span></h1>
 				</div>
 
 				<p class="lead">Explore the premium source for higher education information in Nigeria.</p>
-				<p>Delve into our extensive database containing over 600 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings and insights into Institution programmes in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
+				<p>Delve into our extensive database containing over 1400 programmes across 800+ higher institutions including Universities, Polytechnics/Monotechnics, Colleges of Education and other Institutions with 30,000+ Institution-Programme database entries. Uncover Institution Rankings, Institution programmes, Education News, Examination Resources in Nigeria. Streamline your search of our vast and comprehensive database by utilizing our multi-teir filtering and sorting system based on Location, Study Level, Programme, Category, and more .</p>
             
 
 				<div class="d-flex justify-content-center pb-4">
@@ -55,6 +57,8 @@
 
 
 <!-- End Search -->
+
+
 
 
 <!-- Facts -->
@@ -114,12 +118,12 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-light studynexus-bg-concrete" href="{{route('forum')}}" >
+                <a class="block block-link-pop text-center bg-gray-light studynexus-bg-concrete" href="#rankings" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
-                                <i class="fa fa-3x  fa-comments"></i>
-                                <div class="fw-semibold mt-2 text-uppercase">Forum</div>
+                                <i class="fa fa-3x  fa fa-trophy"></i>
+                                <div class="fw-semibold mt-2 text-uppercase">Rankings</div>
                             </div>
                         </div>
                     </div>
@@ -216,7 +220,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div id="rankings" class="col-md-6">
                 <div class="block block-rounded">
                     <div class="block-header block-header-default text-white bg-gray-dark studynexus-bg-cubes">
                         <h3 class="fw-light mb-1">Academic Institution Rankings</h3>

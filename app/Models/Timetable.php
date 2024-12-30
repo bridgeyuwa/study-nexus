@@ -10,7 +10,6 @@ class Timetable extends Model
     use HasFactory;
 	
 	protected $casts = [ 
-	'exam_date' => 'datetime:Y-m-d',
 	'start_time' => 'datetime',
 	'end_time' => 'datetime'
 
@@ -20,14 +19,6 @@ class Timetable extends Model
 	
 	public function exam() {
         return $this->belongsTo(Exam::class);
-    }
-	
-	public function subject() {
-        return $this->belongsTo(Subject::class);
-    }
-	
-	public function paperType() {
-        return $this->belongsTo(PaperType::class);
     }	
 	
 }

@@ -111,7 +111,7 @@
             <section class="text-center">
                 <h2 class="h3 text-primary-dark">Contact Us</h2>
                 <p>If you have any questions or concerns about this privacy policy, please contact us at:</p>
-                <p><strong>Email:</strong> <a href="mailto:privacy@studynexus.ng">privacy@studynexus.ng</a></p>
+                <p><strong>Email:</strong> <a href="mailto:bridgeyuwa@gmail.com">bridgeyuwa@gmail.com</a></p>
                 </section>
         </div>
  

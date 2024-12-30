@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\Builder;
-use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class InstitutionProgram extends Pivot
 {   
@@ -13,19 +11,10 @@ class InstitutionProgram extends Pivot
 	
     protected $casts = [
 	'updated_at' => 'datetime',
-	'requirements' => SchemalessAttributes::class,
 	'accreditation_grant_date' => 'datetime:Y-m-d',
 	'accreditation_expiry_date' => 'datetime:Y-m-d',
 	];
 	
-	
-	public function scopeWithRequirements(): Builder
-	
-	{
-		
-		return $this->requirements->modelScope();
-		
-	}
 	
 	
 	public function accreditationBody() {

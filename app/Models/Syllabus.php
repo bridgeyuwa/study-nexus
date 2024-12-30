@@ -13,11 +13,13 @@ class Syllabus extends Model
 	
 	protected  $slug = 'name';
 	
-	public function examBody() {
+	/* public function examBody() {
         return $this->belongsTo(ExamBody::class);
-    }
+    } */
 	
-	public function subject() {
-        return $this->belongsTo(Subject::class);
+	
+	public function exam() {
+        return $this->belongsTo(Exam::class);
     }
+
 }

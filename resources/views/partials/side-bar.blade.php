@@ -193,7 +193,7 @@
                 </li>
 
 
-				<li class="nav-main-heading">NEWS/DISCUSS</li>
+				<li class="nav-main-heading">NEWS/RESOURCES</li>
 				
 				<li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('news.index')}}">
@@ -201,14 +201,6 @@
                         <span class="nav-main-link-name">News</span></a>
                 </li>
 				
-				<li class="nav-main-item">
-                    <a class="nav-main-link" href="{{route('forum')}}" target="_blank">
-                        <i class="nav-main-link-icon fa fa-comments"></i>
-                        <span class="nav-main-link-name">Forum</span></a>
-                </li>
-				
-
-				<li class="nav-main-heading">Resources</li>
 				
 				<li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('syllabus.index')}}">

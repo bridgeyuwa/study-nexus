@@ -12,7 +12,7 @@
             
 			
 				<h1 class="h2 text-white mt-3 mb-2">
-					<span itemprop="name"> {{$news->title}}</span>
+					<span itemprop="headline"> {{$news->title}}</span>
 				</h1>
 			@if(!empty($news->cover_image))	<link itemprop="image" href="{{Storage::url($news->cover_image)}}">  @endif
 				<link itemprop="url" content="{{ url()->current() }}" >
@@ -73,7 +73,7 @@
 								<div class="d-flex align-items-center">
 									<div itemprop="description" class="px-4 py-3" style="max-width: 100%;">
 										<p class="lead mb-2">
-											{{ $news->excerpt }}
+											{!! $news->excerpt !!}
 										</p>
 
 										{!! \Illuminate\Support\Str::markdown($news->content) !!}

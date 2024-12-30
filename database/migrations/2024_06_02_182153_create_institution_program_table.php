@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('institution_id');
             $table->string('program_id');
             $table->unsignedBigInteger('level_id');
+			$table->string('name')->nullable();
             $table->text('description')->nullable();
 			$table->text('remarks')->nullable();
 			$table->unsignedBigInteger('program_mode_id')->nullable();
@@ -23,6 +24,9 @@ return new class extends Migration
             $table->integer('tuition_fee')->nullable();
             $table->integer('utme_cutoff')->nullable();
             $table->json('requirements')->nullable();
+			$table->text('direct_entry')->nullable();
+			$table->text('o_level')->nullable();
+			$table->text('utme_subjects')->nullable();
 			$table->unsignedBigInteger('accreditation_body_id');
 			$table->unsignedBigInteger('accreditation_status_id')->nullable();
 			$table->boolean('is_distinguished')->default(0);

@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('timetables', function (Blueprint $table) {
 			$table->id();
+			$table->unsignedBigInteger('exam_id');
+			
             $table->string('paper_code');
 			$table->string('name');
-			$table->unsignedBigInteger('exam_id');
-			$table->unsignedBigInteger('paper_type_id');
-			$table->unsignedBigInteger('subject_id');
 			$table->date('exam_date');
 			$table->time('start_time');
-			$table->string('remarks')->nullable();
 			$table->time('end_time');
+			$table->string('remarks')->nullable();
+			
 			
 			
 			

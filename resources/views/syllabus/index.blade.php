@@ -23,59 +23,81 @@
 		  {{Breadcrumbs::render()}}
 		 <!-- End Breadcrumbs -->
 
-       	
-		 <!-- Page Content -->
-<div class="content content-boxed">
-    <div class="row">
-        <div class="col-md-4 order-md-1">
 
-            <!-- Ads -->
-            <div class="block block-rounded">
-                <div class="block-header block-header-default studynexus-bg-cubes" >
-                    <h3 class="block-title">Ads</h3>
-                </div>
-                <div class="block-content">
-                    Ads
-                </div>
+<!-- Page Content -->
+        <div  itemscope itemtype="https://schema.org/ItemList" class="content">
+          
+          <div class="block block-rounded">
+            <div class="block-header block-header-default">
+              <h3 itemprop="name" class="block-title">Syllabi</h3>
             </div>
-            <!-- END Ads -->
-        </div>
-
-        <div class="col-md-8 order-md-0">
-
-            <!-- Programme Levels -->
-            <div itemscope itemtype="https://schema.org/ItemList" class="block block-rounded">
-                <div class="block-header block-header-default text-center studynexus-bg-cubes" >
-                    <h3 itemprop="name"  class="block-title">list of Syllabi (Syllabuses)</h3>
+			<meta itemprop="description" content="Find the latest syllabi for all major exams like WAEC, NECO, NABTEB, etc...." />
+			<link itemprop="url" href="{{url()->current()}}" />
+  
+			
+            <div class="block-content ">
+			
+			@foreach($examBodies as $examBody)
+              <!-- Syllabus -->
+			  <div itemprop="itemListElement" itemscope itemtype="https://schema.org/EducationalOrganization">
+				<h2 class="content-heading"> 
+				@if(!empty($examBody->logo)) <img  src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
+					<span itemprop="name">{{$examBody->name}}</span>  <span itemprop="alternateName"> ({{$examBody->abbr}})</span>
+				</h2>
+              <div class="row items-push">
+                <div class="col-lg-4">
+				     
+				
+                    <p itemprop="description" class="text-muted">
+						{{$examBody->description}}
+                    </p>
                 </div>
-                <div class="block-content">
-
-                    @foreach($examBodies as $examBody)
-					<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ItemList" >
-                    <a  class="block block-rounded block-bordered block-link-shadow" href="{{route('syllabus.subjects',['examBody' => $examBody])}}">
-                  <div class="block-content block-content-full d-flex align-items-center justify-content-between">
-                    <div class="me-3">
-                      <div class=" col fs-lg  mb-0 text-primary">
-						@if(!empty($examBody->logo)) <img src="{{ Storage::url($examBody->logo) }}" alt="{{$examBody->name}} logo"  style="width: 40px; height: 40px; object-fit: cover;"> @endif
-						<span itemprop="name"> {{$examBody->abbr}} Syllabus</span>
-                      </div>                      
-                      
-                    </div>
-                    <div>
-                      <i class="fa fa-circle-right  text-xwork text-primary"></i> 
-                    </div>
-                  </div>
-                </a> 
-				@endforeach
-                 </div>
+				<link itemprop="sameAs" href="{{$examBody->url}}" />
+				
+                <div hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog" class="col-lg-8">
+					<meta itemprop="name" content="{{$examBody->name}} Examination Syllabi">
+							
+                    <div id="{{$examBody->abbr}}" role="tablist" aria-multiselectable="true">
+				  
+					    @foreach($examBody->exams as $exam)
+						<div itemprop="itemListElement"  class="block block-rounded mb-1">
+							<a class="fw-semibold" href="{{route('syllabus.subjects',['exam' => $exam])}}">
+								  <div class="block-header block-header-default" role="tab" id="{{$examBody->abbr}}_h{{$loop->iteration}}">
+								 <span itemprop="name">  {{$exam->name}} -  Syllabus </span>
+								 <link itemprop="url" href="{{route('syllabus.subjects',['exam' => $exam])}}" />
+								<meta itemprop="description" content = {{$exam->description}} >
+								  </div>
+							</a>
+						</div>
+						
+						@endforeach
+				
+					</div>
                 </div>
+              </div>
+			  </div>
+              <!-- END Syllabus -->
+
+              @endforeach
+
+              
             </div>
-            <!-- END Programme Levels -->
-
+          </div>
+         
         </div>
-    </div>
-</div>
-<!-- END Page Content -->
+        <!-- END Page Content -->
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -20,4 +20,8 @@ class Exam extends Model
 	public function timetables() {
         return $this->hasMany(Timetable::class);
     }
+	
+	public function syllabi() {
+        return $this->hasMany(Syllabus::class);
+    }
 }

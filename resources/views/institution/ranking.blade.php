@@ -162,13 +162,13 @@ use Illuminate\Support\Number;
 
                         <tbody itemscope itemtype="https://schema.org/ItemList" >
 						<meta itemprop="name" content="Ranking of {{$categoryClass->name_plural}} in @if(!empty($state)) {{$state->name}} @if(!empty($state->is_state)) State @endif, Nigeria @elseif(!empty($region)) {{$region->name}}, Nigeria @else Nigeria @endif" />
-                            @foreach($institutions as $institution)
+                            @foreach($institutions as $index => $institution)
 							
 							
                             <tr itemscope itemprop="itemListElement" itemtype="https://schema.org/ListItem">
 							@if(!empty($institution->rank)) <meta itemprop="position" content="{{$rank[$institution->id]['institution']}}"> @endif
                                 <td class="fw-semibold fs-sm text-center text-black">
-                                 @if(!empty($rank[$institution->id]['institution'])) {{Number::ordinal($rank[$institution->id]['institution'])}} @else NR @endif
+                                 @if(!empty($rank[$institution->id]['institution'])) {{ Number::ordinal($institutions->firstItem() + $index) }} @else NR @endif
                                 </td>
                                 <td class="fs-sm">
                                    <a itemscope itemtype="https://schema.org/CollegeOrUniversity" itemprop="item" href="{{route('institutions.show', ['institution' => $institution])}}">

@@ -5,15 +5,18 @@
 
                 @if ($breadcrumb->url && !$loop->last)
                     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item text-truncate d-inline-block" style="max-width: 150px;" data-bs-toggle="tooltip" title="{{$breadcrumb->title}}">
-						<a itemprop="item"  href="{{ $breadcrumb->url }}">
+						<a  href="{{ $breadcrumb->url }}">
 						<span itemprop="name">{{ $breadcrumb->title }}</span>
 						</a>
+						
+						<meta itemprop="item"  content="{{ $breadcrumb->url }}">
 						<meta itemprop="position" content="{{$loop->iteration}}" />
 					</li>
                 @else
                     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="breadcrumb-item active text-truncate " aria-current="page" >
 						<span itemprop="name">{{ $breadcrumb->title }}</span>
 						
+						<meta itemprop="item"  content="{{ $breadcrumb->url }}">
 						<meta itemprop="position" content="{{$loop->iteration}}" />
 					</li>
                 @endif

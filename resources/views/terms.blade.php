@@ -89,7 +89,7 @@
             <section class="mb-4">
                 <h2 class="h3 text-primary-dark border-bottom pb-2 mb-3">10. Contact Information</h2>
                 <p>For questions or concerns about this Agreement, please contact us at:</p>
-                <p><strong>Email:</strong> <a href="mailto:legal@studynexus.ng">legal@studynexus.ng</a></p>
+                <p><strong>Email:</strong> <a href="mailto:bridgeyuwa@gmail.com">bridgeyuwa@gmail.com</a></p>
             </section>
         </div>
  
