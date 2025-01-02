@@ -9,7 +9,7 @@
               <div class="pt-4 pb-3">
                 <h1 class="text-white mb-1">
 
-                 Syllabi
+                 Syllabus
 
               </h1>
               
@@ -29,7 +29,7 @@
           
           <div class="block block-rounded">
             <div class="block-header block-header-default">
-              <h3 itemprop="name" class="block-title">Syllabi</h3>
+              <h3 itemprop="name" class="block-title">Syllabus</h3>
             </div>
 			<meta itemprop="description" content="Find the latest syllabi for all major exams like WAEC, NECO, NABTEB, etc...." />
 			<link itemprop="url" href="{{url()->current()}}" />

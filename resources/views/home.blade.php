@@ -241,7 +241,7 @@
                         <h3 class="fw-light mb-1">Exam Resources</h3>
                     </div>
                     <div class="block-content pb-2">
-                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="#">#Post-UTME updates</a></p>
+                        <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('news.newsCategory',['newsCategory' => 2])}}">Post-UTME updates</a></p>
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('syllabus.index')}}">Syllabuses <span class="text-dark fs-sm">(JAMB, WAEC, NECO, NABTEB etc...)</span></a></p>
                         <p class="mb-2"><i class="si si-trophy me-2"></i><a href="{{route('timetable.index')}}">Timetables <span class="text-dark fs-sm">(WAEC, NECO, NABTEB etc...)</span></a></p>
                         

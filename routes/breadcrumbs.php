@@ -196,7 +196,7 @@ Breadcrumbs::for('institutions.news.show', function (BreadcrumbTrail $trail, $in
 // List Exam bodies for Syllabus
 Breadcrumbs::for('syllabus.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('Syllabuses', route('syllabus.index'));
+    $trail->push('Syllabus', route('syllabus.index'));
 });
 
 // List Exam Syllabi for Exam body

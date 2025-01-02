@@ -19,9 +19,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 /* Search institutions / Programs and filter */
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
- Route::get('/forum', function () {
+ /* Route::get('/forum', function () {
     return redirect('/forum');
-})->name('forum');
+})->name('forum'); */
  
 
 Route::get('/about', [StaticPageController::class, 'about'])->name('about');
