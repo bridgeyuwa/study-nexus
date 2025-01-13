@@ -138,12 +138,13 @@
             </div>
 
             <div class="col-6 col-md-3">
-                <a class="block block-link-pop text-center bg-gray-darker studynexus-bg-concrete" href="#" >
+                <a class="block block-link-pop text-center bg-gray-darker studynexus-bg-concrete" href="javascript:void(0)" style="pointer-events: none;" >
                     <div class="block-content block-content-full ratio ratio-4x3 ">
                         <div class="d-flex justify-content-center align-items-center">
                             <div>
                                 <i class="fa fa-3x fa-plane-departure text-white"></i>
                                 <div class="fw-semibold mt-2 text-uppercase text-white">Study Abroad</div>
+                                <div class="mt-1 text-white">( Coming Soon)</div>
                             </div>
                         </div>
                     </div>
