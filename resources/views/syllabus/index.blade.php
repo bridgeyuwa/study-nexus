@@ -23,7 +23,6 @@
 		  {{Breadcrumbs::render()}}
 		 <!-- End Breadcrumbs -->
 
-
 <!-- Page Content -->
         <div  itemscope itemtype="https://schema.org/ItemList" class="content">
           
