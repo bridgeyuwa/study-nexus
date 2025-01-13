@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
 <!-- Study Nexus Hero -->
      
         <div class="row px-4 mb-1 bg-white w-100 mx-auto pt-6 studynexus-bg-cubes" >
@@ -57,9 +54,6 @@
 
 
 <!-- End Search -->
-
-
-
 
 <!-- Facts -->
       <div class="d-flex justify-content-center align-items-center text-center py-5 bg-white-75" >
