@@ -441,7 +441,7 @@ use Illuminate\Support\Number;
 						    @if(!empty($institution->url))
 							<div class="row bg-stripped">
 								<div class="col-3  fw-light text-black"><i class="fa fa-link text-dark me-1"></i>Website </div>
-								<div class="col"> <a class="text-primary-darker" href="{{$institution->url}}" target="_blank">{{$institution->url}}</a></div>
+								<div class="col"> <a class="text-primary-darker" href="https://{{$institution->url}}" target="_blank">{{$institution->url}}</a></div>
 							</div>
 							@endif
 							
