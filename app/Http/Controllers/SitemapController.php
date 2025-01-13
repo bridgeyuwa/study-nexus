@@ -12,7 +12,6 @@ use App\Models\Level;
 use App\Models\State;
 use App\Models\Region;
 use App\Models\News;
-use App\Models\Exambody;
 use App\Models\Exam;
 use App\Models\Syllabus;
 
@@ -28,9 +27,9 @@ class SitemapController extends Controller
         $levels = Level::with('__programs')->get();
 		$catchments = Catchment::all();
 		$news = News::all();
-		$examBodies = ExamBody::all();
 		$exams = Exam::all();
 		$syllabi = Syllabus::all();
+		
 
         
 		
@@ -104,9 +103,7 @@ class SitemapController extends Controller
         foreach ($catchments as $catchment) {
             $sitemap->add(Url::create(route('institutions.catchments.show', ['catchment' => $catchment])));
         }
-		
-		
-		
+			
 		
 		
 		//News
@@ -123,7 +120,7 @@ class SitemapController extends Controller
 		
 		$sitemap->add(Url::create(route('timetable.index')));
 		
-		foreach ($exams as $exam) {
+		foreach (Exam::whereHas('timetables')->get() as $exam) {
             $sitemap->add(Url::create(route('timetable.show', ['exam' => $exam])));
         }
 		
@@ -131,7 +128,8 @@ class SitemapController extends Controller
 		
         $sitemap->add(Url::create(route('syllabus.index')));
 		
-		foreach ($examBodies as $examBody) {
+		
+		foreach (Exam::whereHas('syllabi')->get() as $exam) {
             $sitemap->add(Url::create(route('syllabus.subjects', ['exam' => $exam])));
        
 			foreach ($syllabi as $syllabus){
@@ -140,11 +138,7 @@ class SitemapController extends Controller
        
 			}
 
-	   }
-		
-		
-		
-		
+	   }	
 		
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
