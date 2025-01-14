@@ -429,13 +429,13 @@ class InstitutionController extends Controller {
 
 		
 		 $SEOData = new SEOData(
-			title: "{$institution->name}",
-			description: "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.",
+			title: "{$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""),
+			description: "Discover {$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""). " with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.",
            // image: $institution->getFirstMediaUrl('profile', 'main'),                           
 
         );
 		
-		$institution['description_alt']= "Discover {$institution->name} with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.";
+		$institution['description_alt']= "Discover {$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""). " with detailed information on its academic offerings, including highlights, overview, course programs, tuition fees, ranking, and more.";
             // to be fixed
 	     //   dd($institution->head);
 		 
@@ -487,8 +487,8 @@ class InstitutionController extends Controller {
 		});
 		
 		$SEOData = new SEOData(
-			title: "{$institution->name} {$level->name} Programmes",
-			description: "Explore {$level->name} programs offered at {$institution->name}. Compare and choose the best program for your academic journey.",
+			title: "{$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""). " {$level->name} Programmes",
+			description: "Explore {$level->name} programs offered at {$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""). ". Compare and choose the best program for your academic journey.",
 		);	
 
 		$shareLinks = \Share::currentPage()
@@ -527,8 +527,8 @@ class InstitutionController extends Controller {
 		});
 		
 		$SEOData = new SEOData(
-			title: "{$program->name} - {$institution->name}",
-			description: "Detailed information about {$level->name} in {$program->name} offered at {$institution->name}. Program highlights and overview",
+			title: "{$program->name} - {$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""),
+			description: "Detailed information about {$level->name} in {$program->name} offered at {$institution->name}" . ($institution->locality ? ", {$institution->locality}" : ""). ". Program highlights and overview",
 		);
 		
 		$shareLinks = \Share::currentPage()
@@ -567,8 +567,8 @@ class InstitutionController extends Controller {
 	
 		// Prepare SEO data
 		$SEOData = new SEOData(
-			title: "{$program->name} Study Levels at {$institution->name}",
-			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.",
+			title: "{$program->name} Study Levels at {$institution->name}". ($institution->locality ? ", {$institution->locality}" : ""),
+			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.". ($institution->locality ? ", {$institution->locality}" : ""),
 		);
 		
 		
