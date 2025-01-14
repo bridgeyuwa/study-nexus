@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_STORE', null),
+    'default' => env('CACHE_STORE', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,10 +87,6 @@ return [
 
         'octane' => [
             'driver' => 'octane',
-        ],
-		
-		'none' => [
-            'driver' => null,
         ],
 
     ],
