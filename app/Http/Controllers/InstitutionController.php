@@ -567,7 +567,7 @@ class InstitutionController extends Controller {
 	
 		// Prepare SEO data
 		$SEOData = new SEOData(
-			title: "{$program->name} Study Levels - {$institution->name}",
+			title: "{$program->name} Study Levels at {$institution->name}",
 			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.",
 		);
 		

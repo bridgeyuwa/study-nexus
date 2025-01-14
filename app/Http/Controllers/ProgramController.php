@@ -85,7 +85,7 @@ class ProgramController extends Controller
 		
 		
         $SEOData = new SEOData(
-            title: "{$level->name} in {$program->name} in Nigeria",
+            title: "{$program->name} {$level->name}  in Nigeria",
             description: "Detailed information about {$level->name} in {$program->name}",
         );
 		
