@@ -138,7 +138,7 @@
       <div class="content py-0">
         <div class="row fs-sm">
           <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
-            Developed by <a class="fw-semibold" href="https://github.com/bridgeyuwa" rel="nofollow" target="_blank">Bridges Yuwa</a>
+            Developed by <a class="fw-semibold" href="https://bridgeyuwa.github.io" rel="nofollow" target="_blank">Bridges Yuwa</a>
           </div>
           <div class="col-sm-6 order-sm-1 text-center text-sm-start">       
             <a class="fw-semibold" href="{{route('about')}}" target="_blank">Study Nexus</a> &copy;
