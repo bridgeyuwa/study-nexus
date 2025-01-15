@@ -129,7 +129,7 @@ class SitemapController extends Controller
         $sitemap->add(Url::create(route('syllabus.index')));
 		
 		
-		foreach (Exam::whereHas('syllabi')->get() as $exam) {
+		foreach (Exam::whereHas('syllabi')->with('syllabi')->get() as $exam) {
             $sitemap->add(Url::create(route('syllabus.subjects', ['exam' => $exam])));
        
 			foreach ($exam->syllabi as $syllabus){
