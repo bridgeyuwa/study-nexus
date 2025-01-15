@@ -59,16 +59,18 @@
                     <div id="{{$examBody->abbr}}" role="tablist" aria-multiselectable="true">
 				  
 					    @foreach($examBody->exams as $exam)
-						<div itemprop="itemListElement"  class="block block-rounded mb-1">
-							<a class="fw-semibold"  href="{{route('timetable.show', ['exam' => $exam] )}}" >
-								  <div class="block-header block-header-default" role="tab" id="{{$examBody->abbr}}_h{{$loop->iteration}}">
-								 <span itemprop="name">  {{$exam->name}} -  Timetable </span>
-								 <link itemprop="url" href="{{route('timetable.show', ['exam' => $exam] )}}" />
-								<meta itemprop="description" content="{{$exam->description}}" >
-								  </div>
-							</a>
-							
-						</div>
+							@if($exam->timetables->isNotEmpty())
+								<div itemprop="itemListElement"  class="block block-rounded mb-1">
+									<a class="fw-semibold"  href="{{route('timetable.show', ['exam' => $exam] )}}" >
+										  <div class="block-header block-header-default" role="tab" id="{{$examBody->abbr}}_h{{$loop->iteration}}">
+										 <span itemprop="name">  {{$exam->name}} -  Timetable </span>
+										 <link itemprop="url" href="{{route('timetable.show', ['exam' => $exam] )}}" />
+										<meta itemprop="description" content="{{$exam->description}}" >
+										  </div>
+									</a>
+									
+								</div>
+							@endif
 						
 						@endforeach
 				
