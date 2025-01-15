@@ -41,6 +41,14 @@ class TimetableController extends Controller
      */
     public function show(Exam $exam)
     {
+		
+		// Check if the exam has timetables
+		if (!$exam->timetables()->exists()) {
+			abort(404, 'Timetables not found for this exam.');
+		}
+		
+		
+		
         // Cache the timetables grouped by exam date for 60 minutes
 		$groupedTimetables = Cache::remember("timetables_grouped_by_exam_date_{$exam->id}", 60 * 60, function () use ($exam) {
 			return $exam->timetables()->get()
