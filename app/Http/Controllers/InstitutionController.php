@@ -315,7 +315,7 @@ class InstitutionController extends Controller {
 			})
 			->whereNotNull('rank') // Only include institutions with a rank
 			->with(['state.region', 'state.institutions', 'category.categoryClass'])
-			->orderByRaw('rank')
+			->orderBy('rank')
 			->paginate(100);
 			
       });
