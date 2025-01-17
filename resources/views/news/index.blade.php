@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
           <div class="bg-black-75">
             <div class="content content-top content-full text-center">
 			
-			<div class="display-6 text-white mt-5">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</div>>
+			<h1 class="display-6 text-white mt-5">Study<span class="text-info">Nexus</span>.<span class="text-success fs-2">ng</span> News</h1>>
             
 				<div class="d-flex justify-content-center mt-3"> 
 					@if(!empty($institution))
