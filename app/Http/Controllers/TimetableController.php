@@ -29,7 +29,7 @@ class TimetableController extends Controller
 		
 		
 		$SEOData = new SEOData(
-            title: "Exams Timetables",
+            title: "Exam Timetables",
             description: "Find the latest timetables for all major exams like WAEC, NECO, and NABTEB.",
         );
 
@@ -44,7 +44,7 @@ class TimetableController extends Controller
 		
 		// Check if the exam has timetables
 		if (!$exam->timetables()->exists()) {
-			abort(404, 'Timetables not found for this exam.');
+			abort(404, 'Timetable not found for this exam.');
 		}
 		
 		

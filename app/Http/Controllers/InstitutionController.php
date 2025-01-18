@@ -571,6 +571,7 @@ class InstitutionController extends Controller {
 			description: "Explore the available study levels for {$program->name} offered at {$institution->name}.". ($institution->locality ? ", {$institution->locality}" : ""),
 		);
 		
+		$SEOData->robots = 'noindex';
 		
 		$shareLinks = \Share::currentPage()
 				->facebook()
