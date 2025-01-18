@@ -13,13 +13,7 @@ class SyllabusController extends Controller
 {
     public function index()
     {
-        // Cache the exam bodies for 60 minutes
-        /* $examBodies = Cache::remember('exam_bodies_index', 60 * 60, function () {
-            return ExamBody::whereHas('syllabi')->get();
-        });
-		 */
-		
-		
+      
 		$examBodies = Cache::remember('exam_bodies_with_exams', 60 * 60, function () {
 			//load on ExamBodies with Exam
             return ExamBody::whereHas('exams.syllabi')->with(['exams' => function($query){
@@ -30,8 +24,6 @@ class SyllabusController extends Controller
 			}])->get();
 			
         });
-		
-		//dd($examBodies);
 		
 		
 		
@@ -74,7 +66,7 @@ class SyllabusController extends Controller
     public function show(Exam $exam, Syllabus $syllabus)
     {
         if ($syllabus->exam_id !== $exam->id) {
-            abort(404);
+            abort(404, 'Syllabus not found for this exam.');
         }
 		
 		$SEOData = new SEOData(
