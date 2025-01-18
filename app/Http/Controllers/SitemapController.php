@@ -89,10 +89,16 @@ class SitemapController extends Controller
 				$sitemap->add(Url::create(route('institutions.news', ['institution' => $institution])));
              }
             foreach ($levels as $level) {
-                foreach ($institution->programs()->wherePivot('level_id', $level->id)->get() as $institution_program) {
-                    $sitemap->add(Url::create(route('institutions.programs', ['institution' => $institution, 'level' => $level])));
-                    $sitemap->add(Url::create(route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $institution_program])));
-                }
+				
+				// Check if there are any programs for the current level
+				$institution_programs = $institution->programs()->wherePivot('level_id', $level->id)->get();
+    
+				if ($institution_programs->isNotEmpty()) {
+					foreach ($institution_programs as $institution_program) {
+						$sitemap->add(Url::create(route('institutions.programs', ['institution' => $institution, 'level' => $level])));
+						$sitemap->add(Url::create(route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $institution_program])));
+					}
+				}
             }
         }
 
