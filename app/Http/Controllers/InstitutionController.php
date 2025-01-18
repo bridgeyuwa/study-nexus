@@ -165,10 +165,13 @@ class InstitutionController extends Controller {
 			return CategoryClass::all();
 		});
 		
-        $SEOData = new SEOData(
-            title: "Higher Institutions in {$state->name}",
-			description: "Explore top institutions in {$state->name} Compare programmes and find the best fit for your education needs.",
-        );
+		
+		$SEOData = new SEOData(
+			title: "Higher Institutions in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria",
+			description: "Explore top institutions in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria. Compare programmes and find the best fit for your education needs."
+		);
+
+		
            
          $parameters = ['location' => $state->id, 'level' => '', 'program' => '', 'category' => '' ];
 		 
@@ -202,11 +205,13 @@ class InstitutionController extends Controller {
 		 $categoryClasses = Cache::remember('category_classes', 24 * 60 * 60, function() {
 			return CategoryClass::all();
 		});
-		
+			
+			
 		$SEOData = new SEOData(
-				title: "{$categoryClass->name_plural} in {$state->name}, Nigeria",
-				description: "Explore {$categoryClass->name_plural} in {$state->name}, Nigeria. Compare programs and find the best fit for your education needs.",
-			);
+			title: "{$categoryClass->name_plural} in {$state->name}" . ($state->is_state !== null ? " State" : "") . " - Nigeria",
+			description: "Explore {$categoryClass->name_plural} in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria. Compare programs and find the best fit for your education needs.",
+		);
+
 		
 		
 		$parameters = ['location' => $state->id, 'level' => '', 'program' => '', 'category' => $categoryClass->id ];
@@ -287,10 +292,12 @@ class InstitutionController extends Controller {
 		
 		$rank = $institutions->isNotEmpty() ? $this->computeRankings($institutions) : null;
 
-		$SEOData =  new SEOData(
-			title: "{$categoryClass->name_plural} Rankings in {$state->name}, Nigeria",
-			description: "Discover the top-ranked {$categoryClass->name_plural} in {$state->name}, Nigeria. Compare rankings and find the best schools in the state.",
+		
+		$SEOData = new SEOData(
+			title: "{$categoryClass->name_plural} Rankings in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria",
+			description: "Discover the top-ranked {$categoryClass->name_plural} in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria. Compare rankings and find the best schools in the state.",
 		);
+
 		
 		$shareLinks = \Share::currentPage()
 				->facebook()
