@@ -92,7 +92,6 @@ class SitemapController extends Controller
                 foreach ($institution->programs()->wherePivot('level_id', $level->id)->get() as $institution_program) {
                     $sitemap->add(Url::create(route('institutions.programs', ['institution' => $institution, 'level' => $level])));
                     $sitemap->add(Url::create(route('institutions.program.show', ['institution' => $institution, 'level' => $level, 'program' => $institution_program])));
-                    $sitemap->add(Url::create(route('institutions.program.levels', ['institution' => $institution, 'program' => $institution_program])));
                 }
             }
         }
