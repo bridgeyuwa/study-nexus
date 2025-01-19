@@ -103,7 +103,7 @@ class ProgramController extends Controller
     
     /* list institutions which have a program */
     public function institutions(Level $level, Program $program) {
-        $cacheKey = "program_{$program->id}_institutions_level_{$level->id}";
+        $cacheKey = "program_{$program->id}_institutions_level_{$level->id}_page_". request('page', 1);
         
         $institutions = Cache::remember($cacheKey, 60 * 60, function () use ($program, $level) {
             return $program->institutions()
