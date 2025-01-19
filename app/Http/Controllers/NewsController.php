@@ -14,7 +14,7 @@ class NewsController extends Controller
     public function index()
     {
         // Cache the paginated news items
-        $news = Cache::remember('news_index', 15 * 60, function () {
+        $news = Cache::remember('news_index_page_'. request('page', 1), 15 * 60, function () {
             $newsItems = News::with(['newsCategories', 'institution'])->orderBy('created_at', 'desc')->paginate(10);
             $newsItems->getCollection()->transform(function ($newsItem) {
                 $newsItem->readTime = $this->readTime($newsItem->content);

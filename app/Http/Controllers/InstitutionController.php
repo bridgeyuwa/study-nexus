@@ -208,7 +208,7 @@ class InstitutionController extends Controller {
 			
 			
 		$SEOData = new SEOData(
-			title: "{$categoryClass->name_plural} in {$state->name}" . ($state->is_state !== null ? " State" : "") . " - Nigeria",
+			title: "{$categoryClass->name_plural} in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria",
 			description: "Explore {$categoryClass->name_plural} in {$state->name}" . ($state->is_state !== null ? " State" : "") . ", Nigeria. Compare programs and find the best fit for your education needs.",
 		);
 
@@ -239,7 +239,7 @@ class InstitutionController extends Controller {
 		
 				
 		
-		$institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}", 60 * 60, function() use ($categoryClass) {
+		$institutions = Cache::remember("institution_ranking_for_category_{$categoryClass->id}_page_". request('page', 1), 60 * 60, function() use ($categoryClass) {
 			return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
 				->whereNotNull('rank') // Only include institutions with a rank
 				->with(['state.region', 'category.categoryClass', 'state.institutions', 'state.region.institutions'])
@@ -276,7 +276,7 @@ class InstitutionController extends Controller {
 
 	public function stateRanking(CategoryClass $categoryClass, State $state) {
 			
-		$institutions = Cache::remember("state_ranking_for_category_{$categoryClass->id}_state_{$state->id}", 24 * 60 * 60 , function() use ($categoryClass, $state) {
+		$institutions = Cache::remember("state_ranking_for_category_{$categoryClass->id}_state_{$state->id}_page_". request('page', 1), 24 * 60 * 60 , function() use ($categoryClass, $state) {
 			return Institution::where('state_id', $state->id)
 				->whereIn('category_id', $categoryClass->categories->pluck('id'))
 				->whereNotNull('rank') // Only include institutions with a rank
@@ -314,7 +314,7 @@ class InstitutionController extends Controller {
 
 	public function regionRanking(CategoryClass $categoryClass, Region $region) {
 		
-		$institutions = Cache::remember("region_ranking_for_category_{$categoryClass->id}_region_{$region->id}", 24 * 60 * 60, function() use ($categoryClass, $region) {
+		$institutions = Cache::remember("region_ranking_for_category_{$categoryClass->id}_region_{$region->id}_page_". request('page', 1), 24 * 60 * 60, function() use ($categoryClass, $region) {
 		
 		return Institution::whereIn('category_id', $categoryClass->categories->pluck('id'))
 			->whereHas('state.region', function($query) use ($region) {
