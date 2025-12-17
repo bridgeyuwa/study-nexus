@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
            // NewsNewsCategoryTableSeeder::class, 
 			
 			//SyllabiTableSeeder::class,
+            InstitutionProgramSeeder::class,
         ]);
 		
 		
