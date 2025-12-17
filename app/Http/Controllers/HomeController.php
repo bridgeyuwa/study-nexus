@@ -2,37 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Institution;
-use App\Models\Program;
+use App\Http\Controllers\Concerns\ProvidesCache;
+use App\Http\Controllers\Concerns\ProvidesSEO;
 use App\Models\CategoryClass;
+use App\Models\Institution;
 use App\Models\Level;
-use RalphJSmit\Laravel\SEO\Support\SEOData;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Program;
 
 class HomeController extends Controller
 {
+    use ProvidesCache;
+    use ProvidesSEO;
+
     public function index()
     {
-        // Cache the results of the queries
-        $institutions = Cache::tags(['institutions'])->remember('all_institutions', 60 * 60, function () {
-            return Institution::all();
-        });
+        $institutions = $this->cache('all_institutions', 60 * 60, fn () => Institution::all(), ['institutions']);
 
-        $programs = Cache::tags(['programs'])->remember('all_programs', 60 * 60, function () {
-            return Program::all();
-        });
+        $programs = $this->cache('all_programs', 60 * 60, fn () => Program::all(), ['programs']);
 
-        $categoryClasses = Cache::tags(['category_classes'])->remember('all_category_classes', 60 * 60 * 24, function () {
-            return CategoryClass::all();
-        });
+        $categoryClasses = $this->cache('all_category_classes', 60 * 60 * 24, fn () => CategoryClass::all(), ['category_classes']);
 
-        $levels = Cache::tags(['levels'])->remember('all_levels', 60 * 60, function () {
-            return Level::all();
-        });
+        $levels = $this->cache('all_levels', 60 * 60, fn () => Level::all(), ['levels']);
 
-        $SEOData = new SEOData(
-            description: "Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic programmes, rankings, News Updates and more on Study Nexus."
+        $SEOData = $this->seo(
+            title: 'Study Nexus - Your Gateway to Higher Education in Nigeria',
+            description: 'Discover universities, polytechnics, monotechnics, and colleges of education in Nigeria. Explore the online directory academic programmes, rankings, News Updates and more on Study Nexus.'
         );
 
         return view('home', compact('institutions', 'programs', 'categoryClasses', 'levels', 'SEOData'));
