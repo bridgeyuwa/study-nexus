@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Level;
 use App\Models\Program;
+use App\Traits\GeneratesShareLinks;
+use App\Traits\ProvidesCache;
+use App\Traits\ProvidesSEO;
 
 class ProgramController extends Controller
 {

@@ -8,6 +8,9 @@ use App\Models\Level;
 use App\Models\Program;
 use App\Models\Region;
 use App\Models\State;
+use App\Traits\GeneratesShareLinks;
+use App\Traits\ProvidesCache;
+use App\Traits\ProvidesSEO;
 
 class InstitutionController extends Controller
 {

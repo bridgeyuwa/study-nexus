@@ -6,6 +6,8 @@ use App\Models\CategoryClass;
 use App\Models\Institution;
 use App\Models\Level;
 use App\Models\Program;
+use App\Traits\ProvidesCache;
+use App\Traits\ProvidesSEO;
 
 class HomeController extends Controller
 {
