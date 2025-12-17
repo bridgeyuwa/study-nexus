@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Concerns\GeneratesShareLinks;
-use App\Http\Controllers\Concerns\ProvidesCache;
-use App\Http\Controllers\Concerns\ProvidesSEO;
 use App\Models\Level;
 use App\Models\Program;
 

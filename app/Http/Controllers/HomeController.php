@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Concerns\ProvidesCache;
-use App\Http\Controllers\Concerns\ProvidesSEO;
 use App\Models\CategoryClass;
 use App\Models\Institution;
 use App\Models\Level;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Concerns;
+namespace App\Http\Controllers;
 
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
