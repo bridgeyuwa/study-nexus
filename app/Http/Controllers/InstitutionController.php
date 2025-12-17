@@ -8,6 +8,7 @@ use App\Models\Level;
 use App\Models\Program;
 use App\Models\Region;
 use App\Models\State;
+use App\Services\RankingService;
 use App\Traits\GeneratesShareLinks;
 use App\Traits\ProvidesCache;
 use App\Traits\ProvidesSEO;
@@ -17,6 +18,13 @@ class InstitutionController extends Controller
     use GeneratesShareLinks;
     use ProvidesCache;
     use ProvidesSEO;
+
+    protected $rankingService;
+
+    public function __construct(RankingService $rankingService)
+    {
+        $this->rankingService = $rankingService;
+    }
 
     public function index()
     {
@@ -153,7 +161,7 @@ class InstitutionController extends Controller
 
         $categoryClasses = $this->cache('category_classes', 24 * 60 * 60, fn () => CategoryClass::all());
 
-        $rank = $institutions->isNotEmpty() ? $this->computeRankings($institutions) : null;
+        $rank = $institutions->isNotEmpty() ? $this->rankingService->computeRankings($institutions) : null;
 
         $SEOData = $this->seo(
             title: "{$categoryClass->name_plural} Rankings in Nigeria",
@@ -176,7 +184,7 @@ class InstitutionController extends Controller
 
         $categoryClasses = $this->cache('category_classes', 24 * 60 * 60, fn () => CategoryClass::all());
 
-        $rank = $institutions->isNotEmpty() ? $this->computeRankings($institutions) : null;
+        $rank = $institutions->isNotEmpty() ? $this->rankingService->computeRankings($institutions) : null;
 
         $SEOData = $this->seo(
             title: "{$categoryClass->name_plural} Rankings in ".$state->name.($state->is_state !== null ? ' State' : '').', Nigeria',
@@ -199,7 +207,7 @@ class InstitutionController extends Controller
 
         $categoryClasses = $this->cache('category_classes', 24 * 60 * 60, fn () => CategoryClass::all());
 
-        $rank = $institutions->isNotEmpty() ? $this->computeRankings($institutions) : null;
+        $rank = $institutions->isNotEmpty() ? $this->rankingService->computeRankings($institutions) : null;
 
         $SEOData = $this->seo(
             title: "{$categoryClass->name_plural} Rankings in {$region->name}, Nigeria",
@@ -209,63 +217,6 @@ class InstitutionController extends Controller
         $shareLinks = $this->shareLinks();
 
         return view('institution.ranking', compact('institutions', 'rank', 'categoryClass', 'categoryClasses', 'region', 'SEOData', 'shareLinks'));
-    }
-
-    private function computeRankings($institutions)
-    {
-        $rank = [];
-        foreach ($institutions as $institution) {
-            $computedRank = $this->computeRank($institution, $institutions);
-            $rank[$institution->id] = [
-                'institution' => $computedRank['institution'],
-                'region' => $computedRank['region'],
-                'state' => $computedRank['state'],
-            ];
-        }
-
-        return $rank;
-    }
-
-    private function computeRank($institution, $allInstitutions)
-    {
-        $rank = ['institution' => 0, 'region' => 0, 'state' => 0];
-
-        if ($institution->rank) {
-            foreach ($allInstitutions as $school) {
-                $rank['institution']++;
-                if ($school->id == $institution->id) {
-                    break;
-                }
-            }
-
-            $regionInstitutions = $institution->state->region->institutions
-                ->whereNotNull('rank')
-                ->where('category_id', $institution->category->id)
-                ->sortBy('rank');
-
-            foreach ($regionInstitutions as $regionInstitution) {
-                $rank['region']++;
-                if ($regionInstitution->id == $institution->id) {
-                    break;
-                }
-            }
-
-            $stateInstitutions = $institution->state->institutions
-                ->whereNotNull('rank')
-                ->where('category_id', $institution->category->id)
-                ->sortBy('rank');
-
-            foreach ($stateInstitutions as $stateInstitution) {
-                $rank['state']++;
-                if ($stateInstitution->id == $institution->id) {
-                    break;
-                }
-            }
-        } else {
-            $rank = ['institution' => false, 'region' => false, 'state' => false];
-        }
-
-        return $rank;
     }
 
     public function show(Institution $institution)
@@ -285,7 +236,7 @@ class InstitutionController extends Controller
             ->orderBy('rank')
             ->get());
 
-        $rank = $this->cache("institution_rank_{$institution->id}", 60 * 60 * 24, fn () => $this->computeRank($institution, $allInstitutions));
+        $rank = $this->cache("institution_rank_{$institution->id}", 60 * 60 * 24, fn () => $this->rankingService->computeRank($institution, $allInstitutions));
 
         $levels = $institution->levels->unique();
 

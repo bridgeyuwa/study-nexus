@@ -21,5 +21,12 @@ class News extends Model
     {
         return $this->belongsToMany(NewsCategory::class);
     }
-	
+
+    public function getReadTimeAttribute()
+    {
+        $content = str_word_count(strip_tags($this->content));
+        $minutes = ceil($content / 200);
+
+        return $minutes;
+    }
 }

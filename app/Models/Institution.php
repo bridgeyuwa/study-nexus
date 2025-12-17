@@ -107,9 +107,5 @@ class Institution extends Model {
 	{
 		return $this->hasMany(News::class);
 	}
-	
-	
-	
-	
-	
+
 }
