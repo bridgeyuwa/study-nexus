@@ -14,69 +14,20 @@ class HomeController extends Controller
 {
     public function index()
     {
-		
-		
-		/*
-$filePath = public_path('files.json');
-
-$fileContent = file_get_contents($filePath);
-
-$data = json_decode($fileContent);
-
-
-foreach($data as &$obj){
-	
-	$institution = $obj->institutions_list;
-	
-	unset($obj->institutions_list);
-	
-	$obj = (object) array_merge(['institutions_list' => $institution], (array) $obj);		
-}
-
-$allSql ='';
-
-foreach($data as &$obj){
-	
-	$institution = $obj->institutions_list;
-	
-	 unset($obj->institutions_list);  //to remove institution id from the json
-		
-	$program = $obj->title;
-	
-	unset($obj->title);   //to remove program id from the json
-	
-	 $encodedObj = json_encode($obj);
-	 $escapedData = addslashes($encodedObj);
-	 
-	//prepare SQL
-	$sql = "INSERT INTO institution_program (institution_id, program_id, level_id, requirement) VALUES ('$institution','$program',1,'$escapedData');";
-	
-	$allSql .= $sql .PHP_EOL ;	
-}
-
- //$reorderedJson = json_encode($data, JSON_PRETTY_PRINT);
-
-$newFilePath = public_path('decodedFile.json');
-
-$newFileContent = file_put_contents($newFilePath, $allSql);
-
-*/
-			
-		
         // Cache the results of the queries
-        $institutions = Cache::remember('all_institutions', 60 * 60, function () {
+        $institutions = Cache::tags(['institutions'])->remember('all_institutions', 60 * 60, function () {
             return Institution::all();
         });
 
-        $programs = Cache::remember('all_programs', 60 * 60, function () {
+        $programs = Cache::tags(['programs'])->remember('all_programs', 60 * 60, function () {
             return Program::all();
         });
 
-        $categoryClasses = Cache::rememberForever('all_category_classes', function () {
+        $categoryClasses = Cache::tags(['category_classes'])->remember('all_category_classes', 60 * 60 * 24, function () {
             return CategoryClass::all();
         });
 
-        $levels = Cache::remember('all_levels', 60 * 60, function () {
+        $levels = Cache::tags(['levels'])->remember('all_levels', 60 * 60, function () {
             return Level::all();
         });
 
