@@ -2,19 +2,41 @@
 
 namespace App\Console\Commands;
 
-use App\Application\Sitemap\Actions\GenerateSitemapAction;
 use Illuminate\Console\Command;
+use App\Http\Controllers\SitemapController;
 
 class GenerateSitemap extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'sitemap:generate';
 
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
     protected $description = 'Generate sitemap';
 
-    public function handle(GenerateSitemapAction $generateSitemapAction): void
+    /**
+     * Execute the console command.
+     */
+    public function handle()
     {
-        $generateSitemapAction->execute();
-
-        $this->info('Sitemap generated successfully');
+         
+		 $sitemap = new SitemapController();
+		 
+		 $response = $sitemap->index();
+		 
+		 $this->info('Sitemap generated successfully');
+		 
+		 
     }
 }
+
+
+
+
