@@ -1,7 +1,5 @@
 <?php
 
-namespace Tests\Feature;
-
 use App\Models\AccreditationBody;
 use App\Models\AccreditationStatus;
 use App\Models\Category;
@@ -17,327 +15,231 @@ use App\Models\ReligiousAffiliation;
 use App\Models\ReligiousAffiliationCategory;
 use App\Models\State;
 use App\Models\Term;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class SearchControllerTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function () {
+    $this->term       = Term::factory()->create();
+    $this->accBody    = AccreditationBody::factory()->create();
+    $this->accStatus  = AccreditationStatus::factory()->create();
+    $this->instHead   = InstitutionHead::factory()->create();
+    $categoryClass    = CategoryClass::factory()->create();
+    $this->category   = Category::factory()->create(['category_class_id' => $categoryClass->id]);
 
-    private Term $term;
-    private AccreditationBody $accreditationBody;
-    private AccreditationStatus $accreditationStatus;
-    private InstitutionHead $institutionHead;
-    private Category $category;
+    // Helper: create one institution with all required FKs satisfied.
+    $this->make = fn (array $overrides = []) => Institution::factory()->create(array_merge([
+        'state_id'                 => State::factory()->create(['region_id' => Region::factory()->create()->id])->id,
+        'category_id'              => $this->category->id,
+        'term_id'                  => $this->term->id,
+        'accreditation_body_id'    => $this->accBody->id,
+        'accreditation_status_id'  => $this->accStatus->id,
+        'institution_type_id'      => InstitutionType::factory()->create()->id,
+        'religious_affiliation_id' => ReligiousAffiliation::factory()->create()->id,
+        'institution_head_id'      => $this->instHead->id,
+    ], $overrides));
+});
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+// -------------------------------------------------------------------------
+// Basics
+// -------------------------------------------------------------------------
 
-        $this->term                 = Term::factory()->create();
-        $this->accreditationBody    = AccreditationBody::factory()->create();
-        $this->accreditationStatus  = AccreditationStatus::factory()->create();
-        $this->institutionHead      = InstitutionHead::factory()->create();
-        $categoryClass              = CategoryClass::factory()->create();
-        $this->category             = Category::factory()->create(['category_class_id' => $categoryClass->id]);
-    }
+it('returns 200 with no filters applied', function () {
+    $this->get(route('search'))->assertStatus(200);
+});
 
-    private function createInstitution(array $overrides = []): Institution
-    {
-        $region  = Region::factory()->create();
-        $state   = State::factory()->create(['region_id' => $region->id]);
-        $relAff  = ReligiousAffiliation::factory()->create();
-        $type    = InstitutionType::factory()->create();
+it('returns all institutions when no filters are set', function () {
+    $a = ($this->make)();
+    $b = ($this->make)();
 
-        return Institution::factory()->create(array_merge([
-            'state_id'                 => $state->id,
-            'category_id'              => $this->category->id,
-            'term_id'                  => $this->term->id,
-            'accreditation_body_id'    => $this->accreditationBody->id,
-            'accreditation_status_id'  => $this->accreditationStatus->id,
-            'institution_type_id'      => $type->id,
-            'religious_affiliation_id' => $relAff->id,
-            'institution_head_id'      => $this->institutionHead->id,
-        ], $overrides));
-    }
+    $this->get(route('search'))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $a->id) && $i->contains('id', $b->id)
+        );
+});
 
-    // -------------------------------------------------------------------------
-    // Basic
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// Type filter
+// -------------------------------------------------------------------------
 
-    public function test_search_with_no_filters_returns_200(): void
-    {
-        $this->get(route('search'))->assertStatus(200);
-    }
+it('type=public matches institutions whose type category slug is public', function () {
+    $publicTypeCat  = InstitutionTypeCategory::factory()->create(['slug' => 'public']);
+    $publicType     = InstitutionType::factory()->create(['institution_type_category_id' => $publicTypeCat->id]);
+    $privateTypeCat = InstitutionTypeCategory::factory()->create(['slug' => 'private-cat']);
+    $privateType    = InstitutionType::factory()->create(['institution_type_category_id' => $privateTypeCat->id]);
 
-    public function test_search_returns_all_institutions_when_no_filters_applied(): void
-    {
-        $inst1 = $this->createInstitution();
-        $inst2 = $this->createInstitution();
+    $public  = ($this->make)(['institution_type_id' => $publicType->id]);
+    $private = ($this->make)(['institution_type_id' => $privateType->id]);
 
-        $this->get(route('search'))
-            ->assertViewHas('institutions', function ($institutions) use ($inst1, $inst2) {
-                return $institutions->contains('id', $inst1->id)
-                    && $institutions->contains('id', $inst2->id);
-            });
-    }
+    $this->get(route('search', ['type' => 'public']))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $public->id) && !$i->contains('id', $private->id)
+        );
+});
 
-    // -------------------------------------------------------------------------
-    // Type filter
-    // -------------------------------------------------------------------------
+it('type=federal matches institutions whose institution type slug is federal', function () {
+    $federalType = InstitutionType::factory()->create(['slug' => 'federal']);
+    $otherType   = InstitutionType::factory()->create(['slug' => 'private']);
 
-    public function test_search_filter_type_public_matches_institutions_with_public_type_category(): void
-    {
-        $publicTypeCat  = InstitutionTypeCategory::factory()->create(['slug' => 'public']);
-        $publicType     = InstitutionType::factory()->create(['institution_type_category_id' => $publicTypeCat->id]);
-        $privateTypeCat = InstitutionTypeCategory::factory()->create(['slug' => 'private-cat']);
-        $privateType    = InstitutionType::factory()->create(['institution_type_category_id' => $privateTypeCat->id]);
+    $federal = ($this->make)(['institution_type_id' => $federalType->id]);
+    $other   = ($this->make)(['institution_type_id' => $otherType->id]);
 
-        $public  = $this->createInstitution(['institution_type_id' => $publicType->id]);
-        $private = $this->createInstitution(['institution_type_id' => $privateType->id]);
+    $this->get(route('search', ['type' => 'federal']))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $federal->id) && !$i->contains('id', $other->id)
+        );
+});
 
-        $this->get(route('search', ['type' => 'public']))
-            ->assertViewHas('institutions', function ($institutions) use ($public, $private) {
-                return $institutions->contains('id', $public->id)
-                    && !$institutions->contains('id', $private->id);
-            });
-    }
+it('sanitises an invalid type and returns all institutions', function () {
+    $institution = ($this->make)();
+    $this->get(route('search', ['type' => 'hacked_value']))
+        ->assertStatus(200)
+        ->assertViewHas('institutions', fn ($i) => $i->contains('id', $institution->id));
+});
 
-    public function test_search_filter_type_federal_matches_by_institution_type_slug(): void
-    {
-        $federalType  = InstitutionType::factory()->create(['slug' => 'federal']);
-        $otherType    = InstitutionType::factory()->create(['slug' => 'private']);
+// -------------------------------------------------------------------------
+// State filter
+// -------------------------------------------------------------------------
 
-        $federal = $this->createInstitution(['institution_type_id' => $federalType->id]);
-        $other   = $this->createInstitution(['institution_type_id' => $otherType->id]);
+it('location filter returns only institutions in the requested state', function () {
+    $region      = Region::factory()->create();
+    $targetState = State::factory()->create(['region_id' => $region->id]);
+    $otherState  = State::factory()->create(['region_id' => $region->id]);
 
-        $this->get(route('search', ['type' => 'federal']))
-            ->assertViewHas('institutions', function ($institutions) use ($federal, $other) {
-                return $institutions->contains('id', $federal->id)
-                    && !$institutions->contains('id', $other->id);
-            });
-    }
+    $matching    = ($this->make)(['state_id' => $targetState->id]);
+    $nonMatching = ($this->make)(['state_id' => $otherState->id]);
 
-    public function test_search_invalid_type_is_sanitized_and_returns_all_results(): void
-    {
-        $institution = $this->createInstitution();
+    $this->get(route('search', ['location' => $targetState->id]))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $matching->id) && !$i->contains('id', $nonMatching->id)
+        );
+});
 
-        $this->get(route('search', ['type' => 'hacked_value']))
-            ->assertStatus(200)
-            ->assertViewHas('institutions', function ($institutions) use ($institution) {
-                return $institutions->contains('id', $institution->id);
-            });
-    }
+// -------------------------------------------------------------------------
+// Category filter
+// -------------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------
-    // State filter
-    // -------------------------------------------------------------------------
+it('category filter returns only institutions in the requested category class', function () {
+    $otherCatClass = CategoryClass::factory()->create();
+    $otherCat      = Category::factory()->create(['category_class_id' => $otherCatClass->id]);
 
-    public function test_search_filter_by_state_returns_only_matching_institutions(): void
-    {
-        $region      = Region::factory()->create();
-        $targetState = State::factory()->create(['region_id' => $region->id]);
-        $otherState  = State::factory()->create(['region_id' => $region->id]);
+    $matching    = ($this->make)();
+    $nonMatching = ($this->make)(['category_id' => $otherCat->id]);
 
-        $relAff = ReligiousAffiliation::factory()->create();
-        $type   = InstitutionType::factory()->create();
+    $this->get(route('search', ['category' => $this->category->categoryClass->id]))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $matching->id) && !$i->contains('id', $nonMatching->id)
+        );
+});
 
-        $matching = Institution::factory()->create([
-            'state_id'                 => $targetState->id,
-            'category_id'              => $this->category->id,
-            'term_id'                  => $this->term->id,
-            'accreditation_body_id'    => $this->accreditationBody->id,
-            'accreditation_status_id'  => $this->accreditationStatus->id,
-            'institution_type_id'      => $type->id,
-            'religious_affiliation_id' => $relAff->id,
-            'institution_head_id'      => $this->institutionHead->id,
-        ]);
+// -------------------------------------------------------------------------
+// Level / Program filters
+// -------------------------------------------------------------------------
 
-        $nonMatching = Institution::factory()->create([
-            'state_id'                 => $otherState->id,
-            'category_id'              => $this->category->id,
-            'term_id'                  => $this->term->id,
-            'accreditation_body_id'    => $this->accreditationBody->id,
-            'accreditation_status_id'  => $this->accreditationStatus->id,
-            'institution_type_id'      => $type->id,
-            'religious_affiliation_id' => $relAff->id,
-            'institution_head_id'      => $this->institutionHead->id,
-        ]);
+it('level filter returns only institutions that offer the requested level', function () {
+    $institution = ($this->make)();
+    $level       = Level::factory()->create();
+    $program     = Program::factory()->create();
 
-        $this->get(route('search', ['location' => $targetState->id]))
-            ->assertViewHas('institutions', function ($institutions) use ($matching, $nonMatching) {
-                return $institutions->contains('id', $matching->id)
-                    && !$institutions->contains('id', $nonMatching->id);
-            });
-    }
+    $institution->programs()->attach($program, [
+        'level_id'              => $level->id,
+        'accreditation_body_id' => $this->accBody->id,
+    ]);
 
-    // -------------------------------------------------------------------------
-    // Category filter
-    // -------------------------------------------------------------------------
+    $noLevel = ($this->make)();
 
-    public function test_search_filter_by_category_class_returns_only_matching_institutions(): void
-    {
-        $otherCategoryClass = CategoryClass::factory()->create();
-        $otherCategory      = Category::factory()->create(['category_class_id' => $otherCategoryClass->id]);
+    $this->get(route('search', ['level' => $level->id]))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $institution->id) && !$i->contains('id', $noLevel->id)
+        );
+});
 
-        $matching    = $this->createInstitution();
-        $nonMatching = $this->createInstitution(['category_id' => $otherCategory->id]);
+it('program filter returns only institutions that offer the requested program', function () {
+    $institution = ($this->make)();
+    $other       = ($this->make)();
+    $level       = Level::factory()->create();
+    $program     = Program::factory()->create();
 
-        $this->get(route('search', ['category' => $this->category->categoryClass->id]))
-            ->assertViewHas('institutions', function ($institutions) use ($matching, $nonMatching) {
-                return $institutions->contains('id', $matching->id)
-                    && !$institutions->contains('id', $nonMatching->id);
-            });
-    }
+    $institution->programs()->attach($program, [
+        'level_id'              => $level->id,
+        'accreditation_body_id' => $this->accBody->id,
+    ]);
 
-    // -------------------------------------------------------------------------
-    // Level filter
-    // -------------------------------------------------------------------------
+    $this->get(route('search', ['program' => $program->id]))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $institution->id) && !$i->contains('id', $other->id)
+        );
+});
 
-    public function test_search_filter_by_level_returns_institutions_offering_that_level(): void
-    {
-        $institution = $this->createInstitution();
-        $level       = Level::factory()->create();
-        $program     = Program::factory()->create();
+// -------------------------------------------------------------------------
+// Religious affiliation filter
+// -------------------------------------------------------------------------
 
-        $institution->programs()->attach($program, [
-            'level_id'              => $level->id,
-            'accreditation_body_id' => $this->accreditationBody->id,
-        ]);
+it('religion filter returns only institutions with the requested affiliation category', function () {
+    $relCategory = ReligiousAffiliationCategory::factory()->create();
+    $targetAffil = ReligiousAffiliation::factory()->create(['religious_affiliation_category_id' => $relCategory->id]);
+    $otherAffil  = ReligiousAffiliation::factory()->create();
 
-        $noLevelInstitution = $this->createInstitution();
+    $matching    = ($this->make)(['religious_affiliation_id' => $targetAffil->id]);
+    $nonMatching = ($this->make)(['religious_affiliation_id' => $otherAffil->id]);
 
-        $this->get(route('search', ['level' => $level->id]))
-            ->assertViewHas('institutions', function ($institutions) use ($institution, $noLevelInstitution) {
-                return $institutions->contains('id', $institution->id)
-                    && !$institutions->contains('id', $noLevelInstitution->id);
-            });
-    }
+    $this->get(route('search', ['religion' => $relCategory->id]))
+        ->assertViewHas('institutions', fn ($i) =>
+            $i->contains('id', $matching->id) && !$i->contains('id', $nonMatching->id)
+        );
+});
 
-    // -------------------------------------------------------------------------
-    // Program filter
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// Sorting
+// -------------------------------------------------------------------------
 
-    public function test_search_filter_by_program_returns_institutions_offering_that_program(): void
-    {
-        $institution    = $this->createInstitution();
-        $otherInstitution = $this->createInstitution();
-        $level          = Level::factory()->create();
-        $program        = Program::factory()->create();
+it('default sort is A-Z by name', function () {
+    ($this->make)(['name' => 'Zeta University']);
+    ($this->make)(['name' => 'Alpha University']);
 
-        $institution->programs()->attach($program, [
-            'level_id'              => $level->id,
-            'accreditation_body_id' => $this->accreditationBody->id,
-        ]);
+    $this->get(route('search'))
+        ->assertViewHas('institutions', fn ($i) => $i->first()->name === 'Alpha University');
+});
 
-        $this->get(route('search', ['program' => $program->id]))
-            ->assertViewHas('institutions', function ($institutions) use ($institution, $otherInstitution) {
-                return $institutions->contains('id', $institution->id)
-                    && !$institutions->contains('id', $otherInstitution->id);
-            });
-    }
+it('sort=za orders institutions Z-A', function () {
+    ($this->make)(['name' => 'Alpha University']);
+    ($this->make)(['name' => 'Zeta University']);
 
-    // -------------------------------------------------------------------------
-    // Religious affiliation filter
-    // -------------------------------------------------------------------------
+    $this->get(route('search', ['sort' => 'za']))
+        ->assertViewHas('institutions', fn ($i) => $i->first()->name === 'Zeta University');
+});
 
-    public function test_search_filter_by_religion_returns_matching_institutions(): void
-    {
-        $relCategory    = ReligiousAffiliationCategory::factory()->create();
-        $targetAffil    = ReligiousAffiliation::factory()->create(['religious_affiliation_category_id' => $relCategory->id]);
-        $otherAffil     = ReligiousAffiliation::factory()->create();
+it('sort=rank places ranked institutions before unranked', function () {
+    $ranked   = ($this->make)(['rank' => 1,    'name' => 'Zeta University']);
+    ($this->make)(               ['rank' => null, 'name' => 'Alpha University']);
 
-        $matching    = $this->createInstitution(['religious_affiliation_id' => $targetAffil->id]);
-        $nonMatching = $this->createInstitution(['religious_affiliation_id' => $otherAffil->id]);
+    $this->get(route('search', ['sort' => 'rank']))
+        ->assertViewHas('institutions', fn ($i) => $i->first()->id === $ranked->id);
+});
 
-        $this->get(route('search', ['religion' => $relCategory->id]))
-            ->assertViewHas('institutions', function ($institutions) use ($matching, $nonMatching) {
-                return $institutions->contains('id', $matching->id)
-                    && !$institutions->contains('id', $nonMatching->id);
-            });
-    }
+it('sanitises an invalid sort value and defaults to A-Z', function () {
+    ($this->make)(['name' => 'Alpha University']);
+    ($this->make)(['name' => 'Zeta University']);
 
-    // -------------------------------------------------------------------------
-    // Sorting
-    // -------------------------------------------------------------------------
+    $this->get(route('search', ['sort' => 'bad_value']))
+        ->assertStatus(200)
+        ->assertViewHas('institutions', fn ($i) => $i->first()->name === 'Alpha University');
+});
 
-    public function test_search_default_sort_is_alphabetical_ascending(): void
-    {
-        $this->createInstitution(['name' => 'Zeta University']);
-        $this->createInstitution(['name' => 'Alpha University']);
+// -------------------------------------------------------------------------
+// Cache key isolation
+// -------------------------------------------------------------------------
 
-        $this->get(route('search'))
-            ->assertViewHas('institutions', function ($institutions) {
-                return $institutions->first()->name === 'Alpha University';
-            });
-    }
+it('different state filters return independent result sets', function () {
+    $region = Region::factory()->create();
+    $state1 = State::factory()->create(['region_id' => $region->id]);
+    $state2 = State::factory()->create(['region_id' => $region->id]);
 
-    public function test_search_sort_za_orders_descending(): void
-    {
-        $this->createInstitution(['name' => 'Alpha University']);
-        $this->createInstitution(['name' => 'Zeta University']);
+    $inst1 = ($this->make)(['state_id' => $state1->id]);
+    $inst2 = ($this->make)(['state_id' => $state2->id]);
 
-        $this->get(route('search', ['sort' => 'za']))
-            ->assertViewHas('institutions', function ($institutions) {
-                return $institutions->first()->name === 'Zeta University';
-            });
-    }
+    $r1 = $this->get(route('search', ['location' => $state1->id]))->viewData('institutions');
+    $r2 = $this->get(route('search', ['location' => $state2->id]))->viewData('institutions');
 
-    public function test_search_sort_rank_places_ranked_institutions_first(): void
-    {
-        $ranked   = $this->createInstitution(['rank' => 1, 'name' => 'Zeta University']);
-        $unranked = $this->createInstitution(['rank' => null, 'name' => 'Alpha University']);
-
-        $this->get(route('search', ['sort' => 'rank']))
-            ->assertViewHas('institutions', function ($institutions) use ($ranked) {
-                return $institutions->first()->id === $ranked->id;
-            });
-    }
-
-    public function test_search_invalid_sort_is_sanitized_and_defaults_to_az(): void
-    {
-        $this->createInstitution(['name' => 'Alpha University']);
-        $this->createInstitution(['name' => 'Zeta University']);
-
-        $this->get(route('search', ['sort' => 'invalid_value']))
-            ->assertStatus(200)
-            ->assertViewHas('institutions', function ($institutions) {
-                return $institutions->first()->name === 'Alpha University';
-            });
-    }
-
-    // -------------------------------------------------------------------------
-    // Cache key isolation
-    // -------------------------------------------------------------------------
-
-    public function test_different_state_filters_return_different_results(): void
-    {
-        $region = Region::factory()->create();
-        $state1 = State::factory()->create(['region_id' => $region->id]);
-        $state2 = State::factory()->create(['region_id' => $region->id]);
-
-        $relAff = ReligiousAffiliation::factory()->create();
-        $type   = InstitutionType::factory()->create();
-
-        $base = [
-            'category_id'              => $this->category->id,
-            'term_id'                  => $this->term->id,
-            'accreditation_body_id'    => $this->accreditationBody->id,
-            'accreditation_status_id'  => $this->accreditationStatus->id,
-            'institution_type_id'      => $type->id,
-            'religious_affiliation_id' => $relAff->id,
-            'institution_head_id'      => $this->institutionHead->id,
-        ];
-
-        $inst1 = Institution::factory()->create(array_merge($base, ['state_id' => $state1->id]));
-        $inst2 = Institution::factory()->create(array_merge($base, ['state_id' => $state2->id]));
-
-        $resultState1 = $this->get(route('search', ['location' => $state1->id]))->viewData('institutions');
-        $resultState2 = $this->get(route('search', ['location' => $state2->id]))->viewData('institutions');
-
-        $this->assertTrue($resultState1->contains('id', $inst1->id));
-        $this->assertFalse($resultState1->contains('id', $inst2->id));
-        $this->assertTrue($resultState2->contains('id', $inst2->id));
-        $this->assertFalse($resultState2->contains('id', $inst1->id));
-    }
-}
+    expect($r1->contains('id', $inst1->id))->toBeTrue();
+    expect($r1->contains('id', $inst2->id))->toBeFalse();
+    expect($r2->contains('id', $inst2->id))->toBeTrue();
+    expect($r2->contains('id', $inst1->id))->toBeFalse();
+});
