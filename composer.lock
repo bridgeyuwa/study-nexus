@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f2a5dbc48c6320bbbcb748fd022cf9b",
+    "content-hash": "ad8a82eb70e10b346c2052ff588fcb9e",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -3247,6 +3247,32 @@
                 }
             ],
             "time": "2026-04-02T20:48:35+00:00"
+        },
+        {
+            "name": "lukeraymonddowning/self-healing-urls",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lukeraymonddowning/self-healing-urls.git",
+                "reference": "v0.7.0"
+            },
+            "require": {
+                "laravel/framework": "^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1|^8.2|^8.3|^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lukeraymonddowning\\SelfHealingUrls\\Providers\\SelfHealingUrlsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lukeraymonddowning\\SelfHealingUrls\\": "src/"
+                }
+            }
         },
         {
             "name": "monolog/monolog",

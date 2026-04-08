@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Levintoo\SelfHealingUrls\Concerns\HasSelfHealingUrls;
+use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 
 class Syllabus extends Model
 {

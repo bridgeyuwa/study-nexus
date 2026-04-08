@@ -4,7 +4,36 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
-    "repositories": [],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "lukeraymonddowning/self-healing-urls",
+                "version": "0.7.0",
+                "require": {
+                    "php": "^8.1|^8.2|^8.3|^8.4",
+                    "laravel/framework": "^10.0|^11.0|^12.0|^13.0"
+                },
+                "autoload": {
+                    "psr-4": {
+                        "Lukeraymonddowning\\SelfHealingUrls\\": "src/"
+                    }
+                },
+                "extra": {
+                    "laravel": {
+                        "providers": [
+                            "Lukeraymonddowning\\SelfHealingUrls\\Providers\\SelfHealingUrlsServiceProvider"
+                        ]
+                    }
+                },
+                "source": {
+                    "url": "https://github.com/lukeraymonddowning/self-healing-urls.git",
+                    "type": "git",
+                    "reference": "v0.7.0"
+                }
+            }
+        }
+    ],
     "require": {
         "php": "^8.3",
         "diglactic/laravel-breadcrumbs": "^10.0",
@@ -14,6 +43,7 @@
         "laravel/tinker": "^3.0",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "*",
+        "lukeraymonddowning/self-healing-urls": "0.7.0",
         "ralphjsmit/laravel-seo": "^1.6",
         "sentry/sentry-laravel": "*",
         "spatie/geocoder": "^4.0",
