@@ -6,7 +6,7 @@ This document provides a comprehensive guide for AI assistants (Claude) working 
 
 ## 📋 Project Overview
 
-**StudyNexus** is a Laravel 11-based web application that serves as a comprehensive directory and discovery platform for educational institutions in Nigeria. It provides features for browsing institutions, programs, news, exams, and other educational resources.
+**StudyNexus** is a Laravel 13-based web application that serves as a comprehensive directory and discovery platform for educational institutions in Nigeria. It provides features for browsing institutions, programs, news, exams, and other educational resources.
 
 ### Core Purpose
 - Directory of educational institutions (universities, colleges, polytechnics, etc.)
@@ -69,8 +69,8 @@ studynexus/
 ## 🔧 Technology Stack
 
 ### Backend
-- **Framework**: Laravel 11.x
-- **Language**: PHP 8.2+
+- **Framework**: Laravel 13.x
+- **Language**: PHP 8.3+
 - **Database**: MySQL
 - **ORM**: Eloquent (with 27 models)
 
@@ -96,7 +96,7 @@ studynexus/
 - **Self-healing URLs**: `lukeraymonddowning/self-healing-urls`
 
 ### Testing & Development
-- **Test Framework**: Pest PHP 3.x
+- **Test Framework**: Pest PHP 4.x
 - **Mocking**: Mockery
 - **Factories**: Faker
 - **Code Quality**: Laravel Pint
@@ -762,7 +762,7 @@ php artisan test --watch                    # Watch mode
 
 ### External Documentation
 
-- [Laravel 11 Documentation](https://laravel.com/docs/11.x)
+- [Laravel 13 Documentation](https://laravel.com/docs/13.x)
 - [Pest PHP Documentation](https://pestphp.com)
 - [Livewire Documentation](https://livewire.laravel.com)
 - [Spatie Packages](https://spatie.be/open-source)
@@ -793,7 +793,7 @@ php artisan test --watch                    # Watch mode
 ---
 
 **Last Updated**: April 8, 2026  
-**Status**: Active Development (Phase 1 Roadmap – Action Extraction)
+**Status**: Active Development (Laravel 13 Upgraded – Phase 1 Roadmap – Action Extraction)
 
 ===
 
@@ -809,15 +809,15 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
 - php - 8.4
-- laravel/framework (LARAVEL) - v11
+- laravel/framework (LARAVEL) - v13
 - laravel/prompts (PROMPTS) - v0
 - livewire/livewire (LIVEWIRE) - v3
 - laravel/boost (BOOST) - v2
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
-- pestphp/pest (PEST) - v3
-- phpunit/phpunit (PHPUNIT) - v11
+- pestphp/pest (PEST) - v4
+- phpunit/phpunit (PHPUNIT) - v12
 
 ## Conventions
 
