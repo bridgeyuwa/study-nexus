@@ -10,15 +10,25 @@ use App\Models\Level;
 use App\Models\Program;
 use App\Models\Region;
 use App\Models\State;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
 
 class InstitutionController extends Controller
 {
     public function __construct(
-        private readonly BuildShareLinksAction $shareLinks,
-        private readonly ComputeRankingsAction $rankings,
+        private readonly BuildShareLinksAction $shareLinks = new BuildShareLinksAction,
+        private readonly ComputeRankingsAction $rankings = new ComputeRankingsAction,
     ) {}
+
+    private function computeRank(mixed $institution, mixed $allInstitutions): array
+    {
+        return $this->rankings->execute(
+            $allInstitutions instanceof Collection
+                ? $allInstitutions
+                : collect($allInstitutions)
+        )[$institution->id] ?? ['institution' => false, 'region' => false, 'state' => false];
+    }
 
     public function index()
     {
