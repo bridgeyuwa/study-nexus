@@ -1,63 +1,47 @@
 <?php
 
-namespace Tests\Unit;
-
 use App\Http\Controllers\NewsController;
 use ReflectionMethod;
-use Tests\TestCase;
 
-class ReadTimeTest extends TestCase
+// Thin wrapper so tests can call readTime() without repeating reflection boilerplate.
+function readTime(string $content): float
 {
-    private function readTime(string $content): int
-    {
-        $method = new ReflectionMethod(NewsController::class, 'readTime');
-        $method->setAccessible(true);
+    static $method = null;
+    $method ??= tap(
+        new ReflectionMethod(NewsController::class, 'readTime'),
+        fn ($m) => $m->setAccessible(true)
+    );
 
-        return $method->invoke(new NewsController(), $content);
-    }
-
-    public function test_strips_html_tags_before_counting_words(): void
-    {
-        // 200 words wrapped in HTML → 1 minute
-        $words   = implode(' ', array_fill(0, 200, 'word'));
-        $content = "<p>{$words}</p>";
-
-        $this->assertEquals(1, $this->readTime($content));
-    }
-
-    public function test_empty_content_returns_zero_minutes(): void
-    {
-        $this->assertEquals(0, $this->readTime(''));
-    }
-
-    public function test_two_hundred_words_is_exactly_one_minute(): void
-    {
-        $content = implode(' ', array_fill(0, 200, 'word'));
-
-        $this->assertEquals(1, $this->readTime($content));
-    }
-
-    public function test_two_hundred_and_one_words_rounds_up_to_two_minutes(): void
-    {
-        $content = implode(' ', array_fill(0, 201, 'word'));
-
-        $this->assertEquals(2, $this->readTime($content));
-    }
-
-    public function test_four_hundred_words_is_exactly_two_minutes(): void
-    {
-        $content = implode(' ', array_fill(0, 400, 'word'));
-
-        $this->assertEquals(2, $this->readTime($content));
-    }
-
-    public function test_single_word_is_one_minute(): void
-    {
-        $this->assertEquals(1, $this->readTime('hello'));
-    }
-
-    public function test_html_only_content_with_no_words_returns_zero(): void
-    {
-        $this->assertEquals(0, $this->readTime('<p></p><br/><hr/>'));
-    }
+    return $method->invoke(new NewsController(), $content);
 }
+
+// ceil() always returns float, so we use toEqual() (loose) throughout.
+
+it('strips html tags before counting words', function () {
+    $words = implode(' ', array_fill(0, 200, 'word'));
+    expect(readTime("<p>{$words}</p>"))->toEqual(1);
+});
+
+it('returns zero minutes for empty content', function () {
+    expect(readTime(''))->toEqual(0);
+});
+
+it('returns 1 minute for exactly 200 words', function () {
+    expect(readTime(implode(' ', array_fill(0, 200, 'word'))))->toEqual(1);
+});
+
+it('rounds up to 2 minutes for 201 words', function () {
+    expect(readTime(implode(' ', array_fill(0, 201, 'word'))))->toEqual(2);
+});
+
+it('returns 2 minutes for exactly 400 words', function () {
+    expect(readTime(implode(' ', array_fill(0, 400, 'word'))))->toEqual(2);
+});
+
+it('returns 1 minute for a single word', function () {
+    expect(readTime('hello'))->toEqual(1);
+});
+
+it('returns zero for html-only content with no words', function () {
+    expect(readTime('<p></p><br/><hr/>'))->toEqual(0);
+});

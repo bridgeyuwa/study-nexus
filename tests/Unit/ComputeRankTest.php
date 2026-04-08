@@ -1,7 +1,5 @@
 <?php
 
-namespace Tests\Unit;
-
 use App\Http\Controllers\InstitutionController;
 use App\Models\AccreditationBody;
 use App\Models\AccreditationStatus;
@@ -16,179 +14,123 @@ use App\Models\State;
 use App\Models\Term;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use ReflectionMethod;
-use Tests\TestCase;
 
-class ComputeRankTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    private InstitutionController $controller;
-    private ReflectionMethod $computeRank;
+beforeEach(function () {
+    $controller = new InstitutionController();
+    $method     = tap(
+        new ReflectionMethod(InstitutionController::class, 'computeRank'),
+        fn ($m) => $m->setAccessible(true)
+    );
 
-    // Shared dependencies reused across institutions in the same test
-    private Region $region;
-    private State $state1;
-    private State $state2;
-    private Category $category;
-    private Term $term;
-    private AccreditationBody $accreditationBody;
-    private AccreditationStatus $accreditationStatus;
-    private InstitutionType $institutionType;
-    private ReligiousAffiliation $religiousAffiliation;
-    private InstitutionHead $institutionHead;
+    $this->region               = Region::factory()->create();
+    $this->state1               = State::factory()->create(['region_id' => $this->region->id]);
+    $this->state2               = State::factory()->create(['region_id' => $this->region->id]);
+    $categoryClass              = CategoryClass::factory()->create();
+    $this->category             = Category::factory()->create(['category_class_id' => $categoryClass->id]);
+    $term                       = Term::factory()->create();
+    $accreditationBody          = AccreditationBody::factory()->create();
+    $accreditationStatus        = AccreditationStatus::factory()->create();
+    $institutionType            = InstitutionType::factory()->create();
+    $religiousAffiliation       = ReligiousAffiliation::factory()->create();
+    $institutionHead            = InstitutionHead::factory()->create();
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->controller  = new InstitutionController();
-        $this->computeRank = new ReflectionMethod(InstitutionController::class, 'computeRank');
-        $this->computeRank->setAccessible(true);
-
-        // Build shared relational data once per test
-        $this->region               = Region::factory()->create();
-        $this->state1               = State::factory()->create(['region_id' => $this->region->id]);
-        $this->state2               = State::factory()->create(['region_id' => $this->region->id]);
-        $categoryClass              = CategoryClass::factory()->create();
-        $this->category             = Category::factory()->create(['category_class_id' => $categoryClass->id]);
-        $this->term                 = Term::factory()->create();
-        $this->accreditationBody    = AccreditationBody::factory()->create();
-        $this->accreditationStatus  = AccreditationStatus::factory()->create();
-        $this->institutionType      = InstitutionType::factory()->create();
-        $this->religiousAffiliation = ReligiousAffiliation::factory()->create();
-        $this->institutionHead      = InstitutionHead::factory()->create();
-    }
-
-    /** Create an institution with all required FKs pre-filled. */
-    private function makeInstitution(State $state, ?int $rank, array $overrides = []): Institution
-    {
-        return Institution::factory()->create(array_merge([
+    // Closure: create an institution with all required FKs pre-filled.
+    $this->make = fn (State $state, ?int $rank, array $overrides = []) =>
+        Institution::factory()->create(array_merge([
             'state_id'                 => $state->id,
             'category_id'              => $this->category->id,
-            'term_id'                  => $this->term->id,
-            'accreditation_body_id'    => $this->accreditationBody->id,
-            'accreditation_status_id'  => $this->accreditationStatus->id,
-            'institution_type_id'      => $this->institutionType->id,
-            'religious_affiliation_id' => $this->religiousAffiliation->id,
-            'institution_head_id'      => $this->institutionHead->id,
+            'term_id'                  => $term->id,
+            'accreditation_body_id'    => $accreditationBody->id,
+            'accreditation_status_id'  => $accreditationStatus->id,
+            'institution_type_id'      => $institutionType->id,
+            'religious_affiliation_id' => $religiousAffiliation->id,
+            'institution_head_id'      => $institutionHead->id,
             'rank'                     => $rank,
         ], $overrides));
-    }
 
-    /** Call the private computeRank method. */
-    private function invokeComputeRank(Institution $institution, $allInstitutions): array
-    {
+    // Closure: eager-load relationships then call the private computeRank.
+    $this->computeRank = function (Institution $institution, $allInstitutions) use ($controller, $method): array {
         $institution->load(['state.region.institutions', 'state.institutions', 'category']);
+        return $method->invoke($controller, $institution, $allInstitutions);
+    };
+});
 
-        return $this->computeRank->invoke($this->controller, $institution, $allInstitutions);
-    }
-
-    public function test_institution_without_rank_returns_false_for_all_positions(): void
-    {
-        $institution     = $this->makeInstitution($this->state1, null);
-        $allInstitutions = Institution::whereNotNull('rank')->orderBy('rank')->get();
-
-        $result = $this->invokeComputeRank($institution, $allInstitutions);
-
-        $this->assertFalse($result['institution']);
-        $this->assertFalse($result['region']);
-        $this->assertFalse($result['state']);
-    }
-
-    public function test_sole_ranked_institution_gets_rank_1_everywhere(): void
-    {
-        $institution     = $this->makeInstitution($this->state1, 1);
-        $allInstitutions = Institution::whereNotNull('rank')
-            ->where('category_id', $this->category->id)
-            ->orderBy('rank')
-            ->get();
-
-        $result = $this->invokeComputeRank($institution, $allInstitutions);
-
-        $this->assertEquals(1, $result['institution']);
-        $this->assertEquals(1, $result['region']);
-        $this->assertEquals(1, $result['state']);
-    }
-
-    public function test_national_rank_reflects_position_in_all_institutions_list(): void
-    {
-        $inst1 = $this->makeInstitution($this->state1, 1);
-        $inst2 = $this->makeInstitution($this->state1, 2);
-        $inst3 = $this->makeInstitution($this->state2, 3);
-
-        $allInstitutions = Institution::whereNotNull('rank')
-            ->where('category_id', $this->category->id)
-            ->orderBy('rank')
-            ->get();
-
-        // inst2 is 2nd in the national list
-        $result = $this->invokeComputeRank($inst2, $allInstitutions);
-
-        $this->assertEquals(2, $result['institution']);
-    }
-
-    public function test_regional_rank_is_scoped_to_institutions_in_same_region(): void
-    {
-        // inst1 → state1 (this->region), rank 1
-        // inst2 → state2 (this->region), rank 2
-        // inst3 → otherState (DIFFERENT region), rank 3
-        $otherRegion = Region::factory()->create();
-        $otherState  = State::factory()->create(['region_id' => $otherRegion->id]);
-
-        $inst1 = $this->makeInstitution($this->state1, 1);
-        $inst2 = $this->makeInstitution($this->state2, 2);
-        /*inst3*/ $this->makeInstitution($otherState, 3);
-
-        $allInstitutions = Institution::whereNotNull('rank')
-            ->where('category_id', $this->category->id)
-            ->orderBy('rank')
-            ->get();
-
-        // inst2 has rank 2, so it is 2nd in the all-institutions list
-        // Its region contains only inst1 and inst2 (inst3 is in a different region)
-        $result = $this->invokeComputeRank($inst2, $allInstitutions);
-
-        $this->assertEquals(2, $result['institution']); // 2nd nationally
-        $this->assertEquals(2, $result['region']);      // 2nd in its own region (after inst1)
-    }
-
-    public function test_state_rank_is_scoped_to_institutions_in_same_state(): void
-    {
-        // inst1 and inst2 are in state1; inst3 is in state2
-        // All three share the SAME region (both states are in $this->region)
-        $inst1 = $this->makeInstitution($this->state1, 1);
-        /*inst2*/ $this->makeInstitution($this->state1, 2);
-        $inst3 = $this->makeInstitution($this->state2, 3);
-
-        $allInstitutions = Institution::whereNotNull('rank')
-            ->where('category_id', $this->category->id)
-            ->orderBy('rank')
-            ->get();
-
-        // inst3 is 3rd nationally; all 3 are in the same region so it is 3rd
-        // regionally too; but it is alone in state2 so it is 1st in its state.
-        $result = $this->invokeComputeRank($inst3, $allInstitutions);
-
-        $this->assertEquals(3, $result['institution']); // 3rd nationally
-        $this->assertEquals(3, $result['region']);      // 3rd in shared region
-        $this->assertEquals(1, $result['state']);       // 1st in state2
-    }
-
-    public function test_unranked_institution_does_not_affect_ranked_institutions_position(): void
-    {
-        $inst1   = $this->makeInstitution($this->state1, 1);
-        /*unranked*/ $this->makeInstitution($this->state1, null);
-
-        $allInstitutions = Institution::whereNotNull('rank')
-            ->where('category_id', $this->category->id)
-            ->orderBy('rank')
-            ->get();
-
-        $result = $this->invokeComputeRank($inst1, $allInstitutions);
-
-        // Unranked institution should not appear in the rank calculations
-        $this->assertEquals(1, $result['institution']);
-        $this->assertEquals(1, $result['region']);
-        $this->assertEquals(1, $result['state']);
-    }
+// Helper: fetch all ranked institutions for the shared category, ordered by rank.
+function allRanked(Category $category): \Illuminate\Database\Eloquent\Collection
+{
+    return Institution::whereNotNull('rank')
+        ->where('category_id', $category->id)
+        ->orderBy('rank')
+        ->get();
 }
+
+it('returns false for all positions when the institution has no rank', function () {
+    $institution = ($this->make)($this->state1, null);
+
+    $result = ($this->computeRank)($institution, allRanked($this->category));
+
+    expect($result['institution'])->toBeFalse();
+    expect($result['region'])->toBeFalse();
+    expect($result['state'])->toBeFalse();
+});
+
+it('gives rank 1 everywhere when it is the only ranked institution', function () {
+    $institution = ($this->make)($this->state1, 1);
+
+    $result = ($this->computeRank)($institution, allRanked($this->category));
+
+    expect($result['institution'])->toBe(1)
+        ->and($result['region'])->toBe(1)
+        ->and($result['state'])->toBe(1);
+});
+
+it('reflects the correct position in the national list', function () {
+    ($this->make)($this->state1, 1);
+    $inst2 = ($this->make)($this->state1, 2);
+    ($this->make)($this->state2, 3);
+
+    $result = ($this->computeRank)($inst2, allRanked($this->category));
+
+    expect($result['institution'])->toBe(2);
+});
+
+it('scopes regional rank to institutions in the same region', function () {
+    $otherRegion = Region::factory()->create();
+    $otherState  = State::factory()->create(['region_id' => $otherRegion->id]);
+
+    // inst1 and inst2 share $this->region; inst3 is in a different region.
+    ($this->make)($this->state1, 1);
+    $inst2 = ($this->make)($this->state2, 2);
+    ($this->make)($otherState,  3);
+
+    $result = ($this->computeRank)($inst2, allRanked($this->category));
+
+    expect($result['institution'])->toBe(2) // 2nd nationally
+        ->and($result['region'])->toBe(2);  // 2nd in its region (inst3 is elsewhere)
+});
+
+it('scopes state rank to institutions in the same state', function () {
+    // inst1 + inst2 in state1; inst3 in state2 — all share the same region.
+    ($this->make)($this->state1, 1);
+    ($this->make)($this->state1, 2);
+    $inst3 = ($this->make)($this->state2, 3);
+
+    $result = ($this->computeRank)($inst3, allRanked($this->category));
+
+    expect($result['institution'])->toBe(3) // 3rd nationally
+        ->and($result['region'])->toBe(3)   // 3rd in shared region
+        ->and($result['state'])->toBe(1);   // 1st in state2 alone
+});
+
+it('does not count unranked institutions in any position', function () {
+    $inst1 = ($this->make)($this->state1, 1);
+    ($this->make)($this->state1, null); // unranked sibling
+
+    $result = ($this->computeRank)($inst1, allRanked($this->category));
+
+    expect($result['institution'])->toBe(1)
+        ->and($result['region'])->toBe(1)
+        ->and($result['state'])->toBe(1);
+});

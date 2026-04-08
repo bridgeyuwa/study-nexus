@@ -1,7 +1,5 @@
 <?php
 
-namespace Tests\Feature;
-
 use App\Models\AccreditationBody;
 use App\Models\AccreditationStatus;
 use App\Models\Category;
@@ -15,42 +13,21 @@ use App\Models\Region;
 use App\Models\ReligiousAffiliation;
 use App\Models\State;
 use App\Models\Term;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class InstitutionModelTest extends TestCase
-{
-    use RefreshDatabase;
+beforeEach(function () {
+    $this->region               = Region::factory()->create();
+    $this->state                = State::factory()->create(['region_id' => $this->region->id]);
+    $categoryClass              = CategoryClass::factory()->create();
+    $this->category             = Category::factory()->create(['category_class_id' => $categoryClass->id]);
+    $this->term                 = Term::factory()->create();
+    $this->accreditationBody    = AccreditationBody::factory()->create();
+    $this->accreditationStatus  = AccreditationStatus::factory()->create();
+    $this->institutionType      = InstitutionType::factory()->create();
+    $this->religiousAffiliation = ReligiousAffiliation::factory()->create();
+    $this->institutionHead      = InstitutionHead::factory()->create();
 
-    private Region $region;
-    private State $state;
-    private Category $category;
-    private Term $term;
-    private AccreditationBody $accreditationBody;
-    private AccreditationStatus $accreditationStatus;
-    private InstitutionType $institutionType;
-    private ReligiousAffiliation $religiousAffiliation;
-    private InstitutionHead $institutionHead;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->region               = Region::factory()->create();
-        $this->state                = State::factory()->create(['region_id' => $this->region->id]);
-        $categoryClass              = CategoryClass::factory()->create();
-        $this->category             = Category::factory()->create(['category_class_id' => $categoryClass->id]);
-        $this->term                 = Term::factory()->create();
-        $this->accreditationBody    = AccreditationBody::factory()->create();
-        $this->accreditationStatus  = AccreditationStatus::factory()->create();
-        $this->institutionType      = InstitutionType::factory()->create();
-        $this->religiousAffiliation = ReligiousAffiliation::factory()->create();
-        $this->institutionHead      = InstitutionHead::factory()->create();
-    }
-
-    private function createInstitution(array $overrides = []): Institution
-    {
-        return Institution::factory()->create(array_merge([
+    $this->createInstitution = fn (array $overrides = []) =>
+        Institution::factory()->create(array_merge([
             'state_id'                 => $this->state->id,
             'category_id'              => $this->category->id,
             'term_id'                  => $this->term->id,
@@ -60,166 +37,148 @@ class InstitutionModelTest extends TestCase
             'religious_affiliation_id' => $this->religiousAffiliation->id,
             'institution_head_id'      => $this->institutionHead->id,
         ], $overrides));
-    }
+});
 
-    // -------------------------------------------------------------------------
-    // Basic relationships
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// Basic relationships
+// -------------------------------------------------------------------------
 
-    public function test_institution_belongs_to_state(): void
-    {
-        $institution = $this->createInstitution();
+it('institution belongs to state', function () {
+    $institution = ($this->createInstitution)();
 
-        $this->assertNotNull($institution->state);
-        $this->assertEquals($this->state->id, $institution->state->id);
-    }
+    expect($institution->state)->not->toBeNull()
+        ->and($institution->state->id)->toBe($this->state->id);
+});
 
-    public function test_institution_belongs_to_category(): void
-    {
-        $institution = $this->createInstitution();
+it('institution belongs to category', function () {
+    $institution = ($this->createInstitution)();
 
-        $this->assertNotNull($institution->category);
-        $this->assertEquals($this->category->id, $institution->category->id);
-    }
+    expect($institution->category)->not->toBeNull()
+        ->and($institution->category->id)->toBe($this->category->id);
+});
 
-    public function test_institution_belongs_to_institution_type(): void
-    {
-        $institution = $this->createInstitution();
+it('institution belongs to institution type', function () {
+    $institution = ($this->createInstitution)();
 
-        $this->assertNotNull($institution->institutionType);
-        $this->assertEquals($this->institutionType->id, $institution->institutionType->id);
-    }
+    expect($institution->institutionType)->not->toBeNull()
+        ->and($institution->institutionType->id)->toBe($this->institutionType->id);
+});
 
-    // -------------------------------------------------------------------------
-    // Self-referential: parent / child
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// Self-referential: parent / child
+// -------------------------------------------------------------------------
 
-    public function test_parent_institution_relationship_resolves_via_parent_id(): void
-    {
-        $parent = $this->createInstitution();
-        $child  = $this->createInstitution(['parent_id' => $parent->id]);
+it('parent institution relationship resolves via parent_id', function () {
+    $parent = ($this->createInstitution)();
+    $child  = ($this->createInstitution)(['parent_id' => $parent->id]);
 
-        $this->assertNotNull($child->parentInstitution);
-        $this->assertEquals($parent->id, $child->parentInstitution->id);
-    }
+    expect($child->parentInstitution)->not->toBeNull()
+        ->and($child->parentInstitution->id)->toBe($parent->id);
+});
 
-    public function test_child_institutions_relationship_returns_correct_children(): void
-    {
-        $parent = $this->createInstitution();
-        $child1 = $this->createInstitution(['parent_id' => $parent->id]);
-        $child2 = $this->createInstitution(['parent_id' => $parent->id]);
-        /*unrelated*/ $this->createInstitution(['parent_id' => null]);
+it('child institutions relationship returns correct children', function () {
+    $parent = ($this->createInstitution)();
+    $child1 = ($this->createInstitution)(['parent_id' => $parent->id]);
+    $child2 = ($this->createInstitution)(['parent_id' => $parent->id]);
+    ($this->createInstitution)(['parent_id' => null]); // unrelated
 
-        $children = $parent->childInstitutions;
+    $children = $parent->childInstitutions;
 
-        $this->assertCount(2, $children);
-        $this->assertTrue($children->contains('id', $child1->id));
-        $this->assertTrue($children->contains('id', $child2->id));
-    }
+    expect($children)->toHaveCount(2)
+        ->and($children->contains('id', $child1->id))->toBeTrue()
+        ->and($children->contains('id', $child2->id))->toBeTrue();
+});
 
-    public function test_institution_with_no_parent_has_null_parent_institution(): void
-    {
-        $institution = $this->createInstitution(['parent_id' => null]);
+it('institution with no parent has null parentInstitution', function () {
+    $institution = ($this->createInstitution)(['parent_id' => null]);
 
-        $this->assertNull($institution->parentInstitution);
-    }
+    expect($institution->parentInstitution)->toBeNull();
+});
 
-    // -------------------------------------------------------------------------
-    // Self-referential many-to-many: affiliatedInstitutions
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// Self-referential many-to-many: affiliatedInstitutions
+// -------------------------------------------------------------------------
 
-    public function test_affiliated_institutions_uses_correct_pivot_table_and_foreign_keys(): void
-    {
-        $primary = $this->createInstitution();
-        $related = $this->createInstitution();
+it('affiliated institutions uses correct pivot table and foreign keys', function () {
+    $primary = ($this->createInstitution)();
+    $related = ($this->createInstitution)();
 
-        // Attach via the pivot using the documented FK column names
-        $primary->affiliatedInstitutions()->attach($related->id);
+    $primary->affiliatedInstitutions()->attach($related->id);
 
-        $affiliates = $primary->affiliatedInstitutions;
+    $affiliates = $primary->affiliatedInstitutions;
 
-        $this->assertCount(1, $affiliates);
-        $this->assertEquals($related->id, $affiliates->first()->id);
-    }
+    expect($affiliates)->toHaveCount(1)
+        ->and($affiliates->first()->id)->toBe($related->id);
+});
 
-    public function test_affiliated_institutions_relationship_is_not_bidirectional_by_default(): void
-    {
-        $primary = $this->createInstitution();
-        $related = $this->createInstitution();
+it('affiliated institutions relationship is not bidirectional by default', function () {
+    $primary = ($this->createInstitution)();
+    $related = ($this->createInstitution)();
 
-        $primary->affiliatedInstitutions()->attach($related->id);
+    $primary->affiliatedInstitutions()->attach($related->id);
 
-        // The inverse relationship (related → primary) is NOT set up automatically
-        $this->assertCount(0, $related->affiliatedInstitutions);
-    }
+    expect($related->affiliatedInstitutions)->toHaveCount(0);
+});
 
-    // -------------------------------------------------------------------------
-    // Programs pivot
-    // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// Programs pivot
+// -------------------------------------------------------------------------
 
-    public function test_programs_relationship_allows_access_to_pivot_attributes(): void
-    {
-        $institution = $this->createInstitution();
-        $level       = Level::factory()->create();
-        $program     = Program::factory()->create();
+it('programs relationship allows access to pivot attributes', function () {
+    $institution = ($this->createInstitution)();
+    $level       = Level::factory()->create();
+    $program     = Program::factory()->create();
 
-        $institution->programs()->attach($program, [
-            'level_id'              => $level->id,
-            'accreditation_body_id' => $this->accreditationBody->id,
-            'tuition_fee'           => 50000,
-        ]);
+    $institution->programs()->attach($program, [
+        'level_id'              => $level->id,
+        'accreditation_body_id' => $this->accreditationBody->id,
+        'tuition_fee'           => 50000,
+    ]);
 
-        $attached = $institution->programs()->first();
+    $attached = $institution->programs()->first();
 
-        $this->assertNotNull($attached);
-        $this->assertEquals(50000, $attached->pivot->tuition_fee);
-        $this->assertEquals($level->id, $attached->pivot->level_id);
-    }
+    expect($attached)->not->toBeNull()
+        ->and($attached->pivot->tuition_fee)->toBe(50000)
+        ->and($attached->pivot->level_id)->toBe($level->id);
+});
 
-    public function test_levels_relationship_returns_levels_through_institution_program_pivot(): void
-    {
-        $institution = $this->createInstitution();
-        $level       = Level::factory()->create();
-        $program     = Program::factory()->create();
+it('levels relationship returns levels through institution program pivot', function () {
+    $institution = ($this->createInstitution)();
+    $level       = Level::factory()->create();
+    $program     = Program::factory()->create();
 
-        $institution->programs()->attach($program, [
-            'level_id'              => $level->id,
-            'accreditation_body_id' => $this->accreditationBody->id,
-        ]);
+    $institution->programs()->attach($program, [
+        'level_id'              => $level->id,
+        'accreditation_body_id' => $this->accreditationBody->id,
+    ]);
 
-        $levels = $institution->levels;
+    expect($institution->levels->contains('id', $level->id))->toBeTrue();
+});
 
-        $this->assertTrue($levels->contains('id', $level->id));
-    }
+// -------------------------------------------------------------------------
+// News relationship
+// -------------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------
-    // News relationship
-    // -------------------------------------------------------------------------
+it('news relationship returns news belonging to institution', function () {
+    $institution   = ($this->createInstitution)();
+    $news          = \App\Models\News::factory()->create(['institution_id' => $institution->id]);
+    \App\Models\News::factory()->create(['institution_id' => null]); // unrelated
 
-    public function test_news_relationship_returns_news_belonging_to_institution(): void
-    {
-        $institution  = $this->createInstitution();
-        $news         = \App\Models\News::factory()->create(['institution_id' => $institution->id]);
-        $unrelatedNews = \App\Models\News::factory()->create(['institution_id' => null]);
+    $institutionNews = $institution->news;
 
-        $institutionNews = $institution->news;
+    expect($institutionNews)->toHaveCount(1)
+        ->and($institutionNews->first()->id)->toBe($news->id);
+});
 
-        $this->assertCount(1, $institutionNews);
-        $this->assertEquals($news->id, $institutionNews->first()->id);
-    }
+// -------------------------------------------------------------------------
+// Route key (HasSelfHealingUrls)
+// -------------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------
-    // Route key (HasSelfHealingUrls)
-    // -------------------------------------------------------------------------
+it('route key includes institution name as slug', function () {
+    $institution = ($this->createInstitution)(['name' => 'University of Lagos']);
+    $routeKey    = $institution->getRouteKey();
 
-    public function test_route_key_includes_institution_name_as_slug(): void
-    {
-        $institution = $this->createInstitution(['name' => 'University of Lagos']);
-        $routeKey    = $institution->getRouteKey();
-
-        // Route key should contain the slugified name
-        $this->assertStringContainsString('university-of-lagos', $routeKey);
-        // And the model's actual primary key at the end
-        $this->assertStringEndsWith((string) $institution->id, $routeKey);
-    }
-}
+    expect($routeKey)
+        ->toContain('university-of-lagos')
+        ->toEndWith((string) $institution->id);
+});
