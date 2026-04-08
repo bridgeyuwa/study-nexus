@@ -69,14 +69,14 @@ studynexus/
 ## 🔧 Technology Stack
 
 ### Backend
-- **Framework**: Laravel 13.x
+- **Framework**: Laravel 13.x (13.4.0)
 - **Language**: PHP 8.3+
 - **Database**: MySQL
-- **ORM**: Eloquent (with 27 models)
+- **ORM**: Eloquent (with 30 models)
 
 ### Frontend
 - **Templating**: Blade
-- **Interactive Components**: Livewire
+- **Interactive Components**: Livewire v4
 - **Assets**: Vite (Laravel Vite Plugin)
 - **Styling**: CSS/SCSS
 
@@ -94,26 +94,30 @@ studynexus/
 - **Social Sharing**: `jorenvanhocht/laravel-share`
 - **Monitoring**: `sentry/sentry-laravel`
 - **Self-healing URLs**: `lukeraymonddowning/self-healing-urls`
+  - ⚠️ v0.7.0 doesn't declare `^13.0` in its constraint; installed via an inline `package` repository override in `composer.json`. The `SelfHealingUrlsServiceProvider` is manually registered in `bootstrap/providers.php` (auto-discovery doesn't work with inline package repos).
 
 ### Testing & Development
-- **Test Framework**: Pest PHP 4.x
+- **Test Framework**: Pest PHP 4.x (PHPUnit 12)
 - **Mocking**: Mockery
 - **Factories**: Faker
 - **Code Quality**: Laravel Pint
 - **Debugging**: Laravel Debugbar
+- **AI Assistance**: Laravel Boost v2 (guidelines + skills in `.ai/`)
 
 ---
 
 ## 📁 Key Directories Explained
 
 ### `app/Models`
-Contains 27 Eloquent models representing domain concepts:
+Contains 30 Eloquent models representing domain concepts:
 
 **Core Entities**:
 - `Institution` – Educational institutions with relationships to programs, types, regions
 - `Program` – Academic programs offered
 - `InstitutionType` – Classification (university, college, polytechnic, etc.)
 - `InstitutionProgram` – Junction between institutions and programs
+- `InstitutionTypeCategory` – Category associations for institution types
+- `LevelProgram` – Junction between academic levels and programs
 
 **Hierarchical Data**:
 - `Region`, `State`, `Catchment` – Geographic organization
@@ -576,9 +580,9 @@ claude/<feature-name>-<SHORT_ID>
 ```
 
 Example:
-- `claude/add-claude-documentation-A6Ero`
 - `claude/extract-search-action-K9xL2`
 - `claude/fix-ranking-algorithm-M2pQr`
+- `claude/restore-self-healing-urls-HHlGs`
 
 ### Commit Messages
 
@@ -619,12 +623,6 @@ git commit -m "refactor: move sitemap logic to action"
 4. **Wait for review** and address feedback
 
 5. **Merge** when approved
-
-### Current Development Branch
-
-**Primary development branch**: `claude/add-claude-documentation-A6Ero`
-
-This branch is where Claude-generated documentation and initial refactoring work is being done.
 
 ---
 
@@ -730,8 +728,8 @@ php artisan test --coverage                 # With code coverage
 php artisan test --watch                    # Watch mode
 
 # Code quality
-./vendor/bin/pint                           # Format code with Pint
-./vendor/bin/pint --test                    # Check formatting without changing
+./vendor/bin/pint                           # Format all PHP files
+./vendor/bin/pint --dirty                   # Format only changed files
 ```
 
 ---
@@ -743,8 +741,9 @@ php artisan test --watch                    # Watch mode
 1. **Controllers are large** – Primary refactoring target (see Phase 1 roadmap)
 2. **No request validation classes** – Form requests not implemented
 3. **Livewire components lack separation** – Validation and mail logic mixed in
-4. **Limited test coverage** – Recent improvements, but still incomplete
+4. **Incomplete test coverage** – Feature and unit tests exist; broader coverage still needed
 5. **No API layer** – All endpoints are web (Blade) only
+6. **`lukeraymonddowning/self-healing-urls` inline repo** – Package v0.7.0 doesn't formally list `^13.0` in its Composer constraint. Installed via an inline `package` repository in `composer.json`; service provider manually registered in `bootstrap/providers.php`. Remove the inline repo once the package tags a Laravel 13-compatible release.
 
 ### Planned Improvements
 
@@ -770,7 +769,7 @@ php artisan test --watch                    # Watch mode
 ### Architecture References
 
 - `docs/architecture-review.md` – Detailed architecture analysis and scoring
-- Current branch: `claude/add-claude-documentation-A6Ero` – Documentation and refactoring work
+- `docs/laravel-13-upgrade-guide.md` – Laravel 13 upgrade record (completed)
 
 ### Contact & Support
 
@@ -808,10 +807,10 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4
+- php - 8.3
 - laravel/framework (LARAVEL) - v13
 - laravel/prompts (PROMPTS) - v0
-- livewire/livewire (LIVEWIRE) - v3
+- livewire/livewire (LIVEWIRE) - v4
 - laravel/boost (BOOST) - v2
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
@@ -917,9 +916,9 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 === laravel/v11 rules ===
 
-# Laravel 11
+# Laravel 11+ Structure (applies through Laravel 13)
 
-- Laravel 11 brought a new streamlined file structure which this project now uses.
+- Laravel 11 introduced the streamlined file structure this project uses.
 
 ## Laravel 11 Structure
 

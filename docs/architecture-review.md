@@ -22,7 +22,7 @@
 | ViewModels / Resources | 3 | Blade views are used, but response preparation is inside controllers rather than dedicated view models/resources. |
 | SOLID + DIP | 3 | Some framework conventions respected, but high-level modules depend on concrete Eloquent and facades. |
 | Bounded Contexts | 3 | Functional route groups exist, but no module boundaries (e.g., Domain/Application/Infrastructure per context). |
-| Testing & DDD Folder Structure | 2 | Only default example tests are present; no architecture-level test coverage. |
+| Testing & DDD Folder Structure | 4 | Feature tests exist for controllers and models (Institution, News, Search, Livewire); unit tests for ComputeRank and ReadTime. No action/query layer tests yet. |
 
 ## Problem inventory
 
@@ -112,9 +112,9 @@
 
 ### Low
 
-1. **Only default tests present**  
-   Evidence (`tests/Feature/ExampleTest.php`, `tests/Unit/ExampleTest.php`).
-   Pain: low confidence during refactoring.
+1. **Test coverage incomplete at action/query layer**  
+   Evidence: feature tests exist for `InstitutionController`, `NewsController`, `SearchController`, and `InstitutionModel`; unit tests for `ComputeRank` and `ReadTime`. No tests for action classes or query objects yet (none extracted).
+   Pain: low confidence when refactoring controller logic into actions.
 
 2. **No Spatie Beyond CRUD helper packages for actions/data/querys**  
    Evidence (`composer.json`) does not include `spatie/laravel-data`, `spatie/laravel-query-builder`, or `lorisleiva/laravel-actions`.
@@ -201,6 +201,6 @@ $this->info('Sitemap generated successfully');
 
 ## Final score
 
-**Overall architecture score: 21 / 100**
+**Overall architecture score: 23 / 100**
 
 **Verdict:** This is a classic Laravel CRUD-style app with solid pragmatic caching, but it needs substantial extraction into actions, DTOs, query objects, and bounded contexts to match Beyond CRUD / DDD standards.
