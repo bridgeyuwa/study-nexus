@@ -141,18 +141,18 @@ Contains 11 controllers handling HTTP requests:
 
 | Controller | Responsibility | Status |
 |---|---|---|
-| `InstitutionController` | Institution browsing, listing, detail views, ranking | **Fat** – 20KB+ with embedded caching, ranking logic |
-| `SearchController` | Institution search with filters | **Fat** – complex query building in controller |
-| `NewsController` | News browsing and display | **Fat** – duplicated similar-news queries |
-| `ProgramController` | Program details and filtering | **Fat** – repeated SEO/share link setup |
-| `SitemapController` | XML sitemap generation | **Fat** – complex generation logic |
+| `InstitutionController` | Institution browsing, listing, detail views, ranking | **Refactored** – injects `BuildShareLinksAction`, `ComputeRankingsAction`; `getCategoryClasses()` helper |
+| `SearchController` | Institution search with filters | **Refactored** – delegates to `InstitutionSearchQuery` with `SearchFiltersData` DTO |
+| `NewsController` | News browsing and display | **Refactored** – injects `GetSimilarNewsAction`, `ComputeReadTimeAction` |
+| `ProgramController` | Program details and filtering | **Refactored** – injects `BuildShareLinksAction`, `GetProgramsAtLevelAction` |
+| `SitemapController` | XML sitemap generation | **Fat** – complex generation logic (Phase 2 target) |
 | `HomeController` | Landing page | Slim |
 | `CatchmentController` | Catchment area browsing | Slim |
 | `StaticPageController` | Static page rendering | Slim |
 | `SyllabusController` | Syllabus display | Slim |
 | `TimetableController` | Timetable display | Slim |
 
-**Current State**: Controllers mix orchestration, query building, caching, ranking, and response shaping. Ready for refactoring into Actions, Query Objects, and DTOs (see Architecture Roadmap).
+**Current State**: Four primary controllers refactored to thin; inject Actions/Queries and delegate. `SitemapController` remains a Phase 2 target.
 
 ### `app/Livewire`
 Contains interactive Livewire components:
@@ -186,38 +186,43 @@ Organized into Feature and Unit directories:
 
 ## 🗂️ Architecture Overview & Roadmap
 
-### Current Architecture Score: 21/100
+### Current Architecture Score: 42/100 *(was 21/100 before Phase 1)*
 
-The codebase is a **pragmatic Laravel CRUD application** with solid caching but architectural weaknesses:
+The codebase has completed **Phase 1 Beyond CRUD refactoring**: all four fat controllers have been thinned, duplicate logic is extracted into dedicated Actions, Queries, and DTOs, and a 50-test Pest suite covers the new layer.
 
-**Current Issues** (in priority order):
-1. **Fat Controllers** – Controllers contain 50+ lines of query building, filtering, caching, ranking logic, and response shaping.
-2. **No Action Classes** – Orchestration logic lives in controllers rather than reusable, testable action classes.
-3. **Duplicated Queries** – Similar-news queries and share-link setup duplicated across multiple controllers.
-4. **No DTOs** – Request/response data passes through arrays and primitives instead of typed data objects.
-5. **Anemic Models** – Models are relational wrappers; domain logic is pushed to controllers.
-6. **No Query Objects** – Complex queries (search, ranking) are not extracted into query objects.
-7. **Hidden Dependencies** – View composers and service providers pull data globally; hard to test.
+**Remaining Issues** (in priority order):
+1. **Anemic Models** – Models are still relational wrappers; domain logic is in actions/controllers.
+2. **No Query Objects for Ranking** – `InstitutionRankingQuery` not yet extracted (ranking still complex in `ComputeRankingsAction`).
+3. **SitemapController fat** – Sitemap generation not yet extracted into an action.
+4. **Hidden Dependencies** – View composers in `AppServiceProvider` still pull `CategoryClass::all()` globally.
+5. **Livewire components mixed** – `ContactForm` mixes validation, mail, and error handling inline.
 
 ### Refactoring Roadmap
 
-#### Phase 1: Quick Wins (Extract Duplicate Logic) ✅ **IN PROGRESS**
-- [ ] Create `app/Actions` directory and extract reusable actions:
-  - `BuildShareLinksAction` – Replaces duplicated share-link setup
-  - `GetSimilarNewsAction` – Replaces duplicated similar-news queries
-  - `BuildSeoDataAction` – Centralizes SEO metadata generation
-  - `GenerateSitemapAction` – Moves sitemap logic into action
-- [ ] Replace duplicated code in `NewsController`, `ProgramController`, `InstitutionController`
-- [ ] Add focused feature tests around extracted actions
+#### Phase 1: Quick Wins (Extract Duplicate Logic) ✅ **COMPLETE**
+- [x] Create `app/Actions` directory and extract reusable actions:
+  - [x] `BuildShareLinksAction` – Replaces 12× duplicated share-link setup across all controllers
+  - [x] `GetSimilarNewsAction` – Replaces 3× identical similar-news query in `NewsController`
+  - [x] `ComputeReadTimeAction` – Extracts inline read-time calculation
+  - [x] `ComputeRankingsAction` – Extracts 47-line ranking algorithm from `InstitutionController`
+  - [x] `GetProgramsAtLevelAction` – Extracts level-3/normal program grouping logic
+- [x] Create `app/Queries` directory:
+  - [x] `InstitutionSearchQuery` – All 6 filter branches + eager loading + sorting extracted from `SearchController`
+- [x] Create `app/DTOs` directory:
+  - [x] `SearchFiltersData` – Typed readonly DTO with `cacheKey()` for search filters
+- [x] Replace duplicated code in `NewsController`, `ProgramController`, `InstitutionController`, `SearchController`
+- [x] Add focused feature tests around extracted actions (50 tests / 75 assertions)
+- [ ] `BuildSeoDataAction` – SEO metadata still set up inline per controller
+- [ ] `GenerateSitemapAction` – Sitemap generation still in `SitemapController`
 
 #### Phase 2: Intermediate Refactoring (Services & Query Objects)
 - [ ] Create `app/Application` and `app/Domain` folder structure by context
-- [ ] Introduce query objects:
-  - `InstitutionSearchQuery` – Search filtering logic
-  - `InstitutionRankingQuery` – Ranking algorithm
-  - `SimilarNewsQuery` – Shared news query logic
+- [ ] Introduce remaining query objects:
+  - [ ] `InstitutionRankingQuery` – Ranking page queries (currently in `ComputeRankingsAction`)
+  - [x] `InstitutionSearchQuery` – **Done in Phase 1**
+  - [x] `GetSimilarNewsAction` (action) – **Done in Phase 1**
 - [ ] Create `app/Repositories` or use query objects to encapsulate complex data access
-- [ ] Introduce DTOs using `spatie/laravel-data` for search filters and result payloads
+- [ ] Introduce DTOs using `spatie/laravel-data` for search filters and result payloads (currently plain PHP DTOs)
 
 #### Phase 3: Full DDD Transformation (Bounded Contexts)
 - [ ] Restructure by bounded context:
@@ -793,7 +798,7 @@ php artisan test --watch                    # Watch mode
 ---
 
 **Last Updated**: April 8, 2026  
-**Status**: Active Development (Laravel 13 Upgraded – Phase 1 Roadmap – Action Extraction)
+**Status**: Active Development (Laravel 13 – Phase 1 Complete – Phase 2 Roadmap Next)
 
 ===
 
