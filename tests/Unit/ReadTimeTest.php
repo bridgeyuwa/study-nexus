@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\NewsController;
-use ReflectionMethod;
 
 // Thin wrapper so tests can call readTime() without repeating reflection boilerplate.
 function readTime(string $content): float
@@ -12,7 +11,7 @@ function readTime(string $content): float
         fn ($m) => $m->setAccessible(true)
     );
 
-    return $method->invoke(new NewsController(), $content);
+    return $method->invoke(new NewsController, $content);
 }
 
 // ceil() always returns float, so we use toEqual() (loose) throughout.

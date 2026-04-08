@@ -4,29 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
+use Levintoo\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 
-class Region extends Model {
-
+class Region extends Model
+{
     use HasFactory;
-	use HasSelfHealingUrls;
-	
-	protected  $slug = 'name';
+    use HasSelfHealingUrls;
 
-    public function states() {
+    protected $slug = 'name';
+
+    public function states()
+    {
         return $this->hasMany(State::class);
     }
 
-    public function institutions() {
+    public function institutions()
+    {
         return $this->hasManyThrough(Institution::class, State::class);
     }
-   
- 
-    public function catchments() {
+
+    public function catchments()
+    {
         return $this->hasMany(Catchment::class);
     }
-  
-   
-   
-
 }
