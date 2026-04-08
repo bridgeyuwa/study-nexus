@@ -1,0 +1,796 @@
+# CLAUDE.md – StudyNexus Development Guide
+
+This document provides a comprehensive guide for AI assistants (Claude) working on the StudyNexus codebase. It covers architecture, development workflows, conventions, and common tasks.
+
+---
+
+## 📋 Project Overview
+
+**StudyNexus** is a Laravel 11-based web application that serves as a comprehensive directory and discovery platform for educational institutions in Nigeria. It provides features for browsing institutions, programs, news, exams, and other educational resources.
+
+### Core Purpose
+- Directory of educational institutions (universities, colleges, polytechnics, etc.)
+- Program discovery and comparison
+- News and announcements
+- Exam information and timetables
+- Institution rankings and filtering
+
+---
+
+## 🏗️ Repository Structure
+
+```
+studynexus/
+├── app/                          # Application code
+│   ├── Console/                  # CLI commands
+│   │   └── Commands/
+│   ├── Http/                     # HTTP layer
+│   │   ├── Controllers/          # Route handlers (currently fat, to be refactored)
+│   │   └── Requests/             # (if any form request validation)
+│   ├── Livewire/                 # Livewire components (interactive UI)
+│   ├── Mail/                     # Mailable classes
+│   ├── Models/                   # Eloquent models (27 models total)
+│   └── Providers/                # Service providers
+├── bootstrap/                    # Laravel bootstrap files
+├── config/                       # Configuration files
+├── database/
+│   ├── factories/                # Model factories for testing
+│   ├── migrations/               # Database schema migrations
+│   └── seeders/                  # Database seeders
+├── docker/                       # Docker configuration
+├── docs/                         # Project documentation
+│   └── architecture-review.md    # Detailed architecture analysis
+├── lang/                         # Language files (i18n)
+├── public/                       # Public web root
+├── resources/
+│   ├── css/                      # Stylesheets
+│   ├── js/                       # JavaScript assets
+│   ├── markdown/                 # Markdown content
+│   ├── views/                    # Blade templates
+│   └── lang/                     # Language translations
+├── routes/
+│   ├── web.php                   # Web routes (primary)
+│   ├── console.php               # Console/Artisan commands
+│   └── breadcrumbs.php           # Breadcrumb navigation
+├── storage/                      # File storage, cache, logs
+├── tests/
+│   ├── Feature/                  # Feature/integration tests (using Pest)
+│   └── Unit/                     # Unit tests (using Pest)
+├── .env.example                  # Environment template
+├── docker-compose.yaml           # Docker Compose setup
+├── composer.json                 # PHP dependencies
+├── phpunit.xml                   # PHPUnit/Pest configuration
+├── vite.config.js                # Vite bundler configuration
+└── CLAUDE.md                     # This file
+```
+
+---
+
+## 🔧 Technology Stack
+
+### Backend
+- **Framework**: Laravel 11.x
+- **Language**: PHP 8.2+
+- **Database**: MySQL
+- **ORM**: Eloquent (with 27 models)
+
+### Frontend
+- **Templating**: Blade
+- **Interactive Components**: Livewire
+- **Assets**: Vite (Laravel Vite Plugin)
+- **Styling**: CSS/SCSS
+
+### Key Packages
+- **Cache & SEO**: Laravel built-ins + Spatie packages
+  - `spatie/laravel-analytics`
+  - `spatie/laravel-backup`
+  - `spatie/laravel-newsletter`
+  - `spatie/laravel-sitemap`
+  - `spatie/schema-org`
+- **Image Processing**: `intervention/image-laravel`
+- **Geocoding**: `spatie/geocoder`
+- **Cloud Storage**: AWS S3 (`league/flysystem-aws-s3-v3`)
+- **Breadcrumbs**: `diglactic/laravel-breadcrumbs`
+- **Social Sharing**: `jorenvanhocht/laravel-share`
+- **Monitoring**: `sentry/sentry-laravel`
+- **Self-healing URLs**: `lukeraymonddowning/self-healing-urls`
+
+### Testing & Development
+- **Test Framework**: Pest PHP 3.x
+- **Mocking**: Mockery
+- **Factories**: Faker
+- **Code Quality**: Laravel Pint
+- **Debugging**: Laravel Debugbar
+
+---
+
+## 📁 Key Directories Explained
+
+### `app/Models`
+Contains 27 Eloquent models representing domain concepts:
+
+**Core Entities**:
+- `Institution` – Educational institutions with relationships to programs, types, regions
+- `Program` – Academic programs offered
+- `InstitutionType` – Classification (university, college, polytechnic, etc.)
+- `InstitutionProgram` – Junction between institutions and programs
+
+**Hierarchical Data**:
+- `Region`, `State`, `Catchment` – Geographic organization
+- `Category`, `CategoryClass` – Program categorization
+- `Level` – Academic levels (100, 200, 300, 400, etc.)
+
+**Administrative Data**:
+- `Exam`, `ExamBody` – Examination information
+- `Syllabus`, `Timetable` – Academic scheduling
+- `News`, `NewsCategory` – Institution news and updates
+- `User` – User accounts
+
+**Reference Data**:
+- `AccreditationBody`, `AccreditationStatus` – Accreditation tracking
+- `ReligiousAffiliation`, `ReligiousAffiliationCategory` – Affiliation types
+- `ProgramMode`, `Term` – Enrollment modes and academic terms
+- `Social`, `SocialType` – Social media links
+- `InstitutionHead`, `PhoneNumber` – Contact information
+- `College` – College/faculty structure
+
+**Current State**: Models are primarily relational wrappers with minimal domain behavior. Data logic is concentrated in controllers (see Architecture Notes).
+
+### `app/Http/Controllers`
+Contains 11 controllers handling HTTP requests:
+
+| Controller | Responsibility | Status |
+|---|---|---|
+| `InstitutionController` | Institution browsing, listing, detail views, ranking | **Fat** – 20KB+ with embedded caching, ranking logic |
+| `SearchController` | Institution search with filters | **Fat** – complex query building in controller |
+| `NewsController` | News browsing and display | **Fat** – duplicated similar-news queries |
+| `ProgramController` | Program details and filtering | **Fat** – repeated SEO/share link setup |
+| `SitemapController` | XML sitemap generation | **Fat** – complex generation logic |
+| `HomeController` | Landing page | Slim |
+| `CatchmentController` | Catchment area browsing | Slim |
+| `StaticPageController` | Static page rendering | Slim |
+| `SyllabusController` | Syllabus display | Slim |
+| `TimetableController` | Timetable display | Slim |
+
+**Current State**: Controllers mix orchestration, query building, caching, ranking, and response shaping. Ready for refactoring into Actions, Query Objects, and DTOs (see Architecture Roadmap).
+
+### `app/Livewire`
+Contains interactive Livewire components:
+- `ContactForm` – Contact form with email sending
+- Other interactive UI elements
+
+**Current State**: Components mix validation, mail orchestration, and error handling inline. Candidates for extraction of reusable actions.
+
+### `routes/web.php`
+Defines all web routes. Route groups organize by resource (institutions, programs, news, etc.). Breadcrumbs defined in `routes/breadcrumbs.php`.
+
+### `resources/views`
+Blade templates organized by resource type:
+- `institutions/` – Institution browsing templates
+- `programs/` – Program templates
+- `news/` – News templates
+- `partials/` – Reusable view partials
+- Static and admin pages
+
+### `database/factories`
+Test factories for all models. Used by Pest test suite to generate test data quickly.
+
+### `tests`
+Organized into Feature and Unit directories:
+- **Feature tests**: Test full HTTP flows (controllers, Livewire, integration)
+- **Unit tests**: Test isolated functions/classes
+
+**Current State**: Comprehensive test suite added recently; migrated to Pest syntax.
+
+---
+
+## 🗂️ Architecture Overview & Roadmap
+
+### Current Architecture Score: 21/100
+
+The codebase is a **pragmatic Laravel CRUD application** with solid caching but architectural weaknesses:
+
+**Current Issues** (in priority order):
+1. **Fat Controllers** – Controllers contain 50+ lines of query building, filtering, caching, ranking logic, and response shaping.
+2. **No Action Classes** – Orchestration logic lives in controllers rather than reusable, testable action classes.
+3. **Duplicated Queries** – Similar-news queries and share-link setup duplicated across multiple controllers.
+4. **No DTOs** – Request/response data passes through arrays and primitives instead of typed data objects.
+5. **Anemic Models** – Models are relational wrappers; domain logic is pushed to controllers.
+6. **No Query Objects** – Complex queries (search, ranking) are not extracted into query objects.
+7. **Hidden Dependencies** – View composers and service providers pull data globally; hard to test.
+
+### Refactoring Roadmap
+
+#### Phase 1: Quick Wins (Extract Duplicate Logic) ✅ **IN PROGRESS**
+- [ ] Create `app/Actions` directory and extract reusable actions:
+  - `BuildShareLinksAction` – Replaces duplicated share-link setup
+  - `GetSimilarNewsAction` – Replaces duplicated similar-news queries
+  - `BuildSeoDataAction` – Centralizes SEO metadata generation
+  - `GenerateSitemapAction` – Moves sitemap logic into action
+- [ ] Replace duplicated code in `NewsController`, `ProgramController`, `InstitutionController`
+- [ ] Add focused feature tests around extracted actions
+
+#### Phase 2: Intermediate Refactoring (Services & Query Objects)
+- [ ] Create `app/Application` and `app/Domain` folder structure by context
+- [ ] Introduce query objects:
+  - `InstitutionSearchQuery` – Search filtering logic
+  - `InstitutionRankingQuery` – Ranking algorithm
+  - `SimilarNewsQuery` – Shared news query logic
+- [ ] Create `app/Repositories` or use query objects to encapsulate complex data access
+- [ ] Introduce DTOs using `spatie/laravel-data` for search filters and result payloads
+
+#### Phase 3: Full DDD Transformation (Bounded Contexts)
+- [ ] Restructure by bounded context:
+  ```
+  app/Domain/<Context>/
+    - Entities/
+    - ValueObjects/
+    - Events/
+  app/Application/<Context>/
+    - Actions/
+    - Queries/
+  app/Infrastructure/<Context>/
+    - Repositories/
+  app/UI/Http/
+    - Controllers/
+    - Resources/
+  ```
+- [ ] Introduce domain events for side-effects (e.g., sitemap refresh on news update)
+- [ ] Create value objects (immutable, typed data holders)
+- [ ] Expand test coverage at action/domain layer
+
+### Architecture Principles
+
+When working on this codebase, follow these principles:
+
+1. **Controllers should be thin** – Route to action, pass data, return response. No query building, caching, or orchestration logic.
+2. **Use Action Classes** – Single-responsibility actions that encapsulate use-cases. Return DTOs or domain objects.
+3. **Query Objects** – Complex queries should live in dedicated query classes, not controllers.
+4. **DTOs for Data Transfer** – Use typed data objects (Spatie Data or custom classes) for request/response payloads.
+5. **Models as Entities** – Keep Eloquent models focused on relationships and basic domain behavior. Push orchestration to actions.
+6. **Test at the Action Layer** – Write tests for actions and queries, not controllers.
+7. **Explicit Dependencies** – Inject dependencies into actions/services. Avoid global facades in domain logic.
+
+### Example Refactoring Pattern
+
+**Before** (Fat Controller):
+```php
+// SearchController@index
+public function index(Request $request)
+{
+    $query = Institution::query();
+    if ($typeSlug) {
+        $query->whereHas('institutionType', fn($q) => $q->where('slug', $typeSlug));
+    }
+    // ... 20+ lines of filter building
+    return $query->paginate(30)->appends($request->except('page'));
+}
+```
+
+**After** (Action + Query Object + DTO):
+```php
+// Routes/web.php
+Route::get('/search', SearchInstitutionsAction::class);
+
+// app/Actions/SearchInstitutionsAction.php
+final class SearchInstitutionsAction
+{
+    public function __invoke(SearchInstitutionsRequest $request)
+    {
+        $results = $this->query->execute(
+            SearchInstitutionsData::from($request->validated())
+        );
+        return response()->view('institutions.search', ['results' => $results]);
+    }
+}
+
+// app/Queries/InstitutionSearchQuery.php
+final class InstitutionSearchQuery
+{
+    public function execute(SearchInstitutionsData $filters): LengthAwarePaginator
+    {
+        return Institution::query()
+            ->when($filters->typeSlug, fn($q) => $q->whereHas('institutionType', ...))
+            // ... filtering logic
+            ->paginate(30);
+    }
+}
+```
+
+---
+
+## 🧪 Testing Strategy
+
+### Testing Framework: Pest PHP
+
+Tests are organized into **Feature** (integration) and **Unit** (isolated) test suites.
+
+### Running Tests
+
+```bash
+# Run all tests
+php artisan test
+
+# Run with coverage
+php artisan test --coverage
+
+# Run specific test
+php artisan test tests/Feature/SearchInstitutionsTest.php
+
+# Watch mode (re-runs on file change)
+php artisan test --watch
+```
+
+### Test Structure
+
+```
+tests/
+├── Feature/
+│   ├── InstitutionBrowsingTest.php      # Test institution listing and detail
+│   ├── SearchInstitutionsTest.php       # Test search functionality
+│   ├── NewsViewingTest.php              # Test news display
+│   └── ...
+├── Unit/
+│   ├── Models/InstitutionTest.php       # Test model relationships
+│   ├── Actions/SearchInstitutionsActionTest.php
+│   └── ...
+├── Pest.php                             # Pest configuration and helpers
+└── TestCase.php                         # Base test class
+```
+
+### Database Seeding for Tests
+
+Models have factories in `database/factories/`. Use them to generate test data:
+
+```php
+use App\Models\Institution;
+use Database\Factories\InstitutionFactory;
+
+test('can search institutions', function () {
+    Institution::factory()->count(5)->create();
+    
+    $response = $this->get('/search?type=university');
+    $response->assertStatus(200);
+});
+```
+
+### Key Testing Patterns
+
+- **Feature tests** test full HTTP flows (request → controller → response)
+- **Unit tests** test isolated classes (actions, queries, models)
+- **Database tests** use `RefreshDatabase` trait to rollback between tests
+- **Factories** generate realistic test data
+
+**Guidelines for AI Assistants**:
+- Write tests when adding features or fixing bugs
+- Test at the appropriate level (Feature for controllers, Unit for actions/queries)
+- Use factories to generate test data quickly
+- Keep tests focused and readable
+
+---
+
+## 🎯 Code Conventions
+
+### PHP & Laravel Conventions
+
+1. **Naming**:
+   - Classes: `PascalCase` (e.g., `InstitutionController`, `GetSimilarNewsAction`)
+   - Methods: `camelCase` (e.g., `searchInstitutions`, `getSimilarNews`)
+   - Variables: `camelCase` (e.g., `$institutions`, `$newsCategories`)
+   - Constants: `UPPER_SNAKE_CASE` (e.g., `CACHE_EXPIRY`)
+   - Database tables: `snake_case` plural (e.g., `institutions`, `program_modes`)
+   - Model properties: `camelCase` with `protected $fillable`
+
+2. **Type Hints**:
+   - Use full type hints for parameters and return types
+   - Use nullable types where appropriate (`?Model`)
+   - Use union types for multiple possible types (`Model|Collection`)
+
+3. **Comments**:
+   - Write comments only for **why**, not **what** (code should be self-documenting)
+   - Use PHPDoc blocks for complex methods
+   - Avoid obvious comments
+
+4. **Models**:
+   - Use `protected $fillable` to whitelist mass-assignable attributes
+   - Define relationships clearly with type hints
+   - Keep domain logic minimal (push to actions)
+   - Use `final class` to prevent unintended inheritance
+
+5. **Controllers**:
+   - Keep controllers **thin** – route to action, pass data, return response
+   - Inject dependencies (services, actions) via constructor
+   - Return views or JSON responses, not raw data
+   - Use type-hinted parameters for validation (Request objects)
+
+6. **Actions**:
+   - Single responsibility: one action = one use-case
+   - Use `__invoke()` or `execute()` method as entry point
+   - Return domain objects, DTOs, or collections
+   - Inject dependencies via constructor
+   - Use `final class` to encourage composition over inheritance
+
+7. **Queries/Repositories**:
+   - Encapsulate complex query logic
+   - Return `Collection`, `Model`, `LengthAwarePaginator`, or similar
+   - Use method names that describe what they do (`findBySlug()`, `searchByFilters()`)
+
+8. **Blade Templates**:
+   - Use `@forelse` for safe iteration
+   - Prefix custom components with namespace if needed
+   - Keep business logic out of views; use view composers or pass data from controller
+
+### File Organization
+
+- **One class per file** (PSR-4 standard)
+- Use namespaces matching directory structure
+- Group related methods together (public, protected, private)
+
+---
+
+## 🚀 Development Workflows
+
+### Setting Up the Project
+
+```bash
+# Clone repository
+git clone https://github.com/bridgeyuwa/studynexus.git
+cd studynexus
+
+# Install dependencies
+composer install
+npm install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Database setup
+php artisan migrate
+php artisan db:seed  # if seeders exist
+
+# Run development server
+php artisan serve
+npm run dev  # in another terminal for Vite
+
+# Visit http://localhost:8000
+```
+
+### Using Docker (Recommended)
+
+```bash
+# Start containers
+docker-compose up -d
+
+# Install dependencies in container
+docker-compose exec app composer install
+docker-compose exec app npm install
+
+# Database migration
+docker-compose exec app php artisan migrate
+
+# View logs
+docker-compose logs -f app
+```
+
+### Making Changes
+
+1. **Create a feature branch**:
+   ```bash
+   git checkout -b claude/feature-name-SHORT_ID
+   ```
+
+2. **Make changes** following conventions above
+
+3. **Run tests**:
+   ```bash
+   php artisan test
+   ```
+
+4. **Lint and format** (using Pint):
+   ```bash
+   ./vendor/bin/pint
+   ```
+
+5. **Commit changes**:
+   ```bash
+   git add .
+   git commit -m "Add feature X"
+   ```
+
+6. **Push to branch**:
+   ```bash
+   git push origin claude/feature-name-SHORT_ID
+   ```
+
+### Common Development Tasks
+
+#### Adding a New Feature
+
+1. **Create a model** (if needed):
+   ```bash
+   php artisan make:model ModelName -mf
+   # -m: create migration, -f: create factory
+   ```
+
+2. **Create a migration**:
+   ```bash
+   php artisan make:migration create_table_name
+   ```
+
+3. **Create an action**:
+   ```bash
+   mkdir -p app/Actions
+   # Create class in app/Actions/YourAction.php
+   ```
+
+4. **Create a route** in `routes/web.php`
+
+5. **Create tests** in `tests/Feature/` or `tests/Unit/`
+
+6. **Create views** in `resources/views/` (if needed)
+
+#### Modifying a Model
+
+1. **Update model class** in `app/Models/`
+2. **Create migration** for schema changes:
+   ```bash
+   php artisan make:migration add_field_to_table
+   ```
+3. **Update factory** in `database/factories/` if test data structure changes
+4. **Write/update tests** for model behavior
+
+#### Extracting Duplicated Logic
+
+1. **Identify duplicate code** (usually in controllers or Livewire components)
+2. **Create an Action** in `app/Actions/`
+3. **Test the action** with `ActionTest.php`
+4. **Replace duplicates** by calling the action
+5. **Delete original code** once replacements are verified
+
+#### Running Migrations
+
+```bash
+# Run all pending migrations
+php artisan migrate
+
+# Rollback last migration
+php artisan migrate:rollback
+
+# Rollback all and re-run
+php artisan migrate:refresh
+
+# With seeding
+php artisan migrate:refresh --seed
+```
+
+---
+
+## 🌳 Git Workflow
+
+### Branch Naming Convention
+
+Use feature branch naming for Claude-generated branches:
+```
+claude/<feature-name>-<SHORT_ID>
+```
+
+Example:
+- `claude/add-claude-documentation-A6Ero`
+- `claude/extract-search-action-K9xL2`
+- `claude/fix-ranking-algorithm-M2pQr`
+
+### Commit Messages
+
+Write clear, descriptive commit messages:
+
+```bash
+# Format: <type>: <description>
+
+git commit -m "feat: extract search institution action"
+git commit -m "fix: correct ranking algorithm edge case"
+git commit -m "test: add search institution action tests"
+git commit -m "refactor: move sitemap logic to action"
+```
+
+**Types**:
+- `feat:` – New feature
+- `fix:` – Bug fix
+- `refactor:` – Code reorganization without behavior change
+- `test:` – Test additions or modifications
+- `docs:` – Documentation updates
+- `chore:` – Maintenance (dependencies, config, etc.)
+
+### Pull Request Workflow
+
+1. **Push your branch** to origin:
+   ```bash
+   git push -u origin claude/feature-name-SHORT_ID
+   ```
+
+2. **Create PR** on GitHub (usually auto-prompted)
+
+3. **PR Description** should include:
+   - What changed (summary)
+   - Why it changed (motivation)
+   - How to test it
+   - Any breaking changes
+
+4. **Wait for review** and address feedback
+
+5. **Merge** when approved
+
+### Current Development Branch
+
+**Primary development branch**: `claude/add-claude-documentation-A6Ero`
+
+This branch is where Claude-generated documentation and initial refactoring work is being done.
+
+---
+
+## 📊 Models & Relationships (Quick Reference)
+
+### Entity Relationship Diagram (Simplified)
+
+```
+Institution
+  ├── has many → Programs (through InstitutionProgram)
+  ├── belongs to → InstitutionType
+  ├── belongs to → State
+  ├── has many → Accreditations
+  ├── has many → News
+  └── has many → InstitutionHeads
+
+Program
+  ├── has many → Institutions (through InstitutionProgram)
+  ├── belongs to → Level
+  ├── belongs to → Category
+  ├── belongs to → ProgramMode
+  └── belongs to → Syllabus
+
+News
+  ├── belongs to → Institution
+  └── has many → NewsCategories (through junction)
+```
+
+### Key Model Methods
+
+Each model has:
+- **Relationships** defined as methods (e.g., `institutions()`, `programs()`)
+- **Factories** in `database/factories/` for test data generation
+- **Fillable attributes** defined in `protected $fillable`
+
+See `app/Models/` directory for full definitions.
+
+---
+
+## 🔍 Debugging & Troubleshooting
+
+### Common Issues
+
+**Issue**: "Column not found" error
+- **Cause**: Database migration wasn't run or column name mismatch
+- **Solution**: Run `php artisan migrate` and check migration files
+
+**Issue**: Model not found / class not found
+- **Cause**: Namespace or file path wrong, or autoloader not updated
+- **Solution**: Verify PSR-4 namespace matches directory structure, run `composer dump-autoload`
+
+**Issue**: View not found
+- **Cause**: View file path mismatch
+- **Solution**: Verify file exists at correct path in `resources/views/`
+
+**Issue**: Route not working
+- **Cause**: Route not defined or middleware blocking
+- **Solution**: Check `routes/web.php` and run `php artisan route:list`
+
+### Debugging Tools
+
+- **Tinker** (REPL for Laravel):
+  ```bash
+  php artisan tinker
+  # Try queries, test logic without running HTTP request
+  ```
+
+- **Debugbar** (in development):
+  - Installed as dev dependency
+  - Shows at bottom of page (in dev mode)
+  - Inspect queries, views, config, etc.
+
+- **Logs**:
+  ```bash
+  tail -f storage/logs/laravel.log
+  ```
+
+- **Email Testing**:
+  - Mailpit service in Docker handles test emails
+  - View at `http://localhost:8025`
+
+---
+
+## 📚 Useful Commands
+
+```bash
+# Artisan commands
+php artisan tinker                          # Interactive shell
+php artisan route:list                      # List all routes
+php artisan cache:clear                     # Clear cache
+php artisan config:clear                    # Clear config cache
+php artisan view:clear                      # Clear view cache
+php artisan storage:link                    # Create storage symlink
+
+# Composer commands
+composer update                             # Update dependencies
+composer require package/name               # Install package
+composer dump-autoload                      # Regenerate autoloader
+
+# Testing
+php artisan test                            # Run all tests
+php artisan test --coverage                 # With code coverage
+php artisan test --watch                    # Watch mode
+
+# Code quality
+./vendor/bin/pint                           # Format code with Pint
+./vendor/bin/pint --test                    # Check formatting without changing
+```
+
+---
+
+## 🚧 Known Issues & Future Work
+
+### Known Limitations
+
+1. **Controllers are large** – Primary refactoring target (see Phase 1 roadmap)
+2. **No request validation classes** – Form requests not implemented
+3. **Livewire components lack separation** – Validation and mail logic mixed in
+4. **Limited test coverage** – Recent improvements, but still incomplete
+5. **No API layer** – All endpoints are web (Blade) only
+
+### Planned Improvements
+
+- [ ] Extract actions for all controllers (Phase 1)
+- [ ] Add query objects for complex searches/filters (Phase 2)
+- [ ] Introduce DTOs with Spatie Data package (Phase 2)
+- [ ] Restructure into bounded contexts (Phase 3)
+- [ ] Add domain events for side-effects (Phase 3)
+- [ ] Expand test coverage to 80%+ (Ongoing)
+- [ ] Consider REST API or GraphQL layer (Future)
+
+---
+
+## 📖 Additional Resources
+
+### External Documentation
+
+- [Laravel 11 Documentation](https://laravel.com/docs/11.x)
+- [Pest PHP Documentation](https://pestphp.com)
+- [Livewire Documentation](https://livewire.laravel.com)
+- [Spatie Packages](https://spatie.be/open-source)
+
+### Architecture References
+
+- `docs/architecture-review.md` – Detailed architecture analysis and scoring
+- Current branch: `claude/add-claude-documentation-A6Ero` – Documentation and refactoring work
+
+### Contact & Support
+
+- **Repository**: https://github.com/bridgeyuwa/studynexus
+- **Issues**: https://github.com/bridgeyuwa/studynexus/issues
+
+---
+
+## 🎓 Key Takeaways for AI Assistants
+
+1. **This is a Laravel CRUD app with architectural weaknesses** – Controllers are fat and need refactoring.
+2. **Follow the roadmap** – Phase 1 (extract actions), Phase 2 (query objects/DTOs), Phase 3 (DDD).
+3. **Write tests for new code** – Use Pest, test at appropriate levels (Feature vs Unit).
+4. **Keep controllers thin** – Route to action, pass data, return response. No business logic.
+5. **Use Actions for reusable logic** – Single responsibility, injected dependencies, testable.
+6. **Refer to conventions** – Naming, typing, file organization matter for team consistency.
+7. **Commit to feature branches** – Use `claude/feature-name-SHORT_ID` pattern.
+8. **Document your changes** – Update this file if architecture changes significantly.
+
+---
+
+**Last Updated**: April 8, 2026  
+**Status**: Active Development (Phase 1 Roadmap – Action Extraction)
