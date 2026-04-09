@@ -9,17 +9,19 @@ use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 class CategoryClass extends Model
 {
     use HasFactory;
-    use HasSelfHealingUrls;
-
-    protected $slug = 'name';
-
-    public function categories()
+	use HasSelfHealingUrls;
+	
+	protected  $slug = 'name';
+	
+	public function categories()
     {
         return $this->hasMany(Category::class);
     }
-
-    public function institutions()
+	
+	
+	public function institutions()
     {
         return $this->hasManyThrough(Institution::class, Category::class);
     }
+	
 }

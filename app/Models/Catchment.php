@@ -10,16 +10,17 @@ class Catchment extends Model
 {
     use HasFactory;
     use HasSelfHealingUrls;
-
-    protected $slug = 'name';
-
-    public function institutions()
+	
+	protected  $slug = 'name';
+   
+     public function institutions()
     {
         return $this->belongsToMany(Institution::class);
     }
-
-    public function region()
+    
+     public function region()
     {
         return $this->belongsTo(Region::class);
     }
+    
 }
