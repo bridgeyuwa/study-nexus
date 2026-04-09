@@ -10,33 +10,47 @@
 
 ## Principle scoring (0–10)
 
-> **Last scored**: April 8, 2026 — after Phase 1 Beyond CRUD refactor. Previous total: 21/100.
-
-| Principle | Score | Δ | Notes |
-|---|---:|---:|---|
-| Thin Controllers | 7 | +5 | Four primary controllers refactored: inject Actions/Queries, delegate, return view. `SitemapController` still fat. |
-| Action Classes / Use-Case Objects | 6 | +5 | `app/Actions/` introduced: `BuildShareLinksAction`, `ComputeRankingsAction`, `GetSimilarNewsAction`, `ComputeReadTimeAction`, `GetProgramsAtLevelAction`. |
-| DTOs | 4 | +3 | `app/DTOs/SearchFiltersData` introduced (plain PHP, readonly). No `spatie/laravel-data` yet; other domains still use primitives. |
-| Value Objects & Entities | 2 | 0 | Models remain relational wrappers; no immutable value objects yet. |
-| Application Service / Domain Service Layer | 3 | +2 | Action layer in place; no formal Application/Domain split yet. |
-| Repository / Query Objects | 5 | +3 | `app/Queries/InstitutionSearchQuery` introduced. Ranking and sitemap queries still inline. |
-| Domain Events | 1 | 0 | No domain event/listener structure yet. |
-| ViewModels / Resources | 3 | 0 | Response preparation still in controllers; no dedicated view models. |
-| SOLID + DIP | 5 | +2 | Actions injected via constructor; `final class` enforced on new classes. Controllers still reference Eloquent directly. |
-| Bounded Contexts | 3 | 0 | Functional route groups exist; no Domain/Application/Infrastructure per context yet. |
-| Testing & DDD Folder Structure | 6 | +4 | 50 Pest tests / 75 assertions added covering Actions, Queries, DTOs (Unit + Feature). |
-
-**Total: 45/100** *(+24 from Phase 1)*
+| Principle | Score | Notes |
+|---|---:|---|
+| Thin Controllers | 2 | Controllers hold substantial business/query logic, branching, caching, ranking algorithms, and response shaping. |
+| Action Classes / Use-Case Objects | 1 | No dedicated `Actions` / use-case classes are present; behavior is concentrated in controllers and Livewire. |
+| DTOs | 1 | No `spatie/laravel-data` or custom DTO layer observed; request primitives and arrays are passed around. |
+| Value Objects & Entities | 2 | Eloquent models are relational wrappers with no immutable value objects for money/status/email/etc. |
+| Application Service / Domain Service Layer | 1 | No service layer; orchestration is mostly in controllers. |
+| Repository / Query Objects | 2 | Query logic appears inline in controllers; no repository/query object abstractions. |
+| Domain Events | 1 | No domain event/listener structure observed. |
+| ViewModels / Resources | 3 | Blade views are used, but response preparation is inside controllers rather than dedicated view models/resources. |
+| SOLID + DIP | 3 | Some framework conventions respected, but high-level modules depend on concrete Eloquent and facades. |
+| Bounded Contexts | 3 | Functional route groups exist, but no module boundaries (e.g., Domain/Application/Infrastructure per context). |
+| Testing & DDD Folder Structure | 2 | Only default example tests are present; no architecture-level test coverage. |
 
 ## Problem inventory
 
 ### Critical
 
-1. ~~**Fat controller with orchestration + ranking algorithm + persistence concerns**~~  
-   **✅ RESOLVED (Phase 1)** — `ComputeRankingsAction` extracted from `InstitutionController`. 12× share-link duplication replaced with `BuildShareLinksAction`. 6× `CategoryClass::all()` collapsed to `getCategoryClasses()` helper.
+1. **Fat controller with orchestration + ranking algorithm + persistence concerns**  
+   Evidence (`app/Http/Controllers/InstitutionController.php`):
+   ```php
+   $institutions = Cache::remember('institutions_page_' . request('page', 1), 60 * 60, function() {
+       return Institution::with(['state', 'institutionType', 'category'])
+   ```
+   ```php
+   private function computeRank($institution, $allInstitutions) {
+       $rank = ['institution' => 0, 'region' => 0, 'state' => 0];
+   ```
+   Pain: hard-to-test behavior, duplicate logic growth, and fragile performance tuning.
 
-2. ~~**Complex search use-case implemented directly in controller**~~  
-   **✅ RESOLVED (Phase 1)** — `InstitutionSearchQuery` + `SearchFiltersData` DTO extracted. `SearchController` slimmed from 174 → ~60 lines.
+2. **Complex search use-case implemented directly in controller**  
+   Evidence (`app/Http/Controllers/SearchController.php`):
+   ```php
+   $query = Institution::query();
+   if ($typeSlug) {
+       if ($typeSlug == "public") {
+   ```
+   ```php
+   return $query->paginate(30)->appends($request->except('page'));
+   ```
+   Pain: no reusable search specification/query object; high risk when adding new filters.
 
 3. **Console command depends on HTTP controller**  
    Evidence (`app/Console/Commands/GenerateSitemap.php`):
@@ -44,15 +58,26 @@
    $sitemap = new SitemapController();
    $response = $sitemap->index();
    ```
-   Pain: violates layer boundaries and prevents clean CLI-oriented orchestration. **(Phase 2 target)**
+   Pain: violates layer boundaries and prevents clean CLI-oriented orchestration.
 
 ### High
 
-1. ~~**Repeated similar-news query duplicated in three controller methods**~~  
-   **✅ RESOLVED (Phase 1)** — `GetSimilarNewsAction` extracted; all 3 identical 20-line blocks replaced with single `execute()` call.
+1. **Repeated similar-news query duplicated in three controller methods**  
+   Evidence (`app/Http/Controllers/NewsController.php`):
+   ```php
+   $similarNews = Cache::remember($cacheKey, 60 * 60, function () use ($news, $newsCategoryIds) {
+       return News::whereHas('newsCategories', function($query) use ($newsCategoryIds) {
+   ```
+   Pain: fixes must be repeated and can diverge.
 
-2. ~~**Presentation concerns (share links / SEO) duplicated across controllers**~~  
-   **✅ RESOLVED (Phase 1, share links)** — `BuildShareLinksAction` replaces 12× repeated chain. SEO setup still inline (Phase 2 target for `BuildSeoDataAction`).
+2. **Presentation concerns (share links / SEO) duplicated across controllers**  
+   Evidence (`app/Http/Controllers/ProgramController.php`):
+   ```php
+   $shareLinks = \Share::currentPage()
+       ->facebook()
+       ->twitter()
+   ```
+   Pain: repeated setup blocks inflate methods and hinder consistency.
 
 3. **No domain/application foldering; flat app structure**  
    Evidence (`app` top-level folders): Controllers, Models, Livewire, Mail, Providers only.
@@ -97,25 +122,29 @@
 
 ## Prioritized roadmap
 
-### Phase 1 ✅ COMPLETE (April 8, 2026)
-1. ✅ Introduced `app/Actions/`, `app/Queries/`, `app/DTOs/`
-2. ✅ Extracted `BuildShareLinksAction`, `GetSimilarNewsAction`, `ComputeReadTimeAction`, `ComputeRankingsAction`, `GetProgramsAtLevelAction`
-3. ✅ Extracted `InstitutionSearchQuery` + `SearchFiltersData` DTO
-4. ✅ Thinned `InstitutionController`, `NewsController`, `SearchController`, `ProgramController`
-5. ✅ Added 50 Pest tests / 75 assertions (Unit + Feature) for all new classes
-6. **Deferred to Phase 2**: `BuildSeoDataAction`, `GenerateSitemapAction`
+### Phase 1 (1–2 days, quick wins)
+1. Introduce `app/Actions` and extract top duplicate blocks first:
+   - `BuildShareLinksAction`
+   - `GetSimilarNewsAction`
+   - `BuildSeoDataAction` (or context-specific variants)
+2. Replace duplicated similar-news code in:
+   - `NewsController@show`
+   - `NewsController@showByInstitution`
+   - `NewsController@showByNewsCategory`
+3. Extract sitemap generation into service/action:
+   - create `app/Actions/GenerateSitemapAction`
+   - call from `GenerateSitemap` command and `SitemapController`.
+4. Add focused feature tests around extracted actions.
 
-### Phase 2 (medium refactor) — **NEXT**
-1. Extract sitemap generation:
-   - Create `app/Actions/GenerateSitemapAction`
-   - Fix `GenerateSitemap` console command to not instantiate `SitemapController`
-2. Introduce `BuildSeoDataAction` (or per-domain SEO value objects)
-3. Create `app/Application` and `app/Domain` skeletons by context:
-   - `Institution`, `Program`, `News`, `Search`, `Sitemap`
-4. Introduce remaining query objects:
-   - `InstitutionRankingQuery` (extract from `ComputeRankingsAction` — ranking page queries)
-5. Migrate plain `SearchFiltersData` DTO to `spatie/laravel-data` for richer validation/casting
-6. Add `FormRequest` classes for validated controller input
+### Phase 2 (medium refactor)
+1. Create `app/Application` and `app/Domain` skeletons by context:
+   - `Institution`, `Program`, `News`, `Search`, `Sitemap`.
+2. Introduce query objects/repositories for largest queries:
+   - `InstitutionSearchQuery`
+   - `InstitutionRankingQuery`
+   - `SimilarNewsQuery`
+3. Migrate `SearchController` and ranking logic in `InstitutionController` to actions + query objects.
+4. Add request objects and DTOs (`spatie/laravel-data`) for search filters and result payload shaping.
 
 ### Phase 3 (full DDD/Beyond CRUD transformation)
 1. Restructure into bounded contexts with layers:

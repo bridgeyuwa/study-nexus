@@ -9,16 +9,17 @@ use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 class Syllabus extends Model
 {
     use HasFactory;
-    use HasSelfHealingUrls;
-
-    protected $slug = 'name';
-
-    /* public function examBody() {
+	use HasSelfHealingUrls;
+	
+	protected  $slug = 'name';
+	
+	/* public function examBody() {
         return $this->belongsTo(ExamBody::class);
     } */
-
-    public function exam()
-    {
+	
+	
+	public function exam() {
         return $this->belongsTo(Exam::class);
     }
+
 }

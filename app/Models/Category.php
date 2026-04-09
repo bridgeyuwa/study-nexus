@@ -10,16 +10,16 @@ class Category extends Model
 {
     use HasFactory;
     use HasSelfHealingUrls;
-
-    protected $slug = 'name';
-
+	
+	protected  $slug = 'name';
+	
     public function institutions()
     {
         return $this->hasMany(Institution::class);
     }
-
-    public function categoryClass()
-    {
+    
+	public function categoryClass() {
         return $this->belongsTo(CategoryClass::class);
     }
+    
 }

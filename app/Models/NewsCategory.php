@@ -9,16 +9,17 @@ use Lukeraymonddowning\SelfHealingUrls\Concerns\HasSelfHealingUrls;
 class NewsCategory extends Model
 {
     use HasFactory;
-    use HasSelfHealingUrls;
-
-    protected $slug = 'name';
-
-    public function institutions()
+	use HasSelfHealingUrls;
+	
+	protected  $slug = 'name';
+	
+	 public function institutions()
     {
         return $this->belongsToMany(Institution::class);
     }
-
-    public function news()
+	
+	
+	 public function news()
     {
         return $this->belongsToMany(News::class);
     }
