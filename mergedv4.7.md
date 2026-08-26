@@ -1,0 +1,3816 @@
+# StudyNexus V4.7 Remediation — Remediation-Halt Record
+
+**Document type:** Escalation / Stop-Work Record (per V4.7 §75, §81)
+**Date:** 2026-08-26
+**Issuing role:** V4.7 Remediation Executor
+**Source artifact supplied:** `studynexus-v4.7-remediation-package.zip`
+**Worklog companion:** `/home/z/my-project/worklog.md`
+
+---
+
+## 1. Status: REMEDIATION HALTED — ESCALATION REQUIRED
+
+Per the governing principle supplied in the task brief:
+
+> "When authority is genuinely absent or contradictory, stop rather than guess."
+> "When a frozen contract conflicts with an observed package fact, do not invent a compromise or silently reinterpret the contract. Stop the affected remediation, record the contradiction precisely, and escalate it."
+
+The Remediation Executor is invoking this stop rule. The remediation cannot be executed in its current form because the **target substrate to which contracts and findings must be propagated is absent from the supplied package**.
+
+This is not a refusal of work; it is the precise behavior the task brief mandates when authority and package facts conflict.
+
+---
+
+## 2. The Contradiction (recorded precisely)
+
+### 2.1 What the task brief requires the Executor to do
+
+The brief assigns four operating duties:
+
+1. Apply the prescribed resolution exactly.
+2. Propagate it across **all affected active-tier files**, not merely the files named in the originating finding.
+3. Search **the entire package** for stale, contradictory, duplicated, or shadowing executable facts.
+4. Verify adversarially that no active contradictory executable fact remains.
+
+All four duties presuppose the presence of a **package of active-tier executable files** — i.e., the V4.6 StudyNexus source corpus that the evidence package audits.
+
+### 2.2 What was actually supplied
+
+The uploaded file `studynexus-v4.7-remediation-package.zip` extracts to **17 markdown files** organized into 16 numbered subdirectories plus a README:
+
+```
+studynexus-v4.7/
+├── README.md
+├── 01-finding-ledger/FINDING-LEDGER.md
+├── 02-decision-ledger/DECISION-LEDGER.md
+├── 03-contract-registry/CONTRACT-REGISTRY.md
+├── 04-change-manifest/CHANGE-MANIFEST.md
+├── 05-contract-diff/CONTRACT-DIFF.md
+├── 06-scenario-tests/SCENARIO-VERIFICATION-REPORT.md
+├── 07-final-audit/FINAL-AUDIT-REPORT.md
+├── 08-unresolved-issues/UNRESOLVED-MATERIAL-ISSUES-REPORT.md
+├── 09-external-evidence/EXTERNAL-EVIDENCE-REGISTER.md
+├── 10-archive-contamination/ARCHIVE-CONTAMINATION-REPORT.md
+├── 11-implementation-determinism/IMPLEMENTATION-DETERMINISM-REPORT.md
+├── 12-changed-file-inventory/CHANGED-FILE-INVENTORY.md
+├── 13-contract-propagation/CONTRACT-PROPAGATION-MATRIX.md
+├── 14-decision-graph/DECISION-DEPENDENCY-CONFLICT-GRAPH.md
+├── 15-regression-verification/REGRESSION-VERIFICATION-REPORT.md
+└── 16-remediated-package/REMEDIATED-PACKAGE-SUMMARY.md
+```
+
+Every one of these 17 files is a **member of the V4.7 remediation evidence package** — i.e., deliverables #1–#16 enumerated in V4.7 §76 plus the README. They are audit/governance documents ABOUT the V4.6 source package.
+
+### 2.3 What is absent
+
+The 16 deliverables reference the following V4.6 active-tier source files as the propagation targets (partial list — the Change Manifest enumerates 16 such files requiring modification, and the source package is stated to contain 57 markdown files totaling 43,616 lines):
+
+- `README.md`
+- `GLOSSARY.md`
+- `00-ORIENTATION/AUTHORITY-HIERARCHY.md`
+- `canonical/01-business.md`
+- `canonical/02-decisions.md`
+- `canonical/03-domain.md`
+- `canonical/04-architecture.md`
+- `canonical/05-implementation.md`
+- `canonical/06-data-acquisition.md`
+- product-experience files (4 — `cut_off_latest` removal and status normalization)
+- `DISCOVERY-CLOSURE.md`
+- archive/historical README formalization
+- (and 41 additional V4.6 files cited as "unchanged")
+
+A grep across the supplied package confirms the situation:
+
+- The string `canonical/05-implementation.md` appears **247 times across all 16 evidence files** — every occurrence is a *citation* of an external file, never the file itself.
+- A filesystem search for any directory named `canonical/`, `00-ORIENTATION/`, `product-experience/`, etc., or for any file named `05-implementation.md`, `02-decisions.md`, `04-architecture.md`, returns **zero matches**.
+
+### 2.4 The precise contradiction
+
+The frozen contracts (CONTRACT-REGISTRY, deliverable #3), the frozen decisions (DECISION-LEDGER, deliverable #2), and the frozen finding resolutions (FINDING-LEDGER, deliverable #1) all mandate propagation **to specific files at specific line numbers / sections** of the V4.6 source corpus. The Change Manifest (deliverable #4) and Changed-File Inventory (deliverable #12) enumerate the exact file:line:section targets — for example:
+
+- `canonical/05-implementation.md` §8.5 — add Projection Event Architecture (~2000–3000 lines)
+- `canonical/04-architecture.md` §1 P9 (line 27) — remove PostgreSQL FTS fallback principle
+- `canonical/06-data-acquisition.md` §13 (lines 567–610) — rewrite for two-stage trust model
+- `canonical/02-decisions.md` ADR-6 (line 237) — rewrite Search Engine Selection
+- `GLOSSARY.md` line 124 — replace PostgreSQL FTS entry
+
+**None of these target files exist in the workspace.** The propagation targets are referenced by the evidence package but are not themselves part of the supplied artifact.
+
+Therefore the frozen authority (contracts requiring propagation to specific file:line:section locations) conflicts with the observed package fact (those file:line:section locations do not exist in the supplied package). The Remediation Executor is forbidden by §68 ("do not invent architecture") and §75 ("do not improvise; do not patch around it; do not declare GO") from inventing the missing files or fabricating their contents.
+
+---
+
+## 3. Why the Executor Did Not Proceed
+
+Proceeding without the V4.6 source corpus would have required the Executor to:
+
+1. **Fabricate** the contents of `canonical/05-implementation.md`, `canonical/04-architecture.md`, `canonical/06-data-acquisition.md`, `canonical/02-decisions.md`, `canonical/03-domain.md`, `GLOSSARY.md`, `00-ORIENTATION/AUTHORITY-HIERARCHY.md`, `README.md`, `DISCOVERY-CLOSURE.md`, 4 product-experience files, and the archive README — i.e., to invent the 43,616-line V4.6 source package from the audit evidence alone. This directly violates V4.7 §68 ("invent architecture" prohibition) and §75 ("do not improvise").
+2. **Apply edits** to those fabricated files and claim the contracts were propagated. This would be silent reinterpretation of the contract — the contracts specify concrete file:line:section targets in real V4.6 files; editing fabricated surrogates does not satisfy the contract.
+3. **Run adversarial verification** against fabricated content and report zero new material findings. This would manufacture a false GO signal — explicitly forbidden by V4.7 §80 ("Do not soften NO-GO into 'mostly ready.'") and by the brief's own rule: *"A change is not considered resolved merely because the named finding files agree. Resolution requires repository/package-wide propagation and adversarial proof that no active contradictory executable fact remains."*
+
+Each of these is a prohibited act. The brief explicitly requires the Executor to **stop** rather than perform any of them.
+
+---
+
+## 4. What the Supplied Package Actually Is
+
+Per its own README and the Remediated Package Summary (deliverable #16):
+
+- It is the **V4.7 remediation evidence package** produced by a prior remediation pass.
+- Its own final verdict is **🔴 NO-GO** (22 unresolved Tier-1 findings; 7 user decisions required; 27 contracts pending propagation).
+- It explicitly states (REMEDIATED-PACKAGE-SUMMARY.md §"What Was NOT Accomplished"): *"The remediation agent has produced the contract LANGUAGE for all 32 new contracts … but has NOT yet propagated this language to the V4.6 active-tier files."*
+- It explicitly identifies contract propagation as the **next mechanical step** to be performed against the V4.6 source corpus.
+- It explicitly states 7 user decisions (DEC-006, 009, 012, 035, 040, 041, 042) are BLOCKED on user approval and cannot be made by the remediation agent.
+
+In other words, the supplied package is the **audit/plan**, not the **subject of the audit/plan**. The Remediation Executor was asked to perform the propagation step (Step 2 of the "Critical Path to GO" in deliverable #16), but the subject of that propagation — the V4.6 source corpus — was not included in the upload.
+
+---
+
+## 5. Independent Verification Performed Before Halting
+
+Before recording this halt, the Executor performed the following adversarial checks to rule out the possibility that the V4.6 source was supplied in some other form (embedded, zipped-again, base64, hidden directory, etc.):
+
+1. **Filesystem enumeration.** `find /home/z/my-project/workspace/studynexus-v4.7 -type f` returns exactly 17 files, all `.md`, all in the 16 numbered subdirectories plus README.
+2. **Filesystem enumeration of non-markdown files.** `find /home/z/my-project/workspace -type f -not -name "*.md"` returns zero files. There are no nested archives, no `.json`, no `.txt`, no `.zip`-within-`.zip`, no source-code files of any kind.
+3. **Directory search.** No directory named `canonical/`, `00-ORIENTATION/`, `product-experience/`, `governance/`, or `archive/` exists anywhere under `/home/z/my-project/`.
+4. **Filename search.** No file named `05-implementation.md`, `04-architecture.md`, `02-decisions.md`, `03-domain.md`, `01-business.md`, `06-data-acquisition.md`, `AUTHORITY-HIERARCHY.md`, `GLOSSARY.md`, `MANIFEST.md`, or `DISCOVERY-CLOSURE.md` exists anywhere under `/home/z/my-project/`.
+5. **Grep for canonical-path citations.** `grep -r "canonical/05-implementation\.md"` returns 247 hits across all 16 evidence files — every hit is a citation inside an audit/evidence document, never the file itself.
+6. **Upload-directory verification.** `/home/z/my-project/upload/` contains only the original `studynexus-v4.7-remediation-package.zip` (148,982 bytes). No additional V4.6 source archive was uploaded alongside it.
+
+The conclusion is robust: **the V4.6 source corpus is not present in the workspace.** It is neither in the uploaded `.zip` nor anywhere else under `/home/z/my-project/`.
+
+---
+
+## 6. Escalation — Information Required From the User
+
+To unblock the remediation, the following must be supplied or decided. Items 1 and 2 are mandatory; items 3 is a precondition for any GO declaration regardless of items 1–2.
+
+### 6.1 Mandatory: Supply the V4.6 source corpus
+
+Upload the **StudyNexus V4.6 REMEDIATED PACKAGE** — the 57-markdown-file, ~43,616-line source corpus that the supplied evidence package audits. The propagation targets enumerated in the Change Manifest (deliverable #4) and Changed-File Inventory (deliverable #12) must exist as real files at the documented paths (e.g., `canonical/05-implementation.md`, `canonical/04-architecture.md`, `canonical/06-data-acquisition.md`, `canonical/02-decisions.md`, `canonical/03-domain.md`, `GLOSSARY.md`, `README.md`, `00-ORIENTATION/AUTHORITY-HIERARCHY.md`, the 4 product-experience files, `DISCOVERY-CLOSURE.md`, the historical README).
+
+Recommended packaging: a single `.zip` of the V4.6 source tree at the same path layout the evidence package assumes (canonical/, product-experience/, etc.).
+
+### 6.2 Mandatory: Resolve the 7 user decisions (DEC-006, 009, 012, 035, 040, 041, 042)
+
+The evidence package's own NO-GO verdict is gated on these decisions (deliverable #8). The Remediation Executor is forbidden by V4.7 §68 and §75 from making them. Each must be explicitly approved (or overridden with an explicit alternative) before the corresponding contract can be propagated:
+
+| Decision | Description | Recommended option (per deliverable #8) |
+|----------|-------------|------------------------------------------|
+| DEC-006 | filament-shield version constraint | `^3.0` (BLOCKED on fresh Packagist/GitHub verification per V4.7 §9) |
+| DEC-009 | QUEUE-001 concrete values (retries, backoff, jitter, timeout, exception cap, retention, alert threshold, channel) | Conservative defaults (retries=3, backoff=5s·2ⁿ, jitter=500ms, timeout=60s, exception cap=5, retention=30d, alert threshold=10/h, channel=email) |
+| DEC-012 | `InstitutionStatus::Closed` replacement | Option A — rename to `Discontinued` |
+| DEC-035 | `ProgrammeStatus` reconciliation with V4.7 §50 matrix | Option A — keep V4.6 enum + document mapping |
+| DEC-040 | `projection_events` retention policy | Option A — retain indefinitely |
+| DEC-041 | `canonical_imports` retention policy | Option A — retain indefinitely |
+| DEC-042 | `projection_states.collection_generation` update mechanism | Option B — create new rows on new generation |
+
+For DEC-006 specifically, the user must perform (or commission) a fresh Packagist/GitHub check of the `filament/filament` and `bezhanSalleh/filament-shield` packages and record the verified version range in the External Evidence Register (deliverable #9). The Remediation Executor cannot perform this verification itself — V4.7 §9 requires fresh external verification by the responsible authority, not stale citation.
+
+### 6.3 Precondition for any GO declaration (after 6.1 + 6.2)
+
+After items 6.1 and 6.2 are supplied, the Remediation Executor will:
+
+1. Propagate all 32 new contracts + 12 contract diffs to the 16 modified V4.6 files per the Change Manifest, with no architectural discretion.
+2. Apply the 47 finding remediations (22 Tier-1 + 18 Tier-2 + 7 Tier-3) per the Finding Ledger.
+3. Re-run the 36 scenario tests (deliverable #6) — target 0 FAIL.
+4. Re-run the final adversarial audit (deliverable #7 methodology) — target 0 new material findings.
+5. Re-run the two-engineer implementation-determinism simulation (deliverable #11) — target 11/11 PASS.
+6. Re-run the 13 adversarial searches (deliverable #15) — target 0 active contradictory executable facts.
+7. Only after all six targets are met, declare GO per V4.7 §80.
+
+The Remediation Executor will not declare GO until an independent adversarial audit produces **zero new material findings** AND the two-engineer simulation shows two independent engineers would converge on the same implementation, per the task brief's explicit requirement: *"Do not declare GO because all currently known findings are closed."*
+
+---
+
+## 7. What the Executor Did NOT Do (Authority Statement)
+
+Per V4.7 §81 (Final Prohibition) and the task brief's governing principle, the Remediation Executor:
+
+- ✅ Did NOT fabricate the V4.6 source corpus in order to "demonstrate" propagation.
+- ✅ Did NOT silently edit the 16 evidence documents themselves to make the audit "look propagated."
+- ✅ Did NOT invent compromise contract language where frozen decisions were missing or contradictory (e.g., DEC-006, DEC-009).
+- ✅ Did NOT perform partial propagation on the evidence package and label it as remediated V4.7 (that would have manufactured a false GO signal in violation of V4.7 §80).
+- ✅ Did NOT reinterpret the task brief's phrase "the entire package" to mean "the evidence package" — the brief's reference to "stale, contradictory, duplicated, or shadowing executable facts" can only refer to executable source content, which the evidence package does not contain.
+- ✅ Did NOT proceed past the contradiction without escalating.
+- ✅ Did NOT soften the NO-GO verdict into "mostly ready" or "awaiting one more step."
+
+The Executor's only actions were: (a) extract the uploaded archive, (b) read the evidence documents to confirm what they audit, (c) perform independent filesystem verification that the V4.6 source corpus is absent, (d) record this halt record, (e) update the shared worklog. No source files were created, modified, or deleted; no contracts were reinterpreted; no findings were closed.
+
+---
+
+## 8. Conclusion
+
+The remediation cannot be executed in its current form. The supplied package is the **plan/audit**, not the **subject of the plan/audit**. The V4.6 source corpus to which the frozen contracts must be propagated is absent from the workspace.
+
+Per the task brief: *"When authority is genuinely absent or contradictory, stop rather than guess."*
+
+The Remediation Executor has stopped, recorded the contradiction precisely (§2 above), performed independent verification before halting (§5 above), and is escalating to the user (§6 above).
+
+**Awaiting:** (1) the V4.6 source corpus upload, and (2) the 7 user decisions. Until both are supplied, no further remediation action is permissible under the frozen authority.
+
+---
+
+*End of Remediation-Halt Record. Status: HALTED — ESCALATION REQUIRED. No files were modified. No GO declaration was made.*
+
+---
+
+# StudyNexus V4.7 Evidence Package — Authority Audit Summary
+
+**Document:** 01 of 13 — Authority Audit Summary
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** StudyNexus V4.7 Remediation Evidence Package (16 deliverables + README, 17 files total)
+**Task type:** Governance-integrity audit (NOT implementation, NOT remediation)
+**Authority for this audit:** User's locked Q1–Q118 decisions (claimed as supplied; see AC-001 below)
+
+---
+
+## 1. Audit Scope and Authority
+
+This audit answers one central question:
+
+> "Does the V4.7 evidence package faithfully represent what the user actually decided, without silently changing, weakening, expanding, combining, reversing, or inventing decisions?"
+
+The audit is **first-principles**. It does not trust labels (FROZEN, APPROVED, CONTRACT, CANONICAL, AUTHORITY, FINAL). Each label is treated as a claim requiring verification against the user's locked Q1–Q118 decisions.
+
+The audit does NOT modify any package file, propagate any contract, resolve any decision, or declare GO. Per the task brief's STOP CONDITION, the only successful outcome is a trustworthy determination of whether the evidence package is faithful to the user's locked authority.
+
+---
+
+## 2. Precondition Blocker (T1)
+
+### AC-001 — User's Q1–Q118 decisions are not present in the workspace
+
+The task brief states:
+
+> "You have been given: 1. The StudyNexus V4.7 remediation evidence package. 2. The merged authority/decision material containing the user's explicit answers and final decisions Q1–Q118."
+
+Independent verification performed before any other audit step:
+
+1. `/home/z/my-project/upload/` contains only `studynexus-v4.7-remediation-package.zip` (148,982 bytes). No companion file is present.
+2. The extracted package contains 17 markdown files, all members of the V4.7 evidence package (16 deliverables + README). None is named or formatted as a Q1–Q118 decision list.
+3. A grep across the entire package for the regex `Q\d{1,3}\b` returns **zero matches**. There is no Q1, no Q118, no Q-anything inside the package.
+4. The Decision Ledger repeatedly labels 7 decisions (DEC-006, 009, 012, 035, 040, 041, 042) as "BLOCKED on user decision" — which means the remediation agent itself never had access to the user's Q1–Q118 answers either.
+
+**Conclusion:** The user's Q1–Q118 decisions — the highest authority for this audit — are absent from the workspace. This is a precondition violation that blocks the primary audit objective (decision-fidelity verification) for all 53 decisions in the Decision Ledger.
+
+**Severity:** T1 — authority contradiction that could cause divergent implementation. The entire audit depends on the ability to compare generated authority against user authority; without user authority, no generated FROZEN/APPROVED claim can be verified.
+
+**Required action:** User must supply the merged authority/decision material containing the Q1–Q118 answers. Until supplied, every FROZEN, APPROVED, and "approved option: X" claim in the package is **unverified**.
+
+**What the audit CAN do without Q1–Q118:**
+
+The audit can still verify **internal package consistency** — i.e., whether the package's own documents agree with each other. This is the bulk of the remaining audit. The audit CANNOT verify **external fidelity** — i.e., whether the package matches the user's actual decisions. That portion of the audit (decision-fidelity matrix, contract-fidelity matrix) is recorded as PRECONDITION-BLOCKED.
+
+---
+
+## 3. Top Authority Contradictions Discovered (T1)
+
+The audit discovered the following T1 contradictions through internal-consistency analysis alone (these do not require Q1–Q118 to verify; they are package-internal contradictions):
+
+### AC-002 — DEC-040, DEC-041, DEC-042 refer to different decisions in different documents
+
+| Document | DEC-040 meaning | DEC-041 meaning | DEC-042 meaning |
+|----------|-----------------|-----------------|-----------------|
+| Decision Ledger (deliverable #2) | Typesense outage contract (V4.7 §13) — FROZEN | Projection event ordering (V4.7 §14) — FROZEN | Affected projection identities (V4.7 §17) — FROZEN |
+| Contract Registry (deliverable #3) | Source decision of OUTAGE-001 (matches Ledger) | Source decision of PROJECTION-001 (matches Ledger) | (not directly referenced; ambiguous) |
+| Decision Graph (deliverable #14) | "Typesense outage contract" (matches Ledger) | "projection event ordering" (matches Ledger) | "projection_states collection_generation" (matches Unresolved-Issues, NOT Ledger) |
+| Final Audit Report (deliverable #7) | "operational retention policies" (matches Unresolved-Issues) | "operational retention policies" (matches Unresolved-Issues) | "operational retention policies" (matches Unresolved-Issues) |
+| Unresolved-Issues Report (deliverable #8) | projection_events retention policy (Origin: FA-015) — BLOCKED | canonical_imports retention policy (Origin: FA-017) — BLOCKED | projection_states.collection_generation update (Origin: FA-019) — BLOCKED |
+| Master Summary (deliverable #16) | "projection_events retention policy" (matches Unresolved-Issues) | "canonical_imports retention policy" (matches Unresolved-Issues) | "projection_states.collection_generation" (matches Unresolved-Issues) |
+| Implementation-Determinism (deliverable #11) | "OUTAGE-001 — Typesense outage" (matches Ledger) | "canonical_imports retention" (matches Unresolved-Issues) | "collection_generation" (matches Unresolved-Issues) |
+
+**Impact:** The package's NO-GO verdict rests on the claim "7 user decisions required" — but 3 of those 7 (DEC-040, 041, 042) are phantom decisions that don't exist in the Decision Ledger. The Decision Ledger's actual DEC-040/041/042 are FROZEN with completely different meanings. If the Decision Ledger is authoritative (which the package's own authority hierarchy claims), then the "7 user decisions required" is overstated by 3 and should be "4 user decisions required" (DEC-006, 009, 012, 035).
+
+**Root cause:** FA-015, FA-017, FA-019 (final-audit findings) were promoted to "DEC-040, 041, 042" in the Unresolved-Issues report (Origin: FA-015/017/019) — but these DEC-IDs were already in use for different decisions in the Decision Ledger. This is the "FINDINGS TREATED AS DECISIONS" pattern the task brief Section J specifically warns about.
+
+**Severity:** T1 — the NO-GO verdict's foundation is internally contradictory.
+
+### AC-003 — 8 dependency cycles in the Decision Ledger's `dependencies:` field
+
+The Decision Graph (deliverable #14) claims "Zero conflict edges; critical path documented" and presents the dependency graph as a DAG. Independent graph analysis of the `dependencies:` field in the Decision Ledger reveals **8 cycles**:
+
+1. DEC-001 ↔ DEC-002 (mutual)
+2. DEC-003 ↔ DEC-004 (mutual)
+3. DEC-005 ↔ DEC-018 (mutual)
+4. DEC-018 ↔ DEC-006 (mutual)
+5. DEC-008 ↔ DEC-009 (mutual)
+6. DEC-012 ↔ DEC-013 (mutual)
+7. DEC-012 → DEC-013 → DEC-035 → DEC-012 (3-cycle)
+8. DEC-013 ↔ DEC-035 (mutual)
+
+**Impact:** The Master Summary's "Critical Path to GO" (Step 1: User resolves 7 decisions; Step 2: Remediation agent propagates 32 contracts; Step 3: Apply 47 finding remediations; etc.) cannot be executed as documented because the underlying dependency graph is not a DAG. A circular dependency means there is no valid topological order in which to execute the steps.
+
+**Severity:** T1 — the package cannot be executed as designed.
+
+### AC-004 — The Decision Ledger treats V4.7 prompt sections as user-approved authority
+
+The Decision Ledger's own authority statement (lines 14–20) claims:
+
+> "All FROZEN and APPROVED decisions originate from the V4.7 governance prompt itself — the prompt's 81 sections ARE the approved decisions. Per V4.7 §68, the remediation agent is authorized to 'implement explicitly approved contract changes' but not to 'invent architecture.'"
+
+This conflates the V4.7 prompt (the remediation agent's source document) with user-approved authority. Per the task brief's ABSOLUTE RULE 9:
+
+> "DO NOT treat the remediation agent's recommended option as the user's decision unless the user's actual Q1–Q118 answer explicitly selected it."
+
+The V4.7 prompt is the remediation agent's source. Whether each V4.7 §section corresponds to an actual user Q-answer is unverifiable without the Q1–Q118 material (see AC-001). Until verified, all 49 FROZEN decisions in the Decision Ledger are **unverified FROZEN claims**.
+
+**Severity:** T1 — every FROZEN claim depends on this unverified authority mapping.
+
+### AC-005 — Findings (FA-015, FA-017, FA-019) silently promoted to decisions (DEC-040, 041, 042)
+
+The Unresolved-Issues Report explicitly states:
+
+- DEC-040: `Origin: FA-015 (final audit finding)`
+- DEC-041: `Origin: FA-017 (final audit finding)`
+- DEC-042: `Origin: FA-019 (final audit finding)`
+
+But these DEC-IDs were already in use in the Decision Ledger for different decisions. The final-audit findings were silently promoted to decisions, reusing existing DEC-IDs, without going through the decision-creation process (which would have assigned new DEC-IDs DEC-054, 055, 056).
+
+**Impact:** This is the "FINDINGS TREATED AS DECISIONS" pattern the task brief Section J specifically warns about. Any downstream reference to "DEC-040" is now ambiguous — does the reader mean the Decision Ledger's "Typesense outage contract" or the Unresolved-Issues report's "projection_events retention policy"?
+
+**Severity:** T1 — creates ID ambiguity that would cause two engineers to implement different things.
+
+---
+
+## 4. Summary of All Findings
+
+### T1 — Authority Contradiction (could cause divergent implementation): 5 findings
+
+| ID | Title | Required action |
+|----|-------|-----------------|
+| AC-001 | User Q1–Q118 decisions absent from workspace | User must supply merged authority/decision material |
+| AC-002 | DEC-040/041/042 refer to different decisions across documents | User must clarify which meaning is authoritative; remediation agent must re-number the retention-policy decisions to DEC-054/055/056 |
+| AC-003 | 8 dependency cycles in Decision Ledger | Remediation agent must break cycles by editing `dependencies:` fields |
+| AC-004 | V4.7 prompt sections treated as user-approved authority | User must explicitly confirm which V4.7 §sections map to which Q1–Q118 answers |
+| AC-005 | FA-015/017/019 promoted to DEC-040/041/042 (reusing existing DEC-IDs) | Remediation agent must re-number these to DEC-054/055/056 |
+
+### T2 — Material Governance/Contract Inconsistency: 20 findings
+
+| ID | Title | Brief description |
+|----|-------|-------------------|
+| AC-006 | Decision Ledger summary mismatch | Summary claims 35 FROZEN + 12 APPROVED + 4 PROPOSED + 2 DEFERRED; actual records show 49 FROZEN + 4 PROPOSED + 0 APPROVED + 0 DEFERRED |
+| AC-007 | Decision Graph references non-existent DEF-001, DEF-002 | DEF-001/002 don't exist in Decision Ledger (which uses DEC-001..053) |
+| AC-008 | Decision Graph self-acknowledged count discrepancy | "APPROVED = 11" but list contains 16 items; note says "count discrepancy because some are sub-decisions of DEC-002" |
+| AC-009 | Decision Graph lists DEC-040..053 in BOTH FROZEN and APPROVED | Internally contradictory table |
+| AC-010 | Decision Graph arithmetic error | Status count totals 52, not 53 as claimed |
+| AC-011 | Contract count contradiction | README says 41, Matrix says 42, actual registry has 60 |
+| AC-012 | Propagation Matrix arithmetic | Summary: 10+3+27+2=42; actual: 10+3+45+2=60 |
+| AC-013 | Finding Ledger Status Summary wrong | Tier 2/3 split and resolved/unresolved split both wrong |
+| AC-014 | Scenario verdict counts wrong | Claimed 6/8/22; actual 8/7/21 |
+| AC-015 | External Evidence Register counts wrong | Claimed 14 total (3+11); actual 16 (3+13) |
+| AC-016 | PROJECTION-007 = TYPESENSE-001 subsumption claim | Listed as 2 separate rows in registry + matrix despite "subsumed" claim |
+| AC-017 | LIFE-001 status inconsistency | Marked NEW but depends on PROPOSED DEC-012/035; should be BLOCKED like QUEUE-001 |
+| AC-018 | DEC-009 status field contradicts approved field | "PROPOSED — BLOCKED" but "approved option: B (V4.7 §57...)" — can't be both |
+| AC-019 | EE-001 false-positive VERIFIED status | Marked VERIFIED but source is "knowledge base"; V4.7 §9 requires primary evidence + corroboration |
+| AC-020 | EE-002 false-confidence language | "likely ^3.0", "unlikely", "likely" — task brief flags these patterns |
+| AC-021 | Final Audit "subsumed" pattern | Discovers 13 new findings (4 Tier-1, 9 Tier-2) then declares them subsumed so effective count stays at original 22/18 |
+| AC-022 | Change Manifest file count mismatch | Manifest lists 14 unique files; Master Summary/Inventory claims 16 modified |
+| AC-023 | Decision Graph inline-relabels DEC-043 as "admission-open semantics §34" | Ledger's DEC-043 = "historical affectedness §18" |
+| AC-024 | Decision Graph inline-relabels DEC-044 as "programme result status §35" | Ledger's DEC-044 = "runtime coalescing §19" |
+| AC-025 | TYPESENSE-001 contract references DEC-043/044 with Graph's meanings, not Ledger's | Cross-document concept drift |
+
+### T3 — Cosmetic/Documentation: 6 findings
+
+| ID | Title | Brief description |
+|----|-------|-------------------|
+| AC-026 | EE-014 cites Typesense version numbers as facts while marked UNVERIFIED | "0.25+", "0.19+" presented as facts |
+| AC-027 | README conflates V4.6 source size (57 files) with V4.7 evidence package size (17 files) | "File count: 57" claim |
+| AC-028 | Master Summary "16 files modified" vs Change Manifest's 14 unique files | Unexplained 2-file gap |
+| AC-029 | Decision Graph uses DEC-043 with two meanings within same document | "historical affectedness §18" early; "admission-open §34" later |
+| AC-030 | "V4.6 REMEDIATED PACKAGE" used both as V4.6 starting state and V4.7 target state | Terminology overlap |
+| AC-031 | README "Total deliverable size: ~150,000 words" inflated | Actual ~14,000 words; inflated ~10× |
+
+---
+
+## 5. Final Verdict
+
+**The V4.7 evidence package is NOT internally trustworthy enough to become the execution authority for a later remediation pass.**
+
+The package contains:
+
+- **5 T1 authority contradictions** (including a precondition blocker on the user's Q1–Q118 material, 8 dependency cycles, ID collisions on DEC-040/041/042, findings silently promoted to decisions, and an unverified authority mapping for all 49 FROZEN claims)
+- **20 T2 material inconsistencies** (count mismatches across 5 separate dimensions, status-field contradictions, false-positive VERIFIED statuses, false-confidence language, self-justifying "subsumed" patterns, and cross-document concept drift)
+- **6 T3 cosmetic issues** (terminology overlap, unverified claims presented as facts, inflated metrics)
+
+Per the task brief's MOST IMPORTANT RULE:
+
+> "When two generated artifacts conflict: 1. compare both against the user's actual Q1–Q118 decision; 2. if the user's decision resolves the conflict, report which artifact is wrong; 3. if the user's decision does NOT resolve it, record a NEW USER DECISION REQUIRED; 4. do not resolve it yourself."
+
+Step 1 cannot be performed for any of the 5 T1 contradictions because the user's Q1–Q118 decisions are absent (AC-001). Steps 2 and 3 are therefore blocked. The audit records the contradictions and escalates.
+
+**Audit classification:** 🔴 **NOT AUTHORITATIVE — DO NOT USE AS EXECUTION AUTHORITY**
+
+Per the task brief's STOP CONDITION, this audit does NOT proceed to source-file remediation. It does NOT declare GO, CONDITIONAL GO, or implementation-ready. It surfaces the contradictions and waits for user input.
+
+---
+
+## 6. Deliverables in This Audit Package
+
+The full audit package contains 13 deliverables in `/home/z/my-project/download/authority-audit/`:
+
+| # | File | Purpose |
+|---|------|---------|
+| 1 | `AUTHORITY-AUDIT-SUMMARY.md` (this file) | Executive summary + final verdict |
+| 2 | `DECISION-FIDELITY-MATRIX.md` | Per-decision MATCH/PARTIAL/DISTORTED/CONTRADICTORY/MISSING/OVER-SPECIFIED/UNDER-SPECIFIED classification (PRECONDITION-BLOCKED on AC-001) |
+| 3 | `CONTRACT-FIDELITY-MATRIX.md` | Per-contract fidelity classification (PRECONDITION-BLOCKED on AC-001) |
+| 4 | `GOVERNANCE-CONSISTENCY-AUDIT.md` | Audit against V4.7 §1–§18 governance rules + later governance decisions |
+| 5 | `PROJECTION-SEMANTICS-AUDIT.md` | Q20–Q31, Q42–Q43 projection chain audit (internal consistency only) |
+| 6 | `INGESTION-TRUST-AUDIT.md` | Artifact/approval/execution/replay identity audit (internal consistency only) |
+| 7 | `SEO-LIFECYCLE-AUDIT.md` | Publication/lifecycle/searchability/SEO separation audit (internal consistency only) |
+| 8 | `GRAPH-INTEGRITY-AUDIT.md` | DAG analysis, cycle detection, missing/stale edges |
+| 9 | `COUNT-CONSISTENCY-AUDIT.md` | Independent count of all numerical claims |
+| 10 | `EXTERNAL-FACT-AUDIT.md` | Verified vs claimed vs recommended vs stale vs unresolved |
+| 11 | `AUTHORITY-CONTRADICTION-LEDGER.md` | All 31 findings (5 T1 + 20 T2 + 6 T3) with full evidence |
+| 12 | `REQUIRED-USER-DECISIONS.md` | Decisions the user must make before this audit can be completed |
+| 13 | `CORRECTED-AUTHORITY-SPEC.md` | Spec the remediation agent should follow to repair the package |
+
+---
+
+## 7. Authority Statement
+
+Per the task brief's ABSOLUTE RULES:
+
+- ✅ Did NOT modify any package files.
+- ✅ Did NOT modify source files (no source files were present anyway).
+- ✅ Did NOT propagate contracts.
+- ✅ Did NOT resolve unresolved decisions.
+- ✅ Did NOT choose between competing options on the user's behalf.
+- ✅ Did NOT "repair" contradictions silently.
+- ✅ Did NOT infer that a recommendation became an approval.
+- ✅ Did NOT treat a generated contract as authoritative merely because it cites a V4.7 section.
+- ✅ Did NOT treat the remediation agent's recommended option as the user's decision (no Q1–Q118 was available to verify against).
+- ✅ Did NOT normalize contradictions by choosing the option that appears most reasonable.
+- ✅ When authority conflicts (AC-001 through AC-005), recorded the conflict and stopped short of resolution.
+- ✅ Did NOT declare GO, CONDITIONAL GO, or implementation-ready.
+- ✅ Did NOT perform source remediation. This is an authority audit only.
+
+The only successful outcome of this task — a trustworthy determination of whether the V4.7 evidence package is faithful to the user's locked authority — is partially achieved. The internal-consistency portion is complete and surfaces 31 findings. The external-fidelity portion is blocked on AC-001.
+
+---
+
+*End of Authority Audit Summary. Final verdict: NOT AUTHORITATIVE. 5 T1 + 20 T2 + 6 T3 = 31 findings. User input required on AC-001 (supply Q1–Q118) and on AC-002/AC-004 (clarify authoritative meaning).*
+
+---
+
+# Decision-Fidelity Matrix
+
+**Document:** 02 of 13 — Decision-Fidelity Matrix
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Per-decision classification of the V4.7 Decision Ledger (53 decisions) against the user's locked Q1–Q118 decisions
+**Status:** ⚠️ PRECONDITION-BLOCKED on AC-001 (user Q1–Q118 material absent)
+
+---
+
+## 1. Purpose
+
+Per task brief Section A (DECISION FIDELITY), for every Q1–Q118 decision, the audit must:
+
+1. Determine what the user actually chose.
+2. Determine what exact semantic rule followed from that choice.
+3. Verify the rule is correctly represented in the Decision Ledger.
+4. Verify the rule is correctly represented in the Contract Registry.
+5. Verify the rule is correctly represented in the Change Manifest.
+6. Verify the rule is correctly represented in the Master Summary.
+7. Verify the rule is represented consistently in downstream contracts.
+
+Each decision is classified as: MATCH, PARTIAL, DISTORTED, CONTRADICTORY, MISSING, OVER-SPECIFIED, or UNDER-SPECIFIED.
+
+---
+
+## 2. Precondition Blocker
+
+**AC-001 (T1):** The user's Q1–Q118 decision material is absent from the workspace (see Authority Audit Summary §2). Without it, steps 1 and 2 above cannot be performed for any decision.
+
+**Consequence:** All 53 decisions in the Decision Ledger are classified **UNVERIFIED — PRECONDITION-BLOCKED** at the external-fidelity level. The matrix below records what CAN be verified (internal consistency) but cannot determine whether any decision MATCHes, CONTRADICTs, or DISTORTs the user's actual choice.
+
+---
+
+## 3. Internal-Consistency Classification (what CAN be audited without Q1–Q118)
+
+For each decision, the audit verifies:
+
+- (a) Whether the Decision Ledger's `status:` field matches the Ledger Status Summary table's category counts.
+- (b) Whether the `approved option:` field is consistent with the `status:` field (e.g., PROPOSED/BLOCKED should not have an approved option).
+- (c) Whether downstream documents (Master Summary, Unresolved-Issues, Final Audit, Implementation-Determinism) reference the same DEC-ID with the same meaning.
+- (d) Whether the `dependencies:` field creates cycles.
+
+### Classification Legend (Internal-Consistency)
+
+- ✅ **CONSISTENT** — Decision record is internally consistent and consistently referenced across documents.
+- ⚠️ **INCONSISTENT-STATUS** — Status field disagrees with summary table or with approved option field.
+- ⚠️ **INCONSISTENT-REFERENCE** — Same DEC-ID is referenced with different meanings across documents.
+- ⚠️ **CYCLE-PARTICIPANT** — Decision participates in a dependency cycle.
+- 🔒 **UNVERIFIED-FROZEN** — Marked FROZEN but the authority claim ("V4.7 §XX") cannot be verified against user Q1–Q118 (AC-001 / AC-004).
+- 🔒 **UNVERIFIED-APPROVED** — Marked APPROVED (in summary) but no APPROVED records exist (AC-006).
+
+---
+
+## 4. Matrix — All 53 Decisions
+
+| DEC-ID | Decision (short) | Ledger Status | Summary Category | Internal-Consistency | Notes |
+|--------|------------------|---------------|------------------|----------------------|-------|
+| DEC-001 | Eliminate PG FTS fallback | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Mutual dependency with DEC-002 (AC-003 cycle #1) |
+| DEC-002 | Add projection-event architecture | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Mutual dependency with DEC-001 (AC-003 cycle #1) |
+| DEC-003 | Two-stage human approval | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Mutual dependency with DEC-004 (AC-003 cycle #2) |
+| DEC-004 | Artifact-level atomicity | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Mutual dependency with DEC-003 (AC-003 cycle #2) |
+| DEC-005 | Fortify version `^1.0` | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Mutual dependency with DEC-018 (AC-003 cycle #3) |
+| DEC-006 | filament-shield version | PROPOSED — BLOCKED | PROPOSED | ⚠️ INCONSISTENT-STATUS + CYCLE-PARTICIPANT | "approved option: TBD" but cycle with DEC-018 (AC-003 cycle #4); "recommended option: A (most likely)" false-confidence (AC-020) |
+| DEC-007 | TYPESENSE-001 registry | FROZEN | FROZEN | ✅ CONSISTENT | Source decision of TYPESENSE-001 contract |
+| DEC-008 | SERIAL-001 projection serialization | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Mutual dependency with DEC-009 (AC-003 cycle #5) |
+| DEC-009 | QUEUE-001 concrete values | PROPOSED — BLOCKED | PROPOSED | ⚠️ INCONSISTENT-STATUS + CYCLE-PARTICIPANT | "approved option: B (V4.7 §57...)" contradicts "PROPOSED — BLOCKED" status (AC-018); cycle with DEC-008 (AC-003 cycle #5) |
+| DEC-010 | Remove `cut_off_latest` top-level field | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-011 | Governance status normalization | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-012 | InstitutionStatus::Closed replacement | PROPOSED — BLOCKED | PROPOSED | ⚠️ CYCLE-PARTICIPANT | Participates in cycles #6, #7 with DEC-013, DEC-035 (AC-003) |
+| DEC-013 | SEO-001 lifecycle matrix | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Participates in cycles #6, #7, #8 with DEC-012, DEC-035 (AC-003) |
+| DEC-014 | SEO-002 indexability registry | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-015 | SEO-003 sitemap | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-016 | SEO-004 structured data | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-017 | SEO-005 redirects | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-018 | DEP-001 dependency contract | FROZEN | FROZEN | ⚠️ CYCLE-PARTICIPANT | Participates in cycles #3, #4 with DEC-005, DEC-006 (AC-003) |
+| DEC-019 | canonical_imports durable state | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-020 | Collection versioning (§30, §31) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-021 | Application architecture principle (§45) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-022 | (§47) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-023 | (§46) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-024 | (§59) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-025 | PERF-001 (§60) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-026 | (§61) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-027 | GOV-002 decision taxonomy (§63) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-028 | (§65) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-029 | (§66) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED | Summary claims 12 APPROVED but no records have status APPROVED (AC-006); ledger record itself says FROZEN |
+| DEC-030 | (§67) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-031 | External-fact policy (§9-§10) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-032 | (§64) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-033 | (§44) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-034 | Historical affectedness (§42-§43) | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-035 | ProgrammeStatus reconciliation | PROPOSED — BLOCKED | PROPOSED | ⚠️ CYCLE-PARTICIPANT | Participates in cycles #7, #8 with DEC-012, DEC-013 (AC-003) |
+| DEC-036 | V4.6 §4.10 LOCKED | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-037 | V4.7 §47 + V4.6 cut_off_marks | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-038 | V4.7 §74 two-engineer simulation | FROZEN | FROZEN | ✅ CONSISTENT | |
+| DEC-039 | Typesense sole public engine (§12) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | Listed in Graph's "APPROVED" list; ledger says FROZEN; both unverified against Q1–Q118 |
+| **DEC-040** | **Decision Ledger: "Typesense outage contract (§13)" / Unresolved-Issues: "projection_events retention policy"** | FROZEN (ledger) / BLOCKED (unresolved-issues) | (CLAIMED APPROVED) | ⚠️ **INCONSISTENT-REFERENCE** | **AC-002 — T1**: Same DEC-ID means different decisions in different documents. Master Summary, Final Audit, and Unresolved-Issues treat as retention-policy decision requiring user approval; Decision Ledger and Contract Registry treat as Typesense outage contract (FROZEN). |
+| **DEC-041** | **Decision Ledger: "Projection event ordering (§14)" / Unresolved-Issues: "canonical_imports retention policy"** | FROZEN (ledger) / BLOCKED (unresolved-issues) | (CLAIMED APPROVED) | ⚠️ **INCONSISTENT-REFERENCE** | **AC-002 — T1**: Same as DEC-040. Implementation-Determinism report uses Unresolved-Issues meaning. |
+| **DEC-042** | **Decision Ledger: "Affected projection identities (§17)" / Unresolved-Issues: "collection_generation update mechanism"** | FROZEN (ledger) / BLOCKED (unresolved-issues) | (CLAIMED APPROVED) | ⚠️ **INCONSISTENT-REFERENCE** | **AC-002 — T1**: Same as DEC-040. Decision Graph uses Unresolved-Issues meaning; Contract Registry ambiguous. |
+| DEC-043 | **Ledger: "Historical affectedness preserved (§18)" / Graph inline: "admission-open semantics (§34)"** | FROZEN | (CLAIMED APPROVED) | ⚠️ **INCONSISTENT-REFERENCE** | **AC-023/AC-024**: Graph inline-relabels DEC-043; TYPESENSE-001 contract uses Graph's meaning, not Ledger's (AC-025) |
+| DEC-044 | **Ledger: "Runtime projection coalescing (§19)" / Graph inline: "programme result status (§35)"** | FROZEN | (CLAIMED APPROVED) | ⚠️ **INCONSISTENT-REFERENCE** | **AC-023/AC-024**: Same as DEC-043 |
+| DEC-045 | Projection snapshot (§20) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-046 | Projection builder (§21) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-047 | Projection relevance (§23) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-048 | Projection fingerprint (§24) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-049 | Apply state machine (§26) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-050 | Apply crash recovery (§27) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-051 | PG/Typesense discrepancies (§28) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-052 | Terminal/ineligible projections (§29) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+| DEC-053 | Typesense nested schema (§32) | FROZEN | (CLAIMED APPROVED) | 🔒 UNVERIFIED-APPROVED + UNVERIFIED-FROZEN | |
+
+---
+
+## 5. Summary of Classifications
+
+| Classification | Count | DEC-IDs |
+|----------------|-------|---------|
+| ✅ CONSISTENT | 26 | DEC-007, 010, 011, 014, 015, 016, 017, 019, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 034, 036, 037, 038 (and others when ignoring precondition blocker) |
+| ⚠️ INCONSISTENT-STATUS | 2 | DEC-006, DEC-009 (PROPOSED/BLOCKED but have "approved option" field populated) |
+| ⚠️ INCONSISTENT-REFERENCE | 5 | DEC-040, DEC-041, DEC-042, DEC-043, DEC-044 (same ID, different meanings across documents) |
+| ⚠️ CYCLE-PARTICIPANT | 9 | DEC-001, 002, 003, 004, 005, 006, 008, 009, 012, 013, 018, 035 (participate in 8 cycles — AC-003) |
+| 🔒 UNVERIFIED-APPROVED | 16 | DEC-029, 039, 040–053 (Graph's "APPROVED" list has no matching APPROVED records in Ledger — AC-006) |
+| 🔒 UNVERIFIED-FROZEN | 49 | All FROZEN decisions (authority mapping to user Q1–Q118 cannot be verified — AC-001, AC-004) |
+
+**Note:** A decision can be in multiple categories. For example, DEC-040 is simultaneously INCONSISTENT-REFERENCE, UNVERIFIED-APPROVED, and UNVERIFIED-FROZEN.
+
+---
+
+## 6. Findings Requiring User Resolution
+
+The following findings require user input before this matrix can be completed at the external-fidelity level (MATCH / PARTIAL / DISTORTED / CONTRADICTORY / MISSING / OVER-SPECIFIED / UNDER-SPECIFIED):
+
+### 6.1 Supply Q1–Q118 (resolves AC-001)
+
+Without the user's Q1–Q118 decisions, all 53 decisions remain UNVERIFIED-FROZEN or UNVERIFIED-APPROVED. Once supplied, the audit can perform the full MATCH/PARTIAL/DISTORTED/CONTRADICTORY/MISSING/OVER-SPECIFIED/UNDER-SPECIFIED classification.
+
+### 6.2 Clarify DEC-040/041/042 authoritative meaning (resolves AC-002)
+
+The user must specify which meaning is authoritative:
+
+- **Option A:** The Decision Ledger's meanings are authoritative (DEC-040 = Typesense outage contract; DEC-041 = projection event ordering; DEC-042 = affected projection identities — all FROZEN). The Unresolved-Issues report's retention-policy decisions should be re-numbered DEC-054, 055, 056.
+- **Option B:** The Unresolved-Issues report's meanings are authoritative (DEC-040 = projection_events retention; DEC-041 = canonical_imports retention; DEC-042 = collection_generation update — all BLOCKED on user approval). The Decision Ledger's entries should be re-numbered DEC-054, 055, 056.
+- **Option C:** Both sets of decisions exist; the Decision Ledger is missing 3 entries (DEC-054/055/056 should be added for the retention-policy decisions; DEC-040/041/042 should retain their Ledger meanings).
+
+### 6.3 Confirm V4.7 §section → Q1–Q118 mapping (resolves AC-004)
+
+The Decision Ledger claims "V4.7 §XX = user-approved authority" for every FROZEN decision. The user must explicitly confirm:
+
+- Does V4.7 §13 correspond to a specific Q-answer that approved the Typesense outage contract?
+- Does V4.7 §14 correspond to a specific Q-answer that approved projection event ordering?
+- (and so on for all 49 FROZEN decisions)
+
+If the user did NOT explicitly approve a V4.7 §section, the corresponding decision should be reclassified from FROZEN to PROPOSED — BLOCKED on user approval.
+
+### 6.4 Confirm DEFERRED decisions (resolves AC-007)
+
+The Decision Graph references "DEF-001, DEF-002" as DEFERRED decisions, but these IDs do not exist in the Decision Ledger. The user must specify:
+
+- Are there 2 DEFERRED decisions that should be added to the Decision Ledger as DEF-001 and DEF-002?
+- Or is the Graph's reference erroneous and there are 0 DEFERRED decisions?
+
+---
+
+## 7. Conclusion
+
+The Decision-Fidelity Matrix cannot be completed at the external-fidelity level (MATCH/PARTIAL/DISTORTED/etc.) because the user's Q1–Q118 decisions are absent (AC-001). The internal-consistency classification above surfaces:
+
+- 5 INCONSISTENT-REFERENCE decisions (DEC-040, 041, 042, 043, 044) — T1
+- 2 INCONSISTENT-STATUS decisions (DEC-006, DEC-009) — T2
+- 9 CYCLE-PARTICIPANT decisions across 8 cycles — T1
+- 16 UNVERIFIED-APPROVED decisions (claimed APPROVED in Graph but FROZEN in Ledger) — T2
+- 49 UNVERIFIED-FROZEN decisions (authority mapping unverified) — T1
+
+**Verdict:** The Decision Ledger is NOT internally trustworthy enough to serve as execution authority. It requires the user resolutions in §6 above before it can be used.
+
+---
+
+*End of Decision-Fidelity Matrix. 53 decisions classified. 5 T1 + multiple T2 internal-consistency issues. External-fidelity classification blocked on AC-001.*
+
+---
+
+# Contract-Fidelity Matrix
+
+**Document:** 03 of 13 — Contract-Fidelity Matrix
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Per-contract classification of the V4.7 Contract Registry (60 contracts) against the user's locked Q1–Q118 decisions
+**Status:** ⚠️ PRECONDITION-BLOCKED on AC-001 (user Q1–Q118 material absent)
+
+---
+
+## 1. Purpose
+
+Per task brief Section A, every contract in the Contract Registry must be verified against the user's locked Q1–Q118 decisions to determine whether the contract faithfully represents what the user decided.
+
+Each contract is to be classified as: faithful, incomplete, contradictory, silently expanded, silently narrowed, or unauthorized invention.
+
+---
+
+## 2. Precondition Blocker
+
+**AC-001 (T1):** The user's Q1–Q118 decision material is absent (see Authority Audit Summary §2). Without it, the audit cannot determine whether any contract's `executable truth:` field matches what the user actually decided.
+
+**Consequence:** All 60 contracts in the Contract Registry are classified **UNVERIFIED — PRECONDITION-BLOCKED** at the external-fidelity level. The matrix below records what CAN be verified (internal consistency) but cannot determine whether any contract is faithful, contradictory, or an unauthorized invention relative to user authority.
+
+---
+
+## 3. Internal-Consistency Classification (what CAN be audited without Q1–Q118)
+
+For each contract, the audit verifies:
+
+- (a) Whether the `source decision:` field references a DEC-ID that exists in the Decision Ledger with a matching semantic.
+- (b) Whether the `authority:` field's V4.7 §section reference matches the source decision's V4.7 §section.
+- (c) Whether the `status:` field is consistent with the propagation matrix's status for the same contract.
+- (d) Whether the contract's `dependencies:` references are valid contract IDs.
+- (e) Whether the contract is listed in the Propagation Matrix.
+- (f) Whether the contract count reconciles with stated totals.
+
+### Classification Legend (Internal-Consistency)
+
+- ✅ **CONSISTENT** — Contract record is internally consistent and consistently referenced across documents.
+- ⚠️ **INCONSISTENT-REFERENCE** — Source decision reference uses a DEC-ID with mismatched semantics across documents.
+- ⚠️ **DUPLICATE-REPRESENTATION** — Contract appears as 2 separate rows despite being the same contract.
+- ⚠️ **STATUS-INCONSISTENT** — Status field disagrees with what dependencies imply (e.g., marked NEW but depends on a PROPOSED decision).
+- 🔒 **UNVERIFIED-NEW** — Marked NEW but the underlying V4.7 §section authority cannot be verified against user Q1–Q118 (AC-001 / AC-004).
+- 🔒 **UNVERIFIED-VERIFIED** — Marked REGISTERED — VERIFIED but the verification claim cannot be checked against user Q1–Q118.
+
+---
+
+## 4. Matrix — All 60 Contracts
+
+### 4.1 Existing Verified Contracts (CON-001 through CON-008)
+
+| Contract ID | Name | Registry Status | Matrix Status | Internal-Consistency | Notes |
+|-------------|------|-----------------|---------------|----------------------|-------|
+| CON-001 | INV-EI1 External Identifier Unique Component | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | V4.6-era contract; cannot verify V4.6 lineage against Q1–Q118 |
+| CON-002 | INV-PI1 ProgrammeInstance Identity | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same as CON-001 |
+| CON-003 | ProgrammeInstance Owns Admission | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same |
+| CON-004 | Publication Predicate | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same |
+| CON-005 | URL Contract (slug vs UUID) | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same |
+| CON-006 | Pending Revisions Table | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same |
+| CON-007 | Auth Stack | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same |
+| CON-008 | Color System (OKLCH) | REGISTERED — VERIFIED | ✅ PROPAGATED | 🔒 UNVERIFIED-VERIFIED | Same |
+
+### 4.2 Search / Projection Contracts (SEARCH, OUTAGE, PROJECTION-001..017, TYPESENSE, SERIAL)
+
+| Contract ID | Name | Registry Status | Matrix Status | Internal-Consistency | Notes |
+|-------------|------|-----------------|---------------|----------------------|-------|
+| SEARCH-001 | Frozen Search/Projection Architecture | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | Authority: V4.7 §12 (claimed) — unverifiable against Q1–Q118 |
+| OUTAGE-001 | Typesense Outage Contract | NEW | ❌ NOT PROPAGATED | ⚠️ INCONSISTENT-REFERENCE | `source decision: DEC-040` — but DEC-040 has different meanings in Ledger vs Unresolved-Issues (AC-002). Contract Registry uses Ledger's meaning (DEC-040 = Typesense outage contract §13) |
+| PROJECTION-001 | Projection Event Ordering | NEW | ❌ NOT PROPAGATED | ⚠️ INCONSISTENT-REFERENCE | `source decision: DEC-002, DEC-041` — DEC-041 has different meanings in Ledger vs Unresolved-Issues (AC-002). Contract uses Ledger's meaning |
+| PROJECTION-002 | Projection Event Targets | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-003 | Historical Affectedness | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-004 | Runtime Projection Coalescing | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-005 | Projection Snapshot | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-006 | Projection Builder | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| **PROJECTION-007** | **Projection Dependency Registry (= TYPESENSE-001)** | **NEW (same as TYPESENSE-001)** | **❌ NOT PROPAGATED** | ⚠️ **DUPLICATE-REPRESENTATION** | **AC-016 — T2**: Listed as separate row from TYPESENSE-001 in both Registry and Matrix despite "same as" claim; Matrix summary says "1 subsumed" but actual rows = 2 |
+| PROJECTION-008 | Projection Relevance | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-009 | Projection Fingerprint | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-010 | Projection Apply State (projection_states table) | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | Explicitly preserves "projection_states is not the projection revision allocator" — good scope preservation |
+| PROJECTION-011 | Projection Apply State Machine | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-012 | Apply Crash Recovery | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-013 | PostgreSQL/Typesense Discrepancy | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-014 | Terminal/Ineligible Projections | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-015 | Collection Contract Versioning | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-016 | Collection Rebuild / Cutover | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PROJECTION-017 | Typesense Nested Schema | NEW | ⚠️ PARTIAL | 🔒 UNVERIFIED-NEW | |
+| TYPESENSE-001 | Programme Search Schema + Dependency Registry | NEW | ❌ NOT PROPAGATED | ⚠️ INCONSISTENT-REFERENCE | `source decision: DEC-007, DEC-010, DEC-043, DEC-044` — DEC-043/044 are referenced with Graph's meanings (§34 admission-open, §35 programme result status), not Ledger's meanings (§18 historical affectedness, §19 runtime coalescing) — AC-025 |
+| SERIAL-001 | Projection Serialization | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+
+### 4.3 Queue / Ingestion / Trust Contracts
+
+| Contract ID | Name | Registry Status | Matrix Status | Internal-Consistency | Notes |
+|-------------|------|-----------------|---------------|----------------------|-------|
+| QUEUE-001 | Queue Policy | PROPOSED — BLOCKED | 🔒 BLOCKED | ✅ CONSISTENT | Properly marked BLOCKED on DEC-009 |
+| TRUST-001 | Human Approval Trust Model | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| TRUST-002 | Approval Replay | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| INGEST-001 | Import Atomicity | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| INGEST-002 | Import Execution Identity | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| INGEST-003 | Canonical Import State | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+
+### 4.4 Lifecycle / SEO Contracts
+
+| Contract ID | Name | Registry Status | Matrix Status | Internal-Consistency | Notes |
+|-------------|------|-----------------|---------------|----------------------|-------|
+| LIFE-001 | Programme Lifecycle (no CLOSED) | **NEW** — depends on DEC-035 user approval | 🔒 BLOCKED on DEC-012, DEC-035 | ⚠️ **STATUS-INCONSISTENT** | **AC-017 — T2**: Registry status field says "NEW" but descriptive note says "depends on DEC-035 user approval"; Matrix correctly marks BLOCKED; should be PROPOSED — BLOCKED like QUEUE-001 |
+| SEO-001 | Terminal/Historical Public Page Matrix | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| SEO-002 | SEO Indexability Registry | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| SEO-003 | Sitemap Eligibility | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| SEO-004 | Structured Data | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| SEO-005 | URL Redirects | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+
+### 4.5 Dependency / RBAC / Migration / Cache / Perf / FVS Contracts
+
+| Contract ID | Name | Registry Status | Matrix Status | Internal-Consistency | Notes |
+|-------------|------|-----------------|---------------|----------------------|-------|
+| DEP-001 | Dependency Contract | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| DEP-002 | Dependency Verification | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| RBAC-001 | Self-Approval Prevention | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| UPSERT-001 | Unique Upsert Constraint Audit | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| MIGR-001 | Migration Dependency-Correctness | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| CACHE-001 | Cache Invalidation | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| PERF-001 | Performance Measurement | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| FVS-001 | FVS Boundary | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+
+### 4.6 Governance / Archive / Revision / Source Contracts
+
+| Contract ID | Name | Registry Status | Matrix Status | Internal-Consistency | Notes |
+|-------------|------|-----------------|---------------|----------------------|-------|
+| GOV-001 | Governance Status Normalization | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| GOV-002 | Decision Taxonomy | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| GOV-003 | Finding Disposition | NEW (this Finding Ledger implements it) | ✅ PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| GOV-004 | Frozen-Decision Challenge | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| GOV-005 | External-Fact Policy | NEW | ⚠️ PARTIAL | 🔒 UNVERIFIED-NEW | |
+| GOV-006 | Narrative Duplication | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| GOV-007 | Two-Engineer Implementation-Determinism | NEW (deliverable #16 implements it) | ✅ PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| ARCHIVE-001 | Archive Labeling | NEW (existing labeling adequate; formalize as contract) | ⚠️ PARTIAL | 🔒 UNVERIFIED-NEW | |
+| REV-001 | Pending Revisions | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| SRC-001 | Source Priority | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+| SRC-002 | Admission Policy Precedence | NEW | ❌ NOT PROPAGATED | 🔒 UNVERIFIED-NEW | |
+
+---
+
+## 5. Summary of Classifications
+
+| Classification | Count | Contracts |
+|----------------|-------|-----------|
+| ✅ CONSISTENT | 1 | QUEUE-001 (only contract with internally consistent status field + matrix status + dependency chain) |
+| ⚠️ INCONSISTENT-REFERENCE | 3 | OUTAGE-001, PROJECTION-001 (source decision DEC-040/041 ambiguous — AC-002); TYPESENSE-001 (source decision DEC-043/044 used with Graph's meanings — AC-025) |
+| ⚠️ DUPLICATE-REPRESENTATION | 1 | PROJECTION-007 + TYPESENSE-001 (same contract, 2 rows — AC-016) |
+| ⚠️ STATUS-INCONSISTENT | 1 | LIFE-001 (status NEW but should be PROPOSED-BLOCKED per dependency on DEC-012/035 — AC-017) |
+| 🔒 UNVERIFIED-VERIFIED | 8 | CON-001 through CON-008 (cannot verify V4.6 lineage against Q1–Q118) |
+| 🔒 UNVERIFIED-NEW | 51 | All other contracts (authority mapping to V4.7 §sections cannot be verified — AC-001, AC-004) |
+
+**Note:** A contract can be in multiple categories. The counts above reflect the primary classification.
+
+---
+
+## 6. Authority Collision Test (per task brief "SPECIAL TEST: AUTHORITY COLLISION")
+
+For every material concept, the task brief requires constructing:
+
+1. User's actual decision
+2. Decision Ledger representation
+3. Contract Registry representation
+4. Change Manifest representation
+5. Master Summary representation
+6. Downstream implementation wording
+
+### Example: Concept "PostgreSQL public-search fallback" (per V4.7 §12-§13)
+
+| Layer | Representation | Result |
+|-------|----------------|--------|
+| 1. User's actual decision | **ABSENT (AC-001)** — cannot verify | N/A — precondition-blocked |
+| 2. Decision Ledger (DEC-001) | "Eliminate PostgreSQL public-search fallback; status: FROZEN; approved option: B (V4.7 §12-§13)" | UNVERIFIED-FROZEN |
+| 3. Contract Registry (SEARCH-001) | "NEW — contract language ready; awaiting file propagation" | UNVERIFIED-NEW |
+| 4. Change Manifest | "Remove PostgreSQL FTS fallback from 9 active-tier files (per F-001)" | Internally consistent with #2/#3 |
+| 5. Master Summary | "PostgreSQL FTS fallback must be eliminated (F-001); SEARCH-001 + OUTAGE-001 contracts FROZEN" | Internally consistent with #2/#3 |
+| 6. Downstream (Propagation Matrix) | "SEARCH-001: ❌ NOT PROPAGATED" | Internally consistent |
+
+**Result:** Internally consistent across #2–#6, but **cannot be verified against #1** (user's actual decision). If the user did not actually approve Option B (eliminate fallback), then 4 documents are wrong simultaneously.
+
+### Example: Concept "Projection event ordering" (per V4.7 §14)
+
+| Layer | Representation | Result |
+|-------|----------------|--------|
+| 1. User's actual decision | **ABSENT (AC-001)** | N/A |
+| 2. Decision Ledger (DEC-041) | "Projection event ordering; approved: V4.7 §14 in full; status: FROZEN" | UNVERIFIED-FROZEN |
+| 3. Contract Registry (PROJECTION-001) | "source decision: DEC-002, DEC-041" | Uses Ledger's meaning |
+| 4. Change Manifest | §canonical/05-implementation.md §8.5 (new Projection Event Architecture) | Internally consistent with #2/#3 |
+| 5. Master Summary | "PROJECTION-001 through PROJECTION-017 contracts FROZEN" | Internally consistent with #2/#3 |
+| 6. Downstream (Unresolved-Issues) | "DEC-041: canonical_imports retention policy (Origin: FA-017)" | **CONTRADICTORY** — uses different meaning for DEC-041 (AC-002) |
+
+**Result:** Layer #6 uses a different meaning of DEC-041 than layers #2–#5. This is a T1 authority collision.
+
+---
+
+## 7. "FROZEN" Claims Test (per task brief "SPECIAL TEST: 'FROZEN' CLAIMS")
+
+Any artifact calling something FROZEN must prove:
+
+1. It was explicitly decided.
+2. The semantic wording matches the user's decision.
+3. No later artifact contradicts it.
+4. Any operational parameters intentionally left adjustable remain explicitly adjustable.
+5. It does not convert a recommendation into an approval.
+
+### Application to V4.7 Contracts
+
+| Test | Result |
+|------|--------|
+| 1. Explicitly decided? | **UNVERIFIABLE** — every FROZEN contract traces back to "V4.7 §XX", which is the remediation agent's source document, not the user's Q1–Q118 answers (AC-001, AC-004) |
+| 2. Semantic wording matches user decision? | **UNVERIFIABLE** — same reason |
+| 3. No later artifact contradicts it? | **FAILED** — multiple contradictions found: AC-002 (DEC-040/041/042), AC-023/024/025 (DEC-043/044), AC-016 (PROJECTION-007 vs TYPESENSE-001), AC-017 (LIFE-001 status) |
+| 4. Operational parameters adjustable remain adjustable? | **PARTIAL** — QUEUE-001 correctly leaves concrete values as "TBD — REQUIRES USER APPROVAL"; but LIFE-001 has implicit DEC-012/035 dependency without explicit BLOCKED status |
+| 5. Recommendation not converted to approval? | **FAILED** — DEC-009 has "approved option: B (V4.7 §57...)" while status is "PROPOSED — BLOCKED on user approval of concrete values" (AC-018) |
+
+**Conclusion:** No FROZEN claim in the package satisfies all 5 tests. Every FROZEN claim is **unverified** at minimum.
+
+---
+
+## 8. Unauthorized Implementation Detail Scan (per task brief MOST IMPORTANT RULE)
+
+> "if a generated contract contains a detail that was never decided by the user and materially affects implementation, mark it as: UNAUTHORIZED IMPLEMENTATION DETAIL — USER DECISION REQUIRED unless it is clearly a mechanical consequence of an already-frozen decision."
+
+The following contract details are flagged as potentially unauthorized implementation details (pending user verification):
+
+| Contract | Detail | Why flagged |
+|---------|--------|-------------|
+| PROJECTION-001 | "Use a single PostgreSQL global transactional serialization point" | Specific implementation choice; user may have preferred per-table sequence |
+| PROJECTION-001 | "Sequence values do not need to be gap-free" | Specific implementation choice; user may have required gap-free |
+| PROJECTION-010 | "Equivalent names are acceptable only if semantics remain identical" | Permissive naming policy; user may have required strict naming |
+| PROJECTION-016 | "Exact retention duration is operational policy" | Defers a decision that may need user input |
+| TYPESENSE-001 | "10 columns per field (name, canonical source, transformation, type, searchable, filterable, sortable, facet behavior, null behavior, dependency)" | Specific 10-column structure; user may have specified different columns |
+| TYPESENSE-001 | "A top-level aggregate is_admission_open may exist only as a separately defined projection concept" | Permissive; user may have forbidden top-level aggregate entirely |
+| OUTAGE-001 | "canonical browse/detail pages continue using PostgreSQL" | Specific routing decision; user may have wanted different fallback |
+| TRUST-001 (implied via DEC-003) | "Stage 1: HMAC or mTLS for transport integrity only" | "or" leaves ambiguity; user may have specified one |
+| LIFE-001 | "depends on DEC-035 user approval for V4.6 ProgrammeStatus" | Implicit dependency not surfaced in status field |
+
+These are flagged as **POTENTIALLY UNAUTHORIZED IMPLEMENTATION DETAILS — USER DECISION REQUIRED**. Without Q1–Q118, the audit cannot determine whether each is a "mechanical consequence of an already-frozen decision" or an unauthorized invention.
+
+---
+
+## 9. Findings Requiring User Resolution
+
+### 9.1 Supply Q1–Q118 (resolves AC-001)
+
+Without the user's Q1–Q118 decisions, all 60 contracts remain UNVERIFIED. Once supplied, the audit can perform the full faithful/incomplete/contradictory/silently expanded/silently narrowed/unauthorized invention classification.
+
+### 9.2 Confirm V4.7 §section authority mapping (resolves AC-004)
+
+The user must explicitly confirm whether each V4.7 §section cited as `authority:` in the Contract Registry corresponds to an actual user-approved Q-answer. If not, the corresponding contract should be reclassified from NEW/VERIFIED to PROPOSED — BLOCKED.
+
+### 9.3 Resolve PROJECTION-007 vs TYPESENSE-001 (resolves AC-016)
+
+The user must specify:
+
+- **Option A:** PROJECTION-007 and TYPESENSE-001 are the same contract; one row should be removed from both the Registry and the Matrix; the contract count should be 59, not 60.
+- **Option B:** PROJECTION-007 and TYPESENSE-001 are distinct contracts; the "same as" claim should be removed; the contract count remains 60.
+
+### 9.4 Resolve LIFE-001 status (resolves AC-017)
+
+The user must specify:
+
+- **Option A:** LIFE-001 should be marked PROPOSED — BLOCKED on DEC-012/035 (matching QUEUE-001's treatment of DEC-009 dependency).
+- **Option B:** LIFE-001 is correctly marked NEW because the contract language is ready even if the values are pending.
+
+### 9.5 Verify potentially unauthorized implementation details (§8 above)
+
+The user must verify each of the 9 flagged contract details in §8 above and confirm whether each is a "mechanical consequence of an already-frozen decision" or requires a new user decision.
+
+---
+
+## 10. Conclusion
+
+The Contract-Fidelity Matrix cannot be completed at the external-fidelity level (faithful/incomplete/contradictory/etc.) because the user's Q1–Q118 decisions are absent (AC-001). The internal-consistency classification surfaces:
+
+- 3 INCONSISTENT-REFERENCE contracts (OUTAGE-001, PROJECTION-001, TYPESENSE-001) — T1/T2
+- 1 DUPLICATE-REPRESENTATION (PROJECTION-007 / TYPESENSE-001) — T2
+- 1 STATUS-INCONSISTENT (LIFE-001) — T2
+- 8 UNVERIFIED-VERIFIED contracts (CON-001..008) — T1 (precondition)
+- 51 UNVERIFIED-NEW contracts — T1 (precondition)
+
+**Verdict:** The Contract Registry is NOT internally trustworthy enough to serve as execution authority. It requires the user resolutions in §9 above before it can be used.
+
+---
+
+*End of Contract-Fidelity Matrix. 60 contracts classified. 3 T1 + 4 T2 internal-consistency issues. External-fidelity classification blocked on AC-001.*
+
+---
+
+# Governance-Consistency Audit
+
+**Document:** 04 of 13 — Governance-Consistency Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Audit of the V4.7 evidence package against V4.7 §1–§18 governance rules and later governance decisions (DEC-027, 028, 030, 031, 038)
+**Status:** Partially blocked on AC-001; internal-consistency audit complete
+
+---
+
+## 1. Purpose
+
+Per task brief Section I (GOVERNANCE AUTHORITY), verify the package is consistent with these governance rules:
+
+1. Contracts override document tier
+2. Contract authority is closed
+3. Executable facts outside registry are violations, not auto-promoted contracts
+4. Delegation is bounded and logged
+5. GLM may propose but not resolve unapproved decisions
+6. Unresolved material issues stop affected work
+7. False-positive closure requires proof
+8. Regression guards are required
+9. Archive is detected but not rewritten
+10. Final completeness requires adversarial discovery, not merely zero open findings
+11. Frozen decisions remain authoritative until explicitly reopened
+12. External facts are evidence, not authority
+13. External re-verification generates challenges rather than silent mutation
+
+---
+
+## 2. Rule-by-Rule Audit
+
+### Rule 1: Contracts override document tier
+
+**V4.7 §section:** implied by authority hierarchy (Canonical > Product Experience > Implementation Plan > Governance > Research > Historical; but contracts override tier).
+
+**Package behavior:**
+- Contract Registry explicitly lists contracts as authoritative.
+- Change Manifest propagates contracts TO canonical files (canonical files do not override contracts).
+- Master Summary says "code against the contracts, not against V4.6 file content".
+
+**Result:** ✅ **CONSISTENT** — Package treats contracts as overriding document tier.
+
+### Rule 2: Contract authority is closed
+
+**V4.7 §section:** Only registered contracts are authoritative; new contracts require registration.
+
+**Package behavior:**
+- Contract Registry has 60 contracts (8 CON + 52 named).
+- Final Audit Report claims "0 new contracts required beyond the 41 in the Contract Registry" — **CONTRADICTS** the actual 60 contracts in the registry (AC-011).
+- Master Summary claims 41 contracts; Matrix claims 42; actual 60.
+
+**Result:** ⚠️ **INCONSISTENT** — Package's stated contract count (41/42) does not match actual registry count (60). This is AC-011 (T2). The authority-closure claim is undermined by the count discrepancy: if there are really 60 contracts, the package's "41" claim leaves 19 contracts potentially "outside the closed authority."
+
+### Rule 3: Executable facts outside registry are violations
+
+**V4.7 §section:** Executable facts in active-tier files that are not registered contracts are violations, not auto-promoted contracts.
+
+**Package behavior:**
+- Finding Ledger F-001 identifies 50+ "PostgreSQL FTS fallback" executable facts across 14 active-tier files — correctly flagged as violations.
+- Finding Ledger F-010 identifies 8 `cut_off_latest` executable facts — correctly flagged.
+- BUT: The Contract Registry itself contains "executable truth:" fields that introduce new executable facts not present in any user-approved source. Without Q1–Q118 verification, these are potentially "unauthorized executable facts" being introduced by the package itself (see Contract-Fidelity Matrix §8).
+
+**Result:** ⚠️ **PARTIALLY CONSISTENT** — Package correctly identifies V4.6 violations but may be introducing new unauthorized executable facts via "executable truth:" fields.
+
+### Rule 4: Delegation is bounded and logged
+
+**V4.7 §section:** All delegation must be bounded (explicit scope) and logged (auditable).
+
+**Package behavior:**
+- No explicit delegation log found in the 17 evidence files.
+- The remediation agent claims authority to "implement explicitly approved contract changes" (per V4.7 §68) but the boundary between "implement" and "invent" is not explicitly logged for any specific change.
+- The Decision Ledger's "approval authority: User (via V4.7 prompt §XX)" pattern is a delegation claim, but the logging is implicit (a single field per decision), not a separate delegation log.
+
+**Result:** ⚠️ **INCONSISTENT** — No explicit delegation log; delegation is implicit in decision records.
+
+### Rule 5: GLM may propose but not resolve unapproved decisions
+
+**V4.7 §section:** The remediation agent (GLM) may propose options but cannot resolve decisions the user has not approved.
+
+**Package behavior:**
+- 4 PROPOSED decisions (DEC-006, 009, 012, 035) correctly identified as requiring user approval.
+- 3 phantom decisions (DEC-040, 041, 042 per Unresolved-Issues) also flagged as requiring user approval.
+- BUT: 49 decisions are marked FROZEN with authority "User (via V4.7 prompt §XX)" — the remediation agent is treating V4.7 prompt sections AS user approval, which conflates "the agent's source document" with "user-approved authority" (AC-004).
+- BUT: DEC-009 has "approved option: B (V4.7 §57...)" despite being marked PROPOSED — BLOCKED (AC-018). The remediation agent is recording an approval that hasn't occurred.
+
+**Result:** ⚠️ **INCONSISTENT** — Package violates Rule 5 in two ways:
+- (a) Treating V4.7 prompt as user approval (AC-004)
+- (b) Recording approved-option fields for PROPOSED/BLOCKED decisions (AC-018)
+
+### Rule 6: Unresolved material issues stop affected work
+
+**V4.7 §section:** When a material decision is unresolved, all affected work stops (not just the directly-blocked file).
+
+**Package behavior:**
+- Unresolved-Issues Report lists 15 items of "Safe Mechanical Work That Can Continue" alongside the 7 unresolved decisions.
+- This is consistent with V4.7 §75 step 7 ("continue safe unrelated mechanical work only").
+- BUT: The 7 unresolved decisions include 3 phantom decisions (DEC-040/041/042 per AC-002) — if these are actually FROZEN (per the Decision Ledger), then the "stopped work" list is overstated.
+
+**Result:** ⚠️ **PARTIALLY CONSISTENT** — Rule followed mechanically but based on contradictory DEC-ID meanings.
+
+### Rule 7: False-positive closure requires proof
+
+**V4.7 §section:** Closing a finding as FALSE-POSITIVE requires affirmative proof, not mere assertion.
+
+**Package behavior:**
+- Finding Ledger has 2 FALSE-POSITIVE findings: F-040 and F-047 (both "properly labeled archive per V4.7 §2").
+- F-040 evidence: "(per V4.7 §2 — properly labeled archive)" — this is a citation, not proof.
+- F-047 evidence: "(properly labeled archive)" — same.
+- Archive Contamination Report (deliverable #10) audits 4 concerns; all marked FALSE-POSITIVE.
+- The Archive Contamination Report says "all FALSE-POSITIVE per V4.7 §2" but V4.7 §2 is a rule, not evidence of compliance with the rule.
+
+**Result:** ⚠️ **INCONSISTENT** — False-positive closures cite the rule but do not provide affirmative proof of compliance (e.g., grep output showing every archive file has "Archived" label in first 5 lines).
+
+### Rule 8: Regression guards are required
+
+**V4.7 §section:** Every registered contract must have a regression guard.
+
+**Package behavior:**
+- Propagation Matrix lists 54 regression guards across all 60 contracts (12 grep + 9 schema + 3 migration + 2 composer + 3 script + 11 scenario + 2 state machine + 2 route + 1 CSS + 2 parse + 1 static + 1 sitemap + 1 structured-data + 2 audit log + 1 reconciliation + 1 hash = 54).
+- All 60 contracts have at least one regression guard listed in the Contract Registry.
+
+**Result:** ✅ **CONSISTENT** — Regression guards present for all contracts; count reconciles (54).
+
+### Rule 9: Archive is detected but not rewritten
+
+**V4.7 §section:** Archive/historical material is detected (for context) but NOT rewritten (preserved as-is).
+
+**Package behavior:**
+- Archive Contamination Report (deliverable #10) audits 4 archive concerns and concludes all are FALSE-POSITIVE.
+- README says "31 files unchanged (properly labeled Tier 6 Historical per ARCHIVE-001)".
+- Change Manifest does NOT list any archive file modifications (only "archive/HISTORICAL-README.md formalize as contract" — which is formalization of labeling, not rewriting content).
+- Propagation Matrix lists ARCHIVE-001 as ⚠️ PARTIAL with note "existing labeling adequate; formalization pending".
+
+**Result:** ✅ **CONSISTENT** — Archive is detected, not rewritten.
+
+### Rule 10: Final completeness requires adversarial discovery
+
+**V4.7 §section:** GO requires the final adversarial audit to produce zero NEW material findings — not merely zero OPEN findings.
+
+**Package behavior:**
+- Final Audit Report (deliverable #7) discovered 20 new findings (FA-001 through FA-020).
+- This is correctly interpreted as "audit is productive" — the package's NO-GO verdict rests in part on these new findings.
+- BUT: 13 of the 20 new findings (4 Tier-1 + 9 Tier-2) are immediately declared "subsumed by existing contracts" so the effective count stays at the original 22/18 (AC-021). This is a self-justifying mechanism that undermines the adversarial-discovery principle.
+
+**Result:** ⚠️ **PARTIALLY INCONSISTENT** — Rule followed in form (20 new findings discovered) but undermined by "subsumed" pattern that prevents the new findings from changing the bottom-line count (AC-021).
+
+### Rule 11: Frozen decisions remain authoritative until explicitly reopened
+
+**V4.7 §section:** A FROZEN decision can only be changed via the explicit frozen-decision challenge protocol (GOV-004).
+
+**Package behavior:**
+- 49 decisions marked FROZEN.
+- No FROZEN decision is challenged in the package.
+- BUT: The Decision Graph's "APPROVED" list (containing DEC-029, 039, 040–053) implicitly demotes 16 FROZEN decisions to APPROVED without going through the challenge protocol (AC-009). This is a silent status change.
+
+**Result:** ⚠️ **INCONSISTENT** — Decision Graph silently changes 16 decisions from FROZEN to APPROVED without using the frozen-decision challenge protocol (AC-009).
+
+### Rule 12: External facts are evidence, not authority
+
+**V4.7 §section:** External facts (Packagist versions, framework release status) are evidence that informs decisions; they are NOT authority themselves.
+
+**Package behavior:**
+- External Evidence Register (deliverable #9) correctly labels external facts as "evidence" and notes they require fresh verification.
+- DEC-005 (Fortify version) and DEC-006 (filament-shield version) correctly require external verification.
+- BUT: EE-001 (Laravel Fortify) is marked "VERIFIED" based on "knowledge base" citation — this is treating the remediation agent's knowledge as authoritative, violating V4.7 §9's "authoritative primary evidence plus corroboration" requirement (AC-019).
+
+**Result:** ⚠️ **PARTIALLY INCONSISTENT** — Rule followed in form but EE-001's VERIFIED status violates the rule (AC-019).
+
+### Rule 13: External re-verification generates challenges
+
+**V4.7 §section:** When an external fact is re-verified and found different, it must generate a frozen-decision challenge — NOT silently mutate the frozen contract.
+
+**Package behavior:**
+- External Evidence Register correctly notes "Reverification may generate a frozen-decision challenge per V4.7 §10. It must never silently mutate the frozen contract."
+- 11 (claimed) / 13 (actual) external facts marked UNVERIFIED — pending fresh check (AC-015).
+- The challenge-generation mechanism is described but not yet exercised (no actual reverification has occurred).
+
+**Result:** ✅ **CONSISTENT** — Rule is correctly described; no actual reverification has occurred to test it.
+
+---
+
+## 3. Summary
+
+| # | Governance Rule | Result | Findings |
+|---|-----------------|--------|----------|
+| 1 | Contracts override document tier | ✅ CONSISTENT | — |
+| 2 | Contract authority is closed | ⚠️ INCONSISTENT | AC-011 (count mismatch) |
+| 3 | Executable facts outside registry are violations | ⚠️ PARTIALLY CONSISTENT | May introduce new unauthorized executable facts |
+| 4 | Delegation is bounded and logged | ⚠️ INCONSISTENT | No explicit delegation log |
+| 5 | GLM may propose but not resolve unapproved | ⚠️ INCONSISTENT | AC-004 (V4.7 prompt treated as approval), AC-018 (DEC-009 has approved-option despite BLOCKED) |
+| 6 | Unresolved material issues stop affected work | ⚠️ PARTIALLY CONSISTENT | AC-002 (phantom DEC-IDs in stop-work list) |
+| 7 | False-positive closure requires proof | ⚠️ INCONSISTENT | F-040, F-047 cite rule but no proof |
+| 8 | Regression guards are required | ✅ CONSISTENT | 54 guards recorded |
+| 9 | Archive is detected but not rewritten | ✅ CONSISTENT | — |
+| 10 | Final completeness requires adversarial discovery | ⚠️ PARTIALLY INCONSISTENT | AC-021 (subsumed pattern) |
+| 11 | Frozen decisions remain authoritative until explicitly reopened | ⚠️ INCONSISTENT | AC-009 (silent FROZEN→APPROVED demotion) |
+| 12 | External facts are evidence, not authority | ⚠️ PARTIALLY INCONSISTENT | AC-019 (EE-001 false-positive VERIFIED) |
+| 13 | External re-verification generates challenges | ✅ CONSISTENT | — |
+
+**Tally:** 4 ✅ CONSISTENT, 7 ⚠️ PARTIALLY CONSISTENT/INCONSISTENT, 2 ⚠️ PARTIALLY INCONSISTENT.
+
+---
+
+## 4. Conclusion
+
+The V4.7 evidence package partially complies with V4.7 governance rules but has 9 partial-or-full violations:
+
+- 1 T1 issue: AC-004 (Rule 5 — V4.7 prompt treated as user approval)
+- 1 T1 issue: AC-009 (Rule 11 — silent FROZEN→APPROVED demotion in Decision Graph)
+- 7 T2 issues: AC-011, AC-018, AC-019, AC-021, plus 3 partial-consistency items
+
+The package CANNOT be considered governance-compliant until these violations are resolved.
+
+---
+
+*End of Governance-Consistency Audit. 13 rules audited. 4 consistent, 9 partially/fully inconsistent.*
+
+---
+
+# Projection-Semantics Audit
+
+**Document:** 05 of 13 — Projection-Semantics Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Audit of the V4.7 projection model as a single causal system (Q20–Q31, Q42–Q43 chain)
+**Status:** Partially blocked on AC-001; internal-consistency audit complete
+
+---
+
+## 1. Purpose
+
+Per task brief Section D (Q20–Q31 PROJECTION CHAIN), verify the package consistently preserves the following distinct concepts:
+
+| Concept | Role |
+|---------|------|
+| contributor revisions | per-source change tracking → provenance |
+| projection-event revision | canonical causal ordering |
+| projection_states | durable application/lifecycle state |
+| Typesense document revision/state | physical serving state |
+
+And verify the final Q31A rule:
+
+> "projection-event revision is allocated transactionally at the canonical mutation boundary and travels immutably with the event. A worker must NOT invent a new freshness revision for an existing event."
+
+Per task brief Section E (Q42–Q43 HISTORICAL AFFECTEDNESS), verify the package consistently says:
+
+> canonical mutation → exact affected projection identities captured at mutation time → normalized target rows → commit
+
+and NOT:
+
+> canonical mutation → later worker queries current relationships → reconstruct affected identities
+
+---
+
+## 2. Precondition Blocker
+
+**AC-001 (T1):** Without the user's Q20–Q31 and Q42–Q43 actual decisions, the audit cannot verify whether the package's projection model matches what the user decided. The audit below verifies **internal consistency only** — i.e., whether the package's own documents agree with each other on the projection model.
+
+---
+
+## 3. Concept-Separation Audit
+
+### 3.1 Contributor revision vs projection-event revision
+
+**Distinction required:** Contributor revisions track per-source changes (provenance). Projection-event revisions track canonical causal ordering of projection-affecting mutations. These MUST NOT be conflated.
+
+**Package behavior:**
+- PROJECTION-001 contract: "Do not derive the projection freshness number from an individual contributor revision."
+- PROJECTION-001 contract: "Projection workers never allocate a new freshness revision for an existing event."
+- DEC-034 (historical affectedness §42-§43): preserves the distinction.
+
+**Result:** ✅ **CONSISTENT** — Package explicitly forbids deriving projection freshness from contributor revisions.
+
+### 3.2 Projection-event revision vs projection_states (durable apply state)
+
+**Distinction required:** Projection-event revision is the immutable causal order. projection_states is the durable PostgreSQL-side record of "what's been applied so far." These MUST NOT be conflated.
+
+**Package behavior:**
+- PROJECTION-010 contract: "projection_states is the durable PostgreSQL application-side projection lifecycle state."
+- PROJECTION-010 contract: "projection_states is not the projection revision allocator." (Explicit scope-preservation statement.)
+- PROJECTION-010 fields: `last_applied_projection_revision` (pointer to the latest applied event), `lifecycle_state` (APPLYING/APPLIED/etc.), `terminal_revision`, `projection_contract_version`, `collection_generation`, `last_applied_fingerprint`.
+
+**Result:** ✅ **CONSISTENT** — Package explicitly separates "projection-event revision" (allocator = global sequence in PROJECTION-001) from "projection_states" (durable apply state in PROJECTION-010).
+
+### 3.3 projection_states vs Typesense document revision/state
+
+**Distinction required:** projection_states is the PostgreSQL-side apply state. Typesense document revision/state is the physical serving state in Typesense. These MUST NOT be conflated.
+
+**Package behavior:**
+- PROJECTION-010 governs PostgreSQL-side state.
+- PROJECTION-009 governs "Projection Fingerprint" (hash of the materialized document) — this is the bridge between PostgreSQL-side state and Typesense-side state.
+- No contract explicitly equates projection_states with Typesense document state.
+
+**Result:** ✅ **CONSISTENT** — Distinction preserved.
+
+### 3.4 Worker-time revision allocation vs canonical-mutation-boundary allocation
+
+**Q31A rule:** "projection-event revision is allocated transactionally at the canonical mutation boundary and travels immutably with the event. A worker must NOT invent a new freshness revision for an existing event."
+
+**Package behavior:**
+- PROJECTION-001 contract: "A projection-affecting canonical transaction receives an immutable `projection_event_revision` inside the same PostgreSQL transaction as: canonical mutation, projection event, affected-target persistence."
+- PROJECTION-001 contract: "Use a single PostgreSQL global transactional serialization point."
+- PROJECTION-001 contract: "Projection workers never allocate a new freshness revision for an existing event."
+- PROJECTION-001 contract: "Retries reuse the exact same immutable event revision."
+- PROJECTION-001 contract: "Do not use worker execution order as freshness order."
+- PROJECTION-001 contract: "Do not use a worker-time sequence."
+
+**Result:** ✅ **CONSISTENT** — Q31A rule is explicitly enforced by PROJECTION-001's executable truth.
+
+---
+
+## 4. Historical Affectedness Audit (Q42–Q43)
+
+**Required pattern:** canonical mutation → exact affected projection identities captured at mutation time → normalized target rows → commit
+
+**Forbidden pattern:** canonical mutation → later worker queries current relationships → reconstruct affected identities
+
+**Package behavior:**
+- PROJECTION-002 contract: "Projection Event Targets" — governed by V4.7 §17 (normalized target rows).
+- PROJECTION-003 contract: "Historical Affectedness" — governed by V4.7 §18.
+- DEC-034 (source decision for PROJECTION-003): "approved: V4.7 §42-§43 in full" — but DEC-034 in the Decision Ledger says "approved: B (V4.7 §42-§43)", suggesting the user approved Option B which corresponds to V4.7 §42-§43.
+- The Contract Registry does not explicitly state "captured at mutation time, NOT rediscovered later" — this is implied by V4.7 §17-§18 but not made explicit in the contract's executable truth.
+
+**Result:** ⚠️ **PARTIALLY CONSISTENT** — The package references V4.7 §17-§18 as authority but does not explicitly restate the "captured at mutation time, NOT rediscovered" rule in the contract's executable truth. This creates a risk that an implementer might not realize the distinction.
+
+**Recommendation:** PROJECTION-002 and PROJECTION-003 contracts should explicitly state: "Affected projection identities are captured at mutation time inside the canonical transaction. A worker MUST NOT query current relationships to reconstruct affected identities."
+
+---
+
+## 5. Decision-Scope Collapse Scan (Section B)
+
+The task brief warns against terminology that accidentally merges distinct concepts. The following terms were checked for conflation:
+
+| Term pair | Conflation risk | Package behavior |
+|-----------|-----------------|------------------|
+| "projection revision" vs "projection state" | Could be merged into "projection status" | ✅ Kept separate (PROJECTION-001 vs PROJECTION-010) |
+| "collection generation" vs "projection state" | Could be merged | ✅ Kept separate (PROJECTION-015/016 vs PROJECTION-010) |
+| "last_applied_projection_revision" vs "terminal_revision" | Could be conflated | ✅ Both fields in PROJECTION-010 with distinct semantics |
+| "lifecycle state" vs "publication state" | Could be merged | ✅ Kept separate (PROJECTION-010 vs SEO-001) |
+| "admission state" vs "searchability" | Could be merged | ✅ Kept separate (TYPESENSE-001 §Admission Open Semantics vs §Publication/searchability state) |
+| "artifact identity" vs "approval identity" | Could be merged | ✅ Kept separate (INGEST-002 vs TRUST-001) |
+| "approval identity" vs "execution identity" | Could be merged | ✅ Kept separate (TRUST-001 vs INGEST-002) |
+| "execution identity" vs "replay execution identity" | Could be merged | ✅ Kept separate (INGEST-002 vs TRUST-002) |
+| "finding" vs "decision" | Could be merged | ⚠️ **VIOLATED** — FA-015/017/019 findings were silently promoted to DEC-040/041/042 decisions (AC-005) |
+
+**Result:** 8 of 9 concept pairs are correctly kept separate. 1 pair (finding vs decision) is violated by AC-005.
+
+---
+
+## 6. cut_off_latest Removal Audit (Q99–Q111)
+
+**Required:** Top-level `cut_off_latest` field must be removed. Contextual nested cutoffs must be used. No escape hatch for reintroducing `cut_off_latest`.
+
+**Package behavior:**
+- TYPESENSE-001 contract §Cut-off Semantics (per V4.7 §36): "Remove top-level cut_off_latest. Use contextual nested cutoff values."
+- TYPESENSE-001 validation mechanism: "grep assertion: zero matches for `cut_off_latest` in active-tier files."
+- Finding F-010: "8 cut_off_latest references across 3 product-experience files" — correctly flagged as violation.
+- DEC-010: "Remove `cut_off_latest` top-level field" — FROZEN.
+
+**Escape-hatch scan:**
+- Searched all 17 evidence files for any language allowing `cut_off_latest` to be retained.
+- TYPESENSE-001 contract: "If future UX needs a top-level cutoff aggregate, that requires an explicit new decision." — This is a properly-bounded escape hatch (requires new decision, not silent reintroduction).
+- No other escape hatches found.
+
+**Result:** ✅ **CONSISTENT** — Package correctly removes `cut_off_latest` with no improper escape hatch.
+
+---
+
+## 7. Contextual Nested Admission State Audit (Q99–Q111)
+
+**Required:** Admission state is contextual to the matching instance set. Same-instance nested filtering must be preserved.
+
+**Package behavior:**
+- TYPESENSE-001 contract §Admission Open Semantics (per V4.7 §34): "instances[].is_admission_open is authoritative for contextual filtering."
+- TYPESENSE-001 contract §Programme Result Status (per V4.7 §35): "Admission status is contextual to the matching instance set. If search context narrows to a specific instance subset: result status reflects those matching instances."
+- PROJECTION-017 contract: "Typesense Nested Schema" — governs the nested schema that enables same-instance filtering.
+
+**Result:** ✅ **CONSISTENT** — Package preserves contextual nested admission state.
+
+---
+
+## 8. Cross-Document Consistency Check
+
+The audit verified that the projection model is described consistently across:
+
+| Document | Projection model described? | Consistent with Contract Registry? |
+|----------|----------------------------|------------------------------------|
+| Decision Ledger (DEC-002, 020, 034, 039–053) | Yes | ✅ |
+| Contract Registry (PROJECTION-001..017, SERIAL-001, TYPESENSE-001) | Yes (authoritative) | N/A |
+| Change Manifest | Yes (§canonical/05-implementation.md §8.5) | ✅ |
+| Scenario Tests (S-10, S-12, S-13, S-14, S-15, S-17, S-18) | Yes | ✅ |
+| Final Audit (FA-014, FA-019) | Yes | ✅ |
+| Implementation-Determinism Report | Yes | ⚠️ Uses Unresolved-Issues meaning of DEC-041/042 (AC-002) |
+
+**Result:** 5 of 6 documents consistent; Implementation-Determinism Report uses different DEC-041/042 meanings (AC-002).
+
+---
+
+## 9. Findings
+
+| ID | Finding | Severity | Required action |
+|----|---------|----------|-----------------|
+| PS-001 | PROJECTION-002/003 do not explicitly restate "captured at mutation time, NOT rediscovered" rule | T2 | Add explicit statement to contract executable truth |
+| PS-002 | Implementation-Determinism Report uses Unresolved-Issues meaning of DEC-041/042, contradicting Decision Ledger | T1 (AC-002) | Resolve DEC-040/041/042 authoritative meaning |
+
+---
+
+## 10. Conclusion
+
+The V4.7 evidence package's projection model is **internally consistent** on concept separation (8 of 9 concept pairs correctly kept distinct) and on the Q31A worker-time allocation rule. The package correctly removes `cut_off_latest` and preserves contextual nested admission state.
+
+However, two issues remain:
+
+1. **PS-001 (T2):** The "captured at mutation time, NOT rediscovered" rule is implied but not explicit in PROJECTION-002/003 executable truth.
+2. **PS-002 (T1, AC-002):** The Implementation-Determinism Report uses different DEC-041/042 meanings than the Decision Ledger.
+
+**External-fidelity verification** (whether the projection model matches what the user actually decided in Q20–Q31 and Q42–Q43) is **BLOCKED on AC-001**.
+
+---
+
+*End of Projection-Semantics Audit. 4 concept pairs + Q31A rule + Q42–Q43 historical affectedness audited. 1 T1 + 1 T2 internal-consistency issue. External-fidelity classification blocked on AC-001.*
+
+---
+
+# Ingestion-Trust Audit
+
+**Document:** 06 of 13 — Ingestion-Trust Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Audit of artifact identity / approval identity / execution identity / replay execution identity separation (Section H)
+**Status:** Partially blocked on AC-001; internal-consistency audit complete
+
+---
+
+## 1. Purpose
+
+Per task brief Section H (INGESTION / APPROVAL / REPLAY), verify the package preserves the distinction between:
+
+1. **artifact identity** — what was submitted (the import artifact)
+2. **approval identity** — who approved it and what they approved (the approval record)
+3. **execution identity** — the canonical mutation that resulted (the canonical_imports row)
+4. **replay execution identity** — a re-execution of an approved artifact (a new canonical_imports row referencing the original)
+
+And verify:
+
+- artifact-level atomicity (no partial acceptance)
+- independent human approval (not HMAC-shared-secret)
+- acquisition environment cannot possess approval signing credential
+- approval binds exact artifact hash
+- normal consumption is single-use
+- explicit replay is a new execution
+- original history is immutable
+
+---
+
+## 2. Precondition Blocker
+
+**AC-001 (T1):** Without the user's actual decisions on artifact/approval/execution/replay identity, the audit cannot verify whether the package's ingestion-trust model matches what the user decided. The audit below verifies **internal consistency only**.
+
+---
+
+## 3. Identity-Separation Audit
+
+### 3.1 Artifact identity
+
+**Required:** An artifact is the submitted import file/package. Its identity is its hash.
+
+**Package behavior:**
+- TRUST-001 contract (per V4.7 §40): "Stage 2: independent human approval via StudyNexus control plane (Filament v5 resource), authenticated via Fortify 2FA; signed approval binds {artifact ID, artifact hash, artifact/schema version, approval action, approver identity, approval timestamp}."
+- INGEST-002 contract: "Import Execution Identity" — governed by V4.7 §38.
+- DEC-003 (source decision for TRUST-001): "approved: B (V4.7 §40-§41)" — Option B describes the two-stage model with artifact hash binding.
+
+**Result:** ✅ **CONSISTENT** — Artifact identity is bound to artifact hash.
+
+### 3.2 Approval identity
+
+**Required:** An approval is a separate record (signed by an approver) that authorizes the artifact for execution.
+
+**Package behavior:**
+- TRUST-001 contract: "Stage 2: independent human approval via StudyNexus control plane."
+- TRUST-001 contract: "signed approval binds {artifact ID, artifact hash, artifact/schema version, approval action, approver identity, approval timestamp}."
+- TRUST-001 contract: "signing private key held ONLY by production control plane."
+- TRUST-001 contract: "Acquisition environment must NOT possess the private approval signing credential."
+
+**Result:** ✅ **CONSISTENT** — Approval identity is separate from artifact identity.
+
+### 3.3 Execution identity
+
+**Required:** An execution is the canonical mutation that results from applying an approved artifact. Each execution is a distinct canonical_imports row.
+
+**Package behavior:**
+- INGEST-002 contract: "Import Execution Identity" — governed by V4.7 §38.
+- INGEST-003 contract: "Canonical Import State" — governs canonical_imports table.
+- DEC-019 (source decision for INGEST-003): "canonical_imports durable state — V4.7 §39."
+- The canonical_imports table is described as "durable PostgreSQL record of every import execution."
+
+**Result:** ✅ **CONSISTENT** — Execution identity is a distinct canonical_imports row.
+
+### 3.4 Replay execution identity
+
+**Required:** A replay is a NEW execution of an already-approved artifact. The original execution history is immutable; the replay creates a new row referencing the original.
+
+**Package behavior:**
+- TRUST-002 contract: "Approval Replay" — governed by V4.7 §41.
+- DEC-003 (source decision): "V4.7 §41 mandates replay recording without mutating original history."
+- The package describes replay as: "explicit replay is a new execution; original history is immutable."
+
+**Result:** ✅ **CONSISTENT** — Replay execution identity is a new row; original history is immutable.
+
+---
+
+## 4. Required-Rules Audit
+
+### 4.1 Artifact-level atomicity
+
+**Required:** Any blocking validation error → entire artifact rejected; zero canonical records committed.
+
+**Package behavior:**
+- INGEST-001 contract: "Import Atomicity" — governed by V4.7 §37.
+- DEC-004 (source decision): "approved: B (V4.7 §37)" — Option B = artifact-level atomicity.
+- DEC-004 rationale: "V4.7 §37 explicitly mandates artifact-level atomicity and explicitly forbids 'partial acceptance.'"
+
+**Result:** ✅ **CONSISTENT** — Artifact-level atomicity is mandated.
+
+### 4.2 Independent human approval (not HMAC-shared-secret)
+
+**Required:** Approval cannot be HMAC-shared-secret (which would mean the acquisition environment has the approval credential).
+
+**Package behavior:**
+- TRUST-001 contract: "Stage 1: acquisition env authenticates artifact origin (HMAC or mTLS for transport integrity only). Stage 2: independent human approval via StudyNexus control plane."
+- TRUST-001 contract: "Acquisition environment must NOT possess the private approval signing credential."
+- DEC-003 rationale: "V4.7 §40 explicitly mandates the two-stage model and explicitly forbids the acquisition environment from possessing the approval signing credential."
+
+**Result:** ✅ **CONSISTENT** — Two-stage model replaces HMAC-only approval.
+
+### 4.3 Acquisition environment cannot possess approval signing credential
+
+**Required:** The signing private key is held ONLY by the production control plane.
+
+**Package behavior:**
+- TRUST-001 contract: "signing private key held ONLY by production control plane."
+- TRUST-001 contract: "Acquisition environment must NOT possess the private approval signing credential."
+
+**Result:** ✅ **CONSISTENT** — Credential separation explicitly enforced.
+
+### 4.4 Approval binds exact artifact hash
+
+**Required:** The approval signature covers the artifact hash, preventing substitution.
+
+**Package behavior:**
+- TRUST-001 contract: "signed approval binds {artifact ID, artifact hash, artifact/schema version, approval action, approver identity, approval timestamp}."
+
+**Result:** ✅ **CONSISTENT** — Artifact hash is part of the signed approval payload.
+
+### 4.5 Normal consumption is single-use
+
+**Required:** An approved artifact can be executed once; subsequent executions require explicit replay.
+
+**Package behavior:**
+- TRUST-002 contract: "Approval Replay" — governs replay semantics.
+- The package describes: "normal consumption is single-use; explicit replay is a new execution."
+
+**Result:** ✅ **CONSISTENT** — Single-use normal consumption; explicit replay for re-execution.
+
+### 4.6 Explicit replay is a new execution
+
+**Required:** A replay creates a new canonical_imports row; it does not mutate the original.
+
+**Package behavior:**
+- TRUST-002 contract: "Approval Replay" — governs this.
+- DEC-003 rationale: "V4.7 §41 mandates replay recording without mutating original history."
+
+**Result:** ✅ **CONSISTENT** — Replay is a new execution.
+
+### 4.7 Original history is immutable
+
+**Required:** Once an execution has occurred, its record cannot be modified.
+
+**Package behavior:**
+- INGEST-003 contract: "Canonical Import State" — governs canonical_imports table.
+- The package describes: "original history is immutable."
+
+**Result:** ✅ **CONSISTENT** — Original history immutability enforced.
+
+---
+
+## 5. Cross-Document Consistency Check
+
+| Document | Ingestion-trust model described? | Consistent with Contract Registry? |
+|----------|----------------------------------|------------------------------------|
+| Decision Ledger (DEC-003, 004, 019) | Yes | ✅ |
+| Contract Registry (TRUST-001, TRUST-002, INGEST-001, INGEST-002, INGEST-003) | Yes (authoritative) | N/A |
+| Change Manifest (§canonical/06-data-acquisition.md §13) | Yes | ✅ |
+| Scenario Tests (S-19, S-20, S-21, S-22, S-23, S-28) | Yes | ✅ |
+| Final Audit (FA-014 hidden coupling in UpdateSearchIndex listener) | Yes | ✅ |
+| Implementation-Determinism Report | Yes | ✅ |
+
+**Result:** ✅ All 6 documents consistent on the ingestion-trust model.
+
+---
+
+## 6. Decision-Scope Collapse Scan
+
+| Concept pair | Conflation risk | Package behavior |
+|--------------|-----------------|------------------|
+| "artifact identity" vs "approval identity" | Could be merged into "submission" | ✅ Kept separate |
+| "approval identity" vs "execution identity" | Could be merged into "transaction" | ✅ Kept separate |
+| "execution identity" vs "replay execution identity" | Could be merged into "import event" | ✅ Kept separate |
+| "transport HMAC" vs "approval signing" | Could be merged into "HMAC approval" | ✅ Kept separate (TRUST-001 explicitly distinguishes) |
+
+**Result:** All 4 concept pairs correctly kept distinct.
+
+---
+
+## 7. Findings
+
+| ID | Finding | Severity | Required action |
+|----|---------|----------|-----------------|
+| IT-001 | No internal-consistency issues found in ingestion-trust model | — | — |
+| IT-002 | External-fidelity verification (whether model matches user's Q-answers on artifact/approval/execution/replay identity) is BLOCKED on AC-001 | T1 (precondition) | Supply Q1–Q118 |
+
+---
+
+## 8. Conclusion
+
+The V4.7 evidence package's ingestion-trust model is **internally consistent**:
+
+- All 4 identity concepts (artifact / approval / execution / replay) are correctly kept distinct.
+- All 7 required rules (artifact-level atomicity, independent human approval, credential separation, hash binding, single-use consumption, explicit replay, original immutability) are explicitly enforced by TRUST-001, TRUST-002, INGEST-001, INGEST-002, INGEST-003 contracts.
+- All 6 cross-document references are consistent.
+
+**No internal-consistency issues found.**
+
+**External-fidelity verification** (whether the ingestion-trust model matches what the user actually decided) is **BLOCKED on AC-001**.
+
+---
+
+*End of Ingestion-Trust Audit. 4 identity concepts + 7 required rules audited. 0 internal-consistency issues. External-fidelity classification blocked on AC-001.*
+
+---
+
+# SEO-Lifecycle Audit
+
+**Document:** 07 of 13 — SEO-Lifecycle Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Audit of publication / lifecycle / searchability / canonical URL / HTTP availability / SEO indexability / sitemap eligibility / structured data separation (Section G)
+**Status:** Partially blocked on AC-001; internal-consistency audit complete
+
+---
+
+## 1. Purpose
+
+Per task brief Section G (SEO / LIFECYCLE SEPARATION), verify the package keeps these concepts separate:
+
+1. **publication** — whether a record is published (editorial decision)
+2. **lifecycle** — the lifecycle state (ACTIVE / SUSPENDED / DISCONTINUED / DRAFT-UNPUBLISHED per V4.7 §50)
+3. **searchability** — whether a record appears in Typesense search results
+4. **canonical URL** — whether the record has a public URL
+5. **HTTP availability** — whether the URL returns 200 vs 404 vs 410
+6. **SEO indexability** — whether search engines are allowed to index the page
+7. **sitemap eligibility** — whether the URL appears in sitemap.xml
+8. **structured data** — what schema.org structured data is emitted
+
+Identify any place where one boolean/status is being used as a proxy for another.
+
+---
+
+## 2. Precondition Blocker
+
+**AC-001 (T1):** Without the user's actual decisions on SEO/lifecycle separation, the audit cannot verify whether the package's model matches what the user decided. The audit below verifies **internal consistency only**.
+
+---
+
+## 3. Concept-Separation Audit
+
+### 3.1 Publication vs lifecycle
+
+**Distinction required:** Publication is an editorial decision (is_published: boolean). Lifecycle is a state machine (ACTIVE/SUSPENDED/DISCONTINUED/DRAFT-UNPUBLISHED). These are independent — e.g., a DISCONTINUED programme might still be published (for historical reference).
+
+**Package behavior:**
+- CON-004 (Publication Predicate): governs publication logic.
+- LIFE-001 (Programme Lifecycle): governs lifecycle states per V4.7 §49-§50.
+- SEO-001 (Terminal/Historical Public Page Matrix): governs the relationship between lifecycle and public page visibility.
+- DEC-035 (ProgrammeStatus reconciliation) — BLOCKED on user approval — explicitly preserves the V4.6 ProgrammeStatus enum (Prospective, Admitting, Suspended, Discontinued) and documents the mapping to V4.7 §50 matrix (ACTIVE, SUSPENDED, DISCONTINUED, DRAFT/UNPUBLISHED).
+- The mapping preserves the distinction: `is_published=false` → DRAFT/UNPUBLISHED; `is_published=true` + (Prospective or Admitting) → ACTIVE; etc.
+
+**Result:** ✅ **CONSISTENT** — Publication and lifecycle are kept separate; mapping is documented.
+
+### 3.2 Lifecycle vs searchability
+
+**Distinction required:** A record's lifecycle state (e.g., DISCONTINUED) does not directly determine whether it appears in Typesense search. Searchability is governed by TYPESENSE-001's publication/searchability state.
+
+**Package behavior:**
+- TYPESENSE-001 contract: "publication/searchability state" is a distinct field in the Programme Search Schema.
+- PROJECTION-008 (Projection Relevance): governs which mutations trigger projection updates — a lifecycle change might or might not trigger a re-projection depending on whether it affects searchability.
+- The package does NOT equate "DISCONTINUED" with "not searchable."
+
+**Result:** ✅ **CONSISTENT** — Lifecycle and searchability are kept separate.
+
+### 3.3 Searchability vs canonical URL accessibility
+
+**Distinction required:** A record may be searchable (in Typesense) but have no public canonical URL (e.g., if it's been unpublished). Or a record may have a canonical URL but be excluded from search (e.g., a historical page).
+
+**Package behavior:**
+- CON-005 (URL Contract): governs canonical URL structure (slug-based, no UUIDs).
+- SEO-001 (Terminal/Historical Public Page Matrix): governs which lifecycle states have public pages.
+- The package describes "canonical browse/detail pages (PostgreSQL) remain available" during Typesense outages (OUTAGE-001) — this preserves the distinction: searchability requires Typesense; canonical URL accessibility requires only PostgreSQL.
+
+**Result:** ✅ **CONSISTENT** — Searchability and canonical URL accessibility are kept separate.
+
+### 3.4 Canonical URL vs HTTP availability
+
+**Distinction required:** A canonical URL existing in the database does not mean the route returns 200. A DISCONTINUED programme's URL might return 410 Gone; a DRAFT programme's URL might return 404.
+
+**Package behavior:**
+- SEO-001 (Terminal/Historical Public Page Matrix): governs HTTP status per lifecycle state.
+- The package describes (in Change Manifest §3): "DISCONTINUED → 410 Gone with link to successor; DRAFT/UNPUBLISHED → 404 Not Found."
+
+**Result:** ✅ **CONSISTENT** — Canonical URL and HTTP availability are kept separate; HTTP status varies by lifecycle.
+
+### 3.5 HTTP availability vs SEO indexability
+
+**Distinction required:** A page may return 200 but be marked `noindex`. Or a page may return 410 but still be indexed (until re-crawled).
+
+**Package behavior:**
+- SEO-002 (SEO Indexability Registry): governs which routes are indexable.
+- The package describes: "no route is indexable unless listed in SEO-002."
+- This means a page can return 200 (HTTP available) but be `noindex` (not SEO indexable) if it's not in the SEO-002 registry.
+
+**Result:** ✅ **CONSISTENT** — HTTP availability and SEO indexability are kept separate.
+
+### 3.6 SEO indexability vs sitemap eligibility
+
+**Distinction required:** A page may be indexable (no `noindex` directive) but excluded from sitemap.xml. Or a page may be in sitemap.xml but marked `noindex` (inconsistent configuration, but conceptually distinct).
+
+**Package behavior:**
+- SEO-003 (Sitemap Eligibility): governs which URLs appear in sitemap.xml.
+- The package describes: "CI sitemap generator output matches SEO-003."
+- The package treats SEO-002 (indexability) and SEO-003 (sitemap) as distinct contracts.
+
+**Result:** ✅ **CONSISTENT** — SEO indexability and sitemap eligibility are kept separate.
+
+### 3.7 Sitemap eligibility vs structured data
+
+**Distinction required:** A page may be in the sitemap but emit no structured data. Or a page may emit structured data but not be in the sitemap.
+
+**Package behavior:**
+- SEO-003 (Sitemap Eligibility): governs sitemap.
+- SEO-004 (Structured Data): governs schema.org structured data per page type.
+- The package treats these as distinct contracts.
+
+**Result:** ✅ **CONSISTENT** — Sitemap eligibility and structured data are kept separate.
+
+### 3.8 Structured data vs URL redirects
+
+**Distinction required:** A redirected URL emits a 301/302 with no structured data. A canonical URL emits structured data.
+
+**Package behavior:**
+- SEO-004 (Structured Data): governs structured data.
+- SEO-005 (URL Redirects): governs redirect chains, loops, and source URL uniqueness.
+- The package treats these as distinct contracts.
+
+**Result:** ✅ **CONSISTENT** — Structured data and URL redirects are kept separate.
+
+---
+
+## 4. Boolean-Proxy Scan
+
+The task brief asks: "Identify any place where one boolean/status is being used as a proxy for another."
+
+**Scan performed across all 17 evidence files.**
+
+| Boolean/field | What it represents | Improper proxy uses found? |
+|---------------|-------------------|---------------------------|
+| `is_published` | Editorial publication decision | ❌ No proxy misuse found |
+| `programme_lifecycle` (V4.7 §50) | Lifecycle state machine | ❌ No proxy misuse found |
+| `is_admission_open` (instances[].is_admission_open) | Contextual admission state per instance | ❌ No proxy misuse found — explicitly contextual |
+| `is_searchable` (in TYPESENSE-001 schema) | Searchability in Typesense | ❌ No proxy misuse found |
+| HTTP status (200/404/410) | HTTP availability | ❌ No proxy misuse found — varies by lifecycle |
+| `noindex` directive | SEO indexability | ❌ No proxy misuse found — governed by SEO-002 registry |
+| sitemap.xml inclusion | Sitemap eligibility | ❌ No proxy misuse found — governed by SEO-003 |
+
+**Result:** ✅ **CONSISTENT** — No boolean-proxy misuse found.
+
+---
+
+## 5. V4.7 §50 Lifecycle Matrix Compliance
+
+**V4.7 §50 specifies a 4-row lifecycle matrix:** ACTIVE / SUSPENDED / DISCONTINUED / DRAFT-UNPUBLISHED.
+
+**Package behavior:**
+- SEO-001 contract: "CI assertion: matrix exists with 4 rows × 6 columns" — implies 6 distinct concepts (likely: lifecycle state, is_published, is_searchable, canonical URL, HTTP status, SEO indexability).
+- LIFE-001 contract: "Programme Lifecycle (no CLOSED)" — explicitly forbids CLOSED as a generic substitute (per V4.7 §49).
+- DEC-012 (InstitutionStatus::Closed replacement) — BLOCKED on user approval — proposes renaming Closed → Discontinued.
+
+**Result:** ✅ **CONSISTENT** — Package correctly implements V4.7 §50 matrix and forbids CLOSED.
+
+---
+
+## 6. Cross-Document Consistency Check
+
+| Document | SEO-lifecycle model described? | Consistent with Contract Registry? |
+|----------|--------------------------------|------------------------------------|
+| Decision Ledger (DEC-012, 013–017, 035) | Yes | ✅ |
+| Contract Registry (CON-004, CON-005, LIFE-001, SEO-001..005) | Yes (authoritative) | N/A |
+| Change Manifest | Yes | ✅ |
+| Scenario Tests (S-7, S-29, S-30, S-34) | Yes | ✅ |
+| Final Audit | Yes | ✅ |
+| Implementation-Determinism Report | Yes | ✅ |
+
+**Result:** ✅ All 6 documents consistent on the SEO-lifecycle model.
+
+---
+
+## 7. Findings
+
+| ID | Finding | Severity | Required action |
+|----|---------|----------|-----------------|
+| SL-001 | No internal-consistency issues found in SEO-lifecycle separation | — | — |
+| SL-002 | External-fidelity verification (whether model matches user's Q-answers on publication/lifecycle/searchability/SEO separation) is BLOCKED on AC-001 | T1 (precondition) | Supply Q1–Q118 |
+
+---
+
+## 8. Conclusion
+
+The V4.7 evidence package's SEO-lifecycle model is **internally consistent**:
+
+- All 8 concepts (publication, lifecycle, searchability, canonical URL, HTTP availability, SEO indexability, sitemap eligibility, structured data) are correctly kept separate.
+- No boolean-proxy misuse found.
+- V4.7 §50 lifecycle matrix is correctly implemented (4 rows × 6 columns).
+- CLOSED vocabulary is correctly forbidden (per V4.7 §49).
+- All 6 cross-document references are consistent.
+
+**No internal-consistency issues found.**
+
+**External-fidelity verification** is **BLOCKED on AC-001**.
+
+---
+
+*End of SEO-Lifecycle Audit. 8 concepts + boolean-proxy scan + V4.7 §50 matrix compliance audited. 0 internal-consistency issues. External-fidelity classification blocked on AC-001.*
+
+---
+
+# Graph-Integrity Audit
+
+**Document:** 08 of 13 — Graph-Integrity Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** DAG analysis, cycle detection, missing/stale edges in the Decision Dependency/Conflict Graph (deliverable #14)
+
+---
+
+## 1. Purpose
+
+Per task brief Section J (GRAPH INTEGRITY), audit every:
+
+- `depends_on`
+- `conflicts_with`
+- `duplicates`
+- `supersedes`
+- `derived_from`
+
+relationship in the generated ledgers.
+
+Specifically detect:
+
+- circular dependencies
+- impossible dependency direction
+- duplicated decisions represented as separate decisions
+- findings treated as decisions
+- contracts depending on their own consequences
+- "conflicts_with" edges missing where two resolutions cannot coexist
+- "depends_on" used where the relationship is actually conceptual relatedness
+- stale graph edges surviving supersession
+
+**A dependency graph must be executable as a DAG unless a relationship is explicitly non-dependency metadata.**
+
+---
+
+## 2. Methodology
+
+The audit extracted the `dependencies:` field from every decision record in the Decision Ledger (deliverable #2) and built a directed graph. A DFS-based cycle detection algorithm was applied to identify all cycles.
+
+The audit also extracted `conflicts:`, `derived_from:`, `supersedes:`, and `duplicates:` fields where present.
+
+---
+
+## 3. Graph Statistics
+
+| Metric | Value |
+|--------|-------|
+| Total decisions in Decision Ledger | 53 |
+| Total dependency edges | 53 |
+| Total conflict edges | 0 |
+| Total derived_from relationships | 0 |
+| Total supersedes relationships | 0 |
+| Total duplicates relationships | 0 |
+| **Cycles found** | **8** |
+| Missing dependency targets | 0 |
+| Self-dependencies | 0 |
+
+---
+
+## 4. Cycles Discovered (T1 — AC-003)
+
+The Decision Graph (deliverable #14) claims "Zero conflict edges; critical path documented" but does NOT mention these 8 cycles:
+
+### Cycle #1: DEC-001 ↔ DEC-002 (mutual)
+
+```
+DEC-001 (Eliminate PG FTS fallback)
+  dependencies: DEC-002 (projection architecture must replace the listener pathway that the fallback relied on)
+DEC-002 (Add projection-event architecture)
+  dependencies: DEC-001 (outage contract must replace fallback before listener pathway is removed)
+```
+
+**Analysis:** DEC-001 says "DEC-002 must be done first" AND DEC-002 says "DEC-001 must be done first." This is a textual catch-22. The Master Summary's "Critical Path to GO" cannot sequence these two steps.
+
+### Cycle #2: DEC-003 ↔ DEC-004 (mutual)
+
+```
+DEC-003 (Two-stage approval)
+  dependencies: DEC-004 (artifact-level atomicity must be in place)
+DEC-004 (Artifact-level atomicity)
+  dependencies: DEC-003 (trust model)
+```
+
+**Analysis:** Same pattern. DEC-003 and DEC-004 mutually depend on each other.
+
+### Cycle #3: DEC-005 ↔ DEC-018 (mutual)
+
+```
+DEC-005 (Fortify version)
+  dependencies: DEC-018 (DEP-001 contract)
+DEC-018 (DEP-001 contract)
+  dependencies: DEC-005 (Fortify version), DEC-006 (filament-shield version)
+```
+
+**Analysis:** DEC-005 depends on DEC-018, but DEC-018 also depends on DEC-005. Circular.
+
+### Cycle #4: DEC-018 ↔ DEC-006 (mutual)
+
+```
+DEC-018 (DEP-001 contract)
+  dependencies: DEC-006 (filament-shield version)
+DEC-006 (filament-shield version)
+  dependencies: DEC-018 (DEP-001 contract)
+```
+
+**Analysis:** DEC-006 is BLOCKED on external verification. DEC-018 depends on DEC-006. DEC-006 depends on DEC-018. The cycle means DEC-018 can never be implemented until DEC-006 is resolved, but DEC-006 can never be resolved until DEC-018 is implemented.
+
+### Cycle #5: DEC-008 ↔ DEC-009 (mutual)
+
+```
+DEC-008 (SERIAL-001 projection serialization)
+  dependencies: DEC-009 (QUEUE-001 — V4.7 §57)
+DEC-009 (QUEUE-001 concrete values)
+  dependencies: DEC-008 (per dependency field)
+```
+
+**Analysis:** DEC-009 is BLOCKED on user approval. DEC-008 depends on DEC-009. DEC-009 depends on DEC-008. Same blocking pattern as Cycle #4.
+
+### Cycle #6: DEC-012 ↔ DEC-013 (mutual)
+
+```
+DEC-012 (InstitutionStatus::Closed replacement)
+  dependencies: DEC-013 (SEO-001 lifecycle matrix — V4.7 §50)
+DEC-013 (SEO-001 lifecycle matrix)
+  dependencies: DEC-012 (per dependency field)
+```
+
+**Analysis:** DEC-012 is BLOCKED on user approval. DEC-013 depends on DEC-012. DEC-012 depends on DEC-013. Same blocking pattern.
+
+### Cycle #7: DEC-012 → DEC-013 → DEC-035 → DEC-012 (3-cycle)
+
+```
+DEC-012 → DEC-013 → DEC-035 → DEC-012
+```
+
+**Analysis:** Three-way circular dependency. All three are involved in the lifecycle/SEO cluster.
+
+### Cycle #8: DEC-013 ↔ DEC-035 (mutual)
+
+```
+DEC-013 (SEO-001 lifecycle matrix)
+  dependencies: DEC-035 (per dependency field)
+DEC-035 (ProgrammeStatus reconciliation)
+  dependencies: DEC-013 (per dependency field)
+```
+
+**Analysis:** DEC-035 is BLOCKED on user approval. Same blocking pattern as Cycles #4, #5, #6.
+
+---
+
+## 5. Missing Conflict Edges
+
+The task brief asks: "conflicts_with edges missing where two resolutions cannot coexist?"
+
+**Audit:** 0 conflict edges declared in the entire package. The Decision Graph explicitly states "Zero conflict edges; critical path documented."
+
+**Assessment:** The absence of conflict edges is suspicious. With 53 decisions and 53 dependency edges, statistical expectation suggests at least some conflicts. However, the audit cannot prove a conflict exists without comparing to user Q1–Q118 decisions (AC-001).
+
+**Result:** ⚠️ **POSSIBLY INCONSISTENT** — 0 conflicts is unusual but cannot be definitively flagged without Q1–Q118.
+
+---
+
+## 6. Findings Treated as Decisions (T1 — AC-005)
+
+The task brief specifically warns about "findings treated as decisions."
+
+**Audit finding:** FA-015, FA-017, FA-019 (final-audit findings) were silently promoted to DEC-040, 041, 042 in the Unresolved-Issues Report — reusing existing DEC-IDs that already referred to different decisions in the Decision Ledger.
+
+This is documented in detail in the Authority-Contradiction Ledger (AC-002, AC-005).
+
+**Result:** ⚠️ **INCONSISTENT** — Findings promoted to decisions without proper decision-creation process.
+
+---
+
+## 7. Duplicated Decisions as Separate Decisions
+
+The task brief warns about "duplicated decisions represented as separate decisions."
+
+**Audit finding:** PROJECTION-007 and TYPESENSE-001 are described as "same contract" (PROJECTION-007's header says "= TYPESENSE-001" and its status says "NEW (same as TYPESENSE-001)") but appear as 2 separate rows in both the Contract Registry and the Propagation Matrix.
+
+This is documented in detail as AC-016.
+
+**Result:** ⚠️ **INCONSISTENT** — Duplicate representation (AC-016).
+
+---
+
+## 8. Contracts Depending on Their Own Consequences
+
+The task brief warns about "contracts depending on their own consequences."
+
+**Audit finding:** No direct self-dependencies found in contracts (0 self-deps). However, the 8 decision cycles (Section 4 above) involve decisions whose `affected contracts:` fields point to contracts that have `dependencies:` pointing back. This is an indirect form of "contract depending on its own consequence."
+
+**Example:**
+- DEC-002 (projection architecture) → affected contracts: PROJECTION-001 through PROJECTION-017
+- PROJECTION-001 → dependencies: PROJECTION-002, PROJECTION-004
+- PROJECTION-002 → dependencies: (none explicit, but source decision DEC-002)
+- DEC-002 → dependencies: DEC-001
+
+This creates an indirect cycle through the decision-contract-decision chain.
+
+**Result:** ⚠️ **INCONSISTENT** — Indirect cyclic dependencies through decision-contract-decision chains.
+
+---
+
+## 9. depends_on Used as Conceptual Relatedness
+
+The task brief warns about "depends_on used where the relationship is actually conceptual relatedness."
+
+**Audit findings:**
+
+| Edge | Claimed relationship | Actual relationship |
+|------|----------------------|---------------------|
+| DEC-001 → DEC-002 | "projection architecture must replace the listener pathway that the fallback relied on" | Conceptual relatedness — these two are RELATED (both about search/projection) but not strictly dependent (DEC-001 could be implemented without DEC-002 if V4.6's listener is left in place temporarily) |
+| DEC-003 → DEC-004 | "artifact-level atomicity must be in place" | Conceptual relatedness — trust model and atomicity are RELATED but could be implemented independently |
+| DEC-005 → DEC-018 | "DEP-001 contract" | Genuine dependency — version constraint needs the contract to record it |
+| DEC-012 → DEC-013 | (per dependency field) | Conceptual relatedness — both about lifecycle vocabulary, but could be implemented independently |
+
+**Result:** ⚠️ **INCONSISTENT** — At least 3 of the 8 cycles are caused by `depends_on` being used for conceptual relatedness rather than strict implementation dependency.
+
+---
+
+## 10. Stale Graph Edges Surviving Supersession
+
+The task brief warns about "stale graph edges surviving supersession."
+
+**Audit finding:** 0 supersedes relationships declared in the entire package. This means no decisions have been superseded — but it also means there's no supersession mechanism to test for stale edges.
+
+However, the Decision Graph's "APPROVED" list silently demotes 16 FROZEN decisions to APPROVED (AC-009). This is a form of stale-edge survival: the Graph's FROZEN list still includes DEC-040..053 (treating them as FROZEN), while the APPROVED list ALSO includes them (treating them as APPROVED). The Graph's edges haven't been updated to reflect the demotion.
+
+**Result:** ⚠️ **INCONSISTENT** — Stale FROZEN edges survive the silent FROZEN→APPROVED demotion (AC-009).
+
+---
+
+## 11. Decision Graph's Own Claims vs. Reality
+
+The Decision Graph (deliverable #14) makes these claims:
+
+| Claim | Reality |
+|-------|---------|
+| "Zero conflict edges" | ✅ Matches (0 conflict edges found) |
+| "Critical path documented" | ❌ FALSE — 8 cycles mean no critical path exists |
+| "FROZEN = 35" | ❌ FALSE — actual records show 49 FROZEN (AC-006) |
+| "APPROVED = 11" | ❌ FALSE — actual records show 0 APPROVED; Graph's own list contains 16 items (AC-008) |
+| "PROPOSED = 4" | ✅ Matches (DEC-006, 009, 012, 035) |
+| "DEFERRED = 2 (DEF-001, DEF-002)" | ❌ FALSE — DEF-001 and DEF-002 do not exist in the Decision Ledger (AC-007) |
+| "Total = 53" | ❌ FALSE — Graph's own status count totals 52 (35+11+4+2), not 53 (AC-010) |
+
+**Result:** Only 2 of 7 claims match reality. The Decision Graph is **not a trustworthy representation** of the underlying Decision Ledger.
+
+---
+
+## 12. Findings Summary
+
+| ID | Finding | Severity |
+|----|---------|----------|
+| GI-001 (AC-003) | 8 dependency cycles in Decision Ledger | T1 |
+| GI-002 (AC-005) | FA-015/017/019 findings promoted to DEC-040/041/042 | T1 |
+| GI-003 (AC-016) | PROJECTION-007 vs TYPESENSE-001 duplicate representation | T2 |
+| GI-004 | Indirect cyclic dependencies through decision-contract-decision chains | T2 |
+| GI-005 | depends_on used for conceptual relatedness in ≥3 cycles | T2 |
+| GI-006 (AC-009) | Stale FROZEN edges survive silent FROZEN→APPROVED demotion | T2 |
+| GI-007 (AC-007) | Decision Graph references non-existent DEF-001, DEF-002 | T2 |
+| GI-008 (AC-008) | Decision Graph self-acknowledged count discrepancy (11 vs 16) | T2 |
+| GI-009 (AC-010) | Decision Graph arithmetic error (52 vs 53) | T3 |
+| GI-010 | 0 conflict edges suspicious but unverifiable without Q1–Q118 | T3 |
+
+---
+
+## 13. Conclusion
+
+The Decision Dependency/Conflict Graph (deliverable #14) is **NOT a trustworthy representation** of the underlying Decision Ledger:
+
+- 8 dependency cycles exist but are not mentioned in the Graph.
+- The Graph's status summary has 5 incorrect claims out of 7.
+- The Graph references 2 non-existent decisions (DEF-001, DEF-002).
+- The Graph silently demotes 16 FROZEN decisions to APPROVED without using the frozen-decision challenge protocol.
+- The Graph's "Critical Path to GO" cannot be executed because no valid topological order exists.
+
+**Severity:** T1 — the package cannot be executed as designed because the dependency graph is not a DAG.
+
+**Required action:** The remediation agent must:
+
+1. Break all 8 cycles by editing the `dependencies:` fields in the Decision Ledger to remove non-strict dependencies (conceptual relatedness should not be modeled as `depends_on`).
+2. Reconcile the Decision Graph's status summary with the Decision Ledger's actual records.
+3. Remove references to non-existent DEF-001, DEF-002.
+4. Either remove the silent FROZEN→APPROVED demotion (treating all 16 as FROZEN) or invoke the frozen-decision challenge protocol to formally demote them.
+
+---
+
+*End of Graph-Integrity Audit. 53 decisions, 53 dependency edges, 8 cycles, 0 conflict edges. 3 T1 + 5 T2 + 2 T3 issues found.*
+
+---
+
+# Count-Consistency Audit
+
+**Document:** 09 of 13 — Count-Consistency Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Independent count of all numerical claims in the V4.7 evidence package
+
+---
+
+## 1. Purpose
+
+Per task brief Section K (COUNT / INVENTORY CONSISTENCY), independently count:
+
+- findings
+- Tier 1/2/3 findings
+- decisions
+- frozen decisions
+- proposed decisions
+- deferred decisions
+- contracts
+- new contracts
+- existing contracts
+- blocked decisions
+- propagated contracts
+- pending contracts
+- affected files
+- modified files
+- scenario tests
+- failed tests
+- regression guards
+- external facts
+
+**Do not trust stated totals.** Flag every mismatch.
+
+---
+
+## 2. Methodology
+
+The audit extracted all `### HEADER` patterns and all `field: value` records from each of the 17 evidence files using a Python script (`/home/z/my-project/scripts/extract_structure.py`). Each count was independently computed and compared against the stated total in the corresponding Summary section.
+
+---
+
+## 3. Count Reconciliation Table
+
+### 3.1 Findings (Finding Ledger, deliverable #1)
+
+| Metric | Stated (Ledger Status Summary) | Actual | Match? |
+|--------|--------------------------------|--------|--------|
+| Total findings | 47 | 47 | ✅ |
+| Tier 1 (BLOCKER) | 22 | 22 | ✅ |
+| Tier 2 (MEDIUM) | 18 | **17** | ❌ |
+| Tier 3 (COSMETIC) | 7 | **8** | ❌ |
+| Resolved | 4 | **7** | ❌ |
+| Unresolved | 43 | **37** | ❌ |
+| False-Positive | 0 | **2** | ❌ |
+| Partially-Resolved | (not in summary) | **1** | ❌ (missing category) |
+
+**Mismatches:**
+- AC-013 (T2): Tier 2 claimed 18, actual 17 (off by 1).
+- AC-013 (T2): Tier 3 claimed 7, actual 8 (off by 1).
+- AC-013 (T2): Resolved claimed 4, actual 7 (off by 3).
+- AC-013 (T2): Unresolved claimed 43, actual 37 (off by 6).
+- AC-013 (T2): False-Positive claimed 0, actual 2 (off by 2).
+- AC-013 (T2): Partially-Resolved category missing from summary; 1 record (F-046) is PARTIALLY-RESOLVED.
+
+### 3.2 Decisions (Decision Ledger, deliverable #2)
+
+| Metric | Stated (Ledger Status Summary) | Actual | Match? |
+|--------|--------------------------------|--------|--------|
+| Total decisions | 53 | 53 | ✅ |
+| FROZEN | 35 | **49** | ❌ |
+| APPROVED | 12 | **0** | ❌ |
+| PROPOSED | 4 | 4 | ✅ |
+| DEFERRED | 2 | **0** | ❌ |
+
+**Mismatches:**
+- AC-006 (T2): FROZEN claimed 35, actual 49 (off by 14).
+- AC-006 (T2): APPROVED claimed 12, actual 0 (off by 12 — entire category empty).
+- AC-006 (T2): DEFERRED claimed 2, actual 0 (off by 2 — entire category empty).
+
+### 3.3 Decisions (Decision Graph, deliverable #14)
+
+| Metric | Stated (Graph Status Summary) | Actual (from Decision Ledger) | Match? |
+|--------|-------------------------------|-------------------------------|--------|
+| Total | 53 | 53 | ✅ |
+| FROZEN | 35 | 49 | ❌ |
+| APPROVED | 11 (but list has 16) | 0 | ❌ |
+| PROPOSED | 4 | 4 | ✅ |
+| DEFERRED | 2 (DEF-001, DEF-002) | 0 (DEF-001/002 don't exist) | ❌ |
+| Arithmetic check | 35+11+4+2 = 52 | (should = 53) | ❌ |
+
+**Mismatches:**
+- AC-008 (T2): APPROVED count is 11 but list contains 16 items (self-acknowledged).
+- AC-007 (T2): DEFERRED references DEF-001, DEF-002 which don't exist.
+- AC-009 (T2): Graph lists DEC-040..053 in BOTH FROZEN and APPROVED lists.
+- AC-010 (T3): Graph's status count totals 52, not 53.
+
+### 3.4 Contracts (Contract Registry, deliverable #3)
+
+| Metric | Stated (README) | Stated (Master Summary) | Stated (Final Audit) | Stated (Propagation Matrix) | Actual (Registry) | Actual (Matrix rows) | Match? |
+|--------|------------------|-------------------------|-----------------------|-----------------------------|-------------------|----------------------|--------|
+| Total contracts | 41 | 41 | 41 | 42 (41 + 1 subsumed) | **60** | **60** | ❌ |
+| Existing (CON-001..008) | 8 | 8 | — | 8 | 8 | 8 | ✅ |
+| New | 32 | 32 | — | — | **51** | **51** | ❌ |
+| Proposed-skeleton | 1 | 1 | — | 1 (QUEUE-001) | 1 (QUEUE-001) | 1 (QUEUE-001) | ✅ |
+
+**Mismatches:**
+- AC-011 (T2): Total claimed 41/42, actual 60 (off by 18-19).
+- AC-011 (T2): New claimed 32, actual 51 (off by 19).
+- AC-016 (T2): "1 subsumed" claim — both PROJECTION-007 and TYPESENSE-001 appear as separate rows despite "same as" claim.
+
+### 3.5 Propagation Matrix (deliverable #13)
+
+| Metric | Stated (Matrix Summary) | Actual | Match? |
+|--------|-------------------------|--------|--------|
+| Total | 42 | **60** | ❌ |
+| ✅ PROPAGATED | 10 (8 CON + GOV-003 + GOV-007) | 10 | ✅ |
+| ⚠️ PARTIAL | 3 | 3 | ✅ |
+| ❌ NOT PROPAGATED | 27 | **45** | ❌ |
+| 🔒 BLOCKED | 2 (QUEUE-001, LIFE-001) | 2 | ✅ |
+
+**Mismatches:**
+- AC-012 (T2): Total claimed 42, actual 60 (off by 18).
+- AC-012 (T2): NOT PROPAGATED claimed 27, actual 45 (off by 18).
+
+### 3.6 Scenarios (Scenario Verification Report, deliverable #6)
+
+| Metric | Stated (README + Master Summary) | Actual | Match? |
+|--------|----------------------------------|--------|--------|
+| Total scenarios | 36 | 36 | ✅ |
+| PASS | 6 | **8** | ❌ |
+| PARTIAL | 8 | **7** | ❌ |
+| FAIL | 22 | **21** | ❌ |
+
+**Mismatches:**
+- AC-014 (T2): PASS claimed 6, actual 8 (off by 2).
+- AC-014 (T2): PARTIAL claimed 8, actual 7 (off by 1).
+- AC-014 (T2): FAIL claimed 22, actual 21 (off by 1).
+
+### 3.7 Final Audit Findings (deliverable #7)
+
+| Metric | Stated (Final Audit Summary) | Actual | Match? |
+|--------|-------------------------------|--------|--------|
+| Total new findings (FA-*) | 20 | 20 | ✅ |
+| Tier 1 new | 4 (FA-001, 007, 008, 014) | 4 | ✅ |
+| Tier 2 new | 9 (FA-002, 004, 005, 006, 009, 010, 011, 012, 019) | 9 | ✅ |
+| Tier 3 new | 7 (FA-003, 013, 015, 016, 017, 018, 020) | 7 | ✅ |
+
+**Mismatches:** None. ✅
+
+### 3.8 External Facts (deliverable #9)
+
+| Metric | Stated (Register Summary) | Actual | Match? |
+|--------|---------------------------|--------|--------|
+| Total | 14 | **16** | ❌ |
+| VERIFIED | 3 (EE-001, 015, 016) | 3 | ✅ |
+| UNVERIFIED | 11 | **13** | ❌ |
+
+**Mismatches:**
+- AC-015 (T2): Total claimed 14, actual 16 (off by 2).
+- AC-015 (T2): UNVERIFIED claimed 11, actual 13 (off by 2).
+
+### 3.9 Regression Guards (deliverable #13)
+
+| Metric | Stated | Actual (sum of guard-type counts) | Match? |
+|--------|--------|-----------------------------------|--------|
+| Total regression guards | 54 | 12+9+3+2+3+11+2+2+1+2+1+1+1+2+1+1 = 54 | ✅ |
+
+**Mismatches:** None. ✅
+
+### 3.10 Changed Files (deliverable #12)
+
+| Metric | Stated (Master Summary) | Stated (Inventory) | Actual (Change Manifest) | Match? |
+|--------|-------------------------|---------------------|--------------------------|--------|
+| Files modified | 16 | 16 | **14** | ❌ |
+| Files created | 0 | 0 | 0 | ✅ |
+| Files deleted | 0 | 0 | 0 | ✅ |
+
+**Mismatches:**
+- AC-022 (T2): Modified files claimed 16, actual 14 (off by 2).
+
+### 3.11 Adversarial Searches (deliverable #15)
+
+| Metric | Stated | Actual | Match? |
+|--------|--------|--------|--------|
+| Total searches | 13 | 13 | ✅ |
+
+**Mismatches:** None. ✅
+
+### 3.12 Closed Findings Verified (deliverable #15)
+
+| Metric | Stated | Actual | Match? |
+|--------|--------|--------|--------|
+| Closed findings verified | 9 | 9 | ✅ |
+
+**Mismatches:** None. ✅
+
+### 3.13 User Decisions Required (deliverable #8)
+
+| Metric | Stated | Actual | Match? |
+|--------|--------|--------|--------|
+| User decisions required | 7 | 4 (DEC-006, 009, 012, 035) + 3 phantom (DEC-040, 041, 042) | ❌ |
+
+**Mismatches:**
+- AC-002 (T1): 3 of the 7 "required" decisions (DEC-040, 041, 042) are phantom — they exist with different meanings in the Decision Ledger (FROZEN, not BLOCKED).
+
+---
+
+## 4. Cross-Document Count Comparison
+
+### 4.1 Contract count across documents
+
+| Document | Stated total |
+|----------|--------------|
+| README | 41 |
+| Master Summary | 41 |
+| Final Audit Report | 41 |
+| Propagation Matrix summary | 42 |
+| Contract Registry actual | 60 |
+| Propagation Matrix actual rows | 60 |
+
+**Result:** 5 different documents give 2 different stated totals (41, 42); actual count is 60. None match.
+
+### 4.2 Decision status count across documents
+
+| Document | FROZEN | APPROVED | PROPOSED | DEFERRED | Total |
+|----------|--------|----------|----------|----------|-------|
+| Decision Ledger summary (claimed) | 35 | 12 | 4 | 2 | 53 |
+| Decision Ledger actual records | 49 | 0 | 4 | 0 | 53 |
+| Decision Graph summary (claimed) | 35 | 11 | 4 | 2 | 52 (should be 53) |
+| Master Summary | "35 FROZEN + 11 APPROVED + 4 PROPOSED + 2 DEFERRED + 1 NEW" | — | — | — | 53 |
+| README | "35 FROZEN + 11 APPROVED + 4 PROPOSED + 2 DEFERRED" | — | — | — | 52 (should be 53) |
+
+**Result:** 5 different documents give 5 different breakdowns. Only the actual Decision Ledger records (49 FROZEN + 4 PROPOSED = 53) reconcile arithmetically.
+
+### 4.3 Finding status count across documents
+
+| Document | Tier 1 | Tier 2 | Tier 3 | Total | Resolved | Unresolved | FP |
+|----------|--------|--------|--------|-------|----------|------------|-----|
+| Finding Ledger summary (claimed) | 22 | 18 | 7 | 47 | 4 | 43 | 0 |
+| Finding Ledger actual records | 22 | 17 | 8 | 47 | 7 | 37 | 2 (1 partial) |
+| README | "47 findings (22 Tier-1, 18 Tier-2, 7 Tier-3)" | — | — | 47 | — | — | — |
+| Master Summary | "22 Tier-1 findings remain unresolved" | — | — | 47 | — | — | — |
+
+**Result:** Only the actual records reconcile arithmetically. The stated summaries are off by 1 in Tier 2/3 split, off by 3 in resolved, off by 6 in unresolved, off by 2 in FP.
+
+---
+
+## 5. Summary of All Count Mismatches
+
+| ID | Mismatch | Severity |
+|----|----------|----------|
+| AC-013 | Finding Ledger status summary off by 1 (Tier 2/3), off by 3 (resolved), off by 6 (unresolved), off by 2 (FP) | T2 |
+| AC-006 | Decision Ledger status summary: APPROVED/DEFERRED categories empty; FROZEN off by 14 | T2 |
+| AC-007 | Decision Graph references non-existent DEF-001, DEF-002 | T2 |
+| AC-008 | Decision Graph self-acknowledged count discrepancy (11 vs 16 in APPROVED list) | T2 |
+| AC-009 | Decision Graph lists DEC-040..053 in BOTH FROZEN and APPROVED | T2 |
+| AC-010 | Decision Graph arithmetic error (52 vs 53) | T3 |
+| AC-011 | Contract count: claimed 41/42, actual 60 | T2 |
+| AC-012 | Propagation Matrix: claimed 42 total / 27 not-propagated, actual 60 / 45 | T2 |
+| AC-014 | Scenario counts: claimed 6/8/22, actual 8/7/21 | T2 |
+| AC-015 | External facts: claimed 14/11, actual 16/13 | T2 |
+| AC-022 | Modified files: claimed 16, actual 14 | T2 |
+| AC-002 | User decisions required: claimed 7, actual 4 + 3 phantom | T1 |
+
+**Total mismatches:** 12 (1 T1 + 10 T2 + 1 T3).
+
+---
+
+## 6. Conclusion
+
+The V4.7 evidence package has **pervasive count inconsistencies**:
+
+- 12 of 13 count dimensions have mismatches.
+- Only Final Audit findings (20), Regression guards (54), Adversarial searches (13), and Closed findings verified (9) reconcile.
+- 5 different documents give 5 different decision-status breakdowns.
+- 5 different documents give 3 different contract counts (41, 42, 60).
+- The "7 user decisions required" NO-GO foundation is overstated by 3 (3 phantom DEC-IDs).
+
+**Severity:** The T2 count mismatches undermine the package's credibility but do not directly cause implementation divergence. The T1 mismatch (AC-002 — phantom DEC-IDs in the NO-GO count) directly affects the GO/NO-GO verdict.
+
+**Required action:** The remediation agent must recompute all stated totals from actual records and update all Summary sections to match.
+
+---
+
+*End of Count-Consistency Audit. 13 count dimensions audited. 12 mismatches found (1 T1 + 10 T2 + 1 T3).*
+
+---
+
+# External-Fact Audit
+
+**Document:** 10 of 13 — External-Fact Audit
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Audit of external fact claims in the V4.7 External Evidence Register (deliverable #9)
+
+---
+
+## 1. Purpose
+
+Per task brief Section M (EXTERNAL FACT CLAIMS), distinguish:
+
+- **verified fact** — authoritative primary evidence + corroboration obtained and recorded
+- **claimed verification** — package claims it's verified but evidence is missing or weak
+- **recommendation** — package recommends an option without claiming verification
+- **stale citation** — verification date is old; fact may have changed
+- **unresolved fact** — package explicitly marks as needing fresh verification
+
+Do NOT silently replace the evidence package's claim with the auditor's own conclusion. Where a current external fact materially affects the correctness of a frozen decision, record it as a verification issue.
+
+---
+
+## 2. Methodology
+
+The audit extracted all 16 external-fact records (EE-001 through EE-016) from the External Evidence Register. For each:
+
+1. The `Status:` field was extracted.
+2. The `Verification source:` field was extracted.
+3. The `Verification date:` field was extracted.
+4. The `Verified by:` field was extracted.
+5. The claim was classified as verified / claimed-verification / recommendation / stale / unresolved.
+
+The audit did NOT perform live web fetches to verify the external facts (the task brief explicitly states "Do not blindly trust the remediation package's external claims" but also "Do not silently replace the evidence package's claim with your own conclusion").
+
+---
+
+## 3. External-Fact Classification
+
+| ID | Claim | Stated Status | Verified by | Verification Date | Audit Classification |
+|----|-------|---------------|-------------|-------------------|----------------------|
+| EE-001 | laravel/fortify ^1.0 | VERIFIED | Remediation Agent (Super Z) via knowledge base | 2026-08-26 | **⚠️ CLAIMED-VERIFICATION** (AC-019) — knowledge-base citation does not satisfy V4.7 §9 "authoritative primary evidence plus corroboration" |
+| EE-002 | bezhansalleh/filament-shield version compatibility | UNVERIFIED | PENDING | PENDING | **UNRESOLVED** (correctly marked) — uses false-confidence language "likely ^3.0", "unlikely", "likely" (AC-020) |
+| EE-003 | spatie/laravel-permission ^6.x | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-004 | spatie/laravel-activitylog ^5.0 | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-005 | typesense/typesense-php ^4.0 | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-006 | devloop1024/laravel-typesense | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-007 | livewire/flux ^2.0 | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-008 | pxlrbt/filament-activity-log v3.1.1 | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-009 | PHP 8.5 stable release | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-010 | Laravel 13.0 stable release | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-011 | Filament v5 stable release | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-012 | PostgreSQL 16 stable release | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-013 | Redis 7+ stable release | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) |
+| EE-014 | Typesense server features | UNVERIFIED | (not yet verified for V4.7) | PENDING | **UNRESOLVED** (correctly marked) — but cites specific Typesense version numbers ("0.25+", "0.19+") as facts while marked UNVERIFIED (AC-026 — T3) |
+| EE-015 | WCAG 2.2 AA standard | VERIFIED | (W3C standard published 2023-10) | 2026-08-26 | **VERIFIED** (correctly marked) |
+| EE-016 | Web Vitals thresholds | VERIFIED | (web.dev industry standard) | 2026-08-26 | **VERIFIED** (correctly marked) |
+
+---
+
+## 4. Summary
+
+| Classification | Count | IDs |
+|----------------|-------|-----|
+| ✅ VERIFIED (correctly marked) | 2 | EE-015, EE-016 |
+| ⚠️ CLAIMED-VERIFICATION (false positive) | 1 | EE-001 |
+| ⚠️ UNRESOLVED with false-confidence language | 1 | EE-002 |
+| ✅ UNRESOLVED (correctly marked) | 12 | EE-003 through EE-014 |
+| Stale citation | 0 | — |
+| Recommendation (without claiming verification) | 0 | — |
+
+**Per stated Summary:** "14 total (3 verified + 11 unverified)."
+**Per actual count:** "16 total (3 verified + 13 unverified)."
+
+**Mismatch:** AC-015 (T2) — off by 2 in both total and unverified.
+
+---
+
+## 5. Detailed Findings
+
+### 5.1 EE-001 — False-Positive VERIFIED Status (AC-019, T2)
+
+**Claim:** laravel/fortify latest stable version is `^1.0`.
+
+**Evidence cited:** "Primary: Packagist — https://packagist.org/packages/laravel/fortify" + "Corroboration: GitHub — https://github.com/laravel/fortify"
+
+**Verified by:** "Remediation Agent (Super Z) via knowledge base; recommend fresh Packagist check at execution time"
+
+**V4.7 §9 requirement:** "Tier 1/high-volatility external facts require authoritative primary evidence plus corroboration."
+
+**Audit finding:** The `Verified by:` field explicitly says the verification was performed via the remediation agent's knowledge base — NOT via a fresh Packagist/GitHub fetch. The "recommend fresh Packagist check at execution time" qualifier contradicts the `Status: VERIFIED` claim.
+
+A knowledge-base citation is not authoritative primary evidence. The remediation agent's training data may be stale or incomplete; only a live Packagist/GitHub fetch constitutes authoritative primary evidence.
+
+**Classification:** ⚠️ **CLAIMED-VERIFICATION** — false positive.
+
+**Required action:** Reclassify EE-001 from VERIFIED to UNVERIFIED — requires fresh Packagist check.
+
+### 5.2 EE-002 — False-Confidence Language (AC-020, T2)
+
+**Claim:** bezhansalleh/filament-shield version compatibility.
+
+**Evidence cited:** (none — PENDING verification)
+
+**Problematic language:**
+- "Exact version constraint: TBD (**likely** ^3.0 based on filament-shield's historical versioning pattern; the v3 line supports both Filament v3 AND Filament v5)"
+- "If verification shows ^5.0 is correct (**unlikely**): update canonical/04-architecture.md from v3 to ^5.0."
+- "If verification shows ^3.0 is correct (**likely**): update canonical/05-implementation.md from ^5.0 to ^3.0."
+
+The task brief's "FALSE CONFIDENCE" test specifically flags "likely" and "unlikely" as patterns to detect.
+
+**Audit finding:** The package presents probabilistic guesses about an external fact as if they were informed assessments. The remediation agent cannot know whether filament-shield v3 supports Filament v5 without actually checking Packagist/GitHub. Stating "likely" or "unlikely" creates false confidence in the reader.
+
+**Classification:** ⚠️ **UNRESOLVED with false-confidence language**.
+
+**Required action:** Remove "likely", "unlikely" language. State only: "Exact version constraint: TBD — requires fresh Packagist/GitHub verification per V4.7 §9."
+
+### 5.3 EE-014 — Specific Version Numbers as Facts While UNVERIFIED (AC-026, T3)
+
+**Claim:** Typesense server supports `enable_nested_features`, same-element nested filtering, collection aliasing.
+
+**Problematic language:**
+- "enable_nested_features: Typesense 0.25+"
+- "Same-element nested filtering: requires `instances.{field:=value && field2:=value2}` grouped syntax"
+- "Collection aliasing: Typesense 0.19+"
+
+These are specific version-number claims presented as facts, but the `Status:` field is "UNVERIFIED — requires fresh typesense.org check."
+
+**Audit finding:** If the fact is UNVERIFIED, the version numbers should be marked as claims ("Typesense 0.25+ (per V4.6 governance/CANONICAL-UPDATE-REPORT.md:97; pending fresh verification)"), not as bare facts.
+
+**Classification:** ⚠️ **UNRESOLVED with claims presented as facts**.
+
+**Required action:** Mark version numbers as "claim" or "citation" rather than fact; explicitly note they require fresh verification.
+
+### 5.4 DEC-005 — Fortify Version Decision Rests on EE-001
+
+**DEC-005** is marked FROZEN with "approved: A (^1.0)" and rationale "verified via Packagist — laravel/fortify latest stable is 1.x."
+
+**Audit finding:** DEC-005's FROZEN status rests on EE-001's VERIFIED status. Since EE-001 is a false-positive VERIFIED (AC-019), DEC-005's FROZEN status is also unverified.
+
+**Cascading impact:** If EE-001 is reclassified to UNVERIFIED, DEC-005 should be reclassified from FROZEN to PROPOSED — BLOCKED on external verification.
+
+### 5.5 DEC-006 — filament-shield Version Decision Rests on EE-002
+
+**DEC-006** is correctly marked PROPOSED — BLOCKED on external verification. The decision does NOT rest on EE-002's "likely ^3.0" recommendation; it requires actual verification.
+
+**Audit finding:** DEC-006 is correctly handled. The problem is in EE-002's language, not DEC-006's status.
+
+### 5.6 Verification Cadence
+
+The External Evidence Register correctly describes reverification cadence per V4.7 §10:
+
+- High-volatility Tier 1 facts (EE-002 through EE-014) — reverify on composer update, new major release.
+- Low-volatility Tier 2 facts (EE-015, EE-016) — reverify on standard revision.
+- "Reverification may generate a frozen-decision challenge per V4.7 §10. It must never silently mutate the frozen contract."
+
+**Audit finding:** ✅ Reverification cadence is correctly described. The challenge-generation mechanism is correctly stated. No actual reverification has occurred to test the mechanism.
+
+---
+
+## 6. Materiality Assessment
+
+Which external facts materially affect frozen decisions?
+
+| External Fact | Materially Affects | Frozen Decision at Risk |
+|---------------|-------------------|-------------------------|
+| EE-001 (Fortify) | DEC-005 (FROZEN) | If EE-001 is wrong, DEC-005 approves wrong version |
+| EE-002 (filament-shield) | DEC-006 (PROPOSED — correctly blocked) | No frozen decision at risk; correctly handled |
+| EE-003 (spatie/laravel-permission) | DEC-018 (FROZEN) | If EE-003 is wrong, DEP-001 contract may specify wrong version |
+| EE-004 (spatie/laravel-activitylog) | DEC-018 (FROZEN) | Same |
+| EE-005 (typesense/typesense-php) | DEC-018 (FROZEN) | Same |
+| EE-006 (devloop1024/laravel-typesense) | DEC-018 (FROZEN) | Same |
+| EE-007 (livewire/flux) | DEC-018 (FROZEN) | Same |
+| EE-008 (pxlrbt/filament-activity-log) | DEC-018 (FROZEN) | Same |
+| EE-009 (PHP 8.5) | DEC-018 (FROZEN) | Same |
+| EE-010 (Laravel 13.0) | DEC-018 (FROZEN) | Same |
+| EE-011 (Filament v5) | DEC-018 (FROZEN) | Same |
+| EE-012 (PostgreSQL 16) | DEC-018 (FROZEN) | Same |
+| EE-013 (Redis 7+) | DEC-018 (FROZEN) | Same |
+| EE-014 (Typesense features) | DEC-018 (FROZEN), DEC-002 (FROZEN) | If EE-014 is wrong, PROJECTION-017 contract may rely on non-existent Typesense features |
+
+**Audit finding:** 12 external facts materially affect frozen decisions (DEC-005, DEC-018, DEC-002). All 12 are either falsely VERIFIED (EE-001) or correctly UNVERIFIED (EE-002 through EE-014). No frozen decision rests on a correctly VERIFIED Tier-1 external fact.
+
+This means **the FROZEN status of DEC-005, DEC-018, and DEC-002 is contingent on external facts that have not been freshly verified.** Per V4.7 §9, these decisions should be PROPOSED — BLOCKED on external verification, not FROZEN.
+
+---
+
+## 7. Findings Summary
+
+| ID | Finding | Severity |
+|----|---------|----------|
+| EF-001 (AC-019) | EE-001 false-positive VERIFIED status (knowledge-base citation doesn't satisfy V4.7 §9) | T2 |
+| EF-002 (AC-020) | EE-002 false-confidence language ("likely", "unlikely") | T2 |
+| EF-003 (AC-026) | EE-014 cites specific Typesense version numbers as facts while marked UNVERIFIED | T3 |
+| EF-004 (AC-015) | External Evidence Register summary count off by 2 (14 claimed, 16 actual) | T2 |
+| EF-005 | DEC-005 FROZEN status rests on false-positive EE-001 VERIFIED; should be reclassified PROPOSED — BLOCKED | T2 |
+| EF-006 | DEC-018 FROZEN status rests on 12 UNVERIFIED external facts (EE-002 through EE-014); should be reclassified PROPOSED — BLOCKED | T2 |
+| EF-007 | DEC-002 FROZEN status partially rests on EE-014 (Typesense nested features); should be conditional | T2 |
+
+---
+
+## 8. Conclusion
+
+The V4.7 External Evidence Register has **2 false-positive VERIFIED entries** (EE-001, EE-002's language) and **1 claim-as-fact** issue (EE-014). The register's summary count is off by 2 (AC-015).
+
+More critically, **3 FROZEN decisions (DEC-005, DEC-018, DEC-002) rest on external facts that have not been freshly verified**. Per V4.7 §9, these decisions should be reclassified from FROZEN to PROPOSED — BLOCKED on external verification.
+
+The register's reverification cadence is correctly described (V4.7 §10) but has not been exercised.
+
+**Required action:**
+
+1. Reclassify EE-001 from VERIFIED to UNVERIFIED.
+2. Remove false-confidence language from EE-002.
+3. Mark EE-014's version numbers as claims, not facts.
+4. Reclassify DEC-005, DEC-018, DEC-002 from FROZEN to PROPOSED — BLOCKED on external verification (pending fresh Packagist/GitHub/typesense.org checks).
+5. Correct the External Evidence Register summary count from 14 to 16.
+
+---
+
+*End of External-Fact Audit. 16 external facts classified. 1 false-positive VERIFIED + 1 false-confidence + 1 claim-as-fact + 3 cascading FROZEN-status issues. 5 T2 + 1 T3 + 1 T2 cascading findings.*
+
+---
+
+# Authority-Contradiction Ledger
+
+**Document:** 11 of 13 — Authority-Contradiction Ledger
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Consolidated ledger of all authority contradictions, governance inconsistencies, and cosmetic issues discovered in the V4.7 evidence package
+
+---
+
+## 1. Severity Classification (per task brief "REQUIRED FINAL CLASSIFICATION")
+
+- **T1** — authority contradiction that could cause divergent implementation
+- **T2** — material governance/contract inconsistency
+- **T3** — cosmetic/documentation inconsistency
+
+Per the task brief: "GLM does not decide the severity according to personal preference. Cite the exact governing criterion used for the classification. Default upward where ambiguity exists."
+
+---
+
+## 2. T1 Findings — Authority Contradiction (5 findings)
+
+### AC-001 — User Q1–Q118 decisions absent from workspace
+
+**Severity criterion:** T1 — authority contradiction that could cause divergent implementation. The task brief's primary objective is to determine whether the package faithfully represents what the user decided. Without the user's Q1–Q118 decisions, this objective cannot be met for any of the 53 decisions or 60 contracts. Every FROZEN, APPROVED, and "approved option" claim is unverified.
+
+**Evidence:**
+- `/home/z/my-project/upload/` contains only `studynexus-v4.7-remediation-package.zip` (148,982 bytes); no companion file.
+- The extracted package contains 17 markdown files; none is named or formatted as a Q1–Q118 decision list.
+- Regex `Q\d{1,3}\b` returns 0 matches across all 17 files.
+- Decision Ledger labels 7 decisions (DEC-006, 009, 012, 035, 040, 041, 042) as "BLOCKED on user decision" — implying the remediation agent also lacked access to Q1–Q118.
+
+**Required action:** User must supply the merged authority/decision material containing Q1–Q118 answers.
+
+---
+
+### AC-002 — DEC-040, DEC-041, DEC-042 refer to different decisions in different documents
+
+**Severity criterion:** T1 — could cause divergent implementation. An engineer reading the Decision Ledger would implement DEC-040 as "Typesense outage contract" (FROZEN); an engineer reading the Master Summary would treat DEC-040 as "projection_events retention policy" (BLOCKED on user approval). They would produce different implementations.
+
+**Evidence:**
+
+| Document | DEC-040 meaning | DEC-041 meaning | DEC-042 meaning |
+|----------|-----------------|-----------------|-----------------|
+| Decision Ledger | Typesense outage (§13) FROZEN | Projection ordering (§14) FROZEN | Affected IDs (§17) FROZEN |
+| Contract Registry | Source of OUTAGE-001 | Source of PROJECTION-001 | (ambiguous) |
+| Decision Graph | Matches Ledger | Matches Ledger | Matches Unresolved-Issues |
+| Final Audit | "operational retention" | "operational retention" | "operational retention" |
+| Unresolved-Issues | projection_events retention (BLOCKED) | canonical_imports retention (BLOCKED) | collection_generation update (BLOCKED) |
+| Master Summary | Matches Unresolved-Issues | Matches Unresolved-Issues | Matches Unresolved-Issues |
+| Implementation-Determinism | Matches Ledger | Matches Unresolved-Issues | Matches Unresolved-Issues |
+
+**Root cause:** FA-015, FA-017, FA-019 findings were silently promoted to DEC-040/041/042 in the Unresolved-Issues report (Origin: FA-015/017/019), reusing existing DEC-IDs.
+
+**Required action:** User must clarify authoritative meaning (Option A: Ledger meanings authoritative; Option B: Unresolved-Issues meanings authoritative; Option C: Both sets exist, renumber the retention-policy decisions to DEC-054/055/056).
+
+---
+
+### AC-003 — 8 dependency cycles in Decision Ledger's `dependencies:` field
+
+**Severity criterion:** T1 — could cause divergent implementation. The package's "Critical Path to GO" cannot be executed because the dependency graph is not a DAG. Engineers cannot determine a valid implementation order.
+
+**Evidence:** DFS-based cycle detection on the `dependencies:` field of all 53 Decision Ledger records found 8 cycles:
+
+1. DEC-001 ↔ DEC-002 (mutual)
+2. DEC-003 ↔ DEC-004 (mutual)
+3. DEC-005 ↔ DEC-018 (mutual)
+4. DEC-018 ↔ DEC-006 (mutual)
+5. DEC-008 ↔ DEC-009 (mutual)
+6. DEC-012 ↔ DEC-013 (mutual)
+7. DEC-012 → DEC-013 → DEC-035 → DEC-012 (3-cycle)
+8. DEC-013 ↔ DEC-035 (mutual)
+
+The Decision Graph (deliverable #14) claims "Zero conflict edges; critical path documented" but does NOT mention these cycles.
+
+**Root cause:** `depends_on` is being used for conceptual relatedness rather than strict implementation dependency.
+
+**Required action:** Remediation agent must break cycles by editing `dependencies:` fields to remove non-strict dependencies.
+
+---
+
+### AC-004 — V4.7 prompt sections treated as user-approved authority
+
+**Severity criterion:** T1 — could cause divergent implementation. Every FROZEN decision's authority is unverified. If the user did not actually approve a V4.7 §section, the corresponding decision is unapproved and should not be implemented.
+
+**Evidence:**
+- Decision Ledger line 14–20: "All FROZEN and APPROVED decisions originate from the V4.7 governance prompt itself — the prompt's 81 sections ARE the approved decisions."
+- Each decision record's `approval authority:` field says "User (via V4.7 prompt §XX)".
+- 49 decisions marked FROZEN with this authority claim.
+- ABSOLUTE RULE 9 of the task brief: "DO NOT treat the remediation agent's recommended option as the user's decision unless the user's actual Q1–Q118 answer explicitly selected it."
+
+**Required action:** User must explicitly confirm V4.7 §section → Q1–Q118 mapping for all 49 FROZEN decisions. Any decision whose mapping is not confirmed should be reclassified from FROZEN to PROPOSED — BLOCKED.
+
+---
+
+### AC-005 — FA-015/017/019 findings silently promoted to DEC-040/041/042
+
+**Severity criterion:** T1 — findings treated as decisions (task brief Section J specifically warns about this). Creates ID ambiguity that would cause two engineers to implement different things.
+
+**Evidence:**
+- Unresolved-Issues Report: "DEC-040 — projection_events retention policy (Origin: FA-015)"
+- Unresolved-Issues Report: "DEC-041 — canonical_imports retention policy (Origin: FA-017)"
+- Unresolved-Issues Report: "DEC-042 — projection_states collection_generation update (Origin: FA-019)"
+- Decision Ledger: DEC-040/041/042 already exist with different meanings (FROZEN).
+
+**Root cause:** Findings were promoted to decisions without going through the decision-creation process (which would assign new DEC-IDs).
+
+**Required action:** Remediation agent must re-number the retention-policy decisions to DEC-054/055/056 (or whatever next-available IDs are), leaving DEC-040/041/042 with their Decision Ledger meanings.
+
+---
+
+## 3. T2 Findings — Material Governance/Contract Inconsistency (20 findings)
+
+### AC-006 — Decision Ledger Status Summary mismatch
+
+**Severity:** T2 — material governance inconsistency. The summary claims status counts that don't match actual records.
+
+**Evidence:**
+- Summary: 35 FROZEN + 12 APPROVED + 4 PROPOSED + 2 DEFERRED = 53
+- Actual: 49 FROZEN + 0 APPROVED + 4 PROPOSED + 0 DEFERRED = 53
+- "APPROVED" and "DEFERRED" categories have ZERO matching records.
+
+**Required action:** Update Decision Ledger summary to reflect actual counts.
+
+---
+
+### AC-007 — Decision Graph references non-existent DEF-001, DEF-002
+
+**Severity:** T2 — material inconsistency. Graph references decisions that don't exist in the Decision Ledger.
+
+**Evidence:** Decision Graph summary table says "DEFERRED | 2 | DEF-001, DEF-002". Decision Ledger contains only DEC-001 through DEC-053. DEF-001 and DEF-002 do not exist.
+
+**Required action:** Either add DEF-001 and DEF-002 to the Decision Ledger, or remove the reference from the Graph.
+
+---
+
+### AC-008 — Decision Graph self-acknowledged count discrepancy
+
+**Severity:** T2 — material inconsistency. Graph publishes a known counting error without correction.
+
+**Evidence:** Decision Graph summary: "APPROVED (from V4.7 prompt) | 11 | DEC-029, 039, 040, 041, 042, 043, 044, 045, 046, 047, 048, 049, 050, 051, 052, 053 (note: 16 in this list — count discrepancy because some are sub-decisions of DEC-002)".
+
+**Required action:** Either correct the count to 16, or remove the items that don't belong, or move them to the FROZEN list.
+
+---
+
+### AC-009 — Decision Graph lists DEC-040..053 in BOTH FROZEN and APPROVED
+
+**Severity:** T2 — material inconsistency. Same decisions appear in two status categories simultaneously.
+
+**Evidence:** Graph's FROZEN list includes "036-053" (which includes 040-053). Graph's APPROVED list also includes DEC-040 through DEC-053.
+
+**Required action:** Pick one status per decision; remove the duplicate listing.
+
+---
+
+### AC-010 — Decision Graph arithmetic error
+
+**Severity:** T3 (defaulted up to T2 per "default upward where ambiguity exists" rule) — summary count totals 52, not 53.
+
+**Evidence:** 35 FROZEN + 11 APPROVED + 4 PROPOSED + 2 DEFERRED = 52, but the summary claims Total = 53.
+
+**Required action:** Recompute arithmetic.
+
+---
+
+### AC-011 — Contract count contradiction
+
+**Severity:** T2 — material contract inconsistency. 5 documents give 3 different contract counts.
+
+**Evidence:**
+- README: 41 contracts (8 existing + 32 new + 1 proposed)
+- Master Summary: 41
+- Final Audit: "0 new contracts required beyond the 41 in the Contract Registry"
+- Propagation Matrix: 42 (41 + 1 subsumed)
+- Actual Contract Registry: 60 contracts (8 CON + 52 named)
+- Actual Propagation Matrix rows: 60
+
+**Required action:** Recompute contract count from actual registry; update all documents.
+
+---
+
+### AC-012 — Propagation Matrix arithmetic
+
+**Severity:** T2 — material contract inconsistency.
+
+**Evidence:**
+- Summary: 10 PROPAGATED + 3 PARTIAL + 27 NOT PROPAGATED + 2 BLOCKED = 42
+- Actual: 10 + 3 + 45 + 2 = 60
+
+**Required action:** Recompute propagation counts from actual matrix rows.
+
+---
+
+### AC-013 — Finding Ledger Status Summary wrong
+
+**Severity:** T2 — material inconsistency.
+
+**Evidence:**
+- Summary: Tier 1=22, Tier 2=18, Tier 3=7, Resolved=4, Unresolved=43, FP=0
+- Actual: Tier 1=22, Tier 2=17, Tier 3=8, Resolved=7, Unresolved=37, FP=2, Partial=1
+
+**Required action:** Recompute finding counts from actual records.
+
+---
+
+### AC-014 — Scenario verdict counts wrong
+
+**Severity:** T2 — material inconsistency.
+
+**Evidence:**
+- README/Master Summary: 6 PASS, 8 PARTIAL, 22 FAIL = 36
+- Actual: 8 PASS, 7 PARTIAL, 21 FAIL = 36
+
+**Required action:** Recompute scenario verdict counts.
+
+---
+
+### AC-015 — External Evidence Register counts wrong
+
+**Severity:** T2 — material inconsistency.
+
+**Evidence:**
+- Summary: 14 total (3 verified + 11 unverified)
+- Actual: 16 total (3 verified + 13 unverified)
+
+**Required action:** Recompute external fact counts.
+
+---
+
+### AC-016 — PROJECTION-007 = TYPESENSE-001 subsumption claim inconsistent
+
+**Severity:** T2 — duplicate representation.
+
+**Evidence:**
+- PROJECTION-007 header: "= TYPESENSE-001"
+- PROJECTION-007 status: "NEW (same as TYPESENSE-001)"
+- Both contracts appear as separate rows in Contract Registry AND Propagation Matrix.
+- Propagation Matrix summary: "42 (41 contracts in registry + 1 subsumed PROJECTION-007 = TYPESENSE-001)".
+
+**Required action:** Either remove PROJECTION-007 row (treating as truly subsumed) or remove the "same as" claim (treating as distinct).
+
+---
+
+### AC-017 — LIFE-001 status inconsistency
+
+**Severity:** T2 — material contract inconsistency.
+
+**Evidence:**
+- LIFE-001 registry status: "NEW — depends on DEC-035 user approval for V4.6 ProgrammeStatus"
+- LIFE-001 matrix status: "🔒 BLOCKED on DEC-012, DEC-035"
+- Inconsistent: status field says NEW but descriptive note and matrix say BLOCKED.
+- Compare to QUEUE-001 which is consistently marked PROPOSED — BLOCKED on DEC-009.
+
+**Required action:** Reclassify LIFE-001 from NEW to PROPOSED — BLOCKED on DEC-012, DEC-035.
+
+---
+
+### AC-018 — DEC-009 status field contradicts approved option field
+
+**Severity:** T2 — material inconsistency. A decision cannot be both PROPOSED/BLOCKED and have an approved option.
+
+**Evidence:**
+- DEC-009 status: "PROPOSED — BLOCKED on user approval of concrete values"
+- DEC-009 approved option: "B (V4.7 §57 explicitly states 'The exact class-specific values must be those explicitly approved in the final QUEUE-001 contract, not invented by the remediation agent.')"
+
+**Required action:** Either change status to FROZEN (if V4.7 §57 is sufficient approval) or change approved option to "TBD — REQUIRES USER APPROVAL".
+
+---
+
+### AC-019 — EE-001 false-positive VERIFIED status
+
+**Severity:** T2 — material external-fact inconsistency.
+
+**Evidence:**
+- EE-001 status: "VERIFIED — ready for DEP-001 contract"
+- EE-001 verified by: "Remediation Agent (Super Z) via knowledge base; recommend fresh Packagist check at execution time"
+- V4.7 §9 requires "authoritative primary evidence plus corroboration" for Tier 1 facts.
+- Knowledge-base citation is not authoritative primary evidence.
+
+**Required action:** Reclassify EE-001 from VERIFIED to UNVERIFIED.
+
+---
+
+### AC-020 — EE-002 false-confidence language
+
+**Severity:** T2 — material external-fact inconsistency.
+
+**Evidence:**
+- "Exact version constraint: TBD (likely ^3.0...)"
+- "If verification shows ^5.0 is correct (unlikely)..."
+- "If verification shows ^3.0 is correct (likely)..."
+- Task brief's FALSE CONFIDENCE test specifically flags "likely" and "unlikely".
+
+**Required action:** Remove probabilistic language; state facts only.
+
+---
+
+### AC-021 — Final Audit "subsumed" pattern
+
+**Severity:** T2 — material governance inconsistency. The pattern artificially preserves the original finding count without actually resolving new findings.
+
+**Evidence:**
+- Final Audit discovers 4 new Tier-1 findings (FA-001, FA-007, FA-008, FA-014) and 9 new Tier-2 findings.
+- Final Audit immediately declares them "subsumed by existing contracts" so the effective Tier-1 unresolved count stays at 22 and Tier-2 stays at 18.
+- "Tier-1 unresolved: 26 (22 original + 4 new — but 4 new are subsumed by existing contracts, so effective Tier-1 unresolved: 22)".
+
+**Required action:** Either resolve the new findings explicitly (not just declare them subsumed) or count them as additional unresolved findings.
+
+---
+
+### AC-022 — Change Manifest file count mismatch
+
+**Severity:** T2 — material inconsistency.
+
+**Evidence:**
+- Change Manifest enumerates 14 unique files requiring modification.
+- Master Summary and Changed-File Inventory claim 16 files modified.
+- 2-file gap unexplained.
+
+**Required action:** Reconcile file count between Change Manifest and Master Summary.
+
+---
+
+### AC-023 — Decision Graph inline-relabels DEC-043
+
+**Severity:** T2 — material inconsistency.
+
+**Evidence:**
+- Decision Ledger DEC-043: "How is historical affectedness preserved? (V4.7 §18)"
+- Decision Graph: "DEC-043 (admission-open semantics — V4.7 §34) [same DEC-043 as above]"
+- Same DEC-ID used with two different meanings within the same graph document.
+
+**Required action:** Either rename one of them (DEC-054 or similar) or correct the inline label.
+
+---
+
+### AC-024 — Decision Graph inline-relabels DEC-044
+
+**Severity:** T2 — material inconsistency.
+
+**Evidence:**
+- Decision Ledger DEC-044: "How is runtime projection coalescing enforced? (V4.7 §19)"
+- Decision Graph: "DEC-044 (programme result status — V4.7 §35) [same DEC-044 as above]"
+
+**Required action:** Same as AC-023.
+
+---
+
+### AC-025 — TYPESENSE-001 contract references DEC-043/044 with Graph's meanings
+
+**Severity:** T2 — material contract inconsistency.
+
+**Evidence:**
+- TYPESENSE-001 source decision: "DEC-007, DEC-010, DEC-043, DEC-044"
+- TYPESENSE-001 §Admission Open Semantics references DEC-043 with §34 meaning (Graph's meaning).
+- TYPESENSE-001 §Programme Result Status references DEC-044 with §35 meaning (Graph's meaning).
+- Decision Ledger's DEC-043 = §18 (historical affectedness), DEC-044 = §19 (runtime coalescing) — different meanings.
+
+**Required action:** Either update Decision Ledger to match Graph's meanings, or update TYPESENSE-001 to reference the correct DEC-IDs for §34/§35 (which would be new DEC-IDs DEC-054/055 or similar).
+
+---
+
+## 4. T3 Findings — Cosmetic/Documentation (6 findings)
+
+### AC-026 — EE-014 cites Typesense version numbers as facts while UNVERIFIED
+
+**Severity:** T3 — cosmetic inconsistency.
+
+**Evidence:**
+- EE-014 status: "UNVERIFIED — requires fresh typesense.org check"
+- EE-014 text: "enable_nested_features: Typesense 0.25+", "Collection aliasing: Typesense 0.19+"
+- Specific version numbers presented as facts while status is UNVERIFIED.
+
+**Required action:** Mark version numbers as "claim" or "citation", not fact.
+
+---
+
+### AC-027 — README conflates V4.6 source size with V4.7 evidence package size
+
+**Severity:** T3 — cosmetic inconsistency.
+
+**Evidence:**
+- README "Package Statistics" section: "Total deliverable size: ~150,000 words across 16 documents"
+- README "File count: 57" (referring to V4.6 source corpus)
+- The 57-file count refers to the V4.6 source (not present); the V4.7 evidence package itself contains 17 files.
+
+**Required action:** Distinguish V4.6 source corpus size (57 files) from V4.7 evidence package size (17 files).
+
+---
+
+### AC-028 — Master Summary "16 files modified" vs Change Manifest's 14 unique files
+
+**Severity:** T3 — cosmetic inconsistency.
+
+**Evidence:** See AC-022. Master Summary says 16; Change Manifest enumerates 14.
+
+**Required action:** Reconcile.
+
+---
+
+### AC-029 — Decision Graph uses DEC-043 with two meanings within same document
+
+**Severity:** T3 — cosmetic inconsistency.
+
+**Evidence:** Decision Graph earlier uses DEC-043 as "historical affectedness (§18)" (matching the Ledger); later uses it as "admission-open semantics (§34)" (inline relabeling).
+
+**Required action:** Same as AC-023.
+
+---
+
+### AC-030 — "V4.6 REMEDIATED PACKAGE" terminology overlap
+
+**Severity:** T3 — cosmetic inconsistency.
+
+**Evidence:** "V4.6 REMEDIATED PACKAGE" is used both as the V4.6 starting state (the source to be remediated) and the V4.7 target state (the result of remediation). This terminology overlap can confuse readers about which version is being discussed.
+
+**Required action:** Rename one. E.g., call the V4.6 source "V4.6 BASELINE PACKAGE" and the V4.7 target "V4.7 REMEDIATED PACKAGE".
+
+---
+
+### AC-031 — README "Total deliverable size: ~150,000 words" inflated
+
+**Severity:** T3 — cosmetic inconsistency.
+
+**Evidence:**
+- README: "Total deliverable size: ~150,000 words across 16 documents"
+- Actual: 17 files × ~5,200 chars average = ~88,400 chars = ~14,700 words (at 6 chars/word)
+- Inflated by ~10×.
+
+**Required action:** Correct the word count to ~15,000 (or whatever actual count is).
+
+---
+
+## 5. Summary Table
+
+| Severity | Count | IDs |
+|----------|-------|-----|
+| T1 | 5 | AC-001, AC-002, AC-003, AC-004, AC-005 |
+| T2 | 20 | AC-006 through AC-025 (excluding AC-010) |
+| T3 | 7 | AC-010, AC-026, AC-027, AC-028, AC-029, AC-030, AC-031 |
+| **Total** | **32** | |
+
+---
+
+## 6. Severity Justification
+
+Per the task brief: "GLM does not decide the severity according to personal preference. Cite the exact governing criterion used for the classification. Default upward where ambiguity exists."
+
+| Severity | Criterion applied |
+|----------|-------------------|
+| T1 | "authority contradiction that could cause divergent implementation" — applied when (a) two engineers reading different documents would implement different things, OR (b) the package cannot be executed as designed, OR (c) the audit's primary objective (verify user-decision fidelity) is blocked. |
+| T2 | "material governance/contract inconsistency" — applied when (a) counts don't reconcile, (b) status fields contradict each other, (c) external-fact claims use false-confidence language, (d) cross-document concept drift occurs, (e) governance rules are violated. |
+| T3 | "cosmetic/documentation inconsistency" — applied when (a) terminology overlap, (b) inflated metrics, (c) claims presented as facts without verification but without material impact. |
+
+**Default-upward examples:**
+- AC-010 (arithmetic error 52 vs 53) classified T3 by criterion, but defaulted upward to T2 because arithmetic errors in authority documents can mask deeper issues.
+- AC-026 (Typesense version numbers as facts while UNVERIFIED) classified T3 by criterion (cosmetic), no upward default because the underlying fact is correctly marked UNVERIFIED.
+
+---
+
+## 7. Conclusion
+
+The V4.7 evidence package contains **32 authority contradictions** (5 T1 + 20 T2 + 7 T3). The 5 T1 contradictions are sufficient to disqualify the package from serving as execution authority:
+
+- AC-001 blocks the primary audit objective.
+- AC-002 creates DEC-ID ambiguity that would cause divergent implementation.
+- AC-003 makes the "Critical Path to GO" unexecutable.
+- AC-004 leaves every FROZEN claim unverified.
+- AC-005 demonstrates the findings-to-decisions promotion pattern the task brief explicitly warns against.
+
+The 20 T2 inconsistencies are individually repairable but collectively indicate a package-wide lack of count discipline and cross-document consistency.
+
+The 7 T3 issues are cosmetic but should be fixed to improve package readability.
+
+---
+
+*End of Authority-Contradiction Ledger. 32 findings (5 T1 + 20 T2 + 7 T3) recorded with evidence and required actions.*
+
+---
+
+# Required User Decisions
+
+**Document:** 12 of 13 — Required User Decisions
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Decisions the user must make before this audit can be completed and before the V4.7 evidence package can serve as execution authority
+
+---
+
+## 1. Purpose
+
+Per the task brief's MOST IMPORTANT RULE:
+
+> "When two generated artifacts conflict: 1. compare both against the user's actual Q1–Q118 decision; 2. if the user's decision resolves the conflict, report which artifact is wrong; 3. if the user's decision does NOT resolve it, record a NEW USER DECISION REQUIRED; 4. do not resolve it yourself."
+
+This document records all NEW USER DECISIONS REQUIRED — situations where the user's existing decisions (even if supplied) would not resolve the contradiction, OR where the user's decisions are required to unblock the audit itself.
+
+---
+
+## 2. Precondition Decision (Required Before Any Other Audit Work)
+
+### UD-001 — Supply the user's Q1–Q118 decisions
+
+**Resolves:** AC-001 (T1 precondition blocker)
+
+**Why required:** The task brief explicitly states the user supplied "the merged authority/decision material containing the user's explicit answers and final decisions Q1–Q118." This material is absent from the workspace. Without it, the audit cannot verify whether any of the 53 decisions or 60 contracts in the package faithfully represent what the user decided.
+
+**Format required:** A single document containing the user's answers to questions Q1 through Q118, with each answer explicitly tied to the corresponding V4.7 prompt section (e.g., "Q14 = Option B (corresponds to V4.7 §14: 'projection_event_revision allocated transactionally...')").
+
+**Without this:** The Decision-Fidelity Matrix (deliverable #2) and Contract-Fidelity Matrix (deliverable #3) cannot be completed at the external-fidelity level. All 53 decisions remain UNVERIFIED-FROZEN or UNVERIFIED-APPROVED.
+
+---
+
+## 3. Authority-Clash Decisions (Required to Resolve AC-002)
+
+### UD-002 — Clarify authoritative meaning of DEC-040, DEC-041, DEC-042
+
+**Resolves:** AC-002 (T1), AC-005 (T1)
+
+**Why required:** These three DEC-IDs refer to completely different decisions in different documents:
+
+- **Decision Ledger:** DEC-040 = Typesense outage contract (V4.7 §13) FROZEN; DEC-041 = projection event ordering (V4.7 §14) FROZEN; DEC-042 = affected projection identities (V4.7 §17) FROZEN.
+- **Unresolved-Issues Report:** DEC-040 = projection_events retention policy (Origin: FA-015) BLOCKED; DEC-041 = canonical_imports retention policy (Origin: FA-017) BLOCKED; DEC-042 = projection_states.collection_generation update (Origin: FA-019) BLOCKED.
+
+The Decision Ledger and Contract Registry use the first set of meanings. The Master Summary, Final Audit, and Unresolved-Issues Report use the second set. The Decision Graph and Implementation-Determinism Report use a mix.
+
+**User must choose:**
+
+- **Option A:** Decision Ledger meanings are authoritative. The retention-policy decisions should be re-numbered DEC-054, DEC-055, DEC-056 (next available IDs). The "7 user decisions required" NO-GO claim becomes "4 user decisions required" (DEC-006, 009, 012, 035).
+- **Option B:** Unresolved-Issues meanings are authoritative. The Decision Ledger's DEC-040/041/042 entries should be re-numbered DEC-054, DEC-055, DEC-056. The "7 user decisions required" NO-GO claim remains accurate.
+- **Option C:** Both sets of decisions exist; the Decision Ledger is missing 3 entries (DEC-054/055/056 should be added for the retention-policy decisions; DEC-040/041/042 should retain their Ledger meanings). The "7 user decisions required" claim becomes "10 user decisions required" (the original 7 + 3 new ones).
+
+**Without this:** The package's NO-GO verdict foundation is internally contradictory. Engineers reading different documents would implement different things.
+
+---
+
+## 4. Authority-Mapping Decisions (Required to Resolve AC-004)
+
+### UD-003 — Confirm V4.7 §section → Q1–Q118 mapping for all 49 FROZEN decisions
+
+**Resolves:** AC-004 (T1)
+
+**Why required:** The Decision Ledger explicitly claims "All FROZEN and APPROVED decisions originate from the V4.7 governance prompt itself — the prompt's 81 sections ARE the approved decisions." This conflates the V4.7 prompt (the remediation agent's source document) with user-approved authority.
+
+Per the task brief's ABSOLUTE RULE 9: "DO NOT treat the remediation agent's recommended option as the user's decision unless the user's actual Q1–Q118 answer explicitly selected it."
+
+**User must explicitly confirm:** For each of the 49 FROZEN decisions, does the cited V4.7 §section correspond to an actual user-approved Q-answer?
+
+**Specific confirmations required (sample):**
+
+| DEC-ID | V4.7 §section cited | User confirmation required |
+|--------|---------------------|---------------------------|
+| DEC-001 | §12-§13 | Did the user's Q-answer explicitly approve eliminating PostgreSQL public-search fallback? |
+| DEC-002 | §14-§32, §58 | Did the user's Q-answer explicitly approve adding projection-event architecture? |
+| DEC-003 | §40-§41 | Did the user's Q-answer explicitly approve the two-stage human approval trust model? |
+| DEC-004 | §37 | Did the user's Q-answer explicitly approve artifact-level atomicity? |
+| DEC-005 | §9 (external-fact policy) | Did the user's Q-answer explicitly approve Fortify ^1.0? (Also depends on EE-001 fresh verification — see UD-008.) |
+| ... | ... | (and so on for all 49 FROZEN decisions) |
+
+**Without this:** All 49 FROZEN decisions remain UNVERIFIED-FROZEN. The package cannot be used as execution authority.
+
+---
+
+## 5. Graph-Integrity Decisions (Required to Resolve AC-003)
+
+### UD-004 — Approve cycle-breaking strategy for 8 dependency cycles
+
+**Resolves:** AC-003 (T1)
+
+**Why required:** The Decision Ledger's `dependencies:` field creates 8 cycles (see Graph-Integrity Audit §4). The remediation agent has zero architectural discretion per V4.7 §68, so it cannot decide which dependencies to remove. The user must approve the cycle-breaking strategy.
+
+**User must choose:**
+
+- **Option A:** Remove all mutual dependencies (treat them as conceptual relatedness, not strict implementation dependency). This breaks Cycles #1–6, #8.
+- **Option B:** Merge mutually-dependent decisions into single decisions. E.g., DEC-001 and DEC-002 (both about search/projection) become a single decision.
+- **Option C:** Specify a different cycle-breaking strategy.
+- **Option D:** Confirm that the cycles are intentional (e.g., "implement simultaneously, not sequentially") and update the Critical Path to reflect this.
+
+**Without this:** The "Critical Path to GO" cannot be executed.
+
+---
+
+## 6. Status-Reconciliation Decisions (Required to Resolve AC-006 through AC-010)
+
+### UD-005 — Confirm Decision Ledger status taxonomy
+
+**Resolves:** AC-006 (T2), AC-007 (T2), AC-008 (T2), AC-009 (T2), AC-010 (T3)
+
+**Why required:** The Decision Ledger's Status Summary claims 4 categories (FROZEN, APPROVED, PROPOSED, DEFERRED) but actual records use only 2 (FROZEN, PROPOSED). The Decision Graph adds a 5th category (DEF-001, DEF-002) that doesn't exist in the Ledger.
+
+**User must choose:**
+
+- **Option A:** The Ledger's actual 2 categories (FROZEN, PROPOSED) are correct. Update the Summary table; remove APPROVED and DEFERRED categories; remove Decision Graph's DEF-001/002 references.
+- **Option B:** The Ledger's claimed 4 categories are correct. Add APPROVED and DEFERRED records (which decisions should be APPROVED? which DEFERRED?).
+- **Option C:** Some other taxonomy (specify).
+
+**Without this:** The Decision Ledger's status summary is internally contradictory.
+
+---
+
+## 7. Contract-Count Decisions (Required to Resolve AC-011, AC-012, AC-016)
+
+### UD-006 — Confirm authoritative contract count and PROJECTION-007/TYPESENSE-001 subsumption
+
+**Resolves:** AC-011 (T2), AC-012 (T2), AC-016 (T2)
+
+**Why required:** The package gives 3 different contract counts (41, 42, 60). The "subsumed" claim for PROJECTION-007/TYPESENSE-001 is contradicted by the actual listing of both as separate rows.
+
+**User must choose:**
+
+- **Option A:** Actual count is 60. Update all documents (README, Master Summary, Final Audit, Propagation Matrix) to reflect 60. Treat PROJECTION-007 and TYPESENSE-001 as distinct contracts (remove "same as" claim).
+- **Option B:** Actual count is 59. Merge PROJECTION-007 into TYPESENSE-001 (remove PROJECTION-007 row). Update all documents to reflect 59.
+- **Option C:** Some other count (specify which contracts to add or remove).
+
+**Without this:** Contract propagation tracking is unreliable.
+
+---
+
+## 8. External-Verification Decisions (Required to Resolve AC-019, AC-020, EF-005, EF-006, EF-007)
+
+### UD-007 — Perform fresh external verification of 13 Tier-1 external facts
+
+**Resolves:** AC-019 (T2), AC-020 (T2), EF-005 (T2), EF-006 (T2), EF-007 (T2)
+
+**Why required:** Per V4.7 §9, Tier 1 external facts require "authoritative primary evidence plus corroboration." The remediation agent has not performed fresh Packagist/GitHub/typesense.org checks. EE-001 is falsely marked VERIFIED (knowledge-base citation); EE-002 uses false-confidence language; 12 other facts are correctly marked UNVERIFIED but block frozen decisions DEC-005, DEC-018, DEC-002.
+
+**User must perform (or commission):**
+
+1. Fresh Packagist check for `laravel/fortify` — record exact latest stable version.
+2. Fresh Packagist + GitHub check for `bezhansalleh/filament-shield` — record exact latest stable version compatible with Filament v5.
+3. Fresh Packagist check for `spatie/laravel-permission` — record exact version compatible with Laravel ^13.0.
+4. Fresh Packagist check for `spatie/laravel-activitylog` — record exact version.
+5. Fresh Packagist check for `typesense/typesense-php` — record exact version.
+6. Fresh Packagist check for `devloop1024/laravel-typesense` — record exact version.
+7. Fresh Packagist check for `livewire/flux` — record exact version.
+8. Fresh Packagist check for `pxlrbt/filament-activity-log` — record exact version.
+9. Fresh check of `php.net/downloads` for PHP 8.5 stable release status.
+10. Fresh check of `laravel.com/docs/13.x` for Laravel 13.0 stable release status.
+11. Fresh check of `filamentphp.com/docs/5.x` for Filament v5 stable release status.
+12. Fresh check of `postgresql.org/docs/16/` for PostgreSQL 16 stable release status.
+13. Fresh check of `typesense.org/docs/` for Typesense feature support (enable_nested_features, same-element nested filtering, collection aliasing).
+
+**For each:** Record verification date, exact version found, and any compatibility issues. If verification reveals a version incompatibility, raise a frozen-decision challenge per V4.7 §67.
+
+**Without this:** DEC-005 (FROZEN), DEC-018 (FROZEN), DEC-002 (FROZEN) rest on unverified external facts.
+
+---
+
+## 9. Status-Field Reconciliation Decisions (Required to Resolve AC-017, AC-018)
+
+### UD-008 — Confirm LIFE-001 status
+
+**Resolves:** AC-017 (T2)
+
+**Why required:** LIFE-001's status field says "NEW" but the descriptive note and Propagation Matrix say "BLOCKED on DEC-012, DEC-035." Inconsistent with QUEUE-001 which is consistently marked PROPOSED — BLOCKED.
+
+**User must choose:**
+
+- **Option A:** Reclassify LIFE-001 from NEW to PROPOSED — BLOCKED on DEC-012, DEC-035 (matching QUEUE-001's treatment).
+- **Option B:** LIFE-001 is correctly marked NEW because the contract language is ready even if the values are pending.
+
+### UD-009 — Confirm DEC-009 status
+
+**Resolves:** AC-018 (T2)
+
+**Why required:** DEC-009's status field says "PROPOSED — BLOCKED on user approval of concrete values" but the approved-option field says "approved=B (V4.7 §57...)".
+
+**User must choose:**
+
+- **Option A:** DEC-009 is correctly PROPOSED — BLOCKED. Change the approved-option field to "TBD — REQUIRES USER APPROVAL".
+- **Option B:** V4.7 §57 IS sufficient approval. Change DEC-009 status to FROZEN.
+- **Option C:** User must explicitly approve Option B (conservative defaults) or specify alternative values.
+
+---
+
+## 10. Cross-Document Concept-Drift Decisions (Required to Resolve AC-023, AC-024, AC-025)
+
+### UD-010 — Confirm authoritative meanings of DEC-043, DEC-044
+
+**Resolves:** AC-023 (T2), AC-024 (T2), AC-025 (T2)
+
+**Why required:** DEC-043 and DEC-044 have different meanings in the Decision Ledger vs the Decision Graph (inline-relabels) vs the TYPESENSE-001 contract.
+
+- **Decision Ledger:** DEC-043 = historical affectedness (§18); DEC-044 = runtime coalescing (§19).
+- **Decision Graph (inline):** DEC-043 = admission-open semantics (§34); DEC-044 = programme result status (§35).
+- **TYPESENSE-001 contract:** Uses Graph's meanings.
+
+**User must choose:**
+
+- **Option A:** Decision Ledger meanings are authoritative. Update Decision Graph and TYPESENSE-001 to reference new DEC-IDs (DEC-057, DEC-058 or similar) for §34/§35 concepts.
+- **Option B:** Graph meanings are authoritative. Update Decision Ledger to relabel DEC-043/044.
+- **Option C:** Both sets of decisions exist; the Ledger is missing 2 entries.
+
+---
+
+## 11. Phantom-Decisions Decisions (Required to Resolve AC-007)
+
+### UD-011 — Confirm whether DEF-001, DEF-002 exist
+
+**Resolves:** AC-007 (T2)
+
+**Why required:** The Decision Graph references "DEF-001, DEF-002" as DEFERRED decisions, but these IDs do not exist in the Decision Ledger.
+
+**User must choose:**
+
+- **Option A:** DEF-001 and DEF-002 should exist. Specify what they are (which decisions are DEFERRED?).
+- **Option B:** The Graph's reference is erroneous. Remove DEF-001/002 from the Graph; set DEFERRED count to 0.
+
+---
+
+## 12. False-Positive VERIFIED Decisions (Required to Resolve AC-019)
+
+### UD-012 — Confirm EE-001 (Laravel Fortify) verification status
+
+**Resolves:** AC-019 (T2), EF-005 (T2)
+
+**Why required:** EE-001 is marked VERIFIED based on a knowledge-base citation, but V4.7 §9 requires authoritative primary evidence + corroboration. DEC-005 (FROZEN) rests on EE-001's VERIFIED status.
+
+**User must choose:**
+
+- **Option A:** EE-001 should be reclassified to UNVERIFIED. DEC-005 should be reclassified from FROZEN to PROPOSED — BLOCKED on fresh Packagist verification.
+- **Option B:** Knowledge-base citation is acceptable for this fact. EE-001 remains VERIFIED. (Violates V4.7 §9.)
+- **Option C:** User has fresh Packagist verification evidence to supply. If so, EE-001 can remain VERIFIED with updated evidence.
+
+---
+
+## 13. Summary
+
+| UD-ID | Title | Resolves | Severity of underlying issue |
+|-------|-------|----------|------------------------------|
+| UD-001 | Supply Q1–Q118 decisions | AC-001 | T1 (precondition) |
+| UD-002 | Clarify DEC-040/041/042 meanings | AC-002, AC-005 | T1 |
+| UD-003 | Confirm V4.7 §section → Q1–Q118 mapping | AC-004 | T1 |
+| UD-004 | Approve cycle-breaking strategy | AC-003 | T1 |
+| UD-005 | Confirm Decision Ledger status taxonomy | AC-006–AC-010 | T2/T3 |
+| UD-006 | Confirm contract count + PROJECTION-007 subsumption | AC-011, AC-012, AC-016 | T2 |
+| UD-007 | Perform fresh external verification (13 facts) | AC-019, AC-020, EF-005/006/007 | T2 |
+| UD-008 | Confirm LIFE-001 status | AC-017 | T2 |
+| UD-009 | Confirm DEC-009 status | AC-018 | T2 |
+| UD-010 | Confirm DEC-043/044 meanings | AC-023, AC-024, AC-025 | T2 |
+| UD-011 | Confirm DEF-001/002 existence | AC-007 | T2 |
+| UD-012 | Confirm EE-001 verification status | AC-019, EF-005 | T2 |
+
+**Total: 12 user decisions required.**
+
+---
+
+## 14. Priority Order
+
+The user should resolve these in the following order:
+
+1. **UD-001** (supply Q1–Q118) — unblocks the entire audit.
+2. **UD-002, UD-010, UD-011** (DEC-ID clarifications) — unblocks the Decision-Fidelity Matrix.
+3. **UD-003** (V4.7 §section mapping) — unblocks all 49 FROZEN claims.
+4. **UD-004** (cycle-breaking) — unblocks the Critical Path to GO.
+5. **UD-007, UD-012** (external verification) — unblocks DEC-005, DEC-018, DEC-002 FROZEN claims.
+6. **UD-005, UD-006, UD-008, UD-009** (status reconciliations) — unblocks document consistency.
+
+---
+
+*End of Required User Decisions. 12 decisions required (4 T1 unblocking + 8 T2 reconciliations).*
+
+---
+
+# Corrected Authority Spec
+
+**Document:** 13 of 13 — Corrected Authority Spec
+**Date:** 2026-08-26
+**Auditor:** Super Z (Pre-Execution Authority Auditor)
+**Subject:** Specification the remediation agent should follow to repair the V4.7 evidence package so it can serve as execution authority
+
+---
+
+## 1. Purpose
+
+This document specifies the corrections the remediation agent should apply to the V4.7 evidence package to resolve the 32 findings in the Authority-Contradiction Ledger. It is **advisory only** — the remediation agent must NOT apply any correction that depends on a user decision (UD-001 through UD-012) until that decision is made.
+
+Per the task brief's STOP CONDITION: "Do NOT proceed to source-file remediation after completing this audit. Do NOT produce a remediated V4.7 source package. Do NOT declare GO."
+
+This document does NOT authorize the remediation agent to perform source-file remediation. It only specifies what the remediation agent should do **to the evidence package itself** (the 17 markdown files) once the user has resolved the required decisions.
+
+---
+
+## 2. Correction Principles
+
+1. **No architectural discretion.** The remediation agent must NOT invent, simplify, or extend any decision or contract. Corrections are mechanical (renumbering, recounting, removing contradictions) — not architectural.
+
+2. **User decisions take precedence.** Where a correction depends on a user decision (UD-001 through UD-012), the correction cannot be applied until the user decides.
+
+3. **Preserve historical/archive material.** No archive content is modified.
+
+4. **Document every correction.** Each correction must be traceable to a specific finding (AC-001 through AC-031) in the Authority-Contradiction Ledger.
+
+5. **Re-verify after correction.** After applying corrections, the remediation agent must re-run the count-consistency audit, graph-integrity audit, and internal-consistency audit to verify the corrections did not introduce new contradictions.
+
+---
+
+## 3. Correction Plan (Ordered by Dependency)
+
+### Phase 1: Precondition (Required Before Any Other Correction)
+
+#### Correction 1.1 — Wait for UD-001 (user supplies Q1–Q118)
+
+**Resolves:** AC-001
+
+**Action:** No correction to apply. The remediation agent must wait for the user to supply the merged authority/decision material containing Q1–Q118 answers.
+
+**Once supplied:** The remediation agent must perform the V4.7 §section → Q1–Q118 mapping verification (per UD-003) for all 49 FROZEN decisions.
+
+---
+
+### Phase 2: DEC-ID Reconciliation (Required Before Count Corrections)
+
+#### Correction 2.1 — Re-number retention-policy decisions
+
+**Resolves:** AC-002, AC-005
+**Depends on:** UD-002
+
+**Action (assuming UD-002 Option A: Ledger meanings are authoritative):**
+
+1. In `08-unresolved-issues/UNRESOLVED-MATERIAL-ISSUES-REPORT.md`:
+   - Rename "DEC-040 — projection_events retention policy" → "DEC-054 — projection_events retention policy"
+   - Rename "DEC-041 — canonical_imports retention policy" → "DEC-055 — canonical_imports retention policy"
+   - Rename "DEC-042 — projection_states collection_generation update" → "DEC-056 — projection_states collection_generation update"
+   - Update Origin references: "Origin: FA-015" → "Origin: FA-015 (newly created DEC-054)"
+   - Update Summary table accordingly.
+
+2. In `16-remediated-package/REMEDIATED-PACKAGE-SUMMARY.md`:
+   - Replace "DEC-040" with "DEC-054" in the 7-decisions-required list.
+   - Replace "DEC-041" with "DEC-055".
+   - Replace "DEC-042" with "DEC-056".
+
+3. In `07-final-audit/FINAL-AUDIT-REPORT.md`:
+   - Replace "DEC-040" with "DEC-054".
+   - Replace "DEC-041" with "DEC-055".
+   - Replace "DEC-042" with "DEC-056".
+   - Update "3 new user decisions required (DEC-040, DEC-041, DEC-042...)" → "3 new user decisions required (DEC-054, DEC-055, DEC-056...)".
+
+4. In `11-implementation-determinism/IMPLEMENTATION-DETERMINISM-REPORT.md`:
+   - Replace DEC-041 (where it means "canonical_imports retention") with DEC-055.
+   - Replace DEC-042 (where it means "collection_generation update") with DEC-056.
+   - Leave DEC-040 references where they mean "Typesense outage contract" unchanged.
+
+5. In `14-decision-graph/DECISION-DEPENDENCY-CONFLICT-GRAPH.md`:
+   - Replace DEC-042 (where it means "projection_states collection_generation") with DEC-056.
+
+6. Add new decision records to `02-decision-ledger/DECISION-LEDGER.md`:
+   - DEC-054 — projection_events retention policy (status: PROPOSED — BLOCKED on user approval; origin: FA-015)
+   - DEC-055 — canonical_imports retention policy (status: PROPOSED — BLOCKED on user approval; origin: FA-017)
+   - DEC-056 — projection_states.collection_generation update mechanism (status: PROPOSED — BLOCKED on user approval; origin: FA-019)
+
+7. Update `02-decision-ledger/DECISION-LEDGER.md` Status Summary:
+   - Total: 53 → 56
+   - PROPOSED: 4 → 7 (added DEC-054, 055, 056)
+   - FROZEN: 49 (unchanged)
+
+**Verification after correction:**
+- Grep for "DEC-040" — should appear only with "Typesense outage contract" meaning.
+- Grep for "DEC-041" — should appear only with "projection event ordering" meaning.
+- Grep for "DEC-042" — should appear only with "affected projection identities" meaning.
+- Grep for "DEC-054", "DEC-055", "DEC-056" — should appear with retention-policy meanings.
+
+---
+
+### Phase 3: Cycle Breaking (Required Before Graph-Integrity Audit Passes)
+
+#### Correction 3.1 — Break dependency cycles
+
+**Resolves:** AC-003
+**Depends on:** UD-004
+
+**Action (assuming UD-004 Option A: remove mutual dependencies):**
+
+1. In `02-decision-ledger/DECISION-LEDGER.md`, edit the `dependencies:` field of:
+   - DEC-001: Remove "DEC-002" from dependencies (keep as conceptual relatedness only — add note "See also: DEC-002 (related conceptually, not a strict dependency)").
+   - DEC-002: Remove "DEC-001" from dependencies.
+   - DEC-003: Remove "DEC-004" from dependencies.
+   - DEC-004: Remove "DEC-003" from dependencies.
+   - DEC-005: Remove "DEC-018" from dependencies.
+   - DEC-018: Remove "DEC-005" and "DEC-006" from dependencies (these are reverse-dependencies, not forward).
+   - DEC-008: Remove "DEC-009" from dependencies.
+   - DEC-009: Remove "DEC-008" from dependencies.
+   - DEC-012: Remove "DEC-013" from dependencies.
+   - DEC-013: Remove "DEC-012" and "DEC-035" from dependencies.
+   - DEC-035: Remove "DEC-013" from dependencies.
+
+2. Update `14-decision-graph/DECISION-DEPENDENCY-CONFLICT-GRAPH.md` to reflect the new DAG structure (no cycles).
+
+3. Re-run cycle detection (Python script) to verify 0 cycles remain.
+
+**Verification after correction:**
+- DFS-based cycle detection should return 0 cycles.
+- Decision Graph visualization should show a true DAG (no back-edges).
+
+---
+
+### Phase 4: Status Reconciliation (Required Before Count Corrections)
+
+#### Correction 4.1 — Update Decision Ledger Status Summary
+
+**Resolves:** AC-006
+**Depends on:** UD-005
+
+**Action (assuming UD-005 Option A: 2 categories only):**
+
+1. In `02-decision-ledger/DECISION-LEDGER.md`, replace the Ledger Status Summary table:
+
+```markdown
+| Status | Count |
+|--------|-------|
+| FROZEN | 49 (or 52 after Phase 2 adds DEC-054/055/056 as PROPOSED) |
+| PROPOSED | 4 (or 7 after Phase 2) |
+| **Total** | **53** (or 56) |
+```
+
+Remove APPROVED and DEFERRED categories.
+
+2. Remove the line "All FROZEN and APPROVED decisions originate from the V4.7 governance prompt itself — the prompt's 81 sections ARE the approved decisions."
+
+3. Replace with: "All FROZEN decisions are recorded as FROZEN pending user verification of V4.7 §section → Q1–Q118 mapping (per UD-003). No decision is marked APPROVED until the user explicitly confirms the mapping."
+
+#### Correction 4.2 — Update Decision Graph Status Summary
+
+**Resolves:** AC-007, AC-008, AC-009, AC-010
+
+**Action:**
+
+1. In `14-decision-graph/DECISION-DEPENDENCY-CONFLICT-GRAPH.md`, replace the Decision Status Summary table:
+
+```markdown
+| Status | Count | Decisions |
+|--------|-------|-----------|
+| FROZEN | 49 | DEC-001, 002, 003, 004, 005, 007, 008, 010, 011, 013-028, 030-034, 036-053 |
+| PROPOSED (require user approval) | 4 | DEC-006, 009, 012, 035 |
+| **Total** | **53** | |
+```
+
+Remove APPROVED and DEFERRED categories. Remove references to DEF-001, DEF-002. Ensure count totals 53.
+
+#### Correction 4.3 — Fix LIFE-001 status
+
+**Resolves:** AC-017
+**Depends on:** UD-008
+
+**Action (assuming UD-008 Option A):**
+
+1. In `03-contract-registry/CONTRACT-REGISTRY.md`, change LIFE-001's status field from "NEW — depends on DEC-035 user approval for V4.6 ProgrammeStatus" to "PROPOSED — BLOCKED on DEC-012, DEC-035".
+
+#### Correction 4.4 — Fix DEC-009 status contradiction
+
+**Resolves:** AC-018
+**Depends on:** UD-009
+
+**Action (assuming UD-009 Option A):**
+
+1. In `02-decision-ledger/DECISION-LEDGER.md`, change DEC-009's "approved option:" field from "B (V4.7 §57 explicitly states...)" to "TBD — REQUIRES USER APPROVAL".
+
+---
+
+### Phase 5: Count Corrections (Required Before Count-Consistency Audit Passes)
+
+#### Correction 5.1 — Recompute Finding Ledger counts
+
+**Resolves:** AC-013
+
+**Action:**
+
+1. In `01-finding-ledger/FINDING-LEDGER.md`, replace the Ledger Status Summary table:
+
+```markdown
+| Severity | Total | Resolved | Unresolved | False-Positive | Partially-Resolved |
+|----------|-------|----------|------------|----------------|---------------------|
+| Tier 1 (BLOCKER) | 22 | 0 | 21 | 0 | 1 (F-046) |
+| Tier 2 (MEDIUM) | 17 | 1 (F-039) | 16 | 0 | 0 |
+| Tier 3 (COSMETIC) | 8 | 6 | 0 | 2 (F-040, F-047) | 0 |
+| **Total** | **47** | **7** | **37** | **2** | **1** |
+```
+
+#### Correction 5.2 — Recompute Contract counts
+
+**Resolves:** AC-011, AC-012, AC-016
+**Depends on:** UD-006
+
+**Action (assuming UD-006 Option A: actual count is 60):**
+
+1. In `README.md`, replace "41 contracts (8 existing verified, 32 new, 1 proposed-skeleton)" with "60 contracts (8 existing verified, 51 new, 1 proposed-skeleton)".
+
+2. In `16-remediated-package/REMEDIATED-PACKAGE-SUMMARY.md`, replace "41 contracts" with "60 contracts" everywhere.
+
+3. In `07-final-audit/FINAL-AUDIT-REPORT.md`, replace "0 new contracts required beyond the 41 in the Contract Registry" with "0 new contracts required beyond the 60 in the Contract Registry".
+
+4. In `13-contract-propagation/CONTRACT-PROPAGATION-MATRIX.md`, replace the Summary table:
+
+```markdown
+| Status | Count |
+|--------|-------|
+| ✅ PROPAGATED | 10 (8 existing CON-* + GOV-003 + GOV-007) |
+| ⚠️ PARTIAL | 3 (PROJECTION-017, GOV-005, ARCHIVE-001) |
+| ❌ NOT PROPAGATED | 45 |
+| 🔒 BLOCKED | 2 (QUEUE-001, LIFE-001) |
+| **Total** | **60** |
+```
+
+Update "27 contracts require propagation" to "45 contracts require propagation".
+
+5. Remove the "1 subsumed PROJECTION-007 = TYPESENSE-001" claim (treat as distinct contracts).
+
+#### Correction 5.3 — Recompute Scenario counts
+
+**Resolves:** AC-014
+
+**Action:**
+
+1. In `README.md`, replace "36 scenarios simulated (6 PASS, 8 PARTIAL, 22 FAIL)" with "36 scenarios simulated (8 PASS, 7 PARTIAL, 21 FAIL)".
+
+2. In `16-remediated-package/REMEDIATED-PACKAGE-SUMMARY.md`, replace "36 (6 PASS + 8 PARTIAL + 22 FAIL)" with "36 (8 PASS + 7 PARTIAL + 21 FAIL)".
+
+#### Correction 5.4 — Recompute External Evidence counts
+
+**Resolves:** AC-015
+
+**Action:**
+
+1. In `09-external-evidence/EXTERNAL-EVIDENCE-REGISTER.md`, replace the Summary table:
+
+```markdown
+| Status | Count |
+|--------|-------|
+| VERIFIED (knowledge-base; recommend fresh check at execution time) | 3 (EE-001, EE-015, EE-016) — NOTE: EE-001 should be reclassified per Correction 7.1 |
+| UNVERIFIED — requires fresh external check | 13 (EE-002 through EE-014) |
+| **Total** | **16** |
+```
+
+Update "11 Tier 1 external facts require fresh verification" to "12 Tier 1 external facts require fresh verification (13 if EE-001 is reclassified)".
+
+#### Correction 5.5 — Recompute Modified Files count
+
+**Resolves:** AC-022, AC-028
+
+**Action:**
+
+1. In `16-remediated-package/REMEDIATED-PACKAGE-SUMMARY.md`, replace "Files requiring modification: 16 (of 57)" with "Files requiring modification: 14 (of 57)".
+
+2. In `12-changed-file-inventory/CHANGED-FILE-INVENTORY.md`, update the Summary table to show 14 (not 16) files modified.
+
+---
+
+### Phase 6: Cross-Document Concept-Drift Corrections
+
+#### Correction 6.1 — Fix DEC-043/044 inline relabeling
+
+**Resolves:** AC-023, AC-024, AC-025
+**Depends on:** UD-010
+
+**Action (assuming UD-010 Option A: Ledger meanings authoritative):**
+
+1. In `14-decision-graph/DECISION-DEPENDENCY-CONFLICT-GRAPH.md`, replace:
+   - "DEC-043 (admission-open semantics — V4.7 §34)" → "DEC-057 (admission-open semantics — V4.7 §34) — NEW DEC-ID required"
+   - "DEC-044 (programme result status — V4.7 §35)" → "DEC-058 (programme result status — V4.7 §35) — NEW DEC-ID required"
+
+2. In `03-contract-registry/CONTRACT-REGISTRY.md`, update TYPESENSE-001's "source decision:" field from "DEC-007, DEC-010, DEC-043, DEC-044" to "DEC-007, DEC-010, DEC-057, DEC-058".
+
+3. Add new decision records to `02-decision-ledger/DECISION-LEDGER.md`:
+   - DEC-057 — Admission-open semantics (V4.7 §34) — status FROZEN
+   - DEC-058 — Programme result status (V4.7 §35) — status FROZEN
+
+4. Update Decision Ledger Status Summary: Total 56 → 58 (or 53 → 55 if Phase 2 not yet applied).
+
+---
+
+### Phase 7: External-Fact Corrections
+
+#### Correction 7.1 — Reclassify EE-001
+
+**Resolves:** AC-019, EF-001, EF-005
+**Depends on:** UD-007 (fresh Packagist verification) and UD-012
+
+**Action (assuming UD-012 Option A: reclassify to UNVERIFIED):**
+
+1. In `09-external-evidence/EXTERNAL-EVIDENCE-REGISTER.md`, change EE-001's status from "VERIFIED — ready for DEP-001 contract" to "UNVERIFIED — requires fresh Packagist check per V4.7 §9".
+
+2. Change EE-001's "Verified by:" field from "Remediation Agent (Super Z) via knowledge base; recommend fresh Packagist check at execution time" to "PENDING — requires fresh Packagist check".
+
+3. In `02-decision-ledger/DECISION-LEDGER.md`, change DEC-005's status from "FROZEN" to "PROPOSED — BLOCKED on external verification per V4.7 §9".
+
+4. Update Decision Ledger Status Summary: FROZEN 49 → 48; PROPOSED 4 → 5 (or 7 → 8 if Phase 2 applied).
+
+#### Correction 7.2 — Remove false-confidence language from EE-002
+
+**Resolves:** AC-020, EF-002
+
+**Action:**
+
+1. In `09-external-evidence/EXTERNAL-EVIDENCE-REGISTER.md`, edit EE-002:
+   - Replace "Exact version constraint: TBD (likely ^3.0 based on filament-shield's historical versioning pattern; the v3 line supports both Filament v3 AND Filament v5)" with "Exact version constraint: TBD — requires fresh Packagist/GitHub verification per V4.7 §9."
+   - Replace "If verification shows ^5.0 is correct (unlikely):" with "If verification shows ^5.0 is correct:"
+   - Replace "If verification shows ^3.0 is correct (likely):" with "If verification shows ^3.0 is correct:"
+
+#### Correction 7.3 — Mark EE-014 version numbers as claims
+
+**Resolves:** AC-026, EF-003
+
+**Action:**
+
+1. In `09-external-evidence/EXTERNAL-EVIDENCE-REGISTER.md`, edit EE-014's "Feature compatibility:" section:
+   - Replace "enable_nested_features: Typesense 0.25+" with "enable_nested_features: claimed Typesense 0.25+ (per V4.6 governance/CANONICAL-UPDATE-REPORT.md:97; pending fresh verification)"
+   - Replace "Same-element nested filtering: requires..." with "Same-element nested filtering: claimed requires... (pending fresh verification)"
+   - Replace "Collection aliasing: Typesense 0.19+" with "Collection aliasing: claimed Typesense 0.19+ (pending fresh verification)"
+
+---
+
+### Phase 8: Final-Audit "Subsumed" Pattern Correction
+
+#### Correction 8.1 — Remove "subsumed" pattern from Final Audit Report
+
+**Resolves:** AC-021
+
+**Action:**
+
+1. In `07-final-audit/FINAL-AUDIT-REPORT.md`, replace:
+
+   > "Tier-1 unresolved: 26 (22 original + 4 new — but 4 new are subsumed by existing contracts, so effective Tier-1 unresolved: 22)"
+   > "Tier-2 unresolved: 27 (18 original + 9 new — but 9 new are subsumed by MIGR-001, so effective Tier-2 unresolved: 18)"
+
+   With:
+
+   > "Tier-1 unresolved: 26 (22 original + 4 new). The 4 new findings (FA-001, FA-007, FA-008, FA-014) reference the same contracts as existing findings but constitute distinct gaps that must be explicitly resolved."
+   > "Tier-2 unresolved: 27 (18 original + 9 new). The 9 new findings (FA-002, FA-004, FA-005, FA-006, FA-009, FA-010, FA-011, FA-012, FA-019) require explicit MIGR-001 contract propagation to specific migration order entries."
+
+2. Update the Final Audit Verdict accordingly: "26 Tier-1 unresolved (not 22 effective); 27 Tier-2 unresolved (not 18 effective)."
+
+---
+
+### Phase 9: Cosmetic Corrections
+
+#### Correction 9.1 — Distinguish V4.6 source size from V4.7 evidence package size
+
+**Resolves:** AC-027, AC-031
+
+**Action:**
+
+1. In `README.md`, edit "Package Statistics" section:
+   - Replace "File count: 57" with "V4.6 source corpus file count: 57 (not present in this package; this package contains 17 V4.7 evidence files)."
+   - Replace "Total deliverable size: ~150,000 words across 16 documents" with "Total deliverable size: ~15,000 words across 17 files (16 deliverables + README)."
+
+#### Correction 9.2 — Rename "V4.6 REMEDIATED PACKAGE" terminology
+
+**Resolves:** AC-030
+
+**Action:**
+
+1. In all 17 evidence files, replace "V4.6 REMEDIATED PACKAGE" (when referring to the source) with "V4.6 BASELINE PACKAGE".
+2. Reserve "REMEDIATED PACKAGE" for V4.7 target.
+
+#### Correction 9.3 — Fix Decision Graph inline-relabeling within same document
+
+**Resolves:** AC-029
+
+**Action:** Already covered by Correction 6.1 (DEC-043 and DEC-044 are given consistent meanings across all documents).
+
+---
+
+## 4. Post-Correction Verification
+
+After all corrections are applied, the remediation agent must:
+
+### 4.1 Re-run Count-Consistency Audit
+
+Verify all counts reconcile:
+- Finding Ledger: 47 total (22 Tier-1 + 17 Tier-2 + 8 Tier-3); 7 resolved + 37 unresolved + 2 FP + 1 partial.
+- Decision Ledger: 56 total (49 FROZEN + 7 PROPOSED) — or 58 if Phase 6 adds DEC-057/058.
+- Contract Registry: 60 total (8 verified + 51 new + 1 proposed).
+- Propagation Matrix: 60 total (10 propagated + 3 partial + 45 not-propagated + 2 blocked).
+- Scenarios: 36 total (8 PASS + 7 PARTIAL + 21 FAIL).
+- External Evidence: 16 total (3 verified + 13 unverified — or 2 verified + 14 unverified after Correction 7.1).
+- Modified Files: 14.
+
+### 4.2 Re-run Graph-Integrity Audit
+
+Verify 0 cycles remain in Decision Ledger dependencies.
+
+### 4.3 Re-run Internal-Consistency Audit
+
+Verify no cross-document contradictions remain:
+- DEC-040/041/042 have consistent meanings across all documents.
+- DEC-043/044 have consistent meanings across all documents.
+- No FROZEN claim lacks a verified V4.7 §section → Q1–Q118 mapping.
+- No "approved option" field is populated for PROPOSED/BLOCKED decisions.
+
+### 4.4 Re-run External-Fact Audit
+
+Verify:
+- EE-001 is correctly marked UNVERIFIED (or VERIFIED with fresh Packagist evidence).
+- EE-002 contains no false-confidence language.
+- EE-014's version numbers are marked as claims.
+
+### 4.5 Produce Corrected Package Summary
+
+Produce a new `CORRECTED-PACKAGE-READY-FOR-AUDIT.md` documenting:
+- All corrections applied.
+- All user decisions resolved (UD-001 through UD-012).
+- Verification results from 4.1 through 4.4.
+- Whether the corrected package can now serve as execution authority (yes/no).
+
+---
+
+## 5. What This Spec Does NOT Authorize
+
+Per the task brief's STOP CONDITION:
+
+- ❌ This spec does NOT authorize source-file remediation.
+- ❌ This spec does NOT authorize production of a remediated V4.7 source package.
+- ❌ This spec does NOT authorize declaration of GO.
+- ❌ This spec does NOT authorize the remediation agent to make any user decision (UD-001 through UD-012) on the user's behalf.
+- ❌ This spec does NOT authorize architectural changes (no new contracts, no new decisions, no semantic reinterpretation).
+
+This spec ONLY authorizes mechanical corrections to the 17 evidence-package markdown files to resolve the 32 findings in the Authority-Contradiction Ledger.
+
+---
+
+## 6. Final Note
+
+The V4.7 evidence package, even after all corrections in this spec are applied, will remain **NOT AUTHORITATIVE** until:
+
+1. The user supplies Q1–Q118 (UD-001).
+2. The user confirms V4.7 §section → Q1–Q118 mapping for all 49 FROZEN decisions (UD-003).
+3. The user performs fresh external verification of 13 Tier-1 external facts (UD-007).
+4. The user resolves the 8 other user decisions (UD-002, UD-004, UD-005, UD-006, UD-008, UD-009, UD-010, UD-011, UD-012).
+5. The remediation agent applies all corrections in this spec.
+6. The remediation agent re-runs the verification audits (§4 above).
+7. An independent auditor performs a fresh authority audit and produces zero new material findings.
+
+Only after all 7 steps are complete may the package be considered authoritative execution authority.
+
+---
+
+*End of Corrected Authority Spec. 9 phases of corrections specified. All corrections are mechanical; none authorize architectural changes. User decisions UD-001 through UD-012 are prerequisites.*
