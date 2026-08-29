@@ -65,8 +65,8 @@ services:
     container_name: studynexus-mysql
     image: mysql:8.4
     restart: unless-stopped
-    ports:
-      - "${MYSQL_PORT:-3306}:3306"
+    # ports:
+    #   - "${MYSQL_PORT:-3306}:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-secret}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
@@ -126,7 +126,6 @@ networks:
   # For example, 'php-fpm' can connect to 'mysql' by using 'mysql' as the hostname.
   # -----------------------------------------------------------
   studynexus-production:
-
 
 volumes:
   mysql-data-production:
