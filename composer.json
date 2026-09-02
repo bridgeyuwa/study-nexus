@@ -7,12 +7,12 @@
         "framework"
     ],
     "license": "MIT",
-    // "repositories": [ 
-    //    {
-    //     "type": "path",
-    //     "url": "./nova"
-    //    }
-    //  ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./flux-pro"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "diglactic/laravel-breadcrumbs": "^9.0",
